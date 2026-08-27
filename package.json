@@ -1,6 +1,6 @@
 {
   "name": "pyroscope-app-plugin",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "description": "Grafana Pyroscope app plugin (profiles)",
   "license": "AGPL-3.0-only",
   "author": "Grafana",
