@@ -69,7 +69,7 @@ To use Flame graph AI with Grafana Cloud, you need:
 
 To use Flame graph AI with Grafana open source, you need:
 
-- Grafana 11.5 or later
+- Grafana 11.6.11 or later
 - A configured [Pyroscope data source](https://grafana.com/docs/grafana-cloud/connect-externally-hosted/data-sources/pyroscope/) that has profiling data
 - The [LLM plugin](https://grafana.com/docs/grafana-cloud/alerting-and-irm/machine-learning/configure/llm-plugin/) installed and configured for your Grafana instance
 - The [Profiles Drilldown](https://grafana.com/docs/grafana-cloud/visualizations/simplified-exploration/profiles/access/) app installed and activated for your Grafana instance

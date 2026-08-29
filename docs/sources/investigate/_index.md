@@ -75,10 +75,43 @@ While flame graphs show an aggregate of all profiles in the selected time range,
 1. Select **View profile** in the exemplar popover. The flame graph updates to show only that single individual profile. A **profile id selector** tag appears above the flame graph confirming your selection.
 1. To return to the aggregated flame graph, click **X** on the profile id selector tag.
 
+## Move from profiles to traces
+
+{{< docs/public-preview product="Profiles to Traces" >}}
+
+When your profiles include span-level exemplars, you can use the span heatmap in the **Flame graph** view to move from a profile to the trace that produced it.
+
+1. Select the **Flame graph** view for your service.
+1. Use the **Profile timeline visualization** toggle to select **Span heatmap**. If no span profiles are available for the current service, filters, and time range, this option is unavailable.
+1. Select a **Tempo data source** to load trace details.
+1. In the **Top span exemplars** table, find the span you want to inspect using the span name, duration, or timestamp.
+1. For that span, select one of the following:
+
+   - **Open flame graph** to view the flame graph for the single span.
+   - **Open trace** to view the associated trace from your Tempo data source.
+
 ## Common tools during investigations
 
 In the Profiles toolbar, you can also use these features while investigating:
 
-- **Upload ad hoc profiles** to load profile data for one-off analysis.
+- **Upload ad hoc profiles** to load profile data for one-off analysis. The ad hoc view provides a **Single view** to inspect one uploaded profile and a **Diff view** to compare two uploaded profiles. In the diff view, select **Side by side** to show each profile in its own flame graph, or **Diff flamegraph** to show a computed difference. To compute a difference, the two profiles must share a common profile type.
 - **Copy shareable link** to capture the current investigation state and share it with teammates.
 - **View/edit tenant settings** to adjust settings such as collapsed flame graphs, function details, and maximum node count.
+
+### Add a time series panel to a dashboard
+
+You can save a time series visualization from Profiles Drilldown to a Grafana dashboard to monitor it alongside your other observability data.
+
+1. Hover over a time series panel and open the panel menu.
+1. Select **Add to dashboard**.
+1. Choose an existing dashboard or create a new one, then save.
+
+### Save and reuse searches
+
+When you apply filters, you can save the current search and return to it later. A saved search captures the data source, profile type, and filters.
+
+1. Apply one or more filters.
+1. Select **Save in Saved queries** and enter a title and an optional description.
+1. To reuse a saved search, select **Load Saved query** and choose one from the list.
+
+When the Grafana query library is available, searches are saved to the shared **Saved queries** library. When it isn't available, these actions appear as **Save search** and **Load saved search**, and searches are stored locally in your browser and only available on that device.

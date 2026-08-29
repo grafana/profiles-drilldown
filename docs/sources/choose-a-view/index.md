@@ -139,6 +139,8 @@ Determining which view to use frames the rest of your investigation.
 
 The **All services** view is the default view when you first open Profiles Drilldown.
 
+Use the **Filters** bar to narrow the services shown in this view. When you open a service in the **Flame graph** view, the filters you set here are applied there too, so you can keep exploring without losing your place. Your **All services** filters stay in place when you return. These filters apply only to the **All services** view, not to the **Labels** or **Diff flame graph** views.
+
 ![The All services view](/media/docs/explore-profiles/v1.17.0/profiles-drilldown-homescreen-v1.17.0.png)
 
 ### Profile types
@@ -169,10 +171,22 @@ In this view, you can also:
 - Search for functions in the flame graph.
 - Change the color scheme.
 - Expand or collapse all call stacks.
-- Toggle between top table, flame graph, or both views.
+- Toggle between the top table, flame graph, and call tree, or show a combination of views.
 - Export profile data.
 
 ![Flame graphs](/media/docs/explore-profiles/v1.17.0/profiles-drilldown-flamegraph-2-v1.17.0.png)
+
+#### Profiles to Traces
+
+{{< docs/public-preview product="Profiles to Traces" >}}
+
+In the **Flame graph** view, use the **Profile timeline visualization** toggle to switch between **Time series** and **Span heatmap**.
+The span heatmap plots span-level profile exemplars, so you can move from aggregated profiles to the individual spans and traces behind them.
+
+Select a Tempo data source to load trace details.
+From the **Top span exemplars** table, you can **Open flame graph** to view the flame graph for a single span, or **Open trace** to view the associated trace from your Tempo data source.
+
+For the steps to use the span heatmap, refer to [Investigate trends and spikes](../investigate/#move-from-profiles-to-traces).
 
 ### Diff flame graph
 
