@@ -15,7 +15,7 @@ aliases:
 
 The **Profiles settings** page lets you modify flame graph and function-details options used by Profiles Drilldown.
 
-![The Profiles Settings page](/media/docs/explore-profiles/v1.17.0/profiles-drilldown-settings-2-v1.17.0.png)
+<!-- Screenshot hidden until major UI refresh: ![The Profiles Settings page](/media/docs/explore-profiles/v1.17.0/profiles-drilldown-settings-2-v1.17.0.png) -->
 
 | Features                    | Options        | Explanation                                                                                                                                                                                                                                               |
 | --------------------------- | -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
