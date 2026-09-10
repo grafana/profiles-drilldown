@@ -35,6 +35,7 @@ overrides:
   uuid: '>=11.1.1'
   ws: '>=8.21.3'
   browserslist: '>=4.28.7'
+  smol-toml: '>=1.7.1'
 
 importers:
 
@@ -5651,8 +5652,8 @@ packages:
     peerDependencies:
       immutable: ~5.1.9
 
-  smol-toml@1.6.1:
-    resolution: {integrity: sha512-dWUG8F5sIIARXih1DTaQAX4SsiTXhInKf1buxdY9DIg4ZYPZK5nGM1VRIYmEbDbsHt7USo99xSLFu5Q1IqTmsg==}
+  smol-toml@1.8.0:
+    resolution: {integrity: sha512-kCZr2V3ch9i00x8zXRhjUNVcjG9ijES5dDudkXvUVCT5QlJNQWElSJdZqyPemffHoLNUYwOcou0Fy+ojN0uHSQ==}
     engines: {node: '>= 18'}
 
   source-map-js@1.2.1:
@@ -11452,7 +11453,7 @@ snapshots:
       picocolors: 1.1.1
       picomatch: 4.0.4
       pretty-ms: 9.3.0
-      smol-toml: 1.6.1
+      smol-toml: 1.8.0
       strip-json-comments: 5.0.1
       summary: 2.1.0
       typescript: 5.6.2
@@ -12693,7 +12694,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  smol-toml@1.6.1: {}
+  smol-toml@1.8.0: {}
 
   source-map-js@1.2.1: {}
 
