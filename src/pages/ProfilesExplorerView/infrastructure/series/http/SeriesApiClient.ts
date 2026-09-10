@@ -1,4 +1,3 @@
-import { getPyroscopeUTF8LabelNamesFromOpenFeature } from '@shared/infrastructure/featureFlags/featureFlags';
 import { ProfileMetric } from '@shared/infrastructure/profile-metrics/getProfileMetric';
 
 import { DataSourceProxyClient } from './DataSourceProxyClient';
@@ -28,9 +27,7 @@ export class SeriesApiClient extends DataSourceProxyClient {
         labelNames: ['service_name', '__profile_type__'],
         matchers: matchers ?? [],
       }),
-      headers: getPyroscopeUTF8LabelNamesFromOpenFeature()
-        ? { accept: 'application/json; allow-utf8-labelnames=true' }
-        : {},
+      headers: { accept: 'application/json; allow-utf8-labelnames=true' },
     })
       .then((response) => response.json())
       .then(formatSeriesResponse);
