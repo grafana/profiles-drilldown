@@ -17,6 +17,7 @@ export type FlamebearerProfile = {
     query?: string;
     sampleRate: number;
     spyName:
+      | '' // Query responses do not identify the profiler.
       | 'dotnetspy'
       | 'ebpfspy'
       | 'gospy'

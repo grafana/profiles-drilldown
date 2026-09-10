@@ -259,7 +259,7 @@ test.describe('Diff flame graph view', () => {
         await exploreProfilesPage.clickDiffFlameGraphAutoSelect();
       }
 
-      // Time picker drag may not trigger the same render-diff / ds/query sequence as flame graph drag,
+      // Time picker drag may not trigger the same Diff / ds/query sequence as flame graph drag,
       // so waitForApiResponses can hang until test timeout. Drag then wait for UI to settle.
       await exploreProfilesPage.clickAndDragOnComparisonPanel('baseline', { x: 470, y: 200 }, { x: 510, y: 200 });
       await exploreProfilesPage.assertNoSpinner();
