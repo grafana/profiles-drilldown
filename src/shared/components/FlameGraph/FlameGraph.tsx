@@ -1,5 +1,5 @@
 import { createTheme } from '@grafana/data';
-import { FlameGraph as GrafanaFlameGraph, Props } from '@grafana/flamegraph';
+import { FunctionTable, FlameGraph as GrafanaFlameGraph, Props } from '@grafana/flamegraph';
 import { useTheme2 } from '@grafana/ui';
 import React, { memo, useMemo } from 'react';
 
@@ -9,6 +9,7 @@ import { flamebearerToDataFrameDTO } from './domain/flamebearerToDataFrameDTO';
 
 type FlameGraphProps = {
   profile: FlamebearerProfile;
+  functionTable?: FunctionTable;
   diff?: boolean;
   vertical?: boolean;
   enableFlameGraphDotComExport?: boolean;
@@ -19,6 +20,7 @@ type FlameGraphProps = {
 
 function FlameGraphComponent({
   profile,
+  functionTable,
   diff,
   vertical,
   enableFlameGraphDotComExport,
@@ -43,6 +45,7 @@ function FlameGraphComponent({
   return (
     <GrafanaFlameGraph
       data={dataFrame as any}
+      functionTable={functionTable}
       disableCollapsing={!collapsedFlamegraphs}
       extraHeaderElements={<ExportData profile={profile} enableFlameGraphDotComExport={enableFlameGraphDotComExport} />}
       vertical={vertical}

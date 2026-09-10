@@ -21,11 +21,11 @@ export class DiffProfileApiClient extends DataSourceProxyClient {
   async get(params: GetParams): Promise<DiffProfileResponse> {
     const searchParams = new URLSearchParams({
       leftQuery: params.leftQuery,
-      leftFrom: String(params.leftTimeRange.from.unix() * 1000),
-      leftUntil: String(params.leftTimeRange.to.unix() * 1000),
+      leftFrom: String(params.leftTimeRange.from.valueOf()),
+      leftUntil: String(params.leftTimeRange.to.valueOf()),
       rightQuery: params.rightQuery,
-      rightFrom: String(params.rightTimeRange.from.unix() * 1000),
-      rightUntil: String(params.rightTimeRange.to.unix() * 1000),
+      rightFrom: String(params.rightTimeRange.from.valueOf()),
+      rightUntil: String(params.rightTimeRange.to.valueOf()),
     });
 
     if (params.maxNodes) {
