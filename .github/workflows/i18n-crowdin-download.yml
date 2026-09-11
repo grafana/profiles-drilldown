@@ -35,5 +35,4 @@ jobs:
           crowdin_token: ${{ fromJSON(steps.vault-secrets.outputs.secrets).CROWDIN_TOKEN }}
           crowdin_project_id: 42
           pr_labels: 'i18n'
-          github_board_id: 42
           github_repo_token: ${{ steps.get-github-app-token.outputs.token }}
