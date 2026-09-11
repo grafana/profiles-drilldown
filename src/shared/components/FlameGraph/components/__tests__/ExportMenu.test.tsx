@@ -41,4 +41,15 @@ describe('<ExportMenu />', () => {
       expect(screen.queryByText('Switch to the flame graph view to export it as a png')).not.toBeInTheDocument();
     });
   });
+
+  it('shows the gcx copy action only when commands are available', () => {
+    const onCopyGcxCommands = jest.fn();
+    const { rerender } = render(<ExportMenu profile={profile} />);
+
+    expect(screen.queryByText('gcx commands')).not.toBeInTheDocument();
+
+    rerender(<ExportMenu profile={profile} onCopyGcxCommands={onCopyGcxCommands} />);
+
+    expect(screen.getByText('gcx commands')).toBeInTheDocument();
+  });
 });

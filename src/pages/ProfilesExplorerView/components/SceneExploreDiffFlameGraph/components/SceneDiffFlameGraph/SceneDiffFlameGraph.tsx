@@ -4,9 +4,12 @@ import { t, Trans } from '@grafana/i18n';
 import { SceneComponentProps, sceneGraph, SceneObjectBase, SceneObjectState } from '@grafana/scenes';
 import { Spinner, useStyles2 } from '@grafana/ui';
 import { FlameGraph } from '@shared/components/FlameGraph/FlameGraph';
+import { displayError, displaySuccess } from '@shared/domain/displayStatus';
 import { reportInteraction } from '@shared/domain/reportInteraction';
+import { useMaxNodesFromUrl } from '@shared/domain/url-params/useMaxNodesFromUrl';
 import { useToggleSidePanel } from '@shared/domain/useToggleSidePanel';
 import { getProfileMetric, ProfileMetricId } from '@shared/infrastructure/profile-metrics/getProfileMetric';
+import { DEFAULT_SETTINGS } from '@shared/infrastructure/settings/PluginSettings';
 import { useFetchPluginSettings } from '@shared/infrastructure/settings/useFetchPluginSettings';
 import { DomainHookReturnValue } from '@shared/types/DomainHookReturnValue';
 import { FlamebearerProfile } from '@shared/types/FlamebearerProfile';
@@ -15,6 +18,8 @@ import { Panel } from '@shared/ui/Panel/Panel';
 import { PyroscopeLogo } from '@shared/ui/PyroscopeLogo';
 import React, { useEffect, useMemo } from 'react';
 
+import { buildGcxPprofCommand } from '../../../../domain/buildGcxPprofCommand';
+import { getPprofExportFilename } from '../../../../domain/getPprofExportFilename';
 import { useBuildPyroscopeQuery } from '../../../../domain/useBuildPyroscopeQuery';
 import { useGrafanaAssistant } from '../../../../domain/useGrafanaAssistant';
 import { ProfilesDataSourceVariable } from '../../../../domain/variables/ProfilesDataSourceVariable';
@@ -65,6 +70,7 @@ export class SceneDiffFlameGraph extends SceneObjectBase<SceneDiffFlameGraphStat
     const comparisonQuery = useBuildPyroscopeQuery(this, 'filtersComparison');
 
     const { settings } = useFetchPluginSettings();
+    const [maxNodes] = useMaxNodesFromUrl();
 
     const dataSourceUid = sceneGraph.findByKeyAndType(this, 'dataSource', ProfilesDataSourceVariable).useState()
       .value as string;
@@ -101,6 +107,35 @@ export class SceneDiffFlameGraph extends SceneObjectBase<SceneDiffFlameGraphStat
     );
     const hasMissingSelections = !isDiffQueryEnabled;
 
+    const copyGcxCommands = async () => {
+      const effectiveMaxNodes = maxNodes || DEFAULT_SETTINGS.maxNodes;
+      const baselineCommand = buildGcxPprofCommand({
+        dataSourceUid,
+        query: baselineQuery,
+        timeRange: baselineTimeRange,
+        maxNodes: effectiveMaxNodes,
+        filename: `${getPprofExportFilename(baselineQuery, baselineTimeRange)}_baseline.pb.gz`,
+      });
+      const comparisonCommand = buildGcxPprofCommand({
+        dataSourceUid,
+        query: comparisonQuery,
+        timeRange: comparisonTimeRange,
+        maxNodes: effectiveMaxNodes,
+        filename: `${getPprofExportFilename(comparisonQuery, comparisonTimeRange)}_comparison.pb.gz`,
+      });
+
+      try {
+        await navigator.clipboard.writeText(`${baselineCommand}\n${comparisonCommand}`);
+        reportInteraction('g_pyroscope_app_export_profile', { format: 'gcx' });
+        displaySuccess([t('diff-flame-graph.gcx-copied', 'gcx commands copied to clipboard!')]);
+      } catch (error) {
+        displayError(error as Error, [
+          t('diff-flame-graph.error-gcx-copy', 'Failed to copy gcx commands to clipboard!'),
+          (error as Error).message,
+        ]);
+      }
+    };
+
     return {
       data: {
         title: this.buildTitle(),
@@ -111,6 +146,7 @@ export class SceneDiffFlameGraph extends SceneObjectBase<SceneDiffFlameGraphStat
         hasMissingSelections,
         profile: profile as FlamebearerProfile,
         settings,
+        copyGcxCommands,
         ai: {
           panel: aiPanel,
           fetchParams: [
@@ -223,6 +259,7 @@ export class SceneDiffFlameGraph extends SceneObjectBase<SceneDiffFlameGraphStat
               collapsedFlamegraphs={data.settings?.collapsedFlamegraphs}
               /** Grafana assistant does not support diff flame graphs yet, we will use LLM plugin if enabled */
               showAnalyzeWithAssistant={false}
+              onCopyGcxCommands={data.copyGcxCommands}
             />
           )}
         </Panel>
