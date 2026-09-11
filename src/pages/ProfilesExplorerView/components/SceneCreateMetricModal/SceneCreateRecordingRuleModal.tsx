@@ -3,6 +3,7 @@ import { GrafanaTheme2, SelectableValue } from '@grafana/data';
 import { t, Trans } from '@grafana/i18n';
 import { SceneComponentProps, sceneGraph, SceneObjectBase, SceneObjectState } from '@grafana/scenes';
 import { Button, Divider, Field, Input, Modal, MultiSelect, Text, useStyles2 } from '@grafana/ui';
+import { reportInteraction } from '@shared/domain/reportInteraction';
 import { labelsRepository } from '@shared/infrastructure/labels/labelsRepository';
 import { getProfileMetric, ProfileMetricId } from '@shared/infrastructure/profile-metrics/getProfileMetric';
 import { RecordingRuleViewModel } from '@shared/types/RecordingRuleViewModel';
@@ -113,6 +114,7 @@ export class SceneCreateRecordingRuleModal extends SceneObjectBase<SceneCreateRe
         readonly: false,
       };
       await actions.save(rule);
+      reportInteraction('g_pyroscope_app_recording_rule_created');
       onCreated();
     };
 

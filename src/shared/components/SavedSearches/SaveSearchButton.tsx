@@ -71,6 +71,8 @@ export function SaveSearchButton({ sceneRef }: Props) {
       labelSelector,
       groupBy: [],
       includeExemplars: false,
+      includeHeatmap: false,
+      heatmapType: 'individual',
     };
   }, [filters, dsUid, profileMetricId]);
 

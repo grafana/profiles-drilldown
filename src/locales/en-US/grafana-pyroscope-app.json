@@ -8,6 +8,12 @@
     "fav": {
       "favorite": "Favorite",
       "unfavorite": "Unfavorite"
+    },
+    "span-exemplar-toggle": {
+      "aria-label": "Profile timeline visualization",
+      "span-heatmap": "Span heatmap",
+      "time-series": "Time series",
+      "unavailable": "No span profiles are available for the current service, filters, and time range"
     }
   },
   "ad-hoc": {
@@ -22,6 +28,9 @@
     "tabs": {
       "diff-view": "Diff view",
       "single-view": "Single view"
+    },
+    "upload": {
+      "diff-converted-to-single": "Diff profile was converted to a single flame graph for upload. Comparison data was not kept."
     },
     "view": {
       "title": "Ad hoc view"
@@ -55,6 +64,9 @@
   "back-button": {
     "aria-label": "Back to Profiles Drilldown",
     "label": "Back to Profiles Drilldown"
+  },
+  "common": {
+    "not-available": "–"
   },
   "create-recording-rule": {
     "cancel": "Cancel",
@@ -129,16 +141,16 @@
       "label": "Comparison presets",
       "placeholder": "Choose a preset"
     },
-    "settings-error": {
-      "message": "Some features might not work as expected (e.g. flamegraph export options). Please try to reload the page, sorry for the inconvenience.",
-      "title": "Error while retrieving the plugin settings!"
-    },
     "title": "Diff flame graph for {{serviceName}} ({{profileMetricType}})"
   },
   "error-page": {
     "banner-message": "Please try reloading the page or, if the problem persists, contact your organization admin. Sorry for the inconvenience.",
     "banner-title": "Fatal error!",
     "title": "Grafana Profiles Drilldown"
+  },
+  "explore-service-heatmap": {
+    "description": "Count of trace spans falling into a specific bucket",
+    "title": "{{title}} per trace span"
   },
   "explorer": {
     "add-to-dashboard": {
@@ -162,6 +174,7 @@
       "add-recording-rule": "Add recording rule",
       "recording-rules-tooltip": "Recording rules",
       "settings-tooltip": "View/edit tenant settings",
+      "share-error": "Error while copying the shareable link to the clipboard!",
       "share-tooltip": "Copy shareable link to the clipboard",
       "upload-tooltip": "Upload ad hoc profiles",
       "view-recording-rules": "View recording rules"
@@ -176,10 +189,12 @@
     "error-flamegraph-com": "Failed to export to flamegraph.com!",
     "error-loading-profile": "Error while loading flamebearer profile data!",
     "error-png": "Failed to export to png!",
+    "error-png-no-canvas": "Please ensure the flame graph is visible before exporting to png.",
     "error-pprof": "Failed to export to pprof!",
     "json": "json",
     "json-label": "json",
     "png": "png",
+    "png-disabled-description": "Switch to the flame graph view to export it as a png",
     "png-label": "png",
     "pprof": "pprof",
     "tooltip": "Export profile data"
@@ -203,12 +218,11 @@
       "remove": "Remove profile id selector from query",
       "tooltip": "You have added a profile id selector to the flamegraph query ({{profileIdSelector}})."
     },
-    "settings-error": {
-      "message": "Some features might not work as expected (e.g. collapsed flame graphs). Please try to reload the page, sorry for the inconvenience.",
-      "title": "Error while retrieving the plugin settings!"
-    },
     "span-selector": {
-      "added": "Span selector added",
+      "filter-label": "Filter label",
+      "filter-operator": "Filter operator",
+      "filter-value": "Filter value",
+      "name": "Span",
       "remove": "Remove span selector from query",
       "tooltip": "You have added a span selector to the flamegraph query ({{spanSelector}})."
     },
@@ -241,10 +255,10 @@
     "context-menu": {
       "label": "Function details"
     },
+    "copy-error": "Error while copying the file path to the clipboard!",
     "copy-to-clipboard": "Copy to clipboard",
     "fetch-error": "Error while fetching function details!",
     "file": "File",
-    "file-path-copied": "File path copied to clipboard!",
     "file-tooltip": "File path where that function is defined",
     "function-name": "Function name",
     "github": {
@@ -295,11 +309,11 @@
     "title": "Function Details"
   },
   "give-feedback": {
-    "button": "Give feedback",
-    "tooltip": "Share your thoughts about Profiles in Grafana."
+    "button": "Give feedback"
   },
   "grid": {
     "empty-state": {
+      "no-profiles": "No profiles found. Widen the time range or start sending profile data.",
       "no-results": "No results"
     },
     "error": {
@@ -328,6 +342,37 @@
       "clear": "Clear search"
     }
   },
+  "heatmap": {
+    "exemplar": {
+      "select": "Select exemplar"
+    },
+    "exemplar-table": {
+      "clear-selection": "Clear exemplar selection",
+      "col-actions": "Actions",
+      "col-duration": "Duration",
+      "col-span-id": "Span ID",
+      "col-span-name": "Span name",
+      "col-timestamp": "Timestamp",
+      "col-trace-id": "Trace ID",
+      "copied": "Copied!",
+      "copy-to-clipboard": "Copy to clipboard",
+      "empty": "No span exemplars in the selected time range.",
+      "open-flamegraph": "Open flame graph",
+      "open-trace": "Open trace",
+      "select-exemplar": "Select exemplar",
+      "select-tempo": "Select Tempo data source",
+      "tempo-datasource": "Tempo data source",
+      "tempo-placeholder": "Select Tempo data source…",
+      "title": "Top span exemplars",
+      "trace-lookup-failed": "Unable to load trace details from Tempo."
+    },
+    "menu": {
+      "open-in-explore": "Open in Explore"
+    },
+    "trace-drawer": {
+      "title": "Trace {{traceId}}"
+    }
+  },
   "labels": {
     "compare": {
       "aria-label": "Compare",
@@ -351,7 +396,6 @@
       "include-tooltip": "Include \"{{label}}\" in the filters"
     },
     "grid": {
-      "no-results": "No results",
       "refresh-tooltip": "Click to completely refresh all the panels present on the screen"
     },
     "stats-panel": {
@@ -610,7 +654,9 @@
         "tooltip": "The function details feature enables mapping of resource usage to lines of source code. If the GitHub integration is configured, then the source code will be downloaded from GitHub."
       },
       "fetch-error": {
-        "message": "Please try to reload the page, sorry for the inconvenience.",
+        "cloud-hint": "On Grafana Cloud, check with your organization administrator that you have permission to read and write plugin settings for this data source.",
+        "message": "The settings below show default values instead of what was previously saved. What you can do:",
+        "oss-hint": "With Grafana Pyroscope OSS, make sure the data source URL exposes the tenant-settings endpoint.",
         "title": "Error while retrieving the plugin settings!"
       },
       "flame-graph": {
@@ -637,6 +683,7 @@
     "menu": {
       "add-to-dashboard": "Add to dashboard",
       "exemplars": "Exemplars",
+      "labels": "Labels",
       "open-in-explore": "Open in Explore",
       "scale-linear": "Linear",
       "scale-log2": "Log2",

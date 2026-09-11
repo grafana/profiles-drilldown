@@ -515,6 +515,7 @@ export class SceneComparePanel extends SceneObjectBase<SceneComparePanelState> {
     const styles = useStyles2(getStyles, color);
 
     const filtersVariable = sceneGraph.findByKey(model, filterKey) as FiltersVariable;
+    const timeRange = sceneGraph.getTimeRange(model);
 
     return (
       <div className={styles.panel} data-testid={`panel-${target}`}>
@@ -542,7 +543,7 @@ export class SceneComparePanel extends SceneObjectBase<SceneComparePanelState> {
         </div>
 
         <div className={styles.filter}>
-          <filtersVariable.Component model={filtersVariable} />
+          <filtersVariable.Component model={filtersVariable} timeRange={timeRange} />
         </div>
 
         <div className={styles.timeseries}>{timeseries && <timeseries.Component model={timeseries} />}</div>

@@ -1,8 +1,8 @@
 ---
 name: Bug report
 about: Create a report to help us improve
-title: '[bug] '
-labels: bug
+title: '[BUG]:'
+labels: bug, needs-triage
 assignees: ''
 ---
 
@@ -28,3 +28,8 @@ assignees: ''
 #### Expected behaviour
 
 <!-- A clear and concise description of what you expected to happen -->
+
+**AI disclosure** (optional)
+See the [Generative AI Contribution Policy](https://github.com/grafana/profiles-drilldown/blob/main/docs/genai.md).
+
+- [ ] This issue was substantially generated with AI assistance.

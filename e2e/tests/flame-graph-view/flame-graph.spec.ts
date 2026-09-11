@@ -104,20 +104,8 @@ test.describe('Flame graph view', () => {
   });
 
   test.describe('Panel actions', () => {
-    test('Labels action', async ({ exploreProfilesPage }) => {
-      await exploreProfilesPage.clickOnPanelAction('CPU time consumed', 'Labels');
-
-      await exploreProfilesPage.asserSelectedExplorationType('Labels');
-      await exploreProfilesPage.assertSelectedService('ride-sharing-app');
-      await exploreProfilesPage.assertSelectedProfileType('process_cpu/cpu');
-
-      await expect(exploreProfilesPage.getSceneBody()).toHaveScreenshot({
-        stylePath: './e2e/fixtures/css/hide-all-controls.css',
-      });
-    });
-
     test('Favorite action', async ({ exploreProfilesPage }) => {
-      await exploreProfilesPage.clickOnPanelAction('CPU time consumed', 'Favorite');
+      await exploreProfilesPage.clickOnPanelMenuAction('CPU time consumed', 'Favorite');
 
       await exploreProfilesPage.selectExplorationType('Favorites');
 

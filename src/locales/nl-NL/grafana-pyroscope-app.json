@@ -295,13 +295,9 @@
     "title": "Functiedetails"
   },
   "give-feedback": {
-    "button": "Feedback geven",
-    "tooltip": "Deel je mening over Profielen in Grafana."
+    "button": "Feedback geven"
   },
   "grid": {
-    "empty-state": {
-      "no-results": "Geen resultaten"
-    },
     "error": {
       "title": "Queryfout!"
     },

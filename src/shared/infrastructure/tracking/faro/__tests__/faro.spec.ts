@@ -6,6 +6,9 @@ import { initFaro, setFaro } from '../faro';
 
 // Faro dependencies
 jest.mock('@grafana/faro-web-sdk');
+jest.mock('../interactionEchoBackend', () => ({
+  registerFaroInteractionEchoBackend: jest.fn(),
+}));
 
 // Grafana dependency
 jest.mock('@grafana/runtime', () => ({

@@ -3,6 +3,7 @@ import { sceneGraph, SceneObject } from '@grafana/scenes';
 import { clone, defaults, uniqBy } from 'lodash';
 
 import { GridItemData } from '../../components/SceneByVariableRepeaterGrid/types/GridItemData';
+import { AllServicesFilterVariable } from '../../domain/variables/FiltersVariable/AllServicesFilterVariable';
 import { FiltersVariable } from '../../domain/variables/FiltersVariable/FiltersVariable';
 import { getSceneVariableValue } from '../../helpers/getSceneVariableValue';
 
@@ -28,8 +29,14 @@ export function interpolateQueryRunnerVariables(
     ({ key, operator, value }) => ({ key, operator, value })
   );
 
+  const allServicesFilterVariable = sceneGraph.lookupVariable('filtersAllServices', sceneObject) as
+    | AllServicesFilterVariable
+    | undefined;
+  const allServicesFilters =
+    allServicesFilterVariable?.state.filters.map(({ key, operator, value }) => ({ key, operator, value })) ?? [];
+
   interpolatedParams.filters = uniqBy(
-    [...(interpolatedParams.filters || []), ...parsedFilters],
+    [...(interpolatedParams.filters || []), ...parsedFilters, ...allServicesFilters],
     ({ key, operator, value }) => `${key}${operator}${value}`
   );
 

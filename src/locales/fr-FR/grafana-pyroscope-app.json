@@ -295,13 +295,9 @@
     "title": "Détails de la fonction"
   },
   "give-feedback": {
-    "button": "Donner un avis",
-    "tooltip": "Donnez votre avis sur les Profils dans Grafana."
+    "button": "Donner un avis"
   },
   "grid": {
-    "empty-state": {
-      "no-results": "Aucun résultat"
-    },
     "error": {
       "title": "Erreur de requête !"
     },

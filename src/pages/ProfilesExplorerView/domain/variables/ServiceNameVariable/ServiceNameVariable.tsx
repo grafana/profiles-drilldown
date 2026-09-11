@@ -9,6 +9,7 @@ import {
   VariableValueOption,
 } from '@grafana/scenes';
 import { Cascader, Icon, Tooltip, useStyles2 } from '@grafana/ui';
+import { generateUUID } from '@shared/domain/generateUUID';
 import { prepareHistoryEntry } from '@shared/domain/prepareHistoryEntry';
 import { reportInteraction } from '@shared/domain/reportInteraction';
 import { userStorage } from '@shared/infrastructure/userStorage';
@@ -29,11 +30,14 @@ type ServiceNameVariableState = {
 };
 
 export class ServiceNameVariable extends QueryVariable {
-  // hack: subscribe to changes of dataSource only
-  static QUERY_DEFAULT = '$dataSource and all services';
+  // hack: subscribe to changes of dataSource and filtersAllServices
+  static QUERY_DEFAULT = '$dataSource $filtersAllServices and all services';
 
   // hack: subscribe to changes of dataSource and profileMetricId
   static QUERY_PROFILE_METRIC_DEPENDENT = '$dataSource and only $profileMetricId services';
+
+  // subscribe to changes of dataSource, profileMetricId, and filtersAllServices
+  static QUERY_PROFILE_METRIC_AND_FILTERS = '$dataSource $profileMetricId $filtersAllServices';
 
   private initialFilters?: AdHocVariableFilter[];
 
@@ -186,7 +190,7 @@ export class ServiceNameVariable extends QueryVariable {
             // we add a key to ensure that the Cascader selects the initial value properly when landing on the page
             // and when switching exploration types, because the value might also be changed after the component has been rendered by SceneProfilesExplorer
             // (e.g. in SceneExploreServiceProfileTypes)
-            key={crypto.randomUUID()}
+            key={generateUUID()}
             aria-label={t('variables.service-name.aria-label', 'Services list')}
             width={32}
             separator="/"

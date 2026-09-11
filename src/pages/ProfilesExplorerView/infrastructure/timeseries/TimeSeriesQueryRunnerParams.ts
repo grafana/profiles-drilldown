@@ -7,4 +7,5 @@ export type TimeSeriesQueryRunnerParams = {
     label: string;
   };
   filters?: AdHocVariableFilter[];
+  extraFilterVariables?: string[];
 };

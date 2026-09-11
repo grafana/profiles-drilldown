@@ -41,6 +41,38 @@ test.describe('All services view', () => {
     await expect(exploreProfilesPage.getPanelByTitle('ride-sharing-app')).toBeVisible();
   });
 
+  test.describe('Panel reuse', () => {
+    test('Narrowing the list keeps the matching panels mounted', async ({ exploreProfilesPage }) => {
+      await expect(exploreProfilesPage.getPanels()).toHaveCount(3);
+
+      await exploreProfilesPage.tagMountedPanels();
+
+      await exploreProfilesPage.enterQuickFilterText('sharing,load');
+      await expect(exploreProfilesPage.getPanels()).toHaveCount(2);
+
+      // both matching services were already on screen, so the grid must keep their panels rather
+      // than rebuild every item: rebuilding unmounts the whole grid and blanks it before it refills
+      expect(await exploreProfilesPage.countTaggedPanels()).toBe(2);
+    });
+
+    test('Time range change keeps the panels mounted when the service list is unchanged', async ({
+      exploreProfilesPage,
+    }) => {
+      await expect(exploreProfilesPage.getPanels()).toHaveCount(3);
+
+      await exploreProfilesPage.tagMountedPanels();
+
+      await exploreProfilesPage.clickOnZoomOut();
+
+      await expect(exploreProfilesPage.getTimePickerButton()).not.toContainText(
+        '2024-03-13 19:00:00 to 2024-03-13 19:50:00'
+      );
+      await expect(exploreProfilesPage.getPanels()).toHaveCount(3);
+
+      expect(await exploreProfilesPage.countTaggedPanels()).toBe(3);
+    });
+  });
+
   test('Layout switcher', async ({ exploreProfilesPage }) => {
     await exploreProfilesPage.selectLayout('Rows');
 

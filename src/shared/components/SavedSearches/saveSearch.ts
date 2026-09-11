@@ -1,4 +1,5 @@
 import { config } from '@grafana/runtime';
+import { generateUUID } from '@shared/domain/generateUUID';
 import { SceneObject } from '@grafana/scenes';
 import { DataQuery } from '@grafana/schema';
 import { getQueryLibraryFromOpenFeature } from '@shared/infrastructure/featureFlags/featureFlags';
@@ -131,7 +132,7 @@ function saveInLocalStorage({ query, title, description, dsUid }: Omit<SavedSear
     query,
     timestamp: new Date().getTime(),
     title,
-    uid: crypto.randomUUID(),
+    uid: generateUUID(),
   });
 
   localStorage.setItem(SAVED_SEARCHES_KEY, JSON.stringify(stored));

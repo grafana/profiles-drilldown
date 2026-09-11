@@ -1,5 +1,6 @@
 import { t } from '@grafana/i18n';
 
+import { generateUUID } from '@shared/domain/generateUUID';
 import { FilterKind, Filters, OperatorKind } from '../types';
 import { buildIsEmptyFilter } from './buildIsEmptyFilter';
 
@@ -130,7 +131,7 @@ export function queryToFilters(query: string): Filters {
     .filter(([attribute]) => attribute !== 'service_name')
     .map(([attribute, operator, value]) => {
       const filter = {
-        id: crypto.randomUUID(),
+        id: generateUUID(),
         type: FilterKind['attribute-operator-value'],
         active: true,
         attribute: { value: attribute, label: attribute },

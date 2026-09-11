@@ -8,6 +8,12 @@
     "fav": {
       "favorite": "Favorito",
       "unfavorite": "Eliminar de favoritos"
+    },
+    "span-exemplar-toggle": {
+      "aria-label": "",
+      "span-heatmap": "",
+      "time-series": "",
+      "unavailable": ""
     }
   },
   "ad-hoc": {
@@ -22,6 +28,9 @@
     "tabs": {
       "diff-view": "",
       "single-view": "Vista única"
+    },
+    "upload": {
+      "diff-converted-to-single": ""
     },
     "view": {
       "title": "Vista personalizada"
@@ -55,6 +64,9 @@
   "back-button": {
     "aria-label": "Volver a Profiles Drilldown",
     "label": "Volver a Profiles Drilldown"
+  },
+  "common": {
+    "not-available": ""
   },
   "create-recording-rule": {
     "cancel": "Cancelar",
@@ -140,6 +152,10 @@
     "banner-title": "¡Error grave!",
     "title": "Profiles Drilldown de Grafana"
   },
+  "explore-service-heatmap": {
+    "description": "",
+    "title": ""
+  },
   "explorer": {
     "add-to-dashboard": {
       "modal-title": ""
@@ -176,10 +192,12 @@
     "error-flamegraph-com": "¡Error al exportar a flamegraph.com!",
     "error-loading-profile": "¡Error al cargar los datos del perfil de Flamebearer!",
     "error-png": "¡Error al exportar a PNG!",
+    "error-png-no-canvas": "",
     "error-pprof": "¡Error al exportar a PPROF!",
     "json": "json",
     "json-label": "json",
     "png": "png",
+    "png-disabled-description": "",
     "png-label": "png",
     "pprof": "PPROF",
     "tooltip": "Exportar datos del perfil"
@@ -208,7 +226,10 @@
       "title": "¡Error al recuperar los ajustes del plugin!"
     },
     "span-selector": {
-      "added": "Selector de intervalo añadido",
+      "filter-label": "",
+      "filter-operator": "",
+      "filter-value": "",
+      "name": "",
       "remove": "Eliminar el selector de intervalo de la consulta",
       "tooltip": "Has añadido un selector de intervalo a la consulta de gráfico de llama ({{spanSelector}})."
     },
@@ -244,7 +265,6 @@
     "copy-to-clipboard": "Copiar al portapapeles",
     "fetch-error": "¡Error al obtener los detalles de la función!",
     "file": "Archivo",
-    "file-path-copied": "¡Ruta del archivo copiada al portapapeles!",
     "file-tooltip": "Ruta del archivo en el que se define esa función",
     "function-name": "Nombre de la función",
     "github": {
@@ -295,12 +315,12 @@
     "title": "Detalles de la función"
   },
   "give-feedback": {
-    "button": "Enviar comentarios",
-    "tooltip": "Comparte tu opinión sobre los perfiles en Grafana."
+    "button": "Enviar comentarios"
   },
   "grid": {
     "empty-state": {
-      "no-results": "Ningún resultado"
+      "no-profiles": "",
+      "no-results": ""
     },
     "error": {
       "title": "¡Error de consulta!"
@@ -328,6 +348,37 @@
       "clear": "Borrar búsqueda"
     }
   },
+  "heatmap": {
+    "exemplar": {
+      "select": ""
+    },
+    "exemplar-table": {
+      "clear-selection": "",
+      "col-actions": "",
+      "col-duration": "",
+      "col-span-id": "",
+      "col-span-name": "",
+      "col-timestamp": "",
+      "col-trace-id": "",
+      "copied": "",
+      "copy-to-clipboard": "",
+      "empty": "",
+      "open-flamegraph": "",
+      "open-trace": "",
+      "select-exemplar": "",
+      "select-tempo": "",
+      "tempo-datasource": "",
+      "tempo-placeholder": "",
+      "title": "",
+      "trace-lookup-failed": ""
+    },
+    "menu": {
+      "open-in-explore": ""
+    },
+    "trace-drawer": {
+      "title": ""
+    }
+  },
   "labels": {
     "compare": {
       "aria-label": "",
@@ -351,7 +402,6 @@
       "include-tooltip": "Incluir «{{label}}» en los filtros"
     },
     "grid": {
-      "no-results": "Ningún resultado",
       "refresh-tooltip": "Haz clic para actualizar por completo todos los paneles que aparecen en la pantalla."
     },
     "stats-panel": {
@@ -637,6 +687,7 @@
     "menu": {
       "add-to-dashboard": "",
       "exemplars": "Ejemplos",
+      "labels": "",
       "open-in-explore": "Abrir en Explorar",
       "scale-linear": "Lineal",
       "scale-log2": "Log2",

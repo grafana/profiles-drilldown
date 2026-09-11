@@ -295,13 +295,9 @@
     "title": "함수 세부 정보"
   },
   "give-feedback": {
-    "button": "피드백 제출하기",
-    "tooltip": "Grafana에서 프로필에 대한 의견을 공유해 주세요."
+    "button": "피드백 제출하기"
   },
   "grid": {
-    "empty-state": {
-      "no-results": "결과 없음"
-    },
     "error": {
       "title": "쿼리 오류!"
     },

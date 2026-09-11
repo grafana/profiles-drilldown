@@ -10,6 +10,7 @@ import React from 'react';
 import { SceneByVariableRepeaterGrid } from '../../components/SceneByVariableRepeaterGrid/SceneByVariableRepeaterGrid';
 import { FavAction } from '../../domain/actions/FavAction';
 import { SelectAction } from '../../domain/actions/SelectAction';
+import { AllServicesFilterVariable } from '../../domain/variables/FiltersVariable/AllServicesFilterVariable';
 import { ProfileMetricVariable } from '../../domain/variables/ProfileMetricVariable';
 import { ServiceNameVariable } from '../../domain/variables/ServiceNameVariable/ServiceNameVariable';
 import { SceneLayoutSwitcher } from '../SceneByVariableRepeaterGrid/components/SceneLayoutSwitcher';
@@ -26,7 +27,7 @@ export class SceneExploreAllServices extends SceneObjectBase<SceneExploreAllServ
         variables: [
           // we use a custom instance of ServiceNameVariable to display only the services associated to the selected profile metric
           new ServiceNameVariable({
-            query: ServiceNameVariable.QUERY_PROFILE_METRIC_DEPENDENT,
+            query: ServiceNameVariable.QUERY_PROFILE_METRIC_AND_FILTERS,
             skipUrlSync: true,
           }),
         ],
@@ -41,6 +42,7 @@ export class SceneExploreAllServices extends SceneObjectBase<SceneExploreAllServ
           queryRunnerParams: {
             serviceName: option.value as string,
             profileMetricId,
+            extraFilterVariables: ['filtersAllServices'],
           },
           panelType: PanelType.TIMESERIES,
         }),
@@ -60,12 +62,32 @@ export class SceneExploreAllServices extends SceneObjectBase<SceneExploreAllServ
     sceneGraph
       .findByKeyAndType(this, 'quick-filter', SceneQuickFilter)
       .setPlaceholder('Search services (comma-separated regexes are supported)');
+
+    const localServiceNameVar = sceneGraph.lookupVariable('serviceName', this) as ServiceNameVariable;
+    const mainServiceNameVar = sceneGraph.lookupVariable('serviceName', this.parent!) as ServiceNameVariable;
+
+    const sub = localServiceNameVar.subscribeToState((newState, prevState) => {
+      if (!newState.loading && prevState.loading && newState.options.length > 0) {
+        const currentValue = String(mainServiceNameVar.state.value ?? '');
+        const isCurrentValid = currentValue && newState.options.some((o) => String(o.value) === currentValue);
+        if (!isCurrentValid) {
+          mainServiceNameVar.changeValueTo(newState.options[0].value as string);
+        }
+      }
+    });
+
+    return () => {
+      sub.unsubscribe();
+    };
   }
 
   // see SceneProfilesExplorer
   getVariablesAndGridControls() {
     return {
-      variables: [sceneGraph.findByKeyAndType(this, 'profileMetricId', ProfileMetricVariable)],
+      variables: [
+        sceneGraph.findByKeyAndType(this, 'profileMetricId', ProfileMetricVariable),
+        sceneGraph.findByKeyAndType(this, 'filtersAllServices', AllServicesFilterVariable),
+      ],
       gridControls: [
         sceneGraph.findByKeyAndType(this, 'quick-filter', SceneQuickFilter),
         sceneGraph.findByKeyAndType(this, 'layout-switcher', SceneLayoutSwitcher),

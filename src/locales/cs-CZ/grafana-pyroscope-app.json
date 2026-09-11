@@ -295,13 +295,9 @@
     "title": "Podrobnosti o funkci"
   },
   "give-feedback": {
-    "button": "Poskytnout zpětnou vazbu",
-    "tooltip": "Podělte se o svůj názor na profily v Grafaně."
+    "button": "Poskytnout zpětnou vazbu"
   },
   "grid": {
-    "empty-state": {
-      "no-results": "Žádné výsledky"
-    },
     "error": {
       "title": "Chyba dotazu!"
     },

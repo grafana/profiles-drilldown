@@ -6,8 +6,8 @@ packages:
 frozenLockfile: true
 # Disable package lifecycle scripts (postinstall, etc.) on install.
 ignoreScripts: true
-# Five days in minutes (5 × 24 × 60).
-minimumReleaseAge: 7200
+# Three days in minutes (3 × 24 × 60).
+minimumReleaseAge: 4320
 # Fail install if a package's trust evidence is weaker than an earlier release (e.g. lost trusted publisher).
 trustPolicy: no-downgrade
 # Transitive deps must come from the registry/workspace; block git/tarball URLs except on direct deps.
@@ -23,25 +23,37 @@ allowBuilds:
 
 overrides:
   chokidar: '>=5.0.0'
-  semver@6: 7.8.0
+  semver@6: 7.8.5
   ua-parser-js: '>=2.0.10'
   react-redux: '>=9.3.0'
-  undici-types: '>=6.25.0'
-  esbuild: ~0.28.1
-  i18next: ~26.0.5
+  # @types/node 22 would otherwise resolve 6.21.0, which fails trustPolicy: no-downgrade.
+  undici-types: '>=6.28.0'
+  i18next: ~26.4.0
   lodash: ~4.18.1
-  minimatch@^5: ~5.1.9
   minimatch@^9: ~9.0.9
-  ajv@^8: ~8.18.0
-  dompurify: ~3.4.9
-  hono: '>=4.12.25'
-  js-yaml: '>=4.2.0'
-  '@opentelemetry/core': '>=2.8.0'
-  immutable: ~5.1.5
-  js-cookie: '>=3.0.7'
-  protobufjs: '>=8.2.0'
+  ajv@^8: ~8.20.0
+  dompurify: ~3.4.14
+  hono: '>=4.13.5'
+  '@hono/node-server': 2.1.1
+  js-yaml@^3: ~3.15.2
+  js-yaml@^4: ~4.3.2
+  '@opentelemetry/core': '>=2.10.0'
+  immutable: ~5.1.9
+  js-cookie: '>=3.0.8'
+  protobufjs: '>=8.7.2'
+  brace-expansion@^1: 1.1.18
+  brace-expansion@^5: '>=5.0.9'
+  body-parser: '>=2.3.0'
+  fast-uri: '>=4.1.3'
+  ip-address: '>=10.5.0'
+  postcss: '>=8.5.26'
   protocol-buffers-schema: ~3.6.1
-  qs: ~6.15.2
-  serialize-javascript: ~7.0.5
+  qs: ~6.16.0
+  serialize-javascript: ~7.1.0
   uuid: '>=11.1.1'
-  ws: '>=8.20.1'
+  ws: '>=8.21.3'
+  browserslist: '>=4.28.7'
+  smol-toml: '>=1.7.1'
+minimumReleaseAgeExclude:
+  # Renovate security update: pnpm@11.11.0
+  - pnpm@11.11.0

@@ -15,6 +15,11 @@ jest.mock('@grafana/runtime', () => ({
   getAppEvents: () => appEvents,
 }));
 
+// reportInteraction dependency
+jest.mock('@shared/domain/reportInteraction', () => ({
+  reportInteraction: jest.fn(),
+}));
+
 // useFetchPluginSettings dependency
 const mutate = jest.fn();
 

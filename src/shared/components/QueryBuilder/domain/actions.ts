@@ -1,6 +1,7 @@
 import { t } from '@grafana/i18n';
 import { assign } from 'xstate';
 
+import { generateUUID } from '@shared/domain/generateUUID';
 import { LabelsApiClient } from '../../../../pages/ProfilesExplorerView/infrastructure/labels/http/LabelsApiClient';
 import { labelsRepository } from '../../../infrastructure/labels/labelsRepository';
 import { areFiltersEqual } from './helpers/areFiltersEqual';
@@ -42,7 +43,7 @@ export const actions: any = {
   setFilterAttribute: assign((context: QueryBuilderContext, event: SelectEvent) => {
     const newFilters = [
       ...context.filters,
-      { id: crypto.randomUUID(), type: FilterKind.partial, active: false, attribute: event.data },
+      { id: generateUUID(), type: FilterKind.partial, active: false, attribute: event.data },
     ] as Filters;
 
     return {

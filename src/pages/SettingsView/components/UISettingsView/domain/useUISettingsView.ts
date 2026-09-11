@@ -1,4 +1,5 @@
 import { displayError, displaySuccess } from '@shared/domain/displayStatus';
+import { reportInteraction } from '@shared/domain/reportInteraction';
 import { useMaxNodesFromUrl } from '@shared/domain/url-params/useMaxNodesFromUrl';
 import { DEFAULT_SETTINGS, PluginSettings } from '@shared/infrastructure/settings/PluginSettings';
 import { useFetchPluginSettings } from '@shared/infrastructure/settings/useFetchPluginSettings';
@@ -57,6 +58,7 @@ export function useUISettingsView() {
         try {
           await mutate(currentSettings);
 
+          reportInteraction('g_pyroscope_app_settings_saved');
           displaySuccess(['Plugin settings successfully saved!']);
         } catch (error) {
           displayError(error as Error, [

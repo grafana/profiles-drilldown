@@ -1,6 +1,7 @@
 import { IconName } from '@grafana/data';
 import { Props as FlameGraphProps } from '@grafana/flamegraph';
 import { t } from '@grafana/i18n';
+import { reportInteraction } from '@shared/domain/reportInteraction';
 import { DomainHookReturnValue } from '@shared/types/DomainHookReturnValue';
 import { useCallback } from 'react';
 
@@ -11,7 +12,10 @@ export function useCreateRecordingRulesMenu(setModalOpen: (functionName?: string
         {
           label: t('create-recording-rule.menu-option', 'Create recording rule'),
           icon: 'download-alt' as IconName,
-          onClick: () => setModalOpen(label === 'total' && item.level === 0 ? undefined : label),
+          onClick: () => {
+            reportInteraction('g_pyroscope_app_recording_rule_create_modal_opened');
+            setModalOpen(label === 'total' && item.level === 0 ? undefined : label);
+          },
         },
       ];
     },

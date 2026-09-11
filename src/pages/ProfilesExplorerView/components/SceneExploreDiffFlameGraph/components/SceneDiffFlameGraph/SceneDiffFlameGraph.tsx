@@ -4,7 +4,6 @@ import { t, Trans } from '@grafana/i18n';
 import { SceneComponentProps, sceneGraph, SceneObjectBase, SceneObjectState } from '@grafana/scenes';
 import { Spinner, useStyles2 } from '@grafana/ui';
 import { FlameGraph } from '@shared/components/FlameGraph/FlameGraph';
-import { displayWarning } from '@shared/domain/displayStatus';
 import { reportInteraction } from '@shared/domain/reportInteraction';
 import { useToggleSidePanel } from '@shared/domain/useToggleSidePanel';
 import { getProfileMetric, ProfileMetricId } from '@shared/infrastructure/profile-metrics/getProfileMetric';
@@ -65,7 +64,7 @@ export class SceneDiffFlameGraph extends SceneObjectBase<SceneDiffFlameGraphStat
     const baselineQuery = useBuildPyroscopeQuery(this, 'filtersBaseline');
     const comparisonQuery = useBuildPyroscopeQuery(this, 'filtersComparison');
 
-    const { settings, error: fetchSettingsError } = useFetchPluginSettings();
+    const { settings } = useFetchPluginSettings();
 
     const dataSourceUid = sceneGraph.findByKeyAndType(this, 'dataSource', ProfilesDataSourceVariable).useState()
       .value as string;
@@ -112,7 +111,6 @@ export class SceneDiffFlameGraph extends SceneObjectBase<SceneDiffFlameGraphStat
         hasMissingSelections,
         profile: profile as FlamebearerProfile,
         settings,
-        fetchSettingsError,
         ai: {
           panel: aiPanel,
           fetchParams: [
@@ -150,16 +148,6 @@ export class SceneDiffFlameGraph extends SceneObjectBase<SceneDiffFlameGraphStat
         sidePanel.close();
       }
     }, [isAiButtonDisabled, sidePanel]);
-
-    if (data.fetchSettingsError) {
-      displayWarning([
-        t('diff-flame-graph.settings-error.title', 'Error while retrieving the plugin settings!'),
-        t(
-          'diff-flame-graph.settings-error.message',
-          'Some features might not work as expected (e.g. flamegraph export options). Please try to reload the page, sorry for the inconvenience.'
-        ),
-      ]);
-    }
 
     const panelTitle = useMemo(
       () => (

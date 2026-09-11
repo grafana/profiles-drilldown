@@ -4,6 +4,7 @@ plugins:
   - local: protoc-gen-es
     out: src/shared/pyroscope-api
     opt: target=ts
+    include_imports: true
     # This will invoke protoc-gen-connect-query
   - local: protoc-gen-connect-query
     out: src/shared/pyroscope-api
@@ -12,7 +13,7 @@ inputs:
   # Build a subset of the Pyroscope protobuf API
   - git_repo: https://github.com/grafana/pyroscope.git
     # Update this to any commit, which is merged in Pyroscope main
-    ref: weekly-f129-6d0f4264a
+    ref: v2.1.0
     subdir: api
     paths:
       - adhocprofiles/

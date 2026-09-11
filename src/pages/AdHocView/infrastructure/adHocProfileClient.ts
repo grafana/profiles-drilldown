@@ -1,7 +1,10 @@
+import { t } from '@grafana/i18n';
+import { displayWarning } from '@shared/domain/displayStatus';
 import { ApiClient } from '@shared/infrastructure/http/ApiClient';
 
 import { AdHocProfile } from '../domain/AdHocProfile';
 import { stripBase64Prefix } from './helpers/stripBase64Prefix';
+import { prepareAdHocProfileUploadPayload } from './prepareAdHocProfileUploadPayload';
 
 class AdHocProfileClient extends ApiClient {
   async get(profileId: string, profileType: string): Promise<AdHocProfile> {
@@ -24,7 +27,8 @@ class AdHocProfileClient extends ApiClient {
   }
 
   async uploadSingle(file: File): Promise<AdHocProfile> {
-    const profile = await this._readProfileFile(file);
+    const rawProfile = await this._readProfileFile(file);
+    const [profile, convertedFromDouble] = prepareAdHocProfileUploadPayload(rawProfile);
 
     const response = await this.fetch('/adhocprofiles.v1.AdHocProfileService/Upload', {
       method: 'POST',
@@ -35,6 +39,15 @@ class AdHocProfileClient extends ApiClient {
     });
 
     const json = await response.json();
+
+    if (convertedFromDouble) {
+      displayWarning([
+        t(
+          'ad-hoc.upload.diff-converted-to-single',
+          'Diff profile was converted to a single flame graph for upload. Comparison data was not kept.'
+        ),
+      ]);
+    }
 
     return {
       id: json.id,

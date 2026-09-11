@@ -71,6 +71,14 @@ export class ExploreProfilesPage extends PyroscopePage {
     await this.getByTestId('data-testid TimePicker Overlay Content').getByText(quickRangeLabel).click();
   }
 
+  getZoomOutButton() {
+    return this.getByLabel('Zoom out time range');
+  }
+
+  clickOnZoomOut() {
+    return this.getZoomOutButton().click();
+  }
+
   getRefreshPicker() {
     return this.getByTestId('data-testid RefreshPicker run button');
   }
@@ -332,6 +340,28 @@ export class ExploreProfilesPage extends PyroscopePage {
     }).toPass({ timeout: 15000 });
   }
 
+  /**
+   * Marks the panel DOM nodes that are currently mounted. The marker is an expando property, which
+   * survives re-renders but not an unmount/remount, so counting the survivors after an interaction
+   * tells us whether the grid reused its panels or tore them all down and rebuilt them.
+   */
+  tagMountedPanels() {
+    return this.getSceneBody().evaluate((body) => {
+      body.querySelectorAll('[data-viz-panel-key]').forEach((el) => {
+        (el as HTMLElement & { __e2ePanelTag?: boolean }).__e2ePanelTag = true;
+      });
+    });
+  }
+
+  countTaggedPanels() {
+    return this.getSceneBody().evaluate(
+      (body) =>
+        Array.from(body.querySelectorAll('[data-viz-panel-key]')).filter(
+          (el) => (el as HTMLElement & { __e2ePanelTag?: boolean }).__e2ePanelTag
+        ).length
+    );
+  }
+
   getPanelByTitle(title: string) {
     return this.getSceneBody().locator(`[data-viz-panel-key]:has([title="${title}"])`);
   }
@@ -345,6 +375,15 @@ export class ExploreProfilesPage extends PyroscopePage {
     await panel.getByRole('button', { name: actionLabel, exact: true }).click();
 
     // we have to move the mouse to prevent the action tooltip to cover (e.g.) the profile type selector
+    await this.mouse.move(0, 0);
+  }
+
+  async clickOnPanelMenuAction(panelTitle: string, actionLabel: string) {
+    const panel = await this.getPanelByTitle(panelTitle);
+    await panel.hover();
+    await panel.getByRole('button', { name: `Menu for panel ${panelTitle}`, exact: true }).click();
+    await this.getByRole('menuitem', { name: actionLabel, exact: true }).click();
+
     await this.mouse.move(0, 0);
   }
 
@@ -389,7 +428,30 @@ export class ExploreProfilesPage extends PyroscopePage {
     }
   }
 
+  /** Opens the filter input and returns the suggestions menu, which lists the labels found in the current time range. */
+  async openFilterSuggestions(filterKey = 'filters') {
+    await this.getFilters(filterKey).getByRole('combobox').click();
+
+    return this.getByLabel('Select options menu');
+  }
+
+  closeFilterSuggestions() {
+    return this.page.keyboard.press('Escape');
+  }
+
   /* Flame graph component */
+
+  getSpanProfileVisualizationPicker() {
+    return this.getByLabel('Profile timeline visualization');
+  }
+
+  getSpanHeatmapPanel() {
+    return this.getByTestId('span-heatmap-panel');
+  }
+
+  getSpanHeatmapCanvas() {
+    return this.getSpanHeatmapPanel().locator('canvas');
+  }
 
   getExportDataButton() {
     return this.getByLabel('Export profile data');
@@ -520,6 +582,11 @@ export class ExploreProfilesPage extends PyroscopePage {
 
   getComparisonTimePickerButton(target: 'baseline' | 'comparison') {
     return this.getByTestId(`panel-${target}`).getByTestId('data-testid TimePicker Open Button');
+  }
+
+  async selectComparisonQuickRange(target: 'baseline' | 'comparison', quickRangeLabel: string) {
+    await this.getComparisonTimePickerButton(target).click();
+    await this.getByTestId('data-testid TimePicker Overlay Content').getByText(quickRangeLabel).click();
   }
 
   async selectComparisonTimeRange(target: 'baseline' | 'comparison', from: string, to: string) {

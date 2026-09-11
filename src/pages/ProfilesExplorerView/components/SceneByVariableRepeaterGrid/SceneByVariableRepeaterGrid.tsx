@@ -18,6 +18,7 @@ import { debounce, isEqual } from 'lodash';
 import React from 'react';
 
 import { EventTimeseriesDataReceived } from '../../domain/events/EventTimeseriesDataReceived';
+import { AllServicesFilterVariable } from '../../domain/variables/FiltersVariable/AllServicesFilterVariable';
 import { FiltersVariable } from '../../domain/variables/FiltersVariable/FiltersVariable';
 import { getSceneVariableValue } from '../../helpers/getSceneVariableValue';
 import { vizPanelBuilder } from '../../helpers/vizPanelBuilder';
@@ -52,8 +53,13 @@ const GRID_TEMPLATE_ROWS = '1fr';
 const GRID_AUTO_ROWS = '240px';
 
 export class SceneByVariableRepeaterGrid extends SceneObjectBase<SceneByVariableRepeaterGridState> {
+  /**
+   * Identifies a panel by what it queries, so that renderGridItems() can recognize the panels it
+   * can keep. `index` is deliberately left out: it only drives panel colors and shifts for every
+   * item whenever the list grows or shrinks, which would make every panel look new.
+   */
   static buildGridItemKey(item: GridItemData) {
-    return `grid-item-${item.index}-${item.value}`;
+    return `grid-item-${item.value}-${item.panelType}-${JSON.stringify(item.queryRunnerParams)}`;
   }
 
   static getGridColumnsTemplate(layout: LayoutType) {
@@ -116,8 +122,10 @@ export class SceneByVariableRepeaterGrid extends SceneObjectBase<SceneByVariable
     const layoutChangeSub = this.subscribeToLayoutChange();
     const hideNoDataSub = this.subscribeToHideNoDataChange();
     const filtersSub = this.subscribeToFiltersChange();
+    const filtersAllServicesSub = this.subscribeToFiltersAllServicesChange();
 
     return () => {
+      filtersAllServicesSub.unsubscribe();
       filtersSub.unsubscribe();
       hideNoDataSub.unsubscribe();
       layoutChangeSub.unsubscribe();
@@ -201,6 +209,18 @@ export class SceneByVariableRepeaterGrid extends SceneObjectBase<SceneByVariable
     });
   }
 
+  subscribeToFiltersAllServicesChange() {
+    const filtersVariable = sceneGraph.findByKeyAndType(this, 'filtersAllServices', AllServicesFilterVariable);
+    const noDataSwitcher = sceneGraph.findByKeyAndType(this, 'no-data-switcher', SceneNoDataSwitcher);
+
+    return filtersVariable.subscribeToState(() => {
+      if (noDataSwitcher.state.hideNoData === 'on') {
+        // to be sure the list is updated we force render because the filters only influence the query made in each panel
+        this.renderGridItems(true);
+      }
+    });
+  }
+
   buildItemsData(variable: QueryVariable) {
     const { mapOptionToItem } = this.state;
 
@@ -227,6 +247,43 @@ export class SceneByVariableRepeaterGrid extends SceneObjectBase<SceneByVariable
     return !isEqual(items, newItems);
   }
 
+  /**
+   * Indexes the panels that are already on screen so that renderGridItems() can keep the ones that
+   * still query the same thing. Replacing every child unmounts the whole grid, which blanks the
+   * page and restarts every query each time the time range or the filters change.
+   *
+   * A forced render intentionally reuses nothing: it is how panels (re)attach the "no data"
+   * subscription set up in setupHideNoData().
+   */
+  private collectReusablePanels(forceRender: boolean) {
+    const reusablePanels = new Map<string, SceneCSSGridLayout['state']['children'][number]>();
+
+    if (forceRender) {
+      return reusablePanels;
+    }
+
+    for (const child of (this.state.body as SceneCSSGridLayout).state.children) {
+      if (child.state.key) {
+        reusablePanels.set(child.state.key, child);
+      }
+    }
+
+    return reusablePanels;
+  }
+
+  private buildGridItem(item: GridItemData, key: string) {
+    const vizPanel = vizPanelBuilder(item.panelType, {
+      item,
+      headerActions: this.state.headerActions.bind(null, item, this.state.items),
+    });
+
+    if (this.state.hideNoData) {
+      this.setupHideNoData(vizPanel);
+    }
+
+    return new SceneCSSGridItem({ key, body: vizPanel });
+  }
+
   renderGridItems(forceRender = false) {
     const variable = sceneGraph.lookupVariable(this.state.variableName, this) as QueryVariable;
 
@@ -248,27 +305,19 @@ export class SceneByVariableRepeaterGrid extends SceneObjectBase<SceneByVariable
     this.setState({ items: newItems });
 
     if (!this.state.items.length) {
-      this.renderEmptyState();
+      this.renderEmptyState(this.isQuickFilterActive());
       return;
     }
 
+    const grid = this.state.body as SceneCSSGridLayout;
+    const reusablePanels = this.collectReusablePanels(forceRender);
+
     const gridItems = this.state.items.map((item) => {
-      const vizPanel = vizPanelBuilder(item.panelType, {
-        item,
-        headerActions: this.state.headerActions.bind(null, item, this.state.items),
-      });
-
-      if (this.state.hideNoData) {
-        this.setupHideNoData(vizPanel);
-      }
-
-      return new SceneCSSGridItem({
-        key: SceneByVariableRepeaterGrid.buildGridItemKey(item),
-        body: vizPanel,
-      });
+      const key = SceneByVariableRepeaterGrid.buildGridItemKey(item);
+      return reusablePanels.get(key) ?? this.buildGridItem(item, key);
     });
 
-    (this.state.body as SceneCSSGridLayout).setState({
+    grid.setState({
       autoRows: GRID_AUTO_ROWS, // required to have the correct grid items height
       children: gridItems,
     });
@@ -326,13 +375,23 @@ export class SceneByVariableRepeaterGrid extends SceneObjectBase<SceneByVariable
     return items.filter(({ label }) => regexes.some((r) => r.test(label)));
   }
 
-  renderEmptyState() {
+  isQuickFilterActive() {
+    const quickFilterScene = sceneGraph.findByKeyAndType(this, 'quick-filter', SceneQuickFilter);
+    return Boolean(quickFilterScene?.state.searchText);
+  }
+
+  renderEmptyState(isFiltered = false) {
     (this.state.body as SceneCSSGridLayout).setState({
       autoRows: '480px',
       children: [
         new SceneCSSGridItem({
           body: new SceneEmptyState({
-            message: t('grid.empty-state.no-results', 'No results'),
+            message: isFiltered
+              ? t('grid.empty-state.no-results', 'No results')
+              : t(
+                  'grid.empty-state.no-profiles',
+                  'No profiles found. Widen the time range or start sending profile data.'
+                ),
           }),
         }),
       ],

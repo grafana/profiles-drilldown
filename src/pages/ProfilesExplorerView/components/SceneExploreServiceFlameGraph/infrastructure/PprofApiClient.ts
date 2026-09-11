@@ -18,6 +18,7 @@ type SelectMergeProfileJsonParams = {
   end: number;
   stackTrace: string[];
   maxNodes: number;
+  profileIdSelector?: string;
 };
 
 export class PprofApiClient extends DataSourceProxyClient {
@@ -49,6 +50,7 @@ export class PprofApiClient extends DataSourceProxyClient {
     end,
     stackTrace,
     maxNodes,
+    profileIdSelector,
   }: SelectMergeProfileJsonParams): Promise<PprofProfile> {
     const response = await this.fetch('/querier.v1.QuerierService/SelectMergeProfile', {
       method: 'POST',
@@ -61,6 +63,7 @@ export class PprofApiClient extends DataSourceProxyClient {
           call_site: stackTrace.map((name) => ({ name })),
         },
         maxNodes,
+        ...(profileIdSelector && { profileIdSelector: [profileIdSelector] }),
       }),
     });
 

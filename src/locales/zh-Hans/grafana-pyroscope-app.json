@@ -295,13 +295,9 @@
     "title": "函数详情"
   },
   "give-feedback": {
-    "button": "提供反馈",
-    "tooltip": "分享您对 Grafana 配置文件的看法。"
+    "button": "提供反馈"
   },
   "grid": {
-    "empty-state": {
-      "no-results": "没有结果"
-    },
     "error": {
       "title": "查询错误！"
     },

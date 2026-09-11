@@ -3,10 +3,6 @@ ARG grafana_version=12.3.0@sha256:96a793a92c9a77cf543d6e5c55100cd296ed9e22487dc3
 
 FROM grafana/${grafana_image}:${grafana_version}
 
-ARG backendUrl
-ARG basicAuthUser
-ARG basicAuthPassword
-
 # Make it as simple as possible to access the grafana instance for development purposes
 # Do NOT enable these settings in a public facing / production grafana instance
 ENV GF_AUTH_ANONYMOUS_ORG_ROLE="Admin"
@@ -15,18 +11,10 @@ ENV GF_AUTH_BASIC_ENABLED="false"
 # Set development mode so plugins can be loaded without the need to sign
 ENV GF_DEFAULT_APP_MODE="development"
 
-# Credentials for fecthing remote profile data
-ENV REMOTE_BACKEND_URL=$backendUrl
-ENV REMOTE_BASIC_AUTH_USER=$basicAuthUser
-ENV REMOTE_BASIC_AUTH_PASSWORD=$basicAuthPassword
-
 USER root
 
-# This ensures that the basicAuthUser value is a string and not a number
-# which would make the requests to the backend fail
-COPY ./samples/provisioning-remote/plugins/app.yaml  /etc/grafana/provisioning/plugins
-RUN sed -i "s/\$REMOTE_BASIC_AUTH_USER/'$REMOTE_BASIC_AUTH_USER'/g" /etc/grafana/provisioning/plugins/app.yaml
-
-COPY ./samples/provisioning-remote/datasources/datasources.yaml  /etc/grafana/provisioning/datasources
-RUN sed -i "s/\$REMOTE_BASIC_AUTH_USER/'$REMOTE_BASIC_AUTH_USER'/g" /etc/grafana/provisioning/datasources/datasources.yaml
-
+# Install grafana-llm-app into the image (it is required by the provisioning below).
+# Preinstall is disabled at runtime to protect the pyroscope ./dist bind mount, which also
+# disables GF_INSTALL_PLUGINS, so install it here instead. It lives outside the mounted
+# plugin dir and is left untouched by the disabled preinstall.
+RUN grafana cli --pluginsDir "/var/lib/grafana/plugins" plugins install grafana-llm-app

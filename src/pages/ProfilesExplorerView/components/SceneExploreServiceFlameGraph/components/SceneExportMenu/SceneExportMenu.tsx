@@ -6,6 +6,7 @@ import { displayError } from '@shared/domain/displayStatus';
 import { reportInteraction } from '@shared/domain/reportInteraction';
 import { saveProfileJsonToFile } from '@shared/domain/saveProfileJsonToFile';
 import { useMaxNodesFromUrl } from '@shared/domain/url-params/useMaxNodesFromUrl';
+import { useIsFlameGraphCanvasPresent } from '@shared/domain/useIsFlameGraphCanvasPresent';
 import { DEFAULT_SETTINGS } from '@shared/infrastructure/settings/PluginSettings';
 import { useFetchPluginSettings } from '@shared/infrastructure/settings/useFetchPluginSettings';
 import { DomainHookReturnValue } from '@shared/types/DomainHookReturnValue';
@@ -101,7 +102,18 @@ export class SceneExportMenu extends SceneObjectBase<SceneExportMenuState> {
 
       const filename = `${getExportFilename(query, timeRange)}.png`;
 
-      (document.querySelector('canvas[data-testid="flameGraph"]') as HTMLCanvasElement).toBlob((blob) => {
+      const canvasElement = document.querySelector('canvas[data-testid="flameGraph"]') as HTMLCanvasElement | null;
+
+      if (!canvasElement) {
+        const error = new Error('No flame graph canvas found, the image cannot be created.');
+        displayError(error, [
+          t('export-menu.error-png', 'Failed to export to png!'),
+          t('export-menu.error-png-no-canvas', 'Please ensure the flame graph is visible before exporting to png.'),
+        ]);
+        return;
+      }
+
+      canvasElement.toBlob((blob) => {
         if (!blob) {
           const error = new Error('Error while creating the image, no blob.');
           displayError(error, [t('export-menu.error-png', 'Failed to export to png!'), error.message]);
@@ -171,9 +183,13 @@ export class SceneExportMenu extends SceneObjectBase<SceneExportMenuState> {
       }
     };
 
+    // png export captures the flame graph <canvas>, which is not rendered in the "Top table" view
+    const isPngExportDisabled = !useIsFlameGraphCanvasPresent();
+
     return {
       data: {
         shouldDisplayFlamegraphDotCom: Boolean(settings?.enableFlameGraphDotComExport),
+        isPngExportDisabled,
       },
       actions: {
         downloadPng,
@@ -185,13 +201,22 @@ export class SceneExportMenu extends SceneObjectBase<SceneExportMenuState> {
   };
 
   static Component = ({ model, query, timeRange }: SceneComponentProps<SceneExportMenu> & ExtraProps) => {
-    const { actions } = model.useSceneExportMenu({ query, timeRange });
+    const { data, actions } = model.useSceneExportMenu({ query, timeRange });
 
     return (
       <Dropdown
         overlay={
           <Menu>
-            <Menu.Item label={t('export-menu.png', 'png')} onClick={actions.downloadPng} />
+            <Menu.Item
+              label={t('export-menu.png', 'png')}
+              disabled={data.isPngExportDisabled}
+              description={
+                data.isPngExportDisabled
+                  ? t('export-menu.png-disabled-description', 'Switch to the flame graph view to export it as a png')
+                  : undefined
+              }
+              onClick={actions.downloadPng}
+            />
             <Menu.Item label={t('export-menu.json', 'json')} onClick={actions.downloadJson} />
             <Menu.Item label={t('export-menu.pprof', 'pprof')} onClick={actions.downloadPprof} />
           </Menu>

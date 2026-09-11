@@ -14,9 +14,13 @@ services:
       - ./samples/dashboards:/var/lib/grafana/dashboards
     environment:
       GF_INSTALL_PLUGINS: grafana-llm-app
+      # Grafana 12.3+ preinstalls & auto-updates grafana-pyroscope-app from the catalog,
+      # which deletes the ./dist bind mount used for local development. Disable preinstall
+      # so the mounted dev build is used.
+      GF_PLUGINS_PREINSTALL_DISABLED: 'true'
       OPENAI_API_KEY: $OPENAI_API_KEY
       OPENAI_ORGANIZATION_ID: $OPENAI_ORGANIZATION_ID
-      GF_FEATURE_TOGGLES_ENABLE: localizationForPlugins
+      GF_FEATURE_TOGGLES_ENABLE: ${GF_FEATURE_TOGGLES_ENABLE:-localizationForPlugins}
 
   qdrant:
     image: qdrant/qdrant:v1.17.0@sha256:f1c7272cdac52b38c1a0e89313922d940ba50afd90d593a1605dbbc214e66ffb

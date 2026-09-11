@@ -10,7 +10,7 @@ This section describes how you can set up your local development environment to 
 
 ## Requirements
 
-1. Ensure that your local version of the plugin is properly [set up](./CONTRIBUTING.md)
+1. Ensure that your local version of the plugin is properly [set up](../CONTRIBUTING.md)
 2. Check out a local copy of Grafana:
 
    ```shell

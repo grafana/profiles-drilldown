@@ -2,7 +2,6 @@ import { css } from '@emotion/css';
 import { GrafanaTheme2 } from '@grafana/data';
 import { t, Trans } from '@grafana/i18n';
 import { Alert, FieldSet, InlineField, InlineFieldRow, InlineSwitch, Input, useStyles2 } from '@grafana/ui';
-import { displayError } from '@shared/domain/displayStatus';
 import { useFlagMetricsFromProfiles } from '@shared/infrastructure/featureFlags/featureFlags';
 import React from 'react';
 
@@ -13,13 +12,6 @@ export function UISettingsView({ children }: { children: React.ReactNode }) {
   const metricsFromProfiles = useFlagMetricsFromProfiles();
   const { data, actions } = useUISettingsView();
 
-  if (data.fetchError) {
-    displayError(data.fetchError, [
-      t('settings.ui.fetch-error.title', 'Error while retrieving the plugin settings!'),
-      t('settings.ui.fetch-error.message', 'Please try to reload the page, sorry for the inconvenience.'),
-    ]);
-  }
-
   function onSubmit(event: React.FormEvent) {
     event.preventDefault();
     actions.saveSettings();
@@ -27,6 +19,32 @@ export function UISettingsView({ children }: { children: React.ReactNode }) {
 
   return (
     <form className={styles.settingsForm} onSubmit={onSubmit}>
+      {data.fetchError && (
+        <Alert
+          severity="error"
+          title={t('settings.ui.fetch-error.title', 'Error while retrieving the plugin settings!')}
+          className={css({ maxWidth: '1000px' })}
+        >
+          <p>
+            <Trans i18nKey="settings.ui.fetch-error.message">
+              The settings below show default values instead of what was previously saved. What you can do:
+            </Trans>
+          </p>
+          <ul className={styles.fetchErrorList}>
+            <li>
+              <Trans i18nKey="settings.ui.fetch-error.cloud-hint">
+                On Grafana Cloud, check with your organization administrator that you have permission to read and
+                write plugin settings for this data source.
+              </Trans>
+            </li>
+            <li>
+              <Trans i18nKey="settings.ui.fetch-error.oss-hint">
+                With Grafana Pyroscope OSS, make sure the data source URL exposes the tenant-settings endpoint.
+              </Trans>
+            </li>
+          </ul>
+        </Alert>
+      )}
       <FieldSet label={t('settings.ui.flame-graph.label', 'Flame graph')} data-testid="flamegraph-settings">
         <InlineFieldRow>
           <InlineField label={t('settings.ui.collapsed-flame-graphs.label', 'Collapsed flame graphs')} labelWidth={24}>
@@ -136,6 +154,9 @@ export function UISettingsView({ children }: { children: React.ReactNode }) {
 }
 
 const getStyles = (theme: GrafanaTheme2) => ({
+  fetchErrorList: css`
+    margin: ${theme.spacing(0, 0, 1, 2)};
+  `,
   settingsForm: css`
     & > fieldset {
       border: 0 none;

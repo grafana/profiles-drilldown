@@ -70,3 +70,7 @@ export const EXPLORE_PROFILES_DIFF_RANGES_URL_PARAMS = new URLSearchParams({
 // taken from Grafana
 // see https://github.com/grafana/grafana/blob/852d032e1ae1f7c989d8b2ec7d8e05bf2a54928e/public/app/core/components/AppChrome/AppChromeService.tsx#L33
 export const DOCKED_MENU_OPEN_LOCAL_STORAGE_KEY = 'grafana.navigation.open';
+
+// Keep the legacy "Explain Flame Graph" button visible when Grafana Assistant is available.
+// See useGrafanaAssistant() in the plugin source.
+export const FORCE_SHOW_AI_BUTTON_LOCAL_STORAGE_KEY = 'grafana-pyroscope-app.forceShowAIButton';

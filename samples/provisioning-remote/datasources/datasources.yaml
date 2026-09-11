@@ -4,13 +4,27 @@ datasources:
   - uid: grafanacloud-profiles-dev
     type: grafana-pyroscope-datasource
     name: Dev (profiles-dev-001)
-    url: $REMOTE_BACKEND_URL
+    url: ${REMOTE_BACKEND_URL}
     isDefault: true
     jsonData:
       keepCookies: [pyroscope_git_session]
     basicAuth: true
     # 1. our plugin backend expects a string
     # 2. this value must match the one in samples/provisioning/plugins/app.yaml
-    basicAuthUser: $REMOTE_BASIC_AUTH_USER
+    basicAuthUser: ${REMOTE_BASIC_AUTH_USER}
     secureJsonData:
-      basicAuthPassword: $REMOTE_BASIC_AUTH_PASSWORD
+      basicAuthPassword: ${REMOTE_BASIC_AUTH_PASSWORD}
+  - uid: grafanacloud-tempo-dev
+    type: tempo
+    name: Dev (tempo-dev-01)
+    url: ${REMOTE_TRACE_BACKEND_URL}
+    basicAuth: true
+    basicAuthUser: ${REMOTE_TRACE_BASIC_AUTH_USER}
+    jsonData:
+      streamingEnabled:
+        search: true
+      tracesToProfiles:
+        datasourceUid: grafanacloud-profiles-dev
+        profileTypeId: process_cpu:cpu:nanoseconds:cpu:nanoseconds
+    secureJsonData:
+      basicAuthPassword: ${REMOTE_TRACE_BASIC_AUTH_PASSWORD}

@@ -23,6 +23,8 @@ describe('buildURL - Original Functionality', () => {
         labelSelector: '{}',
         groupBy: [],
         includeExemplars: false,
+        includeHeatmap: false,
+        heatmapType: 'individual',
       };
 
       const result = buildURL({
@@ -45,6 +47,8 @@ describe('buildURL - Original Functionality', () => {
         labelSelector: '{service_name="payment-service"}',
         groupBy: [],
         includeExemplars: false,
+        includeHeatmap: false,
+        heatmapType: 'individual',
       };
 
       const result = buildURL({
@@ -64,6 +68,8 @@ describe('buildURL - Original Functionality', () => {
         labelSelector: '{service_name="payment", region="us-east", instance="pod-1"}',
         groupBy: [],
         includeExemplars: false,
+        includeHeatmap: false,
+        heatmapType: 'individual',
       };
 
       const result = buildURL({
@@ -86,6 +92,8 @@ describe('buildURL - Original Functionality', () => {
         labelSelector: '{}',
         groupBy: [],
         includeExemplars: false,
+        includeHeatmap: false,
+        heatmapType: 'individual',
         spanSelector: ['test-span-id'],
       };
 
@@ -105,6 +113,8 @@ describe('buildURL - Original Functionality', () => {
         labelSelector: '{}',
         groupBy: [],
         includeExemplars: false,
+        includeHeatmap: false,
+        heatmapType: 'individual',
       };
 
       const result = buildURL({
@@ -123,6 +133,8 @@ describe('buildURL - Original Functionality', () => {
         labelSelector: '{service_name="payment-service"}',
         groupBy: [],
         includeExemplars: false,
+        includeHeatmap: false,
+        heatmapType: 'individual',
       };
 
       const result = buildURL({
@@ -142,8 +154,55 @@ describe('buildURL - Original Functionality', () => {
         labelSelector: '{}',
         groupBy: [],
         includeExemplars: false,
+        includeHeatmap: false,
+        heatmapType: 'individual',
         spanSelector: [],
       };
+
+      const result = buildURL({
+        pyroscopeQuery,
+        timeRange: mockTimeRange,
+      });
+
+      expect(result).not.toContain('var-spanSelector');
+    });
+
+    // Grafana's Trace View passes spanSelector as a single string rather than the declared
+    // Array<string>, which used to throw `spanSelector.join is not a function`. See
+    // https://github.com/grafana/profiles-drilldown/issues/775
+    it('should handle a string span selector from trace view context', () => {
+      const pyroscopeQuery = {
+        refId: 'A',
+        datasource: mockDatasource,
+        profileTypeId: 'process_cpu:cpu:nanoseconds:cpu:nanoseconds',
+        labelSelector: '{}',
+        groupBy: [],
+        includeExemplars: false,
+        includeHeatmap: false,
+        heatmapType: 'individual',
+        spanSelector: 'single-span-id',
+      } as unknown as GrafanaPyroscopeDataQuery;
+
+      const result = buildURL({
+        pyroscopeQuery,
+        timeRange: mockTimeRange,
+      });
+
+      expect(result).toContain('var-spanSelector=single-span-id');
+    });
+
+    it('should omit the span selector param for an empty string span selector', () => {
+      const pyroscopeQuery = {
+        refId: 'A',
+        datasource: mockDatasource,
+        profileTypeId: 'process_cpu:cpu:nanoseconds:cpu:nanoseconds',
+        labelSelector: '{}',
+        groupBy: [],
+        includeExemplars: false,
+        includeHeatmap: false,
+        heatmapType: 'individual',
+        spanSelector: '',
+      } as unknown as GrafanaPyroscopeDataQuery;
 
       const result = buildURL({
         pyroscopeQuery,
@@ -163,6 +222,8 @@ describe('buildURL - Original Functionality', () => {
         labelSelector: '{}', // No service_name
         groupBy: [],
         includeExemplars: false,
+        includeHeatmap: false,
+        heatmapType: 'individual',
       };
 
       const result = buildURL({
@@ -183,6 +244,8 @@ describe('buildURL - Original Functionality', () => {
         labelSelector: '{service_name="payment", region="us-east", version=~"1.2.*"}',
         groupBy: [],
         includeExemplars: false,
+        includeHeatmap: false,
+        heatmapType: 'individual',
       };
 
       const result = buildURL({
@@ -204,6 +267,8 @@ describe('buildURL - Original Functionality', () => {
         labelSelector: '{}',
         groupBy: [],
         includeExemplars: false,
+        includeHeatmap: false,
+        heatmapType: 'individual',
         maxNodes: 8192,
       };
 
@@ -223,6 +288,8 @@ describe('buildURL - Original Functionality', () => {
         labelSelector: '{}',
         groupBy: [],
         includeExemplars: false,
+        includeHeatmap: false,
+        heatmapType: 'individual',
         spanSelector: ['span-1', 'span-2'],
       };
 
@@ -242,6 +309,8 @@ describe('buildURL - Original Functionality', () => {
         labelSelector: '{service_name="api", region!="test", version=~"1.*", env!~"dev.*"}',
         groupBy: [],
         includeExemplars: false,
+        includeHeatmap: false,
+        heatmapType: 'individual',
       };
 
       const result = buildURL({
@@ -262,6 +331,8 @@ describe('buildURL - Original Functionality', () => {
         labelSelector: '{service_name="payment","http.method"="GET","k8s.node.name"!="node-1"}',
         groupBy: [],
         includeExemplars: false,
+        includeHeatmap: false,
+        heatmapType: 'individual',
       };
 
       const result = buildURL({
@@ -282,6 +353,8 @@ describe('buildURL - Original Functionality', () => {
         labelSelector: '{service_name="payment", region="us-east"}',
         groupBy: [],
         includeExemplars: false,
+        includeHeatmap: false,
+        heatmapType: 'individual',
       };
 
       const result = buildURL({

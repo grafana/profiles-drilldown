@@ -18,6 +18,7 @@ type FetchParams = {
   query: string;
   timeRange: TimeRange;
   stackTrace: string[];
+  profileIdSelector?: string;
 };
 
 type FetchResponse = {
@@ -37,7 +38,13 @@ const DEFAULT_FUNCTION_VERSION: FunctionVersion = {
   root_path: '',
 };
 
-export function useFetchFunctionsDetails({ dataSourceUid, query, timeRange, stackTrace }: FetchParams): FetchResponse {
+export function useFetchFunctionsDetails({
+  dataSourceUid,
+  query,
+  timeRange,
+  stackTrace,
+  profileIdSelector,
+}: FetchParams): FetchResponse {
   const { profileMetricId, labelsSelector, serviceId } = parseQuery(query);
   const [start, end] = [timeRange.from.unix(), timeRange.to.unix()];
   const { isLoggedIn: isGitHubLogged } = useGitHubContext();
@@ -67,6 +74,7 @@ export function useFetchFunctionsDetails({ dataSourceUid, query, timeRange, stac
       stackTrace,
       isGitHubLogged,
       defaultFunctionVersion,
+      profileIdSelector,
     ],
     queryFn: async () => {
       const pprof = await pprofApiClient.selectMergeProfileJson({
@@ -76,6 +84,7 @@ export function useFetchFunctionsDetails({ dataSourceUid, query, timeRange, stac
         end,
         stackTrace,
         maxNodes: MAX_NODES,
+        profileIdSelector,
       });
 
       const functionsDetails = convertPprofToFunctionDetails(stackTrace[stackTrace.length - 1], pprof).sort(

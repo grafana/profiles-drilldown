@@ -7,6 +7,8 @@
 | File                                 | What it's for                                                                                                                   |
 | ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------- |
 | **`AGENTS.md`** (this file)          | **Entry point.** Pyroscope & profiling workflow, expected vs bug, Scenes patterns, security. Points to every other doc below.   |
+| **`CONTRIBUTING.md`**                | **Human contributors.** Dev setup, issues vs PRs, i18n, PR checklist, link to GenAI policy.                                     |
+| **`docs/genai.md`**                  | **AI-assisted contributions.** Disclosure, acceptable use, Profiles Drilldown-specific pitfalls.                                  |
 | **`.config/AGENTS/instructions.md`** | **Plugin tooling only** — webpack, `plugin.json`, E2E, rules about `.config`.                                                   |
 | **`docs/project-intent.md`**         | **Why** we built the app — philosophy, principles. Use when reasoning about tradeoffs or scope.                                 |
 | **`docs/application-structure.md`**  | **How the product is organized** — user journeys, views, exploration types, links in/out. Use when changing UI or URL behavior. |
@@ -26,6 +28,7 @@
 | **Build / plugin** — plugin.json, webpack, .config, E2E                          | `.config/AGENTS/instructions.md`                      | project-intent, application-structure               |
 | **Shipped user docs** — get-started, concepts, structure                         | Relevant file in `docs/sources/` + `docs/README.md`   | Others unless aligning to UI                        |
 | **Bug in profiles / Pyroscope / data**                                           | This file (Pyroscope links) + code                    | application-structure only if UI or URL involved    |
+| **AI-assisted contribution** — drafting or reviewing with GenAI                  | `docs/genai.md`                                       | AGENTS.md, CONTRIBUTING.md unless filing a PR       |
 
 **Default:** Stay shallow; open another doc only when the task clearly fits. For renames, lint, or single-file UI tweaks, skip application-structure and other deep docs.
 
@@ -72,3 +75,5 @@ Profiles Drilldown uses [@grafana/scenes](https://grafana.com/developers/scenes/
 ## Usage
 
 Start with the **How these files fit together** table above, then open the doc that matches your task.
+
+**Human contributors:** follow [CONTRIBUTING.md](CONTRIBUTING.md) for how to file issues, open pull requests, run local checks, and use AI tools responsibly. The full GenAI policy is in [docs/genai.md](docs/genai.md).

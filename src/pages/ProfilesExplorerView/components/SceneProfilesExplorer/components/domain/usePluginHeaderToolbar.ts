@@ -1,7 +1,5 @@
 import { SceneObject, SceneVariable } from '@grafana/scenes';
-import { displaySuccess } from '@shared/domain/displayStatus';
 import { reportInteraction } from '@shared/domain/reportInteraction';
-import { logger } from '@shared/infrastructure/tracking/logger';
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { PLUGIN_BASE_URL, ROUTES } from 'src/constants';
@@ -9,22 +7,15 @@ import { getSceneVariableValue } from 'src/pages/ProfilesExplorerView/helpers/ge
 
 import { ProfilesDataSourceVariable } from '../../../../domain/variables/ProfilesDataSourceVariable';
 import { ExplorationType } from '../../SceneProfilesExplorer';
-import { HeaderProps } from '../Header';
-import { builsShareableUrl } from './builsShareableUrl';
+import type { PluginHeaderToolbarProps } from '@shared/ui/PluginHeaderToolbar';
 
-async function onClickShareLink() {
-  reportInteraction('g_pyroscope_app_share_link_clicked');
-
-  try {
-    await navigator.clipboard.writeText(builsShareableUrl().toString());
-
-    displaySuccess(['Link copied to clipboard!']);
-  } catch (error) {
-    logger.error(error as Error, { info: 'Error while creating the shareable link!' });
-  }
-}
-
-export function useHeader({ explorationType, controls, body, $variables, onChangeExplorationType }: HeaderProps) {
+export function usePluginHeaderToolbar({
+  explorationType,
+  controls,
+  body,
+  $variables,
+  onChangeExplorationType,
+}: PluginHeaderToolbarProps) {
   const [timePickerControl, refreshPickerControl, ...extraControls] =
     explorationType === ExplorationType.DIFF_FLAME_GRAPH ? [] : (controls as SceneObject[]);
 
@@ -67,7 +58,6 @@ export function useHeader({ explorationType, controls, body, $variables, onChang
     },
     actions: {
       onChangeExplorationType,
-      onClickShareLink,
       onClickRecordingRules: useCallback(() => {
         reportInteraction('g_pyroscope_app_open_recording_rules_view');
 

@@ -295,13 +295,9 @@
     "title": "Detail Fungsi"
   },
   "give-feedback": {
-    "button": "Berikan umpan balik",
-    "tooltip": "Bagikan pendapat Anda tentang Profil di Grafana."
+    "button": "Berikan umpan balik"
   },
   "grid": {
-    "empty-state": {
-      "no-results": "Tidak ada hasil"
-    },
     "error": {
       "title": "Terjadi kesalahan kueri!"
     },

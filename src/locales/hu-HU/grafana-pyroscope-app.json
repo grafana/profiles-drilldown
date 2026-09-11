@@ -295,13 +295,9 @@
     "title": "Függvény részletei"
   },
   "give-feedback": {
-    "button": "Visszajelzés küldése",
-    "tooltip": "Ossza meg véleményét a Grafana profilozási funkciójáról."
+    "button": "Visszajelzés küldése"
   },
   "grid": {
-    "empty-state": {
-      "no-results": "Nincs találat"
-    },
     "error": {
       "title": "Lekérdezési hiba!"
     },

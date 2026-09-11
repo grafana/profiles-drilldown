@@ -46,6 +46,16 @@ export type Interactions = {
   g_pyroscope_app_exemplars_toggled: {
     showExemplars: boolean;
   };
+  g_pyroscope_app_span_heatmap_toggled: {
+    showSpanHeatmap: boolean;
+  };
+  g_pyroscope_app_span_exemplar_selected: {
+    source: 'heatmap' | 'table';
+    selected: boolean;
+  };
+  g_pyroscope_app_span_trace_opened: {
+    source: 'trace-id' | 'action';
+  };
   g_pyroscope_app_export_profile: {
     format: 'png' | 'json' | 'pprof' | 'flamegraph.com';
   };
@@ -74,10 +84,14 @@ export type Interactions = {
   };
   g_pyroscope_app_profile_metric_selected: {};
   g_pyroscope_app_quick_filter_focused: {};
+  g_pyroscope_app_recording_rule_create_modal_opened: {};
+  g_pyroscope_app_recording_rule_created: {};
+  g_pyroscope_app_recording_rule_deleted: {};
   g_pyroscope_app_select_action_clicked: {
     type: ActionType;
   };
   g_pyroscope_app_service_name_selected: {};
+  g_pyroscope_app_settings_saved: {};
   g_pyroscope_app_share_link_clicked: {};
   g_pyroscope_app_timeseries_scale_changed: {
     scale: ScaleDistribution;

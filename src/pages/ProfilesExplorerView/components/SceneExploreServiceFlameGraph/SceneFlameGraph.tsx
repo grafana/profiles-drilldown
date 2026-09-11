@@ -2,15 +2,17 @@ import { css } from '@emotion/css';
 import { createTheme, GrafanaTheme2, LoadingState, TimeRange } from '@grafana/data';
 import { FlameGraph, Props as FlameGraphProps } from '@grafana/flamegraph';
 import { t, Trans } from '@grafana/i18n';
-import { SceneComponentProps, SceneObjectBase, SceneObjectState, SceneQueryRunner } from '@grafana/scenes';
+import {
+  SceneComponentProps,
+  SceneObjectBase,
+  SceneObjectState,
+  SceneQueryRunner,
+  SceneTimeRange,
+} from '@grafana/scenes';
 import { Spinner, useStyles2, useTheme2 } from '@grafana/ui';
-import { displayWarning } from '@shared/domain/displayStatus';
 import { useMaxNodesFromUrl } from '@shared/domain/url-params/useMaxNodesFromUrl';
 import { useToggleSidePanel } from '@shared/domain/useToggleSidePanel';
-import {
-  useFlagFlameGraphWithCallTree,
-  useFlagMetricsFromProfiles,
-} from '@shared/infrastructure/featureFlags/featureFlags';
+import { useFlagMetricsFromProfiles } from '@shared/infrastructure/featureFlags/featureFlags';
 import { getProfileMetric, ProfileMetricId } from '@shared/infrastructure/profile-metrics/getProfileMetric';
 import { useFetchPluginSettings } from '@shared/infrastructure/settings/useFetchPluginSettings';
 import { DomainHookReturnValue } from '@shared/types/DomainHookReturnValue';
@@ -30,9 +32,11 @@ import { AIButton } from '../SceneAiPanel/components/AiButton/AIButton';
 import { SceneAiPanel } from '../SceneAiPanel/SceneAiPanel';
 import { useCreateRecordingRulesMenu } from '../SceneCreateMetricModal/domain/useMenuOption';
 import { SceneCreateRecordingRuleModal } from '../SceneCreateMetricModal/SceneCreateRecordingRuleModal';
+import { SamplingIndicatorExtensionPoint } from './components/SamplingIndicatorExtensionPoint';
 import { SceneExportMenu } from './components/SceneExportMenu/SceneExportMenu';
 import { useGitHubIntegration } from './components/SceneFunctionDetailsPanel/domain/useGitHubIntegration';
 import { SceneFunctionDetailsPanel } from './components/SceneFunctionDetailsPanel/SceneFunctionDetailsPanel';
+import { buildSpanTimeRange } from './domain/buildSpanTimeRange';
 import { RemoveProfileIdSelector } from './domain/events/RemoveProfileIdSelector';
 import { RemoveSpanSelector } from './domain/events/RemoveSpanSelector';
 import { ProfileIdSelectorLabel } from './ProfileIdSelectorLabel';
@@ -40,6 +44,7 @@ import { SceneExploreServiceFlameGraph } from './SceneExploreServiceFlameGraph';
 import { SpanSelectorLabel } from './SpanSelectorLabel';
 
 interface SceneFlameGraphState extends SceneObjectState {
+  $timeRange?: SceneTimeRange;
   $data: SceneQueryRunner;
   lastTimeRange?: TimeRange;
   exportMenu: SceneExportMenu;
@@ -113,25 +118,19 @@ export class SceneFlameGraph extends SceneObjectBase<SceneFlameGraphState> {
     const getTheme = useMemo(() => () => createTheme({ colors: { mode: isLight ? 'light' : 'dark' } }), [isLight]);
 
     const [maxNodes] = useMaxNodesFromUrl();
-    const { settings, error: isFetchingSettingsError } = useFetchPluginSettings();
-    const { $data, lastTimeRange, exportMenu, aiPanel, functionDetailsPanel, createRecordingRuleModal } =
+    const { settings } = useFetchPluginSettings();
+    const { $timeRange, $data, lastTimeRange, exportMenu, aiPanel, functionDetailsPanel, createRecordingRuleModal } =
       this.useState();
 
-    if (isFetchingSettingsError) {
-      displayWarning([
-        t('flame-graph.settings-error.title', 'Error while retrieving the plugin settings!'),
-        t(
-          'flame-graph.settings-error.message',
-          'Some features might not work as expected (e.g. collapsed flame graphs). Please try to reload the page, sorry for the inconvenience.'
-        ),
-      ]);
-    }
-
     useEffect(() => {
-      const runner = buildFlameGraphQueryRunner({ maxNodes, spanSelector, profileIdSelector });
+      const runner = buildFlameGraphQueryRunner({
+        maxNodes,
+        spanSelector,
+        profileIdSelector,
+      });
       this.setState({ $data: runner });
       return deferSceneQueryRunnerRun(runner);
-    }, [maxNodes, spanSelector, profileIdSelector]);
+    }, [$timeRange, maxNodes, spanSelector, profileIdSelector]);
 
     const $dataState = $data.useState();
     const loadingState = $dataState?.data?.state;
@@ -181,7 +180,14 @@ export class SceneFlameGraph extends SceneObjectBase<SceneFlameGraphState> {
   };
 
   removeSpanSelector() {
+    this.setState({ $timeRange: undefined });
     this.publishEvent(new RemoveSpanSelector({}), true);
+  }
+
+  setSpanTimeRange(timestamp: number) {
+    this.setState({
+      $timeRange: new SceneTimeRange(buildSpanTimeRange(timestamp)),
+    });
   }
 
   removeProfileIdSelector() {
@@ -191,7 +197,6 @@ export class SceneFlameGraph extends SceneObjectBase<SceneFlameGraphState> {
 
   static Component = ({ model }: SceneComponentProps<SceneFlameGraph>) => {
     const styles = useStyles2(getStyles);
-    const flameGraphWithCallTree = useFlagFlameGraphWithCallTree();
     const metricsFromProfiles = useFlagMetricsFromProfiles();
 
     const spanSelector = getSceneVariableValue(model, 'spanSelector');
@@ -268,6 +273,7 @@ export class SceneFlameGraph extends SceneObjectBase<SceneFlameGraphState> {
                   <Trans i18nKey="flame-graph.explain-button">Explain Flame Graph</Trans>
                 </AIButton>
               )}
+              <SamplingIndicatorExtensionPoint scene={model} />
             </>
           }
         >
@@ -293,7 +299,7 @@ export class SceneFlameGraph extends SceneObjectBase<SceneFlameGraphState> {
                 />
               }
               keepFocusOnDataChange
-              enableNewUI={flameGraphWithCallTree}
+              enableNewUI={true}
             />
           )}
         </Panel>

@@ -1,8 +1,15 @@
 import { css } from '@emotion/css';
 import { GrafanaTheme2, VariableRefresh } from '@grafana/data';
 import { t } from '@grafana/i18n';
-import { MultiValueVariable, QueryVariable, SceneComponentProps, VariableValueOption } from '@grafana/scenes';
+import {
+  MultiValueVariable,
+  MultiValueVariableState,
+  QueryVariable,
+  SceneComponentProps,
+  VariableValueOption,
+} from '@grafana/scenes';
 import { Cascader, CascaderOption, Icon, Tooltip, useStyles2 } from '@grafana/ui';
+import { generateUUID } from '@shared/domain/generateUUID';
 import { localeCompare } from '@shared/domain/localeCompare';
 import { prepareHistoryEntry } from '@shared/domain/prepareHistoryEntry';
 import { reportInteraction } from '@shared/domain/reportInteraction';
@@ -29,8 +36,8 @@ type ProfileMetricVariableState = {
 export class ProfileMetricVariable extends QueryVariable {
   static DEFAULT_VALUE = 'process_cpu:cpu:nanoseconds:cpu:nanoseconds';
 
-  // hack: subscribe to changes of dataSource only
-  static QUERY_DEFAULT = '$dataSource and all profile metrics';
+  // hack: subscribe to changes of dataSource and filtersAllServices
+  static QUERY_DEFAULT = '$dataSource $filtersAllServices and all profile metrics';
 
   // hack: subscribe to changes of dataSource and serviceName to avoid showing options that don't have any data associated
   static QUERY_SERVICE_NAME_DEPENDENT = '$dataSource and only $serviceName profile metrics';
@@ -57,6 +64,20 @@ export class ProfileMetricVariable extends QueryVariable {
       label: t('variables.profile-metric.label', PROFILE_METRIC_LABEL_DEFAULT),
       ...(!this.state.value ? { value: ProfileMetricVariable.DEFAULT_VALUE } : {}),
     });
+  }
+
+  /**
+   * Whenever URL sync (or anything else) tries to set an empty profile type, use the default instead.
+   * Same pattern as ServiceNameVariable uses for its own URL/state edge cases.
+   */
+  protected interceptStateUpdateAfterValidation(stateUpdate: Partial<MultiValueVariableState>): void {
+    const hadEmptyValue = 'value' in stateUpdate && (stateUpdate.value === '' || stateUpdate.value == null);
+
+    super.interceptStateUpdateAfterValidation(stateUpdate);
+
+    if (hadEmptyValue) {
+      stateUpdate.value = ProfileMetricVariable.DEFAULT_VALUE;
+    }
   }
 
   async update(force = false) {
@@ -135,7 +156,7 @@ export class ProfileMetricVariable extends QueryVariable {
       <Cascader
         // we add a key to ensure that the Cascader selects the initial value or available options properly when landing on the page
         // and when switching exploration types, because the value might also be changed after the component has been rendered by SceneProfilesExplorer
-        key={crypto.randomUUID()}
+        key={generateUUID()}
         aria-label={t('variables.profile-metric.aria-label', 'Profile metrics list')}
         width={24}
         separator="/"

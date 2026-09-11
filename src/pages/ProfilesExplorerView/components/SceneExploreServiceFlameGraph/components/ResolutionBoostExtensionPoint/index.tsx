@@ -21,16 +21,14 @@ export function ResolutionBoostExtensionPoint({ scene }: { scene: SceneExploreSe
     return;
   }
 
-  const serviceName = sceneGraph.interpolate(scene, '${serviceName}');
-  // serviceNameUnavailable if the interpolation failed (returning the EXPR back again)
+  const serviceName = sceneGraph.interpolate(scene, SERVICE_NAME_EXPR);
   const serviceNameUnavailable = serviceName === SERVICE_NAME_EXPR;
 
   if (serviceNameUnavailable) {
     return;
   }
 
-  const datasourceUID = sceneGraph.interpolate(scene, '${DATASOURCE_UID_EXPR}');
-  // datasourceUIDUnavailable if the interpolation failed (returning the EXPR back again)
+  const datasourceUID = sceneGraph.interpolate(scene, DATASOURCE_UID_EXPR);
   const datasourceUIDUnavailable = datasourceUID === DATASOURCE_UID_EXPR;
 
   if (datasourceUIDUnavailable) {

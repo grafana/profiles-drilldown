@@ -11,6 +11,9 @@ import { getProfileMetric, ProfileMetricId } from '@shared/infrastructure/profil
 import React from 'react';
 
 import { FiltersVariable } from '../domain/variables/FiltersVariable/FiltersVariable';
+import { SpanExemplarToggleAction } from '../domain/actions/SpanExemplarToggleAction';
+import { FavAction } from '../domain/actions/FavAction';
+import { SelectAction } from '../domain/actions/SelectAction';
 import { GroupByVariable } from '../domain/variables/GroupByVariable/GroupByVariable';
 import { ProfileMetricVariable } from '../domain/variables/ProfileMetricVariable';
 import { ServiceNameVariable } from '../domain/variables/ServiceNameVariable/ServiceNameVariable';
@@ -30,31 +33,70 @@ interface SceneMainServiceTimeseriesState extends SceneObjectState {
 export class SceneMainServiceTimeseries extends SceneObjectBase<SceneMainServiceTimeseriesState> {
   static MIN_HEIGHT = 240;
 
+  private variablesInitialized = false;
+
   constructor({
     item,
     headerActions,
     supportGroupBy,
     includeExemplars,
+    includeSpanExemplars,
+    spanExemplarToggleAction,
+    menuActions,
   }: {
     item?: GridItemData;
     headerActions: SceneMainServiceTimeseriesState['headerActions'];
     supportGroupBy?: boolean;
     includeExemplars?: boolean;
+    includeSpanExemplars?: boolean;
+    spanExemplarToggleAction?: SpanExemplarToggleAction;
+    menuActions?: (item: GridItemData) => { selectAction?: SelectAction; favAction: FavAction };
   }) {
     super({
       headerActions,
       body: undefined,
     });
 
-    this.addActivationHandler(this.onActivate.bind(this, item, supportGroupBy, includeExemplars));
+    this.addActivationHandler(
+      this.onActivate.bind(
+        this,
+        item,
+        supportGroupBy,
+        includeExemplars,
+        includeSpanExemplars,
+        spanExemplarToggleAction,
+        menuActions
+      )
+    );
   }
 
-  onActivate(item?: GridItemData, supportGroupBy?: boolean, includeExemplars?: boolean) {
-    if (item) {
+  onActivate(
+    item?: GridItemData,
+    supportGroupBy?: boolean,
+    includeExemplars?: boolean,
+    includeSpanExemplars?: boolean,
+    spanExemplarToggleAction?: SpanExemplarToggleAction,
+    menuActions?: (item: GridItemData) => { selectAction?: SelectAction; favAction: FavAction }
+  ) {
+    // Only seed the variables from the construction-time item on first activation.
+    // This scene is remounted whenever the span heatmap panel is toggled, and
+    // re-running initVariables would revert user-driven changes (e.g. the selected
+    // service) back to the original item's values.
+    if (item && !this.variablesInitialized) {
       this.initVariables(item);
     }
+    this.variablesInitialized = true;
 
-    this.setState({ body: this.buildTimeseries(item, supportGroupBy, includeExemplars) });
+    this.setState({
+      body: this.buildTimeseries(
+        item,
+        supportGroupBy,
+        includeExemplars,
+        includeSpanExemplars,
+        spanExemplarToggleAction,
+        menuActions
+      ),
+    });
 
     if (supportGroupBy) {
       this.subscribeToGroupByStateChanges(item);
@@ -99,13 +141,20 @@ export class SceneMainServiceTimeseries extends SceneObjectBase<SceneMainService
     }
   }
 
-  buildTimeseries(item?: GridItemData, supportGroupBy?: boolean, includeExemplars?: boolean) {
+  buildTimeseries(
+    item?: GridItemData,
+    supportGroupBy?: boolean,
+    includeExemplars?: boolean,
+    includeSpanExemplars?: boolean,
+    spanExemplarToggleAction?: SpanExemplarToggleAction,
+    menuActions?: (item: GridItemData) => { selectAction?: SelectAction; favAction: FavAction }
+  ) {
     const { headerActions } = this.state;
 
     const timeseriesItem: GridItemData = {
       index: 0,
       value: '',
-      queryRunnerParams: {}, // let interpolation happen
+      queryRunnerParams: {},
       label: this.buildTitle(),
       panelType: PanelType.TIMESERIES,
     };
@@ -119,8 +168,10 @@ export class SceneMainServiceTimeseries extends SceneObjectBase<SceneMainService
     return new SceneLabelValuesTimeseries({
       item: timeseriesItem,
       headerActions,
-      annotations: true,
       includeExemplars: includeExemplars,
+      includeSpanExemplars: includeSpanExemplars,
+      spanExemplarToggleAction,
+      menuActions: menuActions?.(timeseriesItem),
       // we pass data for the scenarios where we land on the page from a shared link
       // we do this to prevent rendering a timeseries without groupBy for a second then with groupBy
       // and also to directly render something when there's no groupBy in the URL

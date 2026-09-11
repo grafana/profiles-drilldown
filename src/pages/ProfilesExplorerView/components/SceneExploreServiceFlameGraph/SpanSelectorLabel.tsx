@@ -1,6 +1,7 @@
 import { css } from '@emotion/css';
-import { t, Trans } from '@grafana/i18n';
-import { Button, Tooltip, useStyles2 } from '@grafana/ui';
+import { GrafanaTheme2 } from '@grafana/data';
+import { t } from '@grafana/i18n';
+import { IconButton, Tooltip, useStyles2 } from '@grafana/ui';
 import React from 'react';
 
 type Props = {
@@ -22,27 +23,87 @@ export function SpanSelectorLabel(props: Props) {
         )}
         placement="top"
       >
-        <span>
-          <Trans i18nKey="flame-graph.span-selector.added">Span selector added</Trans>
+        <span
+          aria-label={t('flame-graph.span-selector.filter-label', 'Filter label')}
+          className={styles.label}
+        >
+          {t('flame-graph.span-selector.name', 'Span')}
         </span>
       </Tooltip>
-      <Button
-        size="md"
-        fill="text"
-        variant="secondary"
-        icon="times"
+
+      <span
+        aria-label={t('flame-graph.span-selector.filter-operator', 'Filter operator')}
+        className={styles.chip}
+      >
+        =
+      </span>
+
+      <span
+        aria-label={t('flame-graph.span-selector.filter-value', 'Filter value')}
+        className={styles.chip}
+      >
+        {spanSelector}
+      </span>
+
+      <IconButton
+        aria-label={t('flame-graph.span-selector.remove', 'Remove span selector from query')}
+        className={styles.removeButton}
+        name="times"
         tooltip={t('flame-graph.span-selector.remove', 'Remove span selector from query')}
-        tooltipPlacement="top"
-        onClick={() => {
-          removeSpanSelector();
-        }}
+        onClick={removeSpanSelector}
       />
     </div>
   );
 }
 
-const getStyles = () => ({
+const activeBackgroundColor = 'rgb(61, 113, 217)';
+const activeTextColor = '#fff';
+
+const getStyles = (theme: GrafanaTheme2) => ({
   container: css`
-    padding: 0 4px;
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
+    border: 1px solid ${activeBackgroundColor};
+    border-radius: 2px;
+
+    & > :last-child {
+      border-left: 1px solid ${activeBackgroundColor};
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
   `,
+
+  chip: css`
+    align-items: center;
+    background: ${theme.colors.background.primary};
+    color: ${theme.colors.text.maxContrast};
+    display: inline-flex;
+    height: 30px;
+    padding: ${theme.spacing(0, 1)};
+  `,
+
+  label: css`
+    align-items: center;
+    background: ${activeBackgroundColor};
+    color: ${activeTextColor};
+    display: inline-flex;
+    height: 30px;
+    padding: ${theme.spacing(0, 1)};
+  `,
+
+  removeButton: css`
+    cursor: pointer;
+    height: 30px;
+
+    &:hover {
+      background-color: ${theme.colors.background.secondary};
+    }
+
+    & svg {
+      width: 12px;
+      height: 12px;
+    }
+  `,
+
 });

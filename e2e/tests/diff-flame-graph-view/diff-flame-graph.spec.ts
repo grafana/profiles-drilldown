@@ -129,6 +129,30 @@ test.describe('Diff flame graph view', () => {
     });
   });
 
+  test.describe('Filter suggestions', () => {
+    // see https://github.com/grafana/profiles-drilldown/issues/821
+    test('Each panel suggests the labels found in its own time range', async ({ exploreProfilesPage }) => {
+      await expect(await exploreProfilesPage.openFilterSuggestions('filtersComparison')).toContainText('vehicle');
+      await exploreProfilesPage.closeFilterSuggestions();
+
+      // the static test data is from 2024-03-13, so this range contains no profiles at all
+      await exploreProfilesPage.selectComparisonQuickRange('comparison', 'Last 5 minutes');
+
+      const comparisonSuggestions = await exploreProfilesPage.openFilterSuggestions('filtersComparison');
+
+      await expect(comparisonSuggestions).not.toContainText('Loading...');
+      await expect(comparisonSuggestions.getByRole('option')).toHaveCount(0);
+
+      await exploreProfilesPage.closeFilterSuggestions();
+
+      // the baseline panel still has the original time range
+      const baselineSuggestions = await exploreProfilesPage.openFilterSuggestions('filtersBaseline');
+
+      await expect(baselineSuggestions.getByRole('option').first()).toBeVisible();
+      await expect(baselineSuggestions).toContainText('vehicle');
+    });
+  });
+
   test.describe('Baseline panel', () => {
     test('Baseline time picker', async ({ exploreProfilesPage }) => {
       await exploreProfilesPage.selectService('pyroscope'); // clears the flame graph ranges

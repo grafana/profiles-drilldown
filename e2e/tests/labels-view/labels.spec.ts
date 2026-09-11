@@ -317,6 +317,6 @@ test.describe('Labels view', () => {
     await exploreProfilesPage.selectHidePanelsWithoutNoData();
 
     await expect(exploreProfilesPage.getGroupByPanels()).toHaveCount(0);
-    await expect(exploreProfilesPage.getGroupByContainer().getByText('No results')).toBeVisible();
+    await expect(exploreProfilesPage.getGroupByContainer().getByText(/No profiles found/)).toBeVisible();
   });
 });

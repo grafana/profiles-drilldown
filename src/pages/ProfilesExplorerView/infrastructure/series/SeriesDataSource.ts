@@ -27,11 +27,11 @@ export class SeriesDataSource extends RuntimeDataSource {
     super(PYROSCOPE_SERIES_DATA_SOURCE.type, PYROSCOPE_SERIES_DATA_SOURCE.uid);
   }
 
-  async fetchSeries(dataSourceUid: string, timeRange: TimeRange, variableName?: string) {
+  async fetchSeries(dataSourceUid: string, timeRange: TimeRange, variableName?: string, matchers?: string[]) {
     seriesRepository.setApiClient(DataSourceProxyClientBuilder.build(dataSourceUid, SeriesApiClient));
 
     try {
-      return await seriesRepository.list({ timeRange });
+      return await seriesRepository.list({ timeRange, matchers });
     } catch (error) {
       logger.error(error as Error, {
         info: 'Error while loading Pyroscope series!',
@@ -68,24 +68,28 @@ export class SeriesDataSource extends RuntimeDataSource {
     let dataSourceUid = safeInterpolate(sceneObject, '$dataSource');
     const serviceName = safeInterpolate(sceneObject, '$serviceName');
     const profileMetricId = safeInterpolate(sceneObject, '$profileMetricId');
+    const filtersAllServices = safeInterpolate(sceneObject, '$filtersAllServices');
 
     // Fallback to default datasource if interpolation not ready yet
     if (!dataSourceUid) {
       dataSourceUid = ApiClient.selectDefaultDataSource().uid as string;
     }
 
-    const pyroscopeSeries = await this.fetchSeries(dataSourceUid, options.range as TimeRange, options.variable?.name);
+    const pyroscopeSeries = await this.fetchSeries(dataSourceUid, options.range as TimeRange, options.variable?.name, [
+      `{${filtersAllServices}}`,
+    ]);
 
     switch (query) {
       // queries that depend only on the selected data source
-      case '$dataSource and all services':
+      case '$dataSource $filtersAllServices and all services':
         return formatSeriesToServices(pyroscopeSeries);
 
-      case '$dataSource and all profile metrics':
+      case '$dataSource $filtersAllServices and all profile metrics':
         return formatSeriesToProfileMetrics(pyroscopeSeries);
 
-      // queries that depend on the selected profile metric or the selected service
+      // queries that depend on the selected profile metric, selected service, or filters
       case '$dataSource and only $profileMetricId services':
+      case '$dataSource $profileMetricId $filtersAllServices':
         return formatSeriesToServices(pyroscopeSeries, profileMetricId);
 
       case '$dataSource and only $serviceName profile metrics':

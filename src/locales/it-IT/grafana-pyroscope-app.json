@@ -295,13 +295,9 @@
     "title": "Dettagli della funzione"
   },
   "give-feedback": {
-    "button": "Lascia un feedback",
-    "tooltip": "Condividi i tuoi pensieri su Profiles in Grafana."
+    "button": "Lascia un feedback"
   },
   "grid": {
-    "empty-state": {
-      "no-results": "Nessun risultato"
-    },
     "error": {
       "title": "Errore di query!"
     },

@@ -1,6 +1,8 @@
+import { t } from '@grafana/i18n';
 import { displayError } from '@shared/domain/displayStatus';
 import { reportInteraction } from '@shared/domain/reportInteraction';
 import { saveProfileJsonToFile } from '@shared/domain/saveProfileJsonToFile';
+import { useIsFlameGraphCanvasPresent } from '@shared/domain/useIsFlameGraphCanvasPresent';
 import 'compression-streams-polyfill';
 import saveAs from 'file-saver';
 
@@ -17,12 +19,21 @@ export function useExportMenu({ profile, enableFlameGraphDotComExport }: ExportD
     const filename = `${customExportName}.png`;
 
     // TODO use ref, this won't work for comparison side by side (??!)
-    const canvasElement = document.querySelector('canvas[data-testid="flameGraph"]') as HTMLCanvasElement;
+    const canvasElement = document.querySelector('canvas[data-testid="flameGraph"]') as HTMLCanvasElement | null;
+
+    if (!canvasElement) {
+      const error = new Error('No flame graph canvas found, the image cannot be created.');
+      displayError(error, [
+        t('export-menu.error-png', 'Failed to export to png!'),
+        t('export-menu.error-png-no-canvas', 'Please ensure the flame graph is visible before exporting to png.'),
+      ]);
+      return;
+    }
 
     canvasElement.toBlob((blob) => {
       if (!blob) {
         const error = new Error('No Blob, the image cannot be created.');
-        displayError(error, ['Failed to export to png!', error.message]);
+        displayError(error, [t('export-menu.error-png', 'Failed to export to png!'), error.message]);
         return;
       }
 
@@ -65,9 +76,13 @@ export function useExportMenu({ profile, enableFlameGraphDotComExport }: ExportD
     document.body.removeChild(dlLink);
   };
 
+  // png export captures the flame graph <canvas>, which is not rendered in the "Top table" view
+  const isPngExportDisabled = !useIsFlameGraphCanvasPresent();
+
   return {
     data: {
       shouldDisplayFlamegraphDotCom: Boolean(enableFlameGraphDotComExport),
+      isPngExportDisabled,
     },
     actions: {
       downloadPng,

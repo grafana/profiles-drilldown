@@ -10,10 +10,12 @@ class SeriesRepository extends AbstractRepository<SeriesApiClient, MemoryCacheCl
     super(options);
   }
 
-  async list(options: { timeRange: TimeRange }): Promise<PyroscopeSeries> {
+  async list(options: { timeRange: TimeRange; matchers?: string[] }): Promise<PyroscopeSeries> {
     const { from, to } = computeRoundedTimeRange(options.timeRange);
+    const { matchers } = options;
 
-    const cacheParams = [this.apiClient!.baseUrl, from, to];
+    const matchersCacheKey = JSON.stringify(matchers ?? []);
+    const cacheParams = [this.apiClient!.baseUrl, from, to, matchersCacheKey];
 
     const responseFromCacheP = this.cacheClient!.get(cacheParams);
     if (responseFromCacheP) {
@@ -26,7 +28,7 @@ class SeriesRepository extends AbstractRepository<SeriesApiClient, MemoryCacheCl
       return { services, profileMetrics };
     }
 
-    const fetchP = this.apiClient!.list({ from, to });
+    const fetchP = this.apiClient!.list({ from, to, matchers });
     this.cacheClient!.set(cacheParams, fetchP);
 
     try {

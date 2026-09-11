@@ -15,7 +15,7 @@ export function buildCompareTimeSeriesQueryRunner({
         refId: `$profileMetricId-$serviceName-${filterKey}}`,
         queryType: 'metrics',
         profileTypeId: '$profileMetricId',
-        labelSelector: `{service_name="$serviceName",$${filterKey}}`,
+        labelSelector: `{service_name="$serviceName"\${${filterKey}.filterExpressionWithLeadingComma}}`,
       },
     ],
   });

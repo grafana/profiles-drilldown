@@ -91,7 +91,7 @@ test.describe('Flame graph view', () => {
 
       const filePathRow = detailsPanel.getByTestId('row-file-path');
       await expect(filePathRow.getByText('File')).toBeVisible();
-      await expect(filePathRow.locator('span')).toHaveText(fileName);
+      await expect(filePathRow.getByText(fileName)).toBeVisible();
 
       const repositoryRow = detailsPanel.getByTestId('row-repository');
       await expect(repositoryRow.getByText('Repository')).toBeVisible();

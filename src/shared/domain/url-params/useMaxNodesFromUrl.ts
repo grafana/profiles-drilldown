@@ -1,4 +1,3 @@
-import { displayWarning } from '@shared/domain/displayStatus';
 import { DEFAULT_SETTINGS } from '@shared/infrastructure/settings/PluginSettings';
 import { useFetchPluginSettings } from '@shared/infrastructure/settings/useFetchPluginSettings';
 import { logger } from '@shared/infrastructure/tracking/logger';
@@ -13,10 +12,6 @@ function useSetDefaultMaxNodes(hasMaxNodes: boolean, setMaxNodes: (newMaxNodes: 
   }
 
   if (error) {
-    displayWarning([
-      'Error while retrieving the plugin settings!',
-      'Some features might not work as expected (e.g. flame graph max nodes). Please try to reload the page, sorry for the inconvenience.',
-    ]);
     logger.error(error);
 
     setMaxNodes(DEFAULT_SETTINGS.maxNodes);

@@ -14,6 +14,10 @@ jest.mock('./domain/useCreateRecordingRule', () => ({
   useCreateRecordingRule: () => ({ actions: { save: mockSave } }),
 }));
 
+jest.mock('@shared/domain/reportInteraction', () => ({
+  reportInteraction: jest.fn(),
+}));
+
 jest.mock('@shared/infrastructure/labels/labelsRepository', () => ({
   labelsRepository: { listLabels: () => Promise.resolve([{ value: 'service_repository' }]) },
 }));

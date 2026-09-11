@@ -85,7 +85,7 @@ export const OverrideRepositoryDetailsButton = (props: Props) => {
             </Alert>
 
             <Field label={t('function-details.override.data-source', 'Data source')}>
-              <DataSourcePicker current={datasourceUid} disabled={true}></DataSourcePicker>
+              <DataSourcePicker current={datasourceUid} disabled={true} onChange={() => {}}></DataSourcePicker>
             </Field>
             <Field label={t('function-details.override.service-name', 'Service name')}>
               <Input disabled={true} value={serviceName}></Input>

@@ -1,5 +1,123 @@
 # Changelog
 
+## [2.3.0](https://github.com/grafana/profiles-drilldown/compare/v2.2.0...v2.3.0) (2026-08-21)
+
+
+### 🎉 Features
+
+* **call-tree:** remove feature flag (default=on) ([#1101](https://github.com/grafana/profiles-drilldown/issues/1101)) ([f527548](https://github.com/grafana/profiles-drilldown/commit/f527548ffe4453c6a72a6b5f481b5ea88d834003))
+
+
+### 🐛 Bug Fixes
+
+* **create-github-app-token:** version bump to 0.3.1 ([#1103](https://github.com/grafana/profiles-drilldown/issues/1103)) ([f535bb1](https://github.com/grafana/profiles-drilldown/commit/f535bb1e96103e4b814a3a8c47a4b7d78b7bf8ec))
+* **deps:** bump pnpm overrides for CVE remediation ([#1098](https://github.com/grafana/profiles-drilldown/issues/1098)) ([75f9380](https://github.com/grafana/profiles-drilldown/commit/75f93805e905628763aacc2f9226bdf2c6de8470))
+* **deps:** bump pnpm overrides for CVE remediation ([#1100](https://github.com/grafana/profiles-drilldown/issues/1100)) ([2c2730b](https://github.com/grafana/profiles-drilldown/commit/2c2730b6ee254f8861c574a08fdbd968043732c8))
+* **deps:** override @hono/node-server ([#1076](https://github.com/grafana/profiles-drilldown/issues/1076)) ([e33002a](https://github.com/grafana/profiles-drilldown/commit/e33002aabd11091c5458b4d7da51c320a9a513ff))
+* **deps:** resolve pnpm audit vulnerabilities ([#1073](https://github.com/grafana/profiles-drilldown/issues/1073)) ([6e2c46c](https://github.com/grafana/profiles-drilldown/commit/6e2c46c9d9b89c0a522fb3e5657aa5be1ca2f2f9))
+* normalize string spanSelector in drilldown link builder ([#1069](https://github.com/grafana/profiles-drilldown/issues/1069)) ([1b7248f](https://github.com/grafana/profiles-drilldown/commit/1b7248f1086222127c913e3372cb111afa48a9dd))
+* preserve span heatmap cell dimensions ([#1089](https://github.com/grafana/profiles-drilldown/issues/1089)) ([d51e13e](https://github.com/grafana/profiles-drilldown/commit/d51e13eeb8fd340b93358a41af7dca575ef354fa))
+* **release-please:** Update release-please action version to v2.0.2 ([#1104](https://github.com/grafana/profiles-drilldown/issues/1104)) ([0f3c35f](https://github.com/grafana/profiles-drilldown/commit/0f3c35fead8f03f2668a541f6876beee85dcea40))
+* **security/unknown/samples/rideshare:** update module github.com/klauspost/compress to v1.18.7 [security] ([#1070](https://github.com/grafana/profiles-drilldown/issues/1070)) ([a295445](https://github.com/grafana/profiles-drilldown/commit/a29544572a39f493af55d7715ea49177c57e185a))
+* **security/unknown/samples/rideshare:** update module go.opentelemetry.io/otel to v1.44.0 [security] ([#1066](https://github.com/grafana/profiles-drilldown/issues/1066)) ([a712509](https://github.com/grafana/profiles-drilldown/commit/a712509ddf2ad0a542ca312e89f554955c8b96bf))
+* stop rebuilding every grid panel when the item list changes ([#1096](https://github.com/grafana/profiles-drilldown/issues/1096)) ([72d6bcf](https://github.com/grafana/profiles-drilldown/commit/72d6bcfc1dc4469b9271cef78921b56ac5ed193d))
+
+
+### 🧹 Chore
+
+* **deps:** update golang docker tag to v1.26.5 ([#1082](https://github.com/grafana/profiles-drilldown/issues/1082)) ([7480059](https://github.com/grafana/profiles-drilldown/commit/748005985dd969b7b4f63b9dfba12d1b9fee5457))
+* **faro:** duplicate rudderstack events as faro events and enhance instrumentation ([#1083](https://github.com/grafana/profiles-drilldown/issues/1083)) ([43711f4](https://github.com/grafana/profiles-drilldown/commit/43711f4a1fd06d27646432bd23fe8f36ac02dc55))
+* move CONTRIBUTING to root of repo ([#1097](https://github.com/grafana/profiles-drilldown/issues/1097)) ([3711e23](https://github.com/grafana/profiles-drilldown/commit/3711e23c32c1aff185b780450bb3d996ee005ae8))
+* remove profilesExemplars feature toggle ([#1090](https://github.com/grafana/profiles-drilldown/issues/1090)) ([57c5017](https://github.com/grafana/profiles-drilldown/commit/57c5017da40058aa504a1899d9dda826b0fa52e9))
+* Update brace ([#1078](https://github.com/grafana/profiles-drilldown/issues/1078)) ([a3505f4](https://github.com/grafana/profiles-drilldown/commit/a3505f41e4ff12fed26dcdb90960855b744d4291))
+* update dependencies ([#1087](https://github.com/grafana/profiles-drilldown/issues/1087)) ([55f40f2](https://github.com/grafana/profiles-drilldown/commit/55f40f252f0603c6dbc1c45b49207d20ef4d3910))
+
+## [2.2.0](https://github.com/grafana/profiles-drilldown/compare/v2.1.1...v2.2.0) (2026-07-27)
+
+
+### 🎉 Features
+
+* Add filters to "All services" page ([#947](https://github.com/grafana/profiles-drilldown/issues/947)) ([de70e87](https://github.com/grafana/profiles-drilldown/commit/de70e8738f1b75f09d049147dd5aed89adc57efd))
+* Profiles to Traces integration via span heatmap ([#934](https://github.com/grafana/profiles-drilldown/issues/934)) ([05fbcdd](https://github.com/grafana/profiles-drilldown/commit/05fbcdd7b3959c7d48615969d4da061a1ff6f1c7))
+* remove data-driven annotations, add an extension point on the flame graph panel header ([#1051](https://github.com/grafana/profiles-drilldown/issues/1051)) ([b9197c0](https://github.com/grafana/profiles-drilldown/commit/b9197c08beea09d0835cd07c3fa642d2a1060430))
+
+
+### 🐛 Bug Fixes
+
+* avoid checking LLM plugin status when grafana-llm-app is not installed ([#1056](https://github.com/grafana/profiles-drilldown/issues/1056)) ([c1ef3d2](https://github.com/grafana/profiles-drilldown/commit/c1ef3d224614f7aa59fb7cf58e8400d4b8509772)), closes [#757](https://github.com/grafana/profiles-drilldown/issues/757)
+* Avoid error exporting png from top table diff ([#1013](https://github.com/grafana/profiles-drilldown/issues/1013)) ([edfed94](https://github.com/grafana/profiles-drilldown/commit/edfed9489a6e125e0ae49478eef41ed99274ac64))
+* **deps:** upgrade @grafana/* packages to 13.1.0 ([#1047](https://github.com/grafana/profiles-drilldown/issues/1047)) ([18b0bb2](https://github.com/grafana/profiles-drilldown/commit/18b0bb21c088b212f7272768db669effc764da95))
+* **header:** use ButtonGroup for plugin header toolbar buttons ([#1065](https://github.com/grafana/profiles-drilldown/issues/1065)) ([95b50ce](https://github.com/grafana/profiles-drilldown/commit/95b50ce3948e1e3508673f6c00f4d404b9f73d66))
+* remove span heatmap hover header ([#1062](https://github.com/grafana/profiles-drilldown/issues/1062)) ([b4b2651](https://github.com/grafana/profiles-drilldown/commit/b4b2651d4a9cd6c10df1b8df8feccfa07132b61e))
+* scope span trace lookups to visible page ([#1061](https://github.com/grafana/profiles-drilldown/issues/1061)) ([4af682e](https://github.com/grafana/profiles-drilldown/commit/4af682ed9bf0784a76d257164e5d28e5c4d07006))
+* show persistent settings-fetch error only on settings page ([#1057](https://github.com/grafana/profiles-drilldown/issues/1057)) ([5bed48c](https://github.com/grafana/profiles-drilldown/commit/5bed48c0c00116b3804629526aa52b37cf450887))
+* time picker menu position ([#1068](https://github.com/grafana/profiles-drilldown/issues/1068)) ([3a39f0a](https://github.com/grafana/profiles-drilldown/commit/3a39f0a56240a90d7d1efbb37b28688a62cca789))
+
+
+### 🧹 Chore
+
+* **remote:** add remote provisioning for the llm app and traces ([#1054](https://github.com/grafana/profiles-drilldown/issues/1054)) ([e5d98d7](https://github.com/grafana/profiles-drilldown/commit/e5d98d706c46cf66fe4e5a9f98320194549b8723))
+
+## [2.1.1](https://github.com/grafana/profiles-drilldown/compare/v2.1.0...v2.1.1) (2026-07-10)
+
+
+### 🐛 Bug Fixes
+
+* Fix empty profile type from URL sync and improve grid empty state ([#1046](https://github.com/grafana/profiles-drilldown/issues/1046)) ([f561976](https://github.com/grafana/profiles-drilldown/commit/f561976240224ced63f87ba0c1923498a035685d))
+* include profile ID selector in function details query ([#1042](https://github.com/grafana/profiles-drilldown/issues/1042)) ([41e5efd](https://github.com/grafana/profiles-drilldown/commit/41e5efd686d6d17f5519a55028129f268e1f09c3))
+* replace crypto.randomUUID with fallback for non-secure contexts ([#1019](https://github.com/grafana/profiles-drilldown/issues/1019)) ([a3f8304](https://github.com/grafana/profiles-drilldown/commit/a3f8304bb63c74de994575ca846d0f2649b46812)), closes [#1017](https://github.com/grafana/profiles-drilldown/issues/1017)
+* **security/high/:** update pnpm to v11.8.0 [security] ([#1034](https://github.com/grafana/profiles-drilldown/issues/1034)) ([2626f08](https://github.com/grafana/profiles-drilldown/commit/2626f08d321bc5056676ac0f1da10c05f8b79f49))
+
+
+### 📝 Documentation
+
+* Add GenAI policy, contributor guide updates and issue templates ([#1041](https://github.com/grafana/profiles-drilldown/issues/1041)) ([7554854](https://github.com/grafana/profiles-drilldown/commit/755485460bf4a933bdf3ed035ca003d773190f46))
+
+
+### 🧹 Chore
+
+* Add give feedback link to plugin info menu and style updates ([#1043](https://github.com/grafana/profiles-drilldown/issues/1043)) ([a7eb27b](https://github.com/grafana/profiles-drilldown/commit/a7eb27b5d4fcf3bf13a96ade2f4dfcbad01de223))
+* align i18next config with core Grafana ([#1033](https://github.com/grafana/profiles-drilldown/issues/1033)) ([1174a53](https://github.com/grafana/profiles-drilldown/commit/1174a53a1f49fabe5c39ff9a43c74fef66fb28f3))
+* **deps:** update actions/checkout action to v6.0.3 ([#1039](https://github.com/grafana/profiles-drilldown/issues/1039)) ([2b016b1](https://github.com/grafana/profiles-drilldown/commit/2b016b1ea91b47b7b7babe16826d18d4c5322fc7))
+* **deps:** update alpine:latest docker digest to 28bd5fe ([#1038](https://github.com/grafana/profiles-drilldown/issues/1038)) ([34ecfac](https://github.com/grafana/profiles-drilldown/commit/34ecfac224f3b9a5003bba4d4f2c16a536957829))
+* **deps:** update dependency semver@6 to v7.8.5 ([#1040](https://github.com/grafana/profiles-drilldown/issues/1040)) ([841c3db](https://github.com/grafana/profiles-drilldown/commit/841c3db18fd5596c6ff9966cf67be7e2a299be06))
+
+## [2.1.0](https://github.com/grafana/profiles-drilldown/compare/v2.0.7...v2.1.0) (2026-07-02)
+
+
+### 🎉 Features
+
+* add Knowledge Graph insights annotations to timeseries ([#886](https://github.com/grafana/profiles-drilldown/issues/886)) ([644600c](https://github.com/grafana/profiles-drilldown/commit/644600c9eb521a42d6841fb60cb2f83052fad33c))
+
+
+### 🐛 Bug Fixes
+
+* **deps:** bump dompurify override to ~3.4.11 for CVE remediation ([#1027](https://github.com/grafana/profiles-drilldown/issues/1027)) ([52ca002](https://github.com/grafana/profiles-drilldown/commit/52ca0026ed4f860ee5b4e27c39b4061364bf91cc))
+* **deps:** update dependency protobufjs to v8.2.0 [security] ([#1001](https://github.com/grafana/profiles-drilldown/issues/1001)) ([e4ed126](https://github.com/grafana/profiles-drilldown/commit/e4ed126fcd48bbc457569184d0d9ce8858d00bcb))
+* **security/unknown/samples/rideshare:** update module golang.org/x/sys to v0.44.0 [security] ([#1000](https://github.com/grafana/profiles-drilldown/issues/1000)) ([47d37b1](https://github.com/grafana/profiles-drilldown/commit/47d37b1b49c266d41f7d079fcfc73890cda6e850))
+
+
+### 🤖 Continuous Integrations
+
+* **release-please:** add release please ([#1024](https://github.com/grafana/profiles-drilldown/issues/1024)) ([61f2ed0](https://github.com/grafana/profiles-drilldown/commit/61f2ed05f88415153bc75a273b1a782abb00fff9))
+
+
+### 🧹 Chore
+
+* Add myself as a CODEOWNER ([#1015](https://github.com/grafana/profiles-drilldown/issues/1015)) ([8f7b5e6](https://github.com/grafana/profiles-drilldown/commit/8f7b5e68b8a20503e680ed293ed1ff40ac08fece))
+* Better feature tracking for uploading profiles ([#983](https://github.com/grafana/profiles-drilldown/issues/983)) ([d6b2dda](https://github.com/grafana/profiles-drilldown/commit/d6b2ddadf5563e3c8631dbd61b2951cda11e5a35))
+* **ci/cd:** update to 10.1.0 ([#1030](https://github.com/grafana/profiles-drilldown/issues/1030)) ([b1a5d19](https://github.com/grafana/profiles-drilldown/commit/b1a5d19453abf5956b0f1227cd36132b558f7898))
+* **ci:** Update release workflows ([#1036](https://github.com/grafana/profiles-drilldown/issues/1036)) ([e858b91](https://github.com/grafana/profiles-drilldown/commit/e858b91e493413b7e853f5cdd603a9f6b10ef51a))
+* **deps:** bump @openfeature/ofrep-web-provider from 0.3.6 to 0.4.1 ([#1011](https://github.com/grafana/profiles-drilldown/issues/1011)) ([f486480](https://github.com/grafana/profiles-drilldown/commit/f4864800f762400bb415b69e273f73134af5abcf))
+* **deps:** update golang:1.26.3 docker digest to 2d6c802 ([#996](https://github.com/grafana/profiles-drilldown/issues/996)) ([4f07155](https://github.com/grafana/profiles-drilldown/commit/4f0715584268a3d4f218932c8b9cf333b1b9522e))
+* Regenerate pyroscope API client ([#1025](https://github.com/grafana/profiles-drilldown/issues/1025)) ([c71c1e9](https://github.com/grafana/profiles-drilldown/commit/c71c1e9a4a918eb43f2c30be507ef9c6acac2461))
+* Remove publish-technical-documentation workflows ([#1026](https://github.com/grafana/profiles-drilldown/issues/1026)) ([227ab2b](https://github.com/grafana/profiles-drilldown/commit/227ab2b6ec74a51b6eaa1a2d5832cfbc362d0287))
+* Sanitize AiReply button link ([#1010](https://github.com/grafana/profiles-drilldown/issues/1010)) ([500489b](https://github.com/grafana/profiles-drilldown/commit/500489b1c6e4fa6b293632025829c3430ffa84a8))
+* Surface backend error of creating a recording rule ([#1014](https://github.com/grafana/profiles-drilldown/issues/1014)) ([bb36a4c](https://github.com/grafana/profiles-drilldown/commit/bb36a4c20d2f06b563a5ce822f7eb678c4082964))
+* Update LLM package ([#1032](https://github.com/grafana/profiles-drilldown/issues/1032)) ([667e618](https://github.com/grafana/profiles-drilldown/commit/667e618d43fe6b8349ff2eb90b9bc91a93b0a12b))
+* Update packages ([#1020](https://github.com/grafana/profiles-drilldown/issues/1020)) ([f025c68](https://github.com/grafana/profiles-drilldown/commit/f025c682b122ed89567f8af31ddcbb9bc116d045))
+* Workflows update ([#995](https://github.com/grafana/profiles-drilldown/issues/995)) ([f665d6d](https://github.com/grafana/profiles-drilldown/commit/f665d6d14ac3ccfcbfbfc9aa5595d4069950799a))
+
 ## 2.0.7
 
 ##### Chores

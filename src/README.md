@@ -46,7 +46,7 @@ that we can discuss the change. You're welcome to file an implementation pull
 request immediately as well, although we generally lean towards discussing the
 change and then reviewing the implementation separately.
 
-For more information, refer to [Contributing to Grafana Profiles Drilldown](https://github.com/grafana/profiles-drilldown/blob/main/docs/CONTRIBUTING.md)
+For more information, refer to [Contributing to Grafana Profiles Drilldown](https://github.com/grafana/profiles-drilldown/blob/main/CONTRIBUTING.md)
 
 ### Bugs
 

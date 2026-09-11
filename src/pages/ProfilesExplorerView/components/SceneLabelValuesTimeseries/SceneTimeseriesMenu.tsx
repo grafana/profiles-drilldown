@@ -21,6 +21,8 @@ import {
 } from '../../domain/actions/addToDashboard';
 import { getExploreUrl } from '../../helpers/getExploreUrl';
 import { TimeSeriesQuery } from '../../infrastructure/timeseries/buildTimeSeriesQueryRunner';
+import { FavAction } from '../../domain/actions/FavAction';
+import { SelectAction } from '../../domain/actions/SelectAction';
 import { SceneLabelValuesTimeseries } from './SceneLabelValuesTimeseries';
 
 /**
@@ -37,6 +39,8 @@ interface SceneTimeseriesMenuState extends SceneObjectState {
   scaleType?: ScaleDistribution;
   showExemplars?: boolean; // undefined means that the Exemplars button is not shown in the menu. Otherwise, it's shown and the value is the current state of the Exemplars button.
   includeAddToDashboard?: boolean;
+  selectAction?: SelectAction;
+  favAction?: FavAction;
 }
 
 export class SceneTimeseriesMenu extends SceneObjectBase<SceneTimeseriesMenuState> {
@@ -97,6 +101,8 @@ export class SceneTimeseriesMenu extends SceneObjectBase<SceneTimeseriesMenuStat
       });
     }
 
+    menuItems.push(...this.buildSecondaryActionItems());
+
     if (showExemplars !== undefined) {
       menuItems.unshift(
         {
@@ -112,6 +118,31 @@ export class SceneTimeseriesMenu extends SceneObjectBase<SceneTimeseriesMenuStat
     }
 
     return menuItems;
+  }
+
+  private buildSecondaryActionItems(): PanelMenuItem[] {
+    const { selectAction, favAction } = this.state;
+    const items: PanelMenuItem[] = [];
+
+    if (selectAction) {
+      items.push({
+        text: selectAction.state.label ?? t('timeseries.menu.labels', 'Labels'),
+        onClick: selectAction.onClick,
+      });
+    }
+
+    if (favAction) {
+      items.push({
+        iconClassName: favAction.state.isFav ? 'favorite' : 'star',
+        text: favAction.state.isFav ? t('actions.fav.unfavorite', 'Unfavorite') : t('actions.fav.favorite', 'Favorite'),
+        onClick: () => {
+          favAction.onClick();
+          this.setState({ items: this.buildMenuItems() });
+        },
+      });
+    }
+
+    return items;
   }
 
   private onClickToggleExemplars() {

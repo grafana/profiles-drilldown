@@ -295,13 +295,9 @@
     "title": "Detalhes da função"
   },
   "give-feedback": {
-    "button": "Enviar feedback",
-    "tooltip": "Compartilhe sua opinião sobre os perfis na Grafana."
+    "button": "Enviar feedback"
   },
   "grid": {
-    "empty-state": {
-      "no-results": "Nenhum resultado"
-    },
     "error": {
       "title": "Erro de consulta!"
     },

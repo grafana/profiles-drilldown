@@ -4,6 +4,7 @@ import { config } from '@grafana/runtime';
 import { PLUGIN_BASE_URL, PYROSCOPE_APP_ID } from '../../../../constants';
 import { GIT_COMMIT } from '../../../../version';
 import { getFaroEnvironment } from './getFaroEnvironment';
+import { registerFaroInteractionEchoBackend } from './interactionEchoBackend';
 
 let faro: Faro | null = null;
 
@@ -60,4 +61,7 @@ export function initFaro() {
       },
     })
   );
+
+  // mirror this plugin's reportInteraction events into faro
+  registerFaroInteractionEchoBackend();
 }

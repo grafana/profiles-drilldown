@@ -6,18 +6,21 @@ services:
       args:
         grafana_image: ${GRAFANA_IMAGE:-grafana-enterprise}
         grafana_version: ${GRAFANA_VERSION:-12.3.0@sha256:96a793a92c9a77cf543d6e5c55100cd296ed9e22487dc3d069331364c456247b}
-        backendUrl: ${REMOTE_BACKEND_URL}
-        basicAuthUser: ${REMOTE_BASIC_AUTH_USER}
-        basicAuthPassword: ${REMOTE_BASIC_AUTH_PASSWORD}
     ports:
-      - 3000:3000/tcp
+      - ${GRAFANA_PORT:-3000}:3000/tcp
     volumes:
       - ./dist:/var/lib/grafana/plugins/grafana-pyroscope-app
+      - ./samples/provisioning-remote:/etc/grafana/provisioning
     environment:
       GF_INSTALL_PLUGINS: grafana-llm-app
+      # Grafana 12.3+ preinstalls & auto-updates grafana-pyroscope-app from the catalog,
+      # which deletes the ./dist bind mount used for local development. Disable preinstall
+      # so the mounted dev build is used.
+      GF_PLUGINS_PREINSTALL_DISABLED: 'true'
       OPENAI_API_KEY: $OPENAI_API_KEY
       OPENAI_ORGANIZATION_ID: $OPENAI_ORGANIZATION_ID
-      GF_FEATURE_TOGGLES_ENABLE: localizationForPlugins
+      GF_FEATURE_TOGGLES_ENABLE: ${GF_FEATURE_TOGGLES_ENABLE:-localizationForPlugins}
+    env_file: ".env"
 
   qdrant:
     image: qdrant/qdrant:v1.17.0@sha256:f1c7272cdac52b38c1a0e89313922d940ba50afd90d593a1605dbbc214e66ffb

@@ -17,3 +17,8 @@ export function quoteLabelName(name: string): string {
 
   return `"${name.replace(/\\/g, '\\\\').replace(/"/g, '\\"')}"`;
 }
+
+/** Returns a PromQL-compatible double-quoted label value. */
+export function quoteLabelValue(value: string): string {
+  return JSON.stringify(value);
+}

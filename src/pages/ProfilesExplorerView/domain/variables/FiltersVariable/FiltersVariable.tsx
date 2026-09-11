@@ -1,6 +1,12 @@
 import { AdHocVariableFilter } from '@grafana/data';
 import { t } from '@grafana/i18n';
-import { AdHocFiltersVariable, SceneComponentProps, sceneGraph, SceneObject } from '@grafana/scenes';
+import {
+  AdHocFiltersVariable,
+  SceneComponentProps,
+  sceneGraph,
+  SceneObject,
+  SceneTimeRangeLike,
+} from '@grafana/scenes';
 import { CompleteFilters } from '@shared/components/QueryBuilder/domain/types';
 import { QueryBuilder } from '@shared/components/QueryBuilder/QueryBuilder';
 import { buildFilterExpressionParts } from '@shared/components/SavedSearches/utils';
@@ -10,9 +16,21 @@ import React from 'react';
 
 import { useBuildPyroscopeQuery } from '../../useBuildPyroscopeQuery';
 import { ProfilesDataSourceVariable } from '../ProfilesDataSourceVariable';
+import {
+  FILTER_EXPRESSION_WITH_LEADING_COMMA,
+  filterExpressionWithLeadingComma,
+} from './filterExpressionWithLeadingComma';
 import { convertPyroscopeToVariableFilter } from './filters-ops';
 
 const FILTERS_LABEL_DEFAULT = 'Filters';
+
+type TimeRangeProp = {
+  /**
+   * The diff view scopes each compare panel to its own time range, which this variable cannot resolve from its
+   * position in the scene graph: it is owned by SceneProfilesExplorer, above the panels.
+   */
+  timeRange?: SceneTimeRangeLike;
+};
 
 export class FiltersVariable extends AdHocFiltersVariable {
   static DEFAULT_VALUE = [];
@@ -32,6 +50,14 @@ export class FiltersVariable extends AdHocFiltersVariable {
 
   reset() {
     this.setState({ filters: FiltersVariable.DEFAULT_VALUE });
+  }
+
+  getValue(fieldPath?: string) {
+    if (fieldPath === FILTER_EXPRESSION_WITH_LEADING_COMMA) {
+      return filterExpressionWithLeadingComma(this.state.filterExpression);
+    }
+
+    return super.getValue(fieldPath);
   }
 
   static resetAll(sceneObject: SceneObject) {
@@ -74,7 +100,15 @@ export class FiltersVariable extends AdHocFiltersVariable {
     });
   };
 
-  static Component = ({ model }: SceneComponentProps<AdHocFiltersVariable & { onChangeQuery?: any }>) => {
+  /** Widens the props: the `SceneComponentWrapper` returned by the base class forwards extra props to `Component` below. */
+  get Component(): (props: SceneComponentProps<this> & TimeRangeProp) => React.ReactElement | null {
+    return super.Component;
+  }
+
+  static Component = ({
+    model,
+    timeRange,
+  }: SceneComponentProps<AdHocFiltersVariable & { onChangeQuery?: any }> & TimeRangeProp) => {
     const { key } = model.useState();
 
     const query = useBuildPyroscopeQuery(model, key as string);
@@ -83,7 +117,10 @@ export class FiltersVariable extends AdHocFiltersVariable {
       .findByKeyAndType(model, 'dataSource', ProfilesDataSourceVariable)
       .useState();
 
-    const { from, to } = sceneGraph.getTimeRange(model).state.value;
+    // subscribing keeps the available label values in sync with the time range, instead of waiting for an unrelated re-render
+    const {
+      value: { from, to },
+    } = (timeRange ?? sceneGraph.getTimeRange(model)).useState();
 
     return (
       <QueryBuilder

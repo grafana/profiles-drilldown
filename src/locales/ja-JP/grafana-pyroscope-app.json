@@ -295,13 +295,9 @@
     "title": "関数の詳細"
   },
   "give-feedback": {
-    "button": "フィードバックを提供",
-    "tooltip": "Grafanaのプロファイル機能についてのご意見をお聞かせください。"
+    "button": "フィードバックを提供"
   },
   "grid": {
-    "empty-state": {
-      "no-results": "結果はありません"
-    },
     "error": {
       "title": "クエリエラーが発生しました！"
     },

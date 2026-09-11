@@ -77,9 +77,22 @@ function addTimeRangeParams(params: string[], timeRange: RawTimeRange | undefine
   }
 }
 
+/**
+ * Normalizes `spanSelector` to an array: the type declares `Array<string>`, but Grafana's
+ * Trace View passes a single string, which satisfies `?.length` and then throws on `.join()`.
+ */
+function normalizeSpanSelector(spanSelector: unknown): string[] {
+  if (Array.isArray(spanSelector)) {
+    return spanSelector;
+  }
+
+  return typeof spanSelector === 'string' && spanSelector.length > 0 ? [spanSelector] : [];
+}
+
 function addQueryParams(params: string[], pyroscopeQuery: GrafanaPyroscopeDataQuery): void {
-  if (pyroscopeQuery.spanSelector?.length) {
-    params.push(`var-spanSelector=${pyroscopeQuery.spanSelector.join(',')}`);
+  const spanSelector = normalizeSpanSelector(pyroscopeQuery.spanSelector);
+  if (spanSelector.length) {
+    params.push(`var-spanSelector=${spanSelector.join(',')}`);
   }
 
   if (pyroscopeQuery.maxNodes) {
@@ -216,6 +229,8 @@ export const TRACEVIEW_DETAILS_ACTION: PluginExtensionAddedLinkConfig<any> = {
       datasource: context.datasource,
       groupBy: ['service_name'],
       includeExemplars: false,
+      includeHeatmap: false,
+      heatmapType: 'individual',
     };
 
     if (pyroscopeQuery.datasource) {

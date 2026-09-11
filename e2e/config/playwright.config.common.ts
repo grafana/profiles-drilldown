@@ -1,7 +1,7 @@
 import { defineConfig, PlaywrightTestConfig, Project } from '@playwright/test';
 import path from 'path';
 
-import { DOCKED_MENU_OPEN_LOCAL_STORAGE_KEY } from './constants';
+import { DOCKED_MENU_OPEN_LOCAL_STORAGE_KEY, FORCE_SHOW_AI_BUTTON_LOCAL_STORAGE_KEY } from './constants';
 
 type CustomEnvConfig = {
   baseURL: string;
@@ -49,6 +49,11 @@ export function config(config: CustomEnvConfig) {
                 // ensures that Grafana's main menu is closed, for screenshots predictability
                 name: DOCKED_MENU_OPEN_LOCAL_STORAGE_KEY,
                 value: 'false',
+              },
+              {
+                // ensures deterministic AI button labels in screenshots and assertions
+                name: FORCE_SHOW_AI_BUTTON_LOCAL_STORAGE_KEY,
+                value: 'true',
               },
             ],
           },

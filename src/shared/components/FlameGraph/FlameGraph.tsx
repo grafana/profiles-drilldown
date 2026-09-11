@@ -1,7 +1,6 @@
 import { createTheme } from '@grafana/data';
 import { FlameGraph as GrafanaFlameGraph, Props } from '@grafana/flamegraph';
 import { useTheme2 } from '@grafana/ui';
-import { useFlagFlameGraphWithCallTree } from '@shared/infrastructure/featureFlags/featureFlags';
 import React, { memo, useMemo } from 'react';
 
 import type { FlamebearerProfile } from '../../types/FlamebearerProfile';
@@ -27,7 +26,6 @@ function FlameGraphComponent({
   getExtraContextMenuButtons,
   showAnalyzeWithAssistant,
 }: FlameGraphProps) {
-  const flameGraphWithCallTree = useFlagFlameGraphWithCallTree();
   const { isLight } = useTheme2();
   const getTheme = () => createTheme({ colors: { mode: isLight ? 'light' : 'dark' } });
 
@@ -52,7 +50,7 @@ function FlameGraphComponent({
       getExtraContextMenuButtons={getExtraContextMenuButtons}
       keepFocusOnDataChange
       showAnalyzeWithAssistant={showAnalyzeWithAssistant}
-      enableNewUI={flameGraphWithCallTree}
+      enableNewUI={true}
     />
   );
 }

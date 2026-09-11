@@ -1,8 +1,8 @@
 ---
 name: Feature request
 about: Suggest an idea for this project
-title: '[feature] '
-labels: ''
+title: '[FEAT]:'
+labels: enhancement
 assignees: ''
 ---
 
@@ -27,3 +27,8 @@ assignees: ''
 ### Additional context
 
 <!-- Add any other context about the feature request here. -->
+
+**AI disclosure** (optional)
+See the [Generative AI Contribution Policy](https://github.com/grafana/profiles-drilldown/blob/main/docs/genai.md).
+
+- [ ] This feature request was substantially generated with AI assistance.
