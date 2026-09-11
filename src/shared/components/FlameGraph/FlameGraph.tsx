@@ -1,4 +1,7 @@
 import { createTheme } from '@grafana/data';
+// TODO: Do not merge until grafana/grafana#132374 is merged, a new @grafana/flamegraph
+// package is published, and the dependency is updated to include FunctionTable support.
+// For local testing: "@grafana/flamegraph": "file:./grafana-flamegraph-local.tgz"
 import { FunctionTable, FlameGraph as GrafanaFlameGraph, Props } from '@grafana/flamegraph';
 import { useTheme2 } from '@grafana/ui';
 import React, { memo, useMemo } from 'react';
