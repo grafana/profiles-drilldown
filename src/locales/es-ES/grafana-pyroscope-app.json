@@ -141,10 +141,6 @@
       "label": "Preajustes de comparación",
       "placeholder": "Elegir un valor preestablecido"
     },
-    "settings-error": {
-      "message": "Es posible que algunas funciones no tengan el comportamiento esperado (por ejemplo, las opciones de exportación de gráficos de llama). Intenta volver a cargar la página. Disculpa las molestias.",
-      "title": "¡Error al recuperar los ajustes del plugin!"
-    },
     "title": "Gráfico de llama de diferencias para {{serviceName}} ({{profileMetricType}})"
   },
   "error-page": {
@@ -158,7 +154,7 @@
   },
   "explorer": {
     "add-to-dashboard": {
-      "modal-title": "Añadir al panel de control"
+      "modal-title": ""
     },
     "exploration-type": {
       "all-services": "Todos los servicios",
@@ -178,6 +174,7 @@
       "add-recording-rule": "Añadir regla de registro",
       "recording-rules-tooltip": "Reglas de registro",
       "settings-tooltip": "Ver/editar los ajustes del inquilino",
+      "share-error": "",
       "share-tooltip": "Copiar el enlace para compartir en el portapapeles",
       "upload-tooltip": "Subir perfiles personalizados",
       "view-recording-rules": "Ver reglas de registro"
@@ -221,10 +218,6 @@
       "remove": "Eliminar el selector de ID de perfil de la consulta",
       "tooltip": "Has añadido un selector de ID de perfil a la consulta de gráfico de llama ({{profileIdSelector}})."
     },
-    "settings-error": {
-      "message": "Es posible que algunas funciones no tengan el comportamiento esperado (por ejemplo, los gráficos de llama contraídos). Intenta volver a cargar la página. Disculpa las molestias.",
-      "title": "¡Error al recuperar los ajustes del plugin!"
-    },
     "span-selector": {
       "filter-label": "",
       "filter-operator": "",
@@ -262,6 +255,7 @@
     "context-menu": {
       "label": "Detalles de la función"
     },
+    "copy-error": "",
     "copy-to-clipboard": "Copiar al portapapeles",
     "fetch-error": "¡Error al obtener los detalles de la función!",
     "file": "Archivo",
@@ -320,7 +314,7 @@
   "grid": {
     "empty-state": {
       "no-profiles": "",
-      "no-results": ""
+      "no-results": "Ningún resultado"
     },
     "error": {
       "title": "¡Error de consulta!"
@@ -382,14 +376,13 @@
   "labels": {
     "compare": {
       "aria-label": "",
-      "button_one": "Comparar ({{count}}/2)",
-      "button_many": "",
-      "button_other": "Comparar ({{count}}/2)",
       "clear-tooltip": "Borrar selección de comparación",
       "tooltip-empty": "Selecciona un panel de referencia y un panel de comparación para comparar sus gráficos de llama.",
       "tooltip-ready": "Comparar «{{baseline}}» con «{{comparison}}»",
       "tooltip-select-baseline": "Seleccionar otro panel para compararlo con «{{label}}»",
-      "tooltip-select-comparison": "Seleccionar otro panel para compararlo con «{{label}}»"
+      "tooltip-select-comparison": "Seleccionar otro panel para compararlo con «{{label}}»",
+      "button_one": "Comparar ({{count}}/2)",
+      "button_other": "Comparar ({{count}}/2)"
     },
     "data-source": {
       "all": "Todo",
@@ -503,7 +496,7 @@
     "commit-sha": "Confirmar SHA: {{shortCommitSha}}",
     "contribute": "Contribuir",
     "documentation": "Documentación",
-    "grafana-version": "Grafana {{edition}} v{{version}} ({{env}})",
+    "grafana-version": "",
     "last-update": "Última actualización: {{updated}}",
     "report-issue": "Notificar un problema",
     "title": "Información del plugin",
@@ -613,7 +606,7 @@
       "no-searches": "No hay búsquedas guardadas para mostrar.",
       "no-searches-tooltip": "No hay búsquedas guardadas para cargar.",
       "remove-tooltip": "Eliminar",
-      "saved-query-tooltip": "Cargar consulta guardada",
+      "saved-query-tooltip": "",
       "select": "Seleccionar",
       "select-pyroscope-query": "Selecciona una consulta de Pyroscope.",
       "title": "Carga una búsqueda guardada anteriormente",
@@ -627,7 +620,7 @@
       "existing-search-warning": "Hay una búsqueda guardada anteriormente con la misma consulta: {{title}}",
       "info-message": "Las búsquedas guardadas se almacenan localmente en tu navegador y solo estarán disponibles en este dispositivo.",
       "save": "Guardar",
-      "saved-queries-tooltip": "Guardar en Consultas guardadas",
+      "saved-queries-tooltip": "",
       "success-body": "Búsqueda guardada correctamente.",
       "success-message": "Búsqueda guardada correctamente.",
       "success-title": "Completado con éxito",
@@ -661,7 +654,9 @@
         "tooltip": "La función de detalles de la función permite asignar el uso de recursos a líneas de código fuente. Si la integración con GitHub está configurada, el código fuente se descargará desde GitHub."
       },
       "fetch-error": {
-        "message": "Intenta volver a cargar la página. Disculpa las molestias.",
+        "cloud-hint": "",
+        "message": "",
+        "oss-hint": "",
         "title": "¡Error al recuperar los ajustes del plugin!"
       },
       "flame-graph": {
@@ -686,7 +681,7 @@
   },
   "timeseries": {
     "menu": {
-      "add-to-dashboard": "Añadir al panel de control",
+      "add-to-dashboard": "",
       "exemplars": "Ejemplos",
       "labels": "",
       "open-in-explore": "Abrir en Explorar",
@@ -721,17 +716,15 @@
       "label": "Tipo de perfil",
       "loading": "Cargando...",
       "placeholder_one": "Seleccionar una métrica de perfil ({{count}})",
-      "placeholder_many": "",
       "placeholder_other": "Seleccionar una métrica de perfil ({{count}})"
     },
     "service-name": {
       "aria-label": "Lista de servicios",
       "label": "Servicio",
       "loading": "Cargando servicios...",
+      "unmatched-tooltip": "",
       "placeholder_one": "Seleccionar un servicio ({{count}})",
-      "placeholder_many": "",
-      "placeholder_other": "Seleccionar un servicio ({{count}})",
-      "unmatched-tooltip": ""
+      "placeholder_other": "Seleccionar un servicio ({{count}})"
     },
     "span-selector": {
       "label": "Selector de intervalo"

@@ -8,6 +8,12 @@
     "fav": {
       "favorite": "Aggiungi ai preferiti",
       "unfavorite": "Elimina dai preferiti"
+    },
+    "span-exemplar-toggle": {
+      "aria-label": "",
+      "span-heatmap": "",
+      "time-series": "",
+      "unavailable": ""
     }
   },
   "ad-hoc": {
@@ -22,6 +28,9 @@
     "tabs": {
       "diff-view": "",
       "single-view": "Vista singola"
+    },
+    "upload": {
+      "diff-converted-to-single": ""
     },
     "view": {
       "title": "Vista ad hoc"
@@ -55,6 +64,9 @@
   "back-button": {
     "aria-label": "Torna a Profiles Drilldown",
     "label": "Torna a Profiles Drilldown"
+  },
+  "common": {
+    "not-available": ""
   },
   "create-recording-rule": {
     "cancel": "Annulla",
@@ -129,10 +141,6 @@
       "label": "Preimpostazioni di confronto",
       "placeholder": "Scegli una preimpostazione"
     },
-    "settings-error": {
-      "message": "Alcune funzionalità potrebbero non funzionare nel modo previsto (ad esempio, le opzioni di esportazione del grafico di fiamma). Prova a ricaricare la pagina. Ci scusiamo per l'inconveniente.",
-      "title": "Errore durante il recupero delle impostazioni del componente aggiuntivo!"
-    },
     "title": "Grafico di fiamma delle differenze per {{serviceName}} ({{profileMetricType}})"
   },
   "error-page": {
@@ -140,7 +148,14 @@
     "banner-title": "Errore irreversibile!",
     "title": "Profiles Drilldown di Grafana"
   },
+  "explore-service-heatmap": {
+    "description": "",
+    "title": ""
+  },
   "explorer": {
+    "add-to-dashboard": {
+      "modal-title": ""
+    },
     "exploration-type": {
       "all-services": "Tutti i servizi",
       "all-services-description": "Panoramica di tutti i servizi, per qualsiasi tipo di profilo",
@@ -159,6 +174,7 @@
       "add-recording-rule": "Aggiungi regola di registrazione",
       "recording-rules-tooltip": "Regole di registrazione",
       "settings-tooltip": "Visualizza/modifica le impostazioni del tenant",
+      "share-error": "",
       "share-tooltip": "Copia il link condivisibile negli appunti",
       "upload-tooltip": "Carica profili ad hoc",
       "view-recording-rules": "Visualizza le regole di registrazione"
@@ -173,10 +189,12 @@
     "error-flamegraph-com": "Impossibile esportare su flamegraph.com!",
     "error-loading-profile": "Errore durante il caricamento dei dati del profilo Flamebearer!",
     "error-png": "Impossibile esportare in png!",
+    "error-png-no-canvas": "",
     "error-pprof": "Impossibile esportare in pprof!",
     "json": "json",
     "json-label": "json",
     "png": "png",
+    "png-disabled-description": "",
     "png-label": "png",
     "pprof": "pprof",
     "tooltip": "Esporta dati di profilo"
@@ -200,12 +218,11 @@
       "remove": "Rimuovi selettore ID profilo dalla query",
       "tooltip": "Hai aggiunto un selettore ID profilo alla query del grafico di fiamma ({{profileIdSelector}})."
     },
-    "settings-error": {
-      "message": "Alcune funzionalità potrebbero non essere disponibili (ad esempio, i grafici di fiamma compressi). Prova a ricaricare la pagina. Ci scusiamo per l'inconveniente.",
-      "title": "Errore durante il recupero delle impostazioni del componente aggiuntivo!"
-    },
     "span-selector": {
-      "added": "Selettore di intervallo aggiunto",
+      "filter-label": "",
+      "filter-operator": "",
+      "filter-value": "",
+      "name": "",
       "remove": "Rimuovi selettore di intervallo dalla query",
       "tooltip": "Hai aggiunto un selettore di intervallo alla query del grafico di fiamma ({{spanSelector}})."
     },
@@ -238,10 +255,10 @@
     "context-menu": {
       "label": "Dettagli della funzione"
     },
+    "copy-error": "",
     "copy-to-clipboard": "Copia negli appunti",
     "fetch-error": "Errore durante il recupero dei dettagli della funzione!",
     "file": "File",
-    "file-path-copied": "Percorso del file copiato negli appunti!",
     "file-tooltip": "Percorso del file in cui è definita la funzione",
     "function-name": "Nome della funzione",
     "github": {
@@ -295,6 +312,10 @@
     "button": "Lascia un feedback"
   },
   "grid": {
+    "empty-state": {
+      "no-profiles": "",
+      "no-results": "Nessun risultato"
+    },
     "error": {
       "title": "Errore di query!"
     },
@@ -321,6 +342,37 @@
       "clear": "Azzera ricerca"
     }
   },
+  "heatmap": {
+    "exemplar": {
+      "select": ""
+    },
+    "exemplar-table": {
+      "clear-selection": "",
+      "col-actions": "",
+      "col-duration": "",
+      "col-span-id": "",
+      "col-span-name": "",
+      "col-timestamp": "",
+      "col-trace-id": "",
+      "copied": "",
+      "copy-to-clipboard": "",
+      "empty": "",
+      "open-flamegraph": "",
+      "open-trace": "",
+      "select-exemplar": "",
+      "select-tempo": "",
+      "tempo-datasource": "",
+      "tempo-placeholder": "",
+      "title": "",
+      "trace-lookup-failed": ""
+    },
+    "menu": {
+      "open-in-explore": ""
+    },
+    "trace-drawer": {
+      "title": ""
+    }
+  },
   "labels": {
     "compare": {
       "aria-label": "",
@@ -344,7 +396,6 @@
       "include-tooltip": "Includi \"{{label}}\" nei filtri"
     },
     "grid": {
-      "no-results": "Nessun risultato",
       "refresh-tooltip": "Fai clic per aggiornare completamente tutti i pannelli presenti sullo schermo"
     },
     "stats-panel": {
@@ -445,11 +496,19 @@
     "commit-sha": "Commit SHA: {{shortCommitSha}}",
     "contribute": "Contribuisci",
     "documentation": "Documentazione",
-    "grafana-version": "Grafana {{edition}} v{{version}} ({{env}})",
+    "grafana-version": "",
     "last-update": "Ultimo aggiornamento: {{updated}}",
     "report-issue": "Segnala un problema",
     "title": "Informazioni sul plug-in",
     "version": "Drilldown Profiles di Grafana v{{version}}"
+  },
+  "profiles": {
+    "kg-annotations": {
+      "insights-label": "",
+      "severity-critical": "",
+      "severity-info": "",
+      "severity-warning": ""
+    }
   },
   "query-analysis": {
     "blocks": "Blocchi",
@@ -547,7 +606,7 @@
       "no-searches": "Nessuna ricerca salvata da visualizzare.",
       "no-searches-tooltip": "Nessuna ricerca salvata da caricare",
       "remove-tooltip": "Rimuovi",
-      "saved-query-tooltip": "Carica query salvata",
+      "saved-query-tooltip": "",
       "select": "Seleziona",
       "select-pyroscope-query": "Seleziona una query Pyroscope.",
       "title": "Carica una ricerca salvata in precedenza",
@@ -561,7 +620,7 @@
       "existing-search-warning": "È presente una ricerca salvata in precedenza con la stessa query: {{title}}",
       "info-message": "Le ricerche salvate vengono archiviate localmente nel browser e saranno disponibili solo su questo dispositivo.",
       "save": "Salva",
-      "saved-queries-tooltip": "Salva in Query salvate",
+      "saved-queries-tooltip": "",
       "success-body": "Ricerca salvata correttamente.",
       "success-message": "Ricerca salvata correttamente.",
       "success-title": "Operazione riuscita",
@@ -595,7 +654,9 @@
         "tooltip": "La funzionalità dei dettagli della funzione consente di mappare l'utilizzo delle risorse alle righe del codice sorgente. Se l'integrazione con GitHub è configurata, il codice sorgente verrà scaricato da GitHub."
       },
       "fetch-error": {
-        "message": "Prova a ricaricare la pagina. Ci scusiamo per l'inconveniente.",
+        "cloud-hint": "",
+        "message": "",
+        "oss-hint": "",
         "title": "Errore durante il recupero delle impostazioni del componente aggiuntivo!"
       },
       "flame-graph": {
@@ -620,7 +681,9 @@
   },
   "timeseries": {
     "menu": {
+      "add-to-dashboard": "",
       "exemplars": "Esemplari",
+      "labels": "",
       "open-in-explore": "Apri in Esplora",
       "scale-linear": "Lineare",
       "scale-log2": "Log2",

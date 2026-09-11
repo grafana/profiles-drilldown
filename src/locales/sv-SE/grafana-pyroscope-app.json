@@ -8,6 +8,12 @@
     "fav": {
       "favorite": "Favorit",
       "unfavorite": "Avmarkera som favorit"
+    },
+    "span-exemplar-toggle": {
+      "aria-label": "",
+      "span-heatmap": "",
+      "time-series": "",
+      "unavailable": ""
     }
   },
   "ad-hoc": {
@@ -22,6 +28,9 @@
     "tabs": {
       "diff-view": "",
       "single-view": "Enskild vy"
+    },
+    "upload": {
+      "diff-converted-to-single": ""
     },
     "view": {
       "title": "Ad hoc-vy"
@@ -55,6 +64,9 @@
   "back-button": {
     "aria-label": "Tillbaka till Profiles Drilldown",
     "label": "Tillbaka till Profiles Drilldown"
+  },
+  "common": {
+    "not-available": ""
   },
   "create-recording-rule": {
     "cancel": "Avbryt",
@@ -129,10 +141,6 @@
       "label": "Förinställningar för jämförelse",
       "placeholder": "Välj en förinställning"
     },
-    "settings-error": {
-      "message": "Vissa funktioner kanske inte fungerar som förväntat (t.ex. exportalternativ för flamgraf). Försök att ladda om sidan. Vi ber om ursäkt för besväret.",
-      "title": "Fel vid hämtning av plugin-inställningar!"
-    },
     "title": "Diff-flamgraf för {{serviceName}} ({{profileMetricType}})"
   },
   "error-page": {
@@ -140,7 +148,14 @@
     "banner-title": "Allvarligt fel!",
     "title": "Grafana Profiles Drilldown"
   },
+  "explore-service-heatmap": {
+    "description": "",
+    "title": ""
+  },
   "explorer": {
+    "add-to-dashboard": {
+      "modal-title": ""
+    },
     "exploration-type": {
       "all-services": "Alla tjänster",
       "all-services-description": "Översikt över alla tjänster, för valfri profiltyp",
@@ -159,6 +174,7 @@
       "add-recording-rule": "Lägg till inspelningsregel",
       "recording-rules-tooltip": "Inspelningsregler",
       "settings-tooltip": "Visa/redigera klientinställningar",
+      "share-error": "",
       "share-tooltip": "Kopiera delbar länk till urklippet",
       "upload-tooltip": "Ladda upp ad hoc-profiler",
       "view-recording-rules": "Visa inspelningsregler"
@@ -173,10 +189,12 @@
     "error-flamegraph-com": "Det gick inte att exportera till flamegraph.com!",
     "error-loading-profile": "Fel vid laddning av Flamebearer-profildata!",
     "error-png": "Det gick inte att exportera till PNG!",
+    "error-png-no-canvas": "",
     "error-pprof": "Det gick inte att exportera till PPROF!",
     "json": "json",
     "json-label": "json",
     "png": "png",
+    "png-disabled-description": "",
     "png-label": "png",
     "pprof": "pprof",
     "tooltip": "Exportera profildata"
@@ -200,12 +218,11 @@
       "remove": "Ta bort profil-ID-väljare från frågan",
       "tooltip": "Du har lagt till en profil-ID-väljare i Flamegraph-frågan ({{profileIdSelector}})."
     },
-    "settings-error": {
-      "message": "Vissa funktioner kanske inte fungerar som förväntat (t.ex. minimerade flamgrafer). Försök att ladda om sidan. Vi ber om ursäkt för besväret.",
-      "title": "Fel vid hämtning av plugin-inställningar!"
-    },
     "span-selector": {
-      "added": "Intervallväljare tillagd",
+      "filter-label": "",
+      "filter-operator": "",
+      "filter-value": "",
+      "name": "",
       "remove": "Ta bort intervallväljare från frågan",
       "tooltip": "Du har lagt till en intervallväljare i flamegraffrågan ({{spanSelector}})."
     },
@@ -238,10 +255,10 @@
     "context-menu": {
       "label": "Funktionsdetaljer"
     },
+    "copy-error": "",
     "copy-to-clipboard": "Kopiera till urklippet",
     "fetch-error": "Fel vid hämtning av funktionsdetaljer!",
     "file": "Fil",
-    "file-path-copied": "Filsökväg kopierad till urklippet!",
     "file-tooltip": "Filsökväg där funktionen definieras",
     "function-name": "Funktionsnamn",
     "github": {
@@ -295,6 +312,10 @@
     "button": "Ge feedback"
   },
   "grid": {
+    "empty-state": {
+      "no-profiles": "",
+      "no-results": "Inga resultat"
+    },
     "error": {
       "title": "Frågefel!"
     },
@@ -321,6 +342,37 @@
       "clear": "Rensa sökningen"
     }
   },
+  "heatmap": {
+    "exemplar": {
+      "select": ""
+    },
+    "exemplar-table": {
+      "clear-selection": "",
+      "col-actions": "",
+      "col-duration": "",
+      "col-span-id": "",
+      "col-span-name": "",
+      "col-timestamp": "",
+      "col-trace-id": "",
+      "copied": "",
+      "copy-to-clipboard": "",
+      "empty": "",
+      "open-flamegraph": "",
+      "open-trace": "",
+      "select-exemplar": "",
+      "select-tempo": "",
+      "tempo-datasource": "",
+      "tempo-placeholder": "",
+      "title": "",
+      "trace-lookup-failed": ""
+    },
+    "menu": {
+      "open-in-explore": ""
+    },
+    "trace-drawer": {
+      "title": ""
+    }
+  },
   "labels": {
     "compare": {
       "aria-label": "",
@@ -344,7 +396,6 @@
       "include-tooltip": "Inkludera ”{{label}}” i filtren"
     },
     "grid": {
-      "no-results": "Inga resultat",
       "refresh-tooltip": "Klicka för att helt uppdatera alla paneler som visas på skärmen"
     },
     "stats-panel": {
@@ -445,11 +496,19 @@
     "commit-sha": "Commit-SHA: {{shortCommitSha}}",
     "contribute": "Bidra",
     "documentation": "Dokumentation",
-    "grafana-version": "Grafana {{edition}} v{{version}} ({{env}})",
+    "grafana-version": "",
     "last-update": "Senaste uppdatering: {{updated}}",
     "report-issue": "Rapportera ett problem",
     "title": "Information om tillägg",
     "version": "Grafana Profiles Drilldown v{{version}}"
+  },
+  "profiles": {
+    "kg-annotations": {
+      "insights-label": "",
+      "severity-critical": "",
+      "severity-info": "",
+      "severity-warning": ""
+    }
   },
   "query-analysis": {
     "blocks": "Block",
@@ -547,7 +606,7 @@
       "no-searches": "Inga sparade sökningar att visa.",
       "no-searches-tooltip": "Inga sparade sökningar att läsa in",
       "remove-tooltip": "Ta bort",
-      "saved-query-tooltip": "Läs in sparad fråga",
+      "saved-query-tooltip": "",
       "select": "Välj",
       "select-pyroscope-query": "Välj en Pyroscope-fråga.",
       "title": "Läs in en tidigare sparad sökning",
@@ -561,7 +620,7 @@
       "existing-search-warning": "Det finns en tidigare sparad sökning med samma fråga: {{title}}",
       "info-message": "Sparade sökningar lagras lokalt i din webbläsare och kommer endast att vara tillgängliga på den här enheten.",
       "save": "Spara",
-      "saved-queries-tooltip": "Spara i Sparade frågor",
+      "saved-queries-tooltip": "",
       "success-body": "Sökningen har sparats.",
       "success-message": "Sökningen har sparats.",
       "success-title": "Lyckades",
@@ -595,7 +654,9 @@
         "tooltip": "Funktionen för funktionsdetaljer gör det möjligt att kartlägga resursanvändningen till raderna i källkoden. Om GitHub-integrationen har konfigurerats kommer källkoden att laddas ner från GitHub."
       },
       "fetch-error": {
-        "message": "Försök att ladda om sidan. Vi ber om ursäkt för besväret.",
+        "cloud-hint": "",
+        "message": "",
+        "oss-hint": "",
         "title": "Fel vid hämtning av plugin-inställningar!"
       },
       "flame-graph": {
@@ -620,7 +681,9 @@
   },
   "timeseries": {
     "menu": {
+      "add-to-dashboard": "",
       "exemplars": "Exemplar",
+      "labels": "",
       "open-in-explore": "Öppna i Utforskaren",
       "scale-linear": "Linjär",
       "scale-log2": "Log2",

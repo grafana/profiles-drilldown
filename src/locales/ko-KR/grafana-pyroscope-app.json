@@ -8,6 +8,12 @@
     "fav": {
       "favorite": "즐겨찾기",
       "unfavorite": "즐겨찾기 해제"
+    },
+    "span-exemplar-toggle": {
+      "aria-label": "",
+      "span-heatmap": "",
+      "time-series": "",
+      "unavailable": ""
     }
   },
   "ad-hoc": {
@@ -22,6 +28,9 @@
     "tabs": {
       "diff-view": "",
       "single-view": "단일 보기"
+    },
+    "upload": {
+      "diff-converted-to-single": ""
     },
     "view": {
       "title": "임시 보기"
@@ -55,6 +64,9 @@
   "back-button": {
     "aria-label": "Profiles Drilldown으로 돌아가기",
     "label": "Profiles Drilldown으로 돌아가기"
+  },
+  "common": {
+    "not-available": ""
   },
   "create-recording-rule": {
     "cancel": "취소",
@@ -129,10 +141,6 @@
       "label": "비교 사전 설정",
       "placeholder": "사전 설정 선택"
     },
-    "settings-error": {
-      "message": "일부 기능(예: 플레임 그래프 내보내기 옵션)이 예상대로 작동하지 않을 수 있습니다. 페이지를 새로 고쳐 보시기 바랍니다. 불편을 드려 죄송합니다.",
-      "title": "플러그인 설정을 가져오는 동안 오류가 발생했습니다!"
-    },
     "title": "{{serviceName}}({{profileMetricType}})에 대한 차등 플레임 그래프"
   },
   "error-page": {
@@ -140,7 +148,14 @@
     "banner-title": "치명적 오류!",
     "title": "Grafana Profiles Drilldown"
   },
+  "explore-service-heatmap": {
+    "description": "",
+    "title": ""
+  },
   "explorer": {
+    "add-to-dashboard": {
+      "modal-title": ""
+    },
     "exploration-type": {
       "all-services": "모든 서비스",
       "all-services-description": "특정 프로필 유형에 대한 모든 서비스의 개요",
@@ -159,6 +174,7 @@
       "add-recording-rule": "기록 규칙 추가",
       "recording-rules-tooltip": "기록 규칙",
       "settings-tooltip": "테넌트 설정 보기/편집",
+      "share-error": "",
       "share-tooltip": "공유 가능한 링크를 클립보드에 복사",
       "upload-tooltip": "임시 프로필 업로드",
       "view-recording-rules": "기록 규칙 보기"
@@ -173,10 +189,12 @@
     "error-flamegraph-com": "flamegraph.com으로 내보내지 못했습니다!",
     "error-loading-profile": "Flamebearer 프로필 데이터를 불러오는 동안 오류가 발생했습니다!",
     "error-png": "png로 내보내지 못했습니다!",
+    "error-png-no-canvas": "",
     "error-pprof": "pprof로 내보내지 못했습니다!",
     "json": "json",
     "json-label": "json",
     "png": "png",
+    "png-disabled-description": "",
     "png-label": "png",
     "pprof": "pprof",
     "tooltip": "프로필 데이터 내보내기"
@@ -200,12 +218,11 @@
       "remove": "쿼리에서 프로필 ID 선택기 제거",
       "tooltip": "플레임그래프 쿼리({{profileIdSelector}})에 프로필 ID 선택기를 추가했습니다."
     },
-    "settings-error": {
-      "message": "일부 기능(예: 축소된 플레임 그래프)이 예상대로 작동하지 않을 수 있습니다. 페이지를 새로 고쳐 보시기 바랍니다. 불편을 드려 죄송합니다.",
-      "title": "플러그인 설정을 가져오는 동안 오류가 발생했습니다!"
-    },
     "span-selector": {
-      "added": "범위 선택기 추가됨",
+      "filter-label": "",
+      "filter-operator": "",
+      "filter-value": "",
+      "name": "",
       "remove": "쿼리에서 범위 선택기 제거",
       "tooltip": "플레임그래프 쿼리({{spanSelector}})에 범위 선택기를 추가했습니다."
     },
@@ -238,10 +255,10 @@
     "context-menu": {
       "label": "함수 세부 정보"
     },
+    "copy-error": "",
     "copy-to-clipboard": "클립보드로 복사",
     "fetch-error": "함수 세부 정보를 가져오는 동안 오류가 발생했습니다!",
     "file": "파일",
-    "file-path-copied": "클립보드에 파일 경로가 복사되었습니다!",
     "file-tooltip": "함수가 정의된 파일 경로",
     "function-name": "함수 이름",
     "github": {
@@ -295,6 +312,10 @@
     "button": "피드백 제출하기"
   },
   "grid": {
+    "empty-state": {
+      "no-profiles": "",
+      "no-results": "결과 없음"
+    },
     "error": {
       "title": "쿼리 오류!"
     },
@@ -321,6 +342,37 @@
       "clear": "검색 초기화"
     }
   },
+  "heatmap": {
+    "exemplar": {
+      "select": ""
+    },
+    "exemplar-table": {
+      "clear-selection": "",
+      "col-actions": "",
+      "col-duration": "",
+      "col-span-id": "",
+      "col-span-name": "",
+      "col-timestamp": "",
+      "col-trace-id": "",
+      "copied": "",
+      "copy-to-clipboard": "",
+      "empty": "",
+      "open-flamegraph": "",
+      "open-trace": "",
+      "select-exemplar": "",
+      "select-tempo": "",
+      "tempo-datasource": "",
+      "tempo-placeholder": "",
+      "title": "",
+      "trace-lookup-failed": ""
+    },
+    "menu": {
+      "open-in-explore": ""
+    },
+    "trace-drawer": {
+      "title": ""
+    }
+  },
   "labels": {
     "compare": {
       "aria-label": "",
@@ -343,7 +395,6 @@
       "include-tooltip": "필터에 '{{label}}' 포함"
     },
     "grid": {
-      "no-results": "결과 없음",
       "refresh-tooltip": "화면에 있는 모든 패널을 완전히 새로 고치려면 클릭하세요."
     },
     "stats-panel": {
@@ -444,11 +495,19 @@
     "commit-sha": "SHA 커밋: {{shortCommitSha}}",
     "contribute": "기여",
     "documentation": "문서",
-    "grafana-version": "Grafana {{edition}} v{{version}}({{env}})",
+    "grafana-version": "",
     "last-update": "마지막 업데이트: {{updated}}",
     "report-issue": "문제 보고",
     "title": "플러그인 정보",
     "version": "Grafana Profiles Drilldown v{{version}}"
+  },
+  "profiles": {
+    "kg-annotations": {
+      "insights-label": "",
+      "severity-critical": "",
+      "severity-info": "",
+      "severity-warning": ""
+    }
   },
   "query-analysis": {
     "blocks": "블록",
@@ -546,7 +605,7 @@
       "no-searches": "표시할 저장된 검색이 없습니다.",
       "no-searches-tooltip": "불러올 저장된 검색이 없습니다.",
       "remove-tooltip": "제거",
-      "saved-query-tooltip": "저장된 쿼리 불러오기",
+      "saved-query-tooltip": "",
       "select": "선택",
       "select-pyroscope-query": "Pyroscope 쿼리를 선택하세요.",
       "title": "이전에 저장된 검색 불러오기",
@@ -560,7 +619,7 @@
       "existing-search-warning": "동일한 쿼리로 이전에 저장된 검색이 있음: {{title}}",
       "info-message": "저장된 검색은 브라우저에 로컬로 저장되며 이 기기에서만 사용할 수 있습니다.",
       "save": "저장",
-      "saved-queries-tooltip": "저장된 쿼리에 저장",
+      "saved-queries-tooltip": "",
       "success-body": "검색이 성공적으로 저장되었습니다.",
       "success-message": "검색이 성공적으로 저장되었습니다.",
       "success-title": "성공",
@@ -594,7 +653,9 @@
         "tooltip": "함수 세부 정보 기능을 사용하면 리소스 사용량을 소스 코드 라인에 매핑할 수 있습니다. GitHub 통합이 구성된 경우 GitHub에서 소스 코드가 다운로드됩니다."
       },
       "fetch-error": {
-        "message": "페이지를 새로 고쳐 보시기 바랍니다. 불편을 드려 죄송합니다.",
+        "cloud-hint": "",
+        "message": "",
+        "oss-hint": "",
         "title": "플러그인 설정을 가져오는 동안 오류가 발생했습니다!"
       },
       "flame-graph": {
@@ -619,7 +680,9 @@
   },
   "timeseries": {
     "menu": {
+      "add-to-dashboard": "",
       "exemplars": "예제",
+      "labels": "",
       "open-in-explore": "탐색에서 열기",
       "scale-linear": "직선형",
       "scale-log2": "Log2",

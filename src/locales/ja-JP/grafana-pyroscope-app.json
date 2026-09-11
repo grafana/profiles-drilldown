@@ -8,6 +8,12 @@
     "fav": {
       "favorite": "お気に入り",
       "unfavorite": "お気に入りから削除"
+    },
+    "span-exemplar-toggle": {
+      "aria-label": "",
+      "span-heatmap": "",
+      "time-series": "",
+      "unavailable": ""
     }
   },
   "ad-hoc": {
@@ -22,6 +28,9 @@
     "tabs": {
       "diff-view": "",
       "single-view": "単一ビュー"
+    },
+    "upload": {
+      "diff-converted-to-single": ""
     },
     "view": {
       "title": "アドホックビュー"
@@ -55,6 +64,9 @@
   "back-button": {
     "aria-label": "Profiles Drilldownに戻る",
     "label": "Profiles Drilldownに戻る"
+  },
+  "common": {
+    "not-available": ""
   },
   "create-recording-rule": {
     "cancel": "キャンセル",
@@ -129,10 +141,6 @@
       "label": "比較プリセット",
       "placeholder": "プリセットを選択"
     },
-    "settings-error": {
-      "message": "一部の機能（フレームグラフのエクスポートオプションなど）が期待通りに動作しない可能性があります。ページの再読み込みをお試しください。ご不便をおかけして申し訳ございません。",
-      "title": "プラグイン設定の取得中にエラーが発生しました！"
-    },
     "title": "{{serviceName}}（{{profileMetricType}}）の差分フレームグラフ"
   },
   "error-page": {
@@ -140,7 +148,14 @@
     "banner-title": "致命的なエラーが発生しました！",
     "title": "Grafana Profiles Drilldown"
   },
+  "explore-service-heatmap": {
+    "description": "",
+    "title": ""
+  },
   "explorer": {
+    "add-to-dashboard": {
+      "modal-title": ""
+    },
     "exploration-type": {
       "all-services": "すべてのサービス",
       "all-services-description": "任意のプロファイルタイプに対する、すべてのサービスの概要",
@@ -159,6 +174,7 @@
       "add-recording-rule": "記録ルールを追加",
       "recording-rules-tooltip": "記録ルール",
       "settings-tooltip": "テナント設定の表示/編集",
+      "share-error": "",
       "share-tooltip": "共有可能なリンクをクリップボードにコピー",
       "upload-tooltip": "アドホックプロファイルをアップロード",
       "view-recording-rules": "記録ルールを表示"
@@ -173,10 +189,12 @@
     "error-flamegraph-com": "flamegraph.comへのエクスポートに失敗しました！",
     "error-loading-profile": "Flamebearerプロファイルデータの読み込み中にエラーが発生しました！",
     "error-png": "pngへのエクスポートに失敗しました！",
+    "error-png-no-canvas": "",
     "error-pprof": "pprofへのエクスポートに失敗しました！",
     "json": "json",
     "json-label": "json",
     "png": "png",
+    "png-disabled-description": "",
     "png-label": "png",
     "pprof": "pprof",
     "tooltip": "プロファイルデータをエクスポート"
@@ -200,12 +218,11 @@
       "remove": "クエリからプロファイルIDセレクターを削除",
       "tooltip": "フレームグラフクエリ（{{profileIdSelector}}）にプロファイルIDセレクターを追加しました。"
     },
-    "settings-error": {
-      "message": "一部の機能（折りたたまれたフレームグラフなど）が期待通りに動作しない可能性があります。ページの再読み込みをお試しください。ご不便をおかけして申し訳ございません。",
-      "title": "プラグイン設定の取得中にエラーが発生しました！"
-    },
     "span-selector": {
-      "added": "スパンセレクターが追加されました",
+      "filter-label": "",
+      "filter-operator": "",
+      "filter-value": "",
+      "name": "",
       "remove": "クエリからスパンセレクターを削除",
       "tooltip": "フレームグラフクエリ（{{spanSelector}}）にスパンセレクターを追加しました。"
     },
@@ -238,10 +255,10 @@
     "context-menu": {
       "label": "関数の詳細"
     },
+    "copy-error": "",
     "copy-to-clipboard": "クリップボードにコピー",
     "fetch-error": "関数の詳細の取得中にエラーが発生しました！",
     "file": "ファイル",
-    "file-path-copied": "ファイルパスをクリップボードにコピーしました！",
     "file-tooltip": "その関数が定義されているファイルパス",
     "function-name": "関数名",
     "github": {
@@ -295,6 +312,10 @@
     "button": "フィードバックを提供"
   },
   "grid": {
+    "empty-state": {
+      "no-profiles": "",
+      "no-results": "結果はありません"
+    },
     "error": {
       "title": "クエリエラーが発生しました！"
     },
@@ -321,6 +342,37 @@
       "clear": "検索をクリア"
     }
   },
+  "heatmap": {
+    "exemplar": {
+      "select": ""
+    },
+    "exemplar-table": {
+      "clear-selection": "",
+      "col-actions": "",
+      "col-duration": "",
+      "col-span-id": "",
+      "col-span-name": "",
+      "col-timestamp": "",
+      "col-trace-id": "",
+      "copied": "",
+      "copy-to-clipboard": "",
+      "empty": "",
+      "open-flamegraph": "",
+      "open-trace": "",
+      "select-exemplar": "",
+      "select-tempo": "",
+      "tempo-datasource": "",
+      "tempo-placeholder": "",
+      "title": "",
+      "trace-lookup-failed": ""
+    },
+    "menu": {
+      "open-in-explore": ""
+    },
+    "trace-drawer": {
+      "title": ""
+    }
+  },
   "labels": {
     "compare": {
       "aria-label": "",
@@ -343,7 +395,6 @@
       "include-tooltip": "フィルターに「{{label}}」を含める"
     },
     "grid": {
-      "no-results": "結果はありません",
       "refresh-tooltip": "クリックして、画面上に表示されているすべてのパネルを完全に更新"
     },
     "stats-panel": {
@@ -444,11 +495,19 @@
     "commit-sha": "コミットSHA：{{shortCommitSha}}",
     "contribute": "貢献",
     "documentation": "ドキュメント",
-    "grafana-version": "Grafana {{edition}} v{{version}}（{{env}}）",
+    "grafana-version": "",
     "last-update": "最終更新：{{updated}}",
     "report-issue": "問題を報告する",
     "title": "プラグイン情報",
     "version": "Grafana Profiles Drilldown v{{version}}"
+  },
+  "profiles": {
+    "kg-annotations": {
+      "insights-label": "",
+      "severity-critical": "",
+      "severity-info": "",
+      "severity-warning": ""
+    }
   },
   "query-analysis": {
     "blocks": "ブロック",
@@ -546,7 +605,7 @@
       "no-searches": "表示する保存した検索がありません。",
       "no-searches-tooltip": "読み込む保存した検索がありません",
       "remove-tooltip": "削除",
-      "saved-query-tooltip": "保存されたクエリを読み込む",
+      "saved-query-tooltip": "",
       "select": "選択",
       "select-pyroscope-query": "Pyroscope クエリを選択してください。",
       "title": "以前に保存した検索を読み込む",
@@ -560,7 +619,7 @@
       "existing-search-warning": "同じクエリを使用した、以前に保存した検索が存在します：{{title}}",
       "info-message": "保存した検索はブラウザのローカルデータに保存され、このデバイスでのみ利用できます。",
       "save": "保存",
-      "saved-queries-tooltip": "保存されたクエリに保存",
+      "saved-queries-tooltip": "",
       "success-body": "検索が正常に保存されました。",
       "success-message": "検索が正常に保存されました。",
       "success-title": "成功",
@@ -594,7 +653,9 @@
         "tooltip": "関数の詳細機能を使用すると、リソース使用状況をソースコードの行にマッピングできます。GitHub統合が設定されている場合、ソースコードはGitHubからダウンロードされます。"
       },
       "fetch-error": {
-        "message": "ページの再読み込みをお試しください。ご不便をおかけして申し訳ございません。",
+        "cloud-hint": "",
+        "message": "",
+        "oss-hint": "",
         "title": "プラグイン設定の取得中にエラーが発生しました！"
       },
       "flame-graph": {
@@ -619,7 +680,9 @@
   },
   "timeseries": {
     "menu": {
+      "add-to-dashboard": "",
       "exemplars": "エグゼンプラー",
+      "labels": "",
       "open-in-explore": "Exploreで開く",
       "scale-linear": "線形",
       "scale-log2": "Log2",
