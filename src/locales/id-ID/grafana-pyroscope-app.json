@@ -8,6 +8,12 @@
     "fav": {
       "favorite": "Favorit",
       "unfavorite": "Batalkan favorit"
+    },
+    "span-exemplar-toggle": {
+      "aria-label": "",
+      "span-heatmap": "",
+      "time-series": "",
+      "unavailable": ""
     }
   },
   "ad-hoc": {
@@ -22,6 +28,9 @@
     "tabs": {
       "diff-view": "",
       "single-view": "Tampilan tunggal"
+    },
+    "upload": {
+      "diff-converted-to-single": ""
     },
     "view": {
       "title": "Tampilan ad hoc"
@@ -55,6 +64,9 @@
   "back-button": {
     "aria-label": "Kembali ke Drilldown Profil",
     "label": "Kembali ke Drilldown Profil"
+  },
+  "common": {
+    "not-available": ""
   },
   "create-recording-rule": {
     "cancel": "Batalkan",
@@ -129,10 +141,6 @@
       "label": "Preset perbandingan",
       "placeholder": "Pilih preset"
     },
-    "settings-error": {
-      "message": "Beberapa fitur mungkin tidak berfungsi seperti yang diharapkan (misalnya opsi ekspor flamegraph). Coba muat ulang halaman. Maaf atas ketidaknyamanan ini.",
-      "title": "Terjadi kesalahan saat mengambil pengaturan plugin!"
-    },
     "title": "Diff flame graph untuk {{serviceName}} ({{profileMetricType}})"
   },
   "error-page": {
@@ -140,7 +148,14 @@
     "banner-title": "Kesalahan fatal!",
     "title": "Drilldown Profil Grafana"
   },
+  "explore-service-heatmap": {
+    "description": "",
+    "title": ""
+  },
   "explorer": {
+    "add-to-dashboard": {
+      "modal-title": ""
+    },
     "exploration-type": {
       "all-services": "Semua service",
       "all-services-description": "Ikhtisar semua service, untuk jenis profil tertentu",
@@ -159,6 +174,7 @@
       "add-recording-rule": "Tambahkan aturan perekaman",
       "recording-rules-tooltip": "Aturan perekaman",
       "settings-tooltip": "Lihat/edit pengaturan tenant",
+      "share-error": "",
       "share-tooltip": "Salin tautan yang dapat dibagikan ke papan klip",
       "upload-tooltip": "Unggah profil ad hoc",
       "view-recording-rules": "Lihat aturan perekaman"
@@ -173,10 +189,12 @@
     "error-flamegraph-com": "Gagal mengekspor ke flamegraph.com!",
     "error-loading-profile": "Terjadi kesalahan saat memuat data profil Flamebearer!",
     "error-png": "Gagal mengekspor ke png!",
+    "error-png-no-canvas": "",
     "error-pprof": "Gagal mengekspor ke pprof!",
     "json": "json",
     "json-label": "json",
     "png": "png",
+    "png-disabled-description": "",
     "png-label": "png",
     "pprof": "pprof",
     "tooltip": "Ekspor data profil"
@@ -200,12 +218,11 @@
       "remove": "Hapus selektor ID profil dari kueri",
       "tooltip": "Anda telah menambahkan selektor ID profil ke kueri flamegraph ({{profileIdSelector}})."
     },
-    "settings-error": {
-      "message": "Beberapa fitur mungkin tidak berfungsi seperti yang diharapkan (misalnya flamegraph yang diciutkan). Coba muat ulang halaman. Maaf atas ketidaknyamanan ini.",
-      "title": "Terjadi kesalahan saat mengambil pengaturan plugin!"
-    },
     "span-selector": {
-      "added": "Selektor rentang ditambahkan",
+      "filter-label": "",
+      "filter-operator": "",
+      "filter-value": "",
+      "name": "",
       "remove": "Hapus selektor rentang dari kueri",
       "tooltip": "Anda telah menambahkan selektor rentang ke kueri flamegraph ({{spanSelector}})."
     },
@@ -238,10 +255,10 @@
     "context-menu": {
       "label": "Detail fungsi"
     },
+    "copy-error": "",
     "copy-to-clipboard": "Salin ke papan klip",
     "fetch-error": "Terjadi kesalahan saat mengambil detail fungsi!",
     "file": "File",
-    "file-path-copied": "Jalur file disalin ke papan klip!",
     "file-tooltip": "Jalur file tempat fungsi tersebut ditetapkan",
     "function-name": "Nama fungsi",
     "github": {
@@ -295,6 +312,10 @@
     "button": "Berikan umpan balik"
   },
   "grid": {
+    "empty-state": {
+      "no-profiles": "",
+      "no-results": "Tidak ada hasil"
+    },
     "error": {
       "title": "Terjadi kesalahan kueri!"
     },
@@ -321,6 +342,37 @@
       "clear": "Hapus pencarian"
     }
   },
+  "heatmap": {
+    "exemplar": {
+      "select": ""
+    },
+    "exemplar-table": {
+      "clear-selection": "",
+      "col-actions": "",
+      "col-duration": "",
+      "col-span-id": "",
+      "col-span-name": "",
+      "col-timestamp": "",
+      "col-trace-id": "",
+      "copied": "",
+      "copy-to-clipboard": "",
+      "empty": "",
+      "open-flamegraph": "",
+      "open-trace": "",
+      "select-exemplar": "",
+      "select-tempo": "",
+      "tempo-datasource": "",
+      "tempo-placeholder": "",
+      "title": "",
+      "trace-lookup-failed": ""
+    },
+    "menu": {
+      "open-in-explore": ""
+    },
+    "trace-drawer": {
+      "title": ""
+    }
+  },
   "labels": {
     "compare": {
       "aria-label": "",
@@ -343,7 +395,6 @@
       "include-tooltip": "Sertakan \"{{label}}\" dalam filter"
     },
     "grid": {
-      "no-results": "Tidak ada hasil",
       "refresh-tooltip": "Klik untuk sepenuhnya memuat ulang semua panel yang ada di layar"
     },
     "stats-panel": {
@@ -444,11 +495,19 @@
     "commit-sha": "Commit SHA: {{shortCommitSha}}",
     "contribute": "Berkontribusi",
     "documentation": "Dokumentasi",
-    "grafana-version": "Grafana {{edition}} v{{version}} ({{env}})",
+    "grafana-version": "",
     "last-update": "Terakhir diperbarui: {{updated}}",
     "report-issue": "Laporkan masalah",
     "title": "Info plugin",
     "version": "Drilldown Profil Grafana v{{version}}"
+  },
+  "profiles": {
+    "kg-annotations": {
+      "insights-label": "",
+      "severity-critical": "",
+      "severity-info": "",
+      "severity-warning": ""
+    }
   },
   "query-analysis": {
     "blocks": "Blok",
@@ -546,7 +605,7 @@
       "no-searches": "Tidak ada pencarian tersimpan untuk ditampilkan.",
       "no-searches-tooltip": "Tidak ada pencarian tersimpan untuk dimuat",
       "remove-tooltip": "Hapus",
-      "saved-query-tooltip": "Muat kueri tersimpan",
+      "saved-query-tooltip": "",
       "select": "Pilih",
       "select-pyroscope-query": "Pilih kueri Pyroscope.",
       "title": "Muat pencarian yang sudah disimpan sebelumnya",
@@ -560,7 +619,7 @@
       "existing-search-warning": "Ada pencarian yang sudah disimpan sebelumnya dengan kueri yang sama: {{title}}",
       "info-message": "Pencarian tersimpan disimpan secara lokal di browser Anda dan hanya akan tersedia di perangkat ini.",
       "save": "Simpan",
-      "saved-queries-tooltip": "Simpan di Kueri Tersimpan",
+      "saved-queries-tooltip": "",
       "success-body": "Pencarian berhasil disimpan.",
       "success-message": "Pencarian berhasil disimpan.",
       "success-title": "Berhasil",
@@ -594,7 +653,9 @@
         "tooltip": "Fitur detail fungsi memungkinkan pemetaan penggunaan sumber daya ke baris kode sumber. Jika integrasi GitHub dikonfigurasi, kode sumber akan diunduh dari GitHub."
       },
       "fetch-error": {
-        "message": "Coba muat ulang halaman. Maaf atas ketidaknyamanan ini.",
+        "cloud-hint": "",
+        "message": "",
+        "oss-hint": "",
         "title": "Terjadi kesalahan saat mengambil pengaturan plugin!"
       },
       "flame-graph": {
@@ -619,7 +680,9 @@
   },
   "timeseries": {
     "menu": {
+      "add-to-dashboard": "",
       "exemplars": "Contoh",
+      "labels": "",
       "open-in-explore": "Buka di Telusuri",
       "scale-linear": "Linier",
       "scale-log2": "Log2",

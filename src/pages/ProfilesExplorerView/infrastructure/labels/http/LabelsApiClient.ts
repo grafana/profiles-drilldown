@@ -1,5 +1,3 @@
-import { getPyroscopeUTF8LabelNamesFromOpenFeature } from '@shared/infrastructure/featureFlags/featureFlags';
-
 import { DataSourceProxyClient } from '../../series/http/DataSourceProxyClient';
 
 export class LabelsApiClient extends DataSourceProxyClient {
@@ -43,9 +41,7 @@ export class LabelsApiClient extends DataSourceProxyClient {
     return super.fetch(pathname, {
       method: 'POST',
       body: JSON.stringify(body),
-      headers: getPyroscopeUTF8LabelNamesFromOpenFeature()
-        ? { accept: 'application/json; allow-utf8-labelnames=true' }
-        : {},
+      headers: { accept: 'application/json; allow-utf8-labelnames=true' },
     });
   }
 }

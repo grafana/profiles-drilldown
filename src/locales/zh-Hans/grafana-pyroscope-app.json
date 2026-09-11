@@ -8,6 +8,12 @@
     "fav": {
       "favorite": "收藏",
       "unfavorite": "取消收藏"
+    },
+    "span-exemplar-toggle": {
+      "aria-label": "",
+      "span-heatmap": "",
+      "time-series": "",
+      "unavailable": ""
     }
   },
   "ad-hoc": {
@@ -22,6 +28,9 @@
     "tabs": {
       "diff-view": "",
       "single-view": "单一视图"
+    },
+    "upload": {
+      "diff-converted-to-single": ""
     },
     "view": {
       "title": "临时视图"
@@ -55,6 +64,9 @@
   "back-button": {
     "aria-label": "返回配置文件深入分析",
     "label": "返回配置文件深入分析"
+  },
+  "common": {
+    "not-available": ""
   },
   "create-recording-rule": {
     "cancel": "取消",
@@ -129,10 +141,6 @@
       "label": "比较预设",
       "placeholder": "选择一个预设"
     },
-    "settings-error": {
-      "message": "某些功能可能无法按预期运行（例如火焰图导出选项）。请尝试重新加载页面。对于给您带来的不便，我们深表歉意。",
-      "title": "检索插件设置时出错！"
-    },
     "title": "{{serviceName}}（{{profileMetricType}}）的差异火焰图"
   },
   "error-page": {
@@ -140,7 +148,14 @@
     "banner-title": "致命错误！",
     "title": "Grafana 配置文件深入分析"
   },
+  "explore-service-heatmap": {
+    "description": "",
+    "title": ""
+  },
   "explorer": {
+    "add-to-dashboard": {
+      "modal-title": ""
+    },
     "exploration-type": {
       "all-services": "所有服务",
       "all-services-description": "针对任何给定配置文件类型的所有服务概览",
@@ -159,6 +174,7 @@
       "add-recording-rule": "添加录制规则",
       "recording-rules-tooltip": "录制规则",
       "settings-tooltip": "查看/编辑租户设置",
+      "share-error": "",
       "share-tooltip": "将可共享链接复制到剪贴板",
       "upload-tooltip": "上传临时配置文件",
       "view-recording-rules": "查看录制规则"
@@ -173,10 +189,12 @@
     "error-flamegraph-com": "导出到 flamegraph.com 失败！",
     "error-loading-profile": "加载 Flamebearer 配置文件数据时出错！",
     "error-png": "导出到 png 失败！",
+    "error-png-no-canvas": "",
     "error-pprof": "导出到 pprof 失败！",
     "json": "json",
     "json-label": "json",
     "png": "png",
+    "png-disabled-description": "",
     "png-label": "png",
     "pprof": "pprof",
     "tooltip": "导出配置文件数据"
@@ -200,12 +218,11 @@
       "remove": "从查询中移除配置文件 ID 选择器",
       "tooltip": "您已在火焰图查询（{{profileIdSelector}}）中添加了配置文件 ID 选择器。"
     },
-    "settings-error": {
-      "message": "某些功能可能无法按预期运行（例如折叠的火焰图）。请尝试重新加载页面。对于给您带来的不便，我们深表歉意。",
-      "title": "检索插件设置时出错！"
-    },
     "span-selector": {
-      "added": "已添加跨度选择器",
+      "filter-label": "",
+      "filter-operator": "",
+      "filter-value": "",
+      "name": "",
       "remove": "从查询中移除跨度选择器",
       "tooltip": "您已在火焰图查询（{{spanSelector}}）中添加了跨度选择器。"
     },
@@ -238,10 +255,10 @@
     "context-menu": {
       "label": "函数详情"
     },
+    "copy-error": "",
     "copy-to-clipboard": "复制到剪贴板",
     "fetch-error": "获取函数详细信息时出错！",
     "file": "文件",
-    "file-path-copied": "文件路径已复制到剪贴板！",
     "file-tooltip": "在其中定义了该函数的文件路径",
     "function-name": "函数名称",
     "github": {
@@ -295,6 +312,10 @@
     "button": "提供反馈"
   },
   "grid": {
+    "empty-state": {
+      "no-profiles": "",
+      "no-results": "没有结果"
+    },
     "error": {
       "title": "查询错误！"
     },
@@ -321,6 +342,37 @@
       "clear": "清除搜索"
     }
   },
+  "heatmap": {
+    "exemplar": {
+      "select": ""
+    },
+    "exemplar-table": {
+      "clear-selection": "",
+      "col-actions": "",
+      "col-duration": "",
+      "col-span-id": "",
+      "col-span-name": "",
+      "col-timestamp": "",
+      "col-trace-id": "",
+      "copied": "",
+      "copy-to-clipboard": "",
+      "empty": "",
+      "open-flamegraph": "",
+      "open-trace": "",
+      "select-exemplar": "",
+      "select-tempo": "",
+      "tempo-datasource": "",
+      "tempo-placeholder": "",
+      "title": "",
+      "trace-lookup-failed": ""
+    },
+    "menu": {
+      "open-in-explore": ""
+    },
+    "trace-drawer": {
+      "title": ""
+    }
+  },
   "labels": {
     "compare": {
       "aria-label": "",
@@ -343,7 +395,6 @@
       "include-tooltip": "在筛选条件中包含“{{label}}”"
     },
     "grid": {
-      "no-results": "没有结果",
       "refresh-tooltip": "点击以完全刷新屏幕上显示的所有面板"
     },
     "stats-panel": {
@@ -444,11 +495,19 @@
     "commit-sha": "提交 SHA：{{shortCommitSha}}",
     "contribute": "贡献",
     "documentation": "文档",
-    "grafana-version": "Grafana {{edition}} v{{version}} ({{env}})",
+    "grafana-version": "",
     "last-update": "上次更新：{{updated}}",
     "report-issue": "报告问题",
     "title": "插件信息",
     "version": "Grafana 配置文件深入分析 v{{version}}"
+  },
+  "profiles": {
+    "kg-annotations": {
+      "insights-label": "",
+      "severity-critical": "",
+      "severity-info": "",
+      "severity-warning": ""
+    }
   },
   "query-analysis": {
     "blocks": "区块",
@@ -546,7 +605,7 @@
       "no-searches": "没有要显示的已保存搜索。",
       "no-searches-tooltip": "没有要加载的已保存搜索",
       "remove-tooltip": "移除",
-      "saved-query-tooltip": "加载已保存的查询",
+      "saved-query-tooltip": "",
       "select": "选择",
       "select-pyroscope-query": "请选择一个 Pyroscope 查询。",
       "title": "加载之前保存的搜索",
@@ -560,7 +619,7 @@
       "existing-search-warning": "之前保存的一个搜索具有相同查询：{{title}}",
       "info-message": "已保存的搜索会存储在您的浏览器本地，并且只能在此设备上使用。",
       "save": "保存",
-      "saved-queries-tooltip": "保存在“已保存的查询”中",
+      "saved-queries-tooltip": "",
       "success-body": "已成功保存搜索。",
       "success-message": "已成功保存搜索。",
       "success-title": "成功",
@@ -594,7 +653,9 @@
         "tooltip": "函数详情功能可将资源使用情况映射到源代码行。如果已配置 GitHub 集成，则将从 GitHub 下载源代码。"
       },
       "fetch-error": {
-        "message": "请尝试重新加载页面。对于给您带来的不便，我们深表歉意。",
+        "cloud-hint": "",
+        "message": "",
+        "oss-hint": "",
         "title": "检索插件设置时出错！"
       },
       "flame-graph": {
@@ -619,7 +680,9 @@
   },
   "timeseries": {
     "menu": {
+      "add-to-dashboard": "",
       "exemplars": "范例",
+      "labels": "",
       "open-in-explore": "在 Explore 中打开",
       "scale-linear": "线性",
       "scale-log2": "Log2",

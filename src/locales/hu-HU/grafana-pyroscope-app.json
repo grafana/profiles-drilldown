@@ -8,6 +8,12 @@
     "fav": {
       "favorite": "Kedvenc",
       "unfavorite": "Eltávolítás a kedvencek közül"
+    },
+    "span-exemplar-toggle": {
+      "aria-label": "",
+      "span-heatmap": "",
+      "time-series": "",
+      "unavailable": ""
     }
   },
   "ad-hoc": {
@@ -22,6 +28,9 @@
     "tabs": {
       "diff-view": "",
       "single-view": "Egyszeres nézet"
+    },
+    "upload": {
+      "diff-converted-to-single": ""
     },
     "view": {
       "title": "Eseti nézet"
@@ -55,6 +64,9 @@
   "back-button": {
     "aria-label": "Vissza a profilrészletezéshez",
     "label": "Vissza a profilrészletezéshez"
+  },
+  "common": {
+    "not-available": ""
   },
   "create-recording-rule": {
     "cancel": "Mégse",
@@ -129,10 +141,6 @@
       "label": "Összehasonlítási sablonok",
       "placeholder": "Válasszon egy sablont"
     },
-    "settings-error": {
-      "message": "Előfordulhat, hogy egyes funkciók nem működnek megfelelően (pl. a lángdiagram exportálási beállításai). Próbálja meg újratölteni az oldalt. Elnézést kérünk a kellemetlenségért.",
-      "title": "Hiba történt a bővítmény beállításainak lekérésekor!"
-    },
     "title": "Eltérési lángdiagram a következőhöz: {{serviceName}} ({{profileMetricType}})"
   },
   "error-page": {
@@ -140,7 +148,14 @@
     "banner-title": "Végzetes hiba!",
     "title": "Grafana profilrészletezés"
   },
+  "explore-service-heatmap": {
+    "description": "",
+    "title": ""
+  },
   "explorer": {
+    "add-to-dashboard": {
+      "modal-title": ""
+    },
     "exploration-type": {
       "all-services": "Minden szolgáltatás",
       "all-services-description": "Az összes szolgáltatás áttekintése bármely profiltípus esetén",
@@ -159,6 +174,7 @@
       "add-recording-rule": "Rögzítési szabály hozzáadása",
       "recording-rules-tooltip": "Rögzítési szabályok",
       "settings-tooltip": "Bérlői beállítások megtekintése/szerkesztése",
+      "share-error": "",
       "share-tooltip": "Megosztható hivatkozás másolása a vágólapra",
       "upload-tooltip": "Eseti profilok feltöltése",
       "view-recording-rules": "Rögzítési szabályok megtekintése"
@@ -173,10 +189,12 @@
     "error-flamegraph-com": "A flamegraph.com webhelyre történő exportálás nem sikerült!",
     "error-loading-profile": "Hiba történt a flamebearer-profiladatok betöltésekor!",
     "error-png": "A PNG-fájlba történő exportálás nem sikerült!",
+    "error-png-no-canvas": "",
     "error-pprof": "A pprof-fájlba történő exportálás nem sikerült!",
     "json": "json",
     "json-label": "json",
     "png": "png",
+    "png-disabled-description": "",
     "png-label": "png",
     "pprof": "pprof",
     "tooltip": "Profiladatok exportálása"
@@ -200,12 +218,11 @@
       "remove": "Profilazonosító-választó eltávolítása a lekérdezésből",
       "tooltip": "Egy profilazonosító-választót adott a lángdiagram-lekérdezéshez ({{profileIdSelector}})."
     },
-    "settings-error": {
-      "message": "Előfordulhat, hogy egyes funkciók nem működnek megfelelően (pl. az összecsukott lángdiagramok). Próbálja meg újratölteni az oldalt. Elnézést kérünk a kellemetlenségért.",
-      "title": "Hiba történt a bővítmény beállításainak lekérésekor!"
-    },
     "span-selector": {
-      "added": "Időegység-választó hozzáadva",
+      "filter-label": "",
+      "filter-operator": "",
+      "filter-value": "",
+      "name": "",
       "remove": "Időegység-választó eltávolítása a lekérdezésből",
       "tooltip": "Időegység-választót adott a lángdiagram-lekérdezéshez ({{spanSelector}})."
     },
@@ -238,10 +255,10 @@
     "context-menu": {
       "label": "Függvény részletei"
     },
+    "copy-error": "",
     "copy-to-clipboard": "Másolás vágólapra",
     "fetch-error": "Hiba történt a függvény részleteinek lekérésekor!",
     "file": "Fájl",
-    "file-path-copied": "Fájl elérési útja a vágólapra másolva!",
     "file-tooltip": "A fájl elérési útja, ahol a függvény definiálva van",
     "function-name": "Függvénynév",
     "github": {
@@ -295,6 +312,10 @@
     "button": "Visszajelzés küldése"
   },
   "grid": {
+    "empty-state": {
+      "no-profiles": "",
+      "no-results": "Nincs találat"
+    },
     "error": {
       "title": "Lekérdezési hiba!"
     },
@@ -321,6 +342,37 @@
       "clear": "Keresés törlése"
     }
   },
+  "heatmap": {
+    "exemplar": {
+      "select": ""
+    },
+    "exemplar-table": {
+      "clear-selection": "",
+      "col-actions": "",
+      "col-duration": "",
+      "col-span-id": "",
+      "col-span-name": "",
+      "col-timestamp": "",
+      "col-trace-id": "",
+      "copied": "",
+      "copy-to-clipboard": "",
+      "empty": "",
+      "open-flamegraph": "",
+      "open-trace": "",
+      "select-exemplar": "",
+      "select-tempo": "",
+      "tempo-datasource": "",
+      "tempo-placeholder": "",
+      "title": "",
+      "trace-lookup-failed": ""
+    },
+    "menu": {
+      "open-in-explore": ""
+    },
+    "trace-drawer": {
+      "title": ""
+    }
+  },
   "labels": {
     "compare": {
       "aria-label": "",
@@ -344,7 +396,6 @@
       "include-tooltip": "„{{label}}” belefoglalása a szűrőkbe"
     },
     "grid": {
-      "no-results": "Nincs találat",
       "refresh-tooltip": "Kattintson ide a képernyőn lévő összes panel teljes frissítéséhez"
     },
     "stats-panel": {
@@ -445,11 +496,19 @@
     "commit-sha": "Véglegesítési azonosító (SHA): {{shortCommitSha}}",
     "contribute": "Hozzájárulás",
     "documentation": "Dokumentáció",
-    "grafana-version": "Grafana {{edition}}, verzió: {{version}} ({{env}})",
+    "grafana-version": "",
     "last-update": "Legutóbbi frissítés: {{updated}}",
     "report-issue": "Probléma bejelentése",
     "title": "Bővítményinformáció",
     "version": "Grafana profilrészletező, verzió: {{version}}"
+  },
+  "profiles": {
+    "kg-annotations": {
+      "insights-label": "",
+      "severity-critical": "",
+      "severity-info": "",
+      "severity-warning": ""
+    }
   },
   "query-analysis": {
     "blocks": "Blokkok",
@@ -547,7 +606,7 @@
       "no-searches": "Nincsenek megjeleníthető mentett keresések.",
       "no-searches-tooltip": "Nincsenek betölthető mentett keresések",
       "remove-tooltip": "Eltávolítás",
-      "saved-query-tooltip": "Mentett lekérdezés betöltése",
+      "saved-query-tooltip": "",
       "select": "Kiválasztás",
       "select-pyroscope-query": "Válasszon egy Pyroscope-lekérdezést.",
       "title": "Korábban mentett keresés betöltése",
@@ -561,7 +620,7 @@
       "existing-search-warning": "Már létezik egy korábban mentett keresés ugyanezzel a lekérdezéssel: {{title}}",
       "info-message": "A mentett kereséseket a böngésző helyileg tárolja, így azok csak ezen az eszközön lesznek elérhetőek.",
       "save": "Mentés",
-      "saved-queries-tooltip": "Mentés a mentett lekérdezések közé",
+      "saved-queries-tooltip": "",
       "success-body": "Keresés sikeresen mentve.",
       "success-message": "Keresés sikeresen mentve.",
       "success-title": "Sikerült",
@@ -595,7 +654,9 @@
         "tooltip": "A függvényrészletek funkciója lehetővé teszi az erőforrás-használat forráskódsorokhoz való rendelését. Ha a GitHub-integráció konfigurálva van, a forráskód letöltődik a GitHubról."
       },
       "fetch-error": {
-        "message": "Próbálja meg újratölteni az oldalt. Elnézést kérünk a kellemetlenségért.",
+        "cloud-hint": "",
+        "message": "",
+        "oss-hint": "",
         "title": "Hiba történt a bővítmény beállításainak lekérésekor!"
       },
       "flame-graph": {
@@ -620,7 +681,9 @@
   },
   "timeseries": {
     "menu": {
+      "add-to-dashboard": "",
       "exemplars": "Mintapéldányok",
+      "labels": "",
       "open-in-explore": "Megnyitás az Explore-ban",
       "scale-linear": "Lineáris",
       "scale-log2": "Log2",

@@ -8,6 +8,12 @@
     "fav": {
       "favorite": "Oblíbené",
       "unfavorite": "Odstranit z oblíbených"
+    },
+    "span-exemplar-toggle": {
+      "aria-label": "",
+      "span-heatmap": "",
+      "time-series": "",
+      "unavailable": ""
     }
   },
   "ad-hoc": {
@@ -22,6 +28,9 @@
     "tabs": {
       "diff-view": "",
       "single-view": "Jednotné zobrazení"
+    },
+    "upload": {
+      "diff-converted-to-single": ""
     },
     "view": {
       "title": "Ad hoc zobrazení"
@@ -55,6 +64,9 @@
   "back-button": {
     "aria-label": "Zpět na Podrobný rozpis profilů",
     "label": "Zpět na Podrobný rozpis profilů"
+  },
+  "common": {
+    "not-available": ""
   },
   "create-recording-rule": {
     "cancel": "Zrušit",
@@ -129,10 +141,6 @@
       "label": "Předvolby srovnání",
       "placeholder": "Vyberte předvolbu"
     },
-    "settings-error": {
-      "message": "Některé funkce nemusí fungovat podle očekávání (např. možnosti exportu flame grafu). Zkuste prosím znovu načíst stránku. Omlouváme se za nepříjemnosti.",
-      "title": "Při načítání nastavení pluginu došlo k chybě!"
-    },
     "title": "Rozdílový flame graf pro {{serviceName}} ({{profileMetricType}})"
   },
   "error-page": {
@@ -140,7 +148,14 @@
     "banner-title": "Závažná chyba!",
     "title": "Podrobný rozpis profilů Grafana"
   },
+  "explore-service-heatmap": {
+    "description": "",
+    "title": ""
+  },
   "explorer": {
+    "add-to-dashboard": {
+      "modal-title": ""
+    },
     "exploration-type": {
       "all-services": "Všechny služby",
       "all-services-description": "Přehled všech služeb pro libovolný typ profilu",
@@ -159,6 +174,7 @@
       "add-recording-rule": "Přidat pravidlo nahrávání",
       "recording-rules-tooltip": "Pravidla nahrávání",
       "settings-tooltip": "Zobrazit/upravit nastavení tenanta",
+      "share-error": "",
       "share-tooltip": "Kopírovat sdílitelný odkaz do schránky",
       "upload-tooltip": "Nahrát ad hoc profily",
       "view-recording-rules": "Zobrazit pravidla nahrávání"
@@ -173,10 +189,12 @@
     "error-flamegraph-com": "Export na flamegraph.com se nezdařil!",
     "error-loading-profile": "Při načítání dat profilu flamebearer došlo k chybě!",
     "error-png": "Export do formátu PNG se nezdařil!",
+    "error-png-no-canvas": "",
     "error-pprof": "Export do formátu pprof se nezdařil!",
     "json": "json",
     "json-label": "json",
     "png": "png",
+    "png-disabled-description": "",
     "png-label": "png",
     "pprof": "pprof",
     "tooltip": "Exportovat data profilu"
@@ -200,12 +218,11 @@
       "remove": "Odebrat volič ID profilu z dotazu",
       "tooltip": "Do dotazu s flame grafem ({{profileIdSelector}}) jste přidali výběr ID profilu."
     },
-    "settings-error": {
-      "message": "Některé funkce nemusí fungovat podle očekávání (např. sbalené flame grafy). Zkuste prosím znovu načíst stránku. Omlouváme se za nepříjemnosti.",
-      "title": "Při načítání nastavení pluginu došlo k chybě!"
-    },
     "span-selector": {
-      "added": "Volič rozsahu byl přidán",
+      "filter-label": "",
+      "filter-operator": "",
+      "filter-value": "",
+      "name": "",
       "remove": "Odebrat volič rozpětí z dotazu",
       "tooltip": "Do dotazu s flame grafem ({{spanSelector}}) jste přidali výběr rozpětí."
     },
@@ -238,10 +255,10 @@
     "context-menu": {
       "label": "Podrobnosti o funkci"
     },
+    "copy-error": "",
     "copy-to-clipboard": "Kopírovat do schránky",
     "fetch-error": "Při načítání podrobností o funkci došlo k chybě!",
     "file": "Soubor",
-    "file-path-copied": "Cesta k souboru byla zkopírována do schránky!",
     "file-tooltip": "Cesta k souboru, ve kterém je tato funkce definována",
     "function-name": "Název funkce",
     "github": {
@@ -295,6 +312,10 @@
     "button": "Poskytnout zpětnou vazbu"
   },
   "grid": {
+    "empty-state": {
+      "no-profiles": "",
+      "no-results": "Žádné výsledky"
+    },
     "error": {
       "title": "Chyba dotazu!"
     },
@@ -319,6 +340,37 @@
     "quick-filter": {
       "aria-label": "Rychlý filtr",
       "clear": "Vymazat vyhledávání"
+    }
+  },
+  "heatmap": {
+    "exemplar": {
+      "select": ""
+    },
+    "exemplar-table": {
+      "clear-selection": "",
+      "col-actions": "",
+      "col-duration": "",
+      "col-span-id": "",
+      "col-span-name": "",
+      "col-timestamp": "",
+      "col-trace-id": "",
+      "copied": "",
+      "copy-to-clipboard": "",
+      "empty": "",
+      "open-flamegraph": "",
+      "open-trace": "",
+      "select-exemplar": "",
+      "select-tempo": "",
+      "tempo-datasource": "",
+      "tempo-placeholder": "",
+      "title": "",
+      "trace-lookup-failed": ""
+    },
+    "menu": {
+      "open-in-explore": ""
+    },
+    "trace-drawer": {
+      "title": ""
     }
   },
   "labels": {
@@ -346,7 +398,6 @@
       "include-tooltip": "Zahrnout „{{label}}“ do filtrů"
     },
     "grid": {
-      "no-results": "Žádné výsledky",
       "refresh-tooltip": "Kliknutím zcela obnovíte všechny panely zobrazené na obrazovce"
     },
     "stats-panel": {
@@ -447,11 +498,19 @@
     "commit-sha": "SHA závazku: {{shortCommitSha}}",
     "contribute": "Přispět",
     "documentation": "Dokumentace",
-    "grafana-version": "Grafana {{edition}} verze {{version}} ({{env}})",
+    "grafana-version": "",
     "last-update": "Poslední aktualizace: {{updated}}",
     "report-issue": "Nahlásit problém",
     "title": "Informace o pluginu",
     "version": "Podrobný rozpis profilů Grafana, verze {{version}}"
+  },
+  "profiles": {
+    "kg-annotations": {
+      "insights-label": "",
+      "severity-critical": "",
+      "severity-info": "",
+      "severity-warning": ""
+    }
   },
   "query-analysis": {
     "blocks": "Bloky",
@@ -549,7 +608,7 @@
       "no-searches": "Žádná uložená vyhledávání k zobrazení.",
       "no-searches-tooltip": "Žádná uložená vyhledávání k načtení",
       "remove-tooltip": "Odebrat",
-      "saved-query-tooltip": "Načíst uložený dotaz",
+      "saved-query-tooltip": "",
       "select": "Vybrat",
       "select-pyroscope-query": "Vyberte dotaz Pyroscope.",
       "title": "Načíst dříve uložené vyhledávání",
@@ -563,7 +622,7 @@
       "existing-search-warning": "Existuje dříve uložené vyhledávání se stejným dotazem: {{title}}",
       "info-message": "Uložená vyhledávání se ukládají místně do vašeho prohlížeče a budou k dispozici pouze na tomto zařízení.",
       "save": "Uložit",
-      "saved-queries-tooltip": "Uložit do uložených dotazů",
+      "saved-queries-tooltip": "",
       "success-body": "Vyhledávání bylo úspěšně uloženo.",
       "success-message": "Vyhledávání bylo úspěšně uloženo.",
       "success-title": "Úspěch",
@@ -597,7 +656,9 @@
         "tooltip": "Funkce Podrobnosti o funkci umožňuje přiřadit využití zdrojů k řádkům zdrojového kódu. Pokud je nakonfigurována integrace s GitHubem, zdrojový kód se stáhne z GitHubu."
       },
       "fetch-error": {
-        "message": "Zkuste prosím znovu načíst stránku. Omlouváme se za nepříjemnosti.",
+        "cloud-hint": "",
+        "message": "",
+        "oss-hint": "",
         "title": "Při načítání nastavení pluginu došlo k chybě!"
       },
       "flame-graph": {
@@ -622,7 +683,9 @@
   },
   "timeseries": {
     "menu": {
+      "add-to-dashboard": "",
       "exemplars": "Příklady",
+      "labels": "",
       "open-in-explore": "Otevřít v Prozkoumat",
       "scale-linear": "Lineární",
       "scale-log2": "Log2",

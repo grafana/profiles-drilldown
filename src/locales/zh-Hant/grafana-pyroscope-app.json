@@ -8,6 +8,12 @@
     "fav": {
       "favorite": "最愛",
       "unfavorite": "移除最愛"
+    },
+    "span-exemplar-toggle": {
+      "aria-label": "",
+      "span-heatmap": "",
+      "time-series": "",
+      "unavailable": ""
     }
   },
   "ad-hoc": {
@@ -22,6 +28,9 @@
     "tabs": {
       "diff-view": "",
       "single-view": "單一檢視"
+    },
+    "upload": {
+      "diff-converted-to-single": ""
     },
     "view": {
       "title": "隨機檢視"
@@ -55,6 +64,9 @@
   "back-button": {
     "aria-label": "返回設定檔深入分析",
     "label": "返回設定檔深入分析"
+  },
+  "common": {
+    "not-available": ""
   },
   "create-recording-rule": {
     "cancel": "取消",
@@ -129,10 +141,6 @@
       "label": "比較預設值",
       "placeholder": "選擇預設值"
     },
-    "settings-error": {
-      "message": "某些功能可能無法按預期運作（例如火焰圖匯出選項）。請嘗試重新載入頁面，很抱歉造成您的不便。",
-      "title": "擷取外掛程式設定時發生錯誤！"
-    },
     "title": "{{serviceName}}（{{profileMetricType}}）的差異火焰圖"
   },
   "error-page": {
@@ -140,7 +148,14 @@
     "banner-title": "致命錯誤！",
     "title": "Grafana 設定檔深入分析"
   },
+  "explore-service-heatmap": {
+    "description": "",
+    "title": ""
+  },
   "explorer": {
+    "add-to-dashboard": {
+      "modal-title": ""
+    },
     "exploration-type": {
       "all-services": "所有服務",
       "all-services-description": "任何指定設定檔類型的所有服務概覽",
@@ -159,6 +174,7 @@
       "add-recording-rule": "新增錄製規則",
       "recording-rules-tooltip": "錄製規則",
       "settings-tooltip": "檢視/編輯租用戶設定",
+      "share-error": "",
       "share-tooltip": "將可分享的連結複製到剪貼簿",
       "upload-tooltip": "上傳隨機設定檔",
       "view-recording-rules": "檢視錄製規則"
@@ -173,10 +189,12 @@
     "error-flamegraph-com": "無法匯出至 flamegraph.com！",
     "error-loading-profile": "載入 Flamebearer 設定檔資料時發生錯誤！",
     "error-png": "無法匯出為 PNG 檔案！",
+    "error-png-no-canvas": "",
     "error-pprof": "無法匯出至 pprof！",
     "json": "json",
     "json-label": "json",
     "png": "png",
+    "png-disabled-description": "",
     "png-label": "png",
     "pprof": "pprof",
     "tooltip": "匯出設定檔資料"
@@ -200,12 +218,11 @@
       "remove": "從查詢中移除設定檔 ID 選擇器",
       "tooltip": "您已將設定檔 ID 選擇器新增至火焰圖查詢（{{profileIdSelector}}）。"
     },
-    "settings-error": {
-      "message": "某些功能可能無法按預期運作（例如折疊的火焰圖）。請嘗試重新載入頁面，很抱歉造成您的不便。",
-      "title": "擷取外掛程式設定時發生錯誤！"
-    },
     "span-selector": {
-      "added": "已新增範圍選擇器",
+      "filter-label": "",
+      "filter-operator": "",
+      "filter-value": "",
+      "name": "",
       "remove": "從查詢中移除範圍選擇器",
       "tooltip": "您已將範圍選擇器新增至火焰圖查詢（{{spanSelector}}）。"
     },
@@ -238,10 +255,10 @@
     "context-menu": {
       "label": "函數詳細資料"
     },
+    "copy-error": "",
     "copy-to-clipboard": "複製至剪貼簿",
     "fetch-error": "擷取函數詳細資訊時發生錯誤！",
     "file": "檔案",
-    "file-path-copied": "檔案路徑已複製到剪貼簿！",
     "file-tooltip": "在其中定義該函數的檔案路徑",
     "function-name": "函數名稱",
     "github": {
@@ -295,6 +312,10 @@
     "button": "提供意見回饋"
   },
   "grid": {
+    "empty-state": {
+      "no-profiles": "",
+      "no-results": "無結果"
+    },
     "error": {
       "title": "查詢錯誤！"
     },
@@ -321,6 +342,37 @@
       "clear": "清除搜尋"
     }
   },
+  "heatmap": {
+    "exemplar": {
+      "select": ""
+    },
+    "exemplar-table": {
+      "clear-selection": "",
+      "col-actions": "",
+      "col-duration": "",
+      "col-span-id": "",
+      "col-span-name": "",
+      "col-timestamp": "",
+      "col-trace-id": "",
+      "copied": "",
+      "copy-to-clipboard": "",
+      "empty": "",
+      "open-flamegraph": "",
+      "open-trace": "",
+      "select-exemplar": "",
+      "select-tempo": "",
+      "tempo-datasource": "",
+      "tempo-placeholder": "",
+      "title": "",
+      "trace-lookup-failed": ""
+    },
+    "menu": {
+      "open-in-explore": ""
+    },
+    "trace-drawer": {
+      "title": ""
+    }
+  },
   "labels": {
     "compare": {
       "aria-label": "",
@@ -343,7 +395,6 @@
       "include-tooltip": "在篩選條件中包含「{{label}}」"
     },
     "grid": {
-      "no-results": "無結果",
       "refresh-tooltip": "按一下以完全重新整理畫面上顯示的所有面板"
     },
     "stats-panel": {
@@ -444,11 +495,19 @@
     "commit-sha": "提交 SHA：{{shortCommitSha}}",
     "contribute": "貢獻",
     "documentation": "文件",
-    "grafana-version": "Grafana {{edition}} v{{version}} ({{env}})",
+    "grafana-version": "",
     "last-update": "上次更新：{{updated}}",
     "report-issue": "回報問題",
     "title": "外掛程式資訊",
     "version": "Grafana 設定檔深入分析 v{{version}}"
+  },
+  "profiles": {
+    "kg-annotations": {
+      "insights-label": "",
+      "severity-critical": "",
+      "severity-info": "",
+      "severity-warning": ""
+    }
   },
   "query-analysis": {
     "blocks": "區塊",
@@ -546,7 +605,7 @@
       "no-searches": "沒有要顯示的已儲存搜尋結果。",
       "no-searches-tooltip": "沒有要載入的已儲存搜尋結果",
       "remove-tooltip": "移除",
-      "saved-query-tooltip": "載入已儲存查詢",
+      "saved-query-tooltip": "",
       "select": "選取",
       "select-pyroscope-query": "請選擇一個 Pyroscope 查詢。",
       "title": "載入先前已儲存的搜尋",
@@ -560,7 +619,7 @@
       "existing-search-warning": "之前已儲存了一個具有相同查詢的搜尋：{{title}}",
       "info-message": "已儲存的搜尋會儲存在瀏覽器的本機資料中，且僅能在此裝置上使用。",
       "save": "儲存",
-      "saved-queries-tooltip": "儲存在「已儲存的查詢」中",
+      "saved-queries-tooltip": "",
       "success-body": "搜尋已成功儲存。",
       "success-message": "搜尋已成功儲存。",
       "success-title": "成功",
@@ -594,7 +653,9 @@
         "tooltip": "函數詳細資訊功能可將資源使用情況對應至原始程式碼行。如果已設定 GitHub 整合，系統將從 GitHub 下載原始程式碼。"
       },
       "fetch-error": {
-        "message": "請嘗試重新載入頁面，很抱歉造成您的不便。",
+        "cloud-hint": "",
+        "message": "",
+        "oss-hint": "",
         "title": "擷取外掛程式設定時發生錯誤！"
       },
       "flame-graph": {
@@ -619,7 +680,9 @@
   },
   "timeseries": {
     "menu": {
+      "add-to-dashboard": "",
       "exemplars": "範例",
+      "labels": "",
       "open-in-explore": "在「探索」中開啟",
       "scale-linear": "線性",
       "scale-log2": "Log2",
