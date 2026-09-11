@@ -4,6 +4,7 @@ import { FlameGraph, Props as FlameGraphProps } from '@grafana/flamegraph';
 import { t, Trans } from '@grafana/i18n';
 import {
   SceneComponentProps,
+  sceneGraph,
   SceneObjectBase,
   SceneObjectState,
   SceneQueryRunner,
@@ -24,9 +25,11 @@ import { Unsubscribable } from 'rxjs';
 
 import { useBuildPyroscopeQuery } from '../../domain/useBuildPyroscopeQuery';
 import { useGrafanaAssistant } from '../../domain/useGrafanaAssistant';
+import { ProfilesDataSourceVariable } from '../../domain/variables/ProfilesDataSourceVariable';
 import { getSceneVariableValue } from '../../helpers/getSceneVariableValue';
 import { deferSceneQueryRunnerRun } from '../../infrastructure/deferSceneQueryRunnerRun';
 import { buildFlameGraphQueryRunner } from '../../infrastructure/flame-graph/buildFlameGraphQueryRunner';
+import { useFunctionTable } from '../../infrastructure/functions/useFunctionTable';
 import { PYROSCOPE_DATA_SOURCE } from '../../infrastructure/pyroscope-data-sources';
 import { AIButton } from '../SceneAiPanel/components/AiButton/AIButton';
 import { SceneAiPanel } from '../SceneAiPanel/SceneAiPanel';
@@ -145,14 +148,26 @@ export class SceneFlameGraph extends SceneObjectBase<SceneFlameGraphState> {
     const hasProfileData = Number(profileData?.length) > 1;
 
     const query = useBuildPyroscopeQuery(this, 'filters');
+    const dataSourceUid = sceneGraph.findByKeyAndType(this, 'dataSource', ProfilesDataSourceVariable).useState()
+      .value as string;
+    const { value: timeRange } = sceneGraph.getTimeRange(this).useState();
+    const functions = useFunctionTable({
+      dataSourceUid,
+      refreshSource: this.getRoot(),
+      enabled: Boolean(dataSourceUid && query && timeRange.from.valueOf() && timeRange.to.valueOf()),
+      left: { query, timeRange, spanSelector, profileIdSelector },
+      maxNodes,
+    });
 
     return {
       data: {
         title: this.buildTitle(),
-        isLoading: isFetchingProfileData,
+        isLoading: isFetchingProfileData || functions.isFetching,
         isFetchingProfileData,
         hasProfileData,
         profileData,
+        functionTable: functions.functionTable,
+        fetchFunctionsError: functions.error,
         spanSelector,
         fetchProfileError,
         settings,
@@ -285,9 +300,18 @@ export class SceneFlameGraph extends SceneObjectBase<SceneFlameGraphState> {
             />
           )}
 
+          {data.fetchFunctionsError && (
+            <InlineBanner
+              severity="error"
+              title={t('flame-graph.error-loading-functions', 'Error while loading function table!')}
+              error={data.fetchFunctionsError}
+            />
+          )}
+
           {!data.fetchProfileError && (
             <FlameGraph
               data={data.profileData as any}
+              functionTable={data.functionTable}
               disableCollapsing={!data.settings?.collapsedFlamegraphs}
               getTheme={actions.getTheme as any}
               getExtraContextMenuButtons={extraContextMenuButtons}

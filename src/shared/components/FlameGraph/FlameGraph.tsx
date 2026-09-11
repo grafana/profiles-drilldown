@@ -1,5 +1,8 @@
 import { createTheme } from '@grafana/data';
-import { FlameGraph as GrafanaFlameGraph, Props } from '@grafana/flamegraph';
+// TODO: Do not merge until grafana/grafana#132374 is merged, a new @grafana/flamegraph
+// package is published, and the dependency is updated to include FunctionTable support.
+// For local testing: "@grafana/flamegraph": "file:./grafana-flamegraph-local.tgz"
+import { FunctionTable, FlameGraph as GrafanaFlameGraph, Props } from '@grafana/flamegraph';
 import { useTheme2 } from '@grafana/ui';
 import React, { memo, useMemo } from 'react';
 
@@ -9,6 +12,7 @@ import { flamebearerToDataFrameDTO } from './domain/flamebearerToDataFrameDTO';
 
 type FlameGraphProps = {
   profile: FlamebearerProfile;
+  functionTable?: FunctionTable;
   diff?: boolean;
   vertical?: boolean;
   enableFlameGraphDotComExport?: boolean;
@@ -19,6 +23,7 @@ type FlameGraphProps = {
 
 function FlameGraphComponent({
   profile,
+  functionTable,
   diff,
   vertical,
   enableFlameGraphDotComExport,
@@ -43,6 +48,7 @@ function FlameGraphComponent({
   return (
     <GrafanaFlameGraph
       data={dataFrame as any}
+      functionTable={functionTable}
       disableCollapsing={!collapsedFlamegraphs}
       extraHeaderElements={<ExportData profile={profile} enableFlameGraphDotComExport={enableFlameGraphDotComExport} />}
       vertical={vertical}

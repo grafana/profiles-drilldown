@@ -208,6 +208,7 @@
     }
   },
   "flame-graph": {
+    "error-loading-functions": "Error while loading function table!",
     "error-loading-profile": "Error while loading profile data!",
     "explain-button": "Explain Flame Graph",
     "profile-id-selector": {
