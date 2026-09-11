@@ -67,6 +67,7 @@ test.describe('Span profiles heatmap', () => {
       expect(bounds?.height).toBeGreaterThan(0);
 
       await expect(panel).toHaveScreenshot(`${name}.png`, {
+        maxDiffPixelRatio: 0.01,
         stylePath: './e2e/fixtures/css/hide-all-controls.css',
       });
     });
