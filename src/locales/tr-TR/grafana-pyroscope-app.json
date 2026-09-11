@@ -8,6 +8,12 @@
     "fav": {
       "favorite": "Favori",
       "unfavorite": "Favorilerden çıkar"
+    },
+    "span-exemplar-toggle": {
+      "aria-label": "",
+      "span-heatmap": "",
+      "time-series": "",
+      "unavailable": ""
     }
   },
   "ad-hoc": {
@@ -22,6 +28,9 @@
     "tabs": {
       "diff-view": "",
       "single-view": "Tekli görünüm"
+    },
+    "upload": {
+      "diff-converted-to-single": ""
     },
     "view": {
       "title": "Geçici görünüm"
@@ -55,6 +64,9 @@
   "back-button": {
     "aria-label": "Profiles Drilldown'a dön",
     "label": "Profiles Drilldown'a dön"
+  },
+  "common": {
+    "not-available": ""
   },
   "create-recording-rule": {
     "cancel": "İptal et",
@@ -129,10 +141,6 @@
       "label": "Karşılaştırma ön ayarları",
       "placeholder": "Bir ön ayar seçin"
     },
-    "settings-error": {
-      "message": "Bazı özellikler (ör. alev grafiği dışa aktarma seçenekleri) beklendiği gibi çalışmayabilir. Lütfen sayfayı yeniden yüklemeyi deneyin, aksaklık için özür dileriz.",
-      "title": "Eklenti ayarları alınırken hata oluştu."
-    },
     "title": "{{serviceName}} için alev grafiği farkları ({{profileMetricType}})"
   },
   "error-page": {
@@ -140,7 +148,14 @@
     "banner-title": "Önemli hata!",
     "title": "Grafana Profiles Drilldown"
   },
+  "explore-service-heatmap": {
+    "description": "",
+    "title": ""
+  },
   "explorer": {
+    "add-to-dashboard": {
+      "modal-title": ""
+    },
     "exploration-type": {
       "all-services": "Tüm hizmetler",
       "all-services-description": "Belirli bir profil türü için tüm hizmetlerin genel görünümü",
@@ -159,6 +174,7 @@
       "add-recording-rule": "Kayıt kuralı ekle",
       "recording-rules-tooltip": "Kayıt kuralları",
       "settings-tooltip": "Kiracı ayarlarını göster/düzenle",
+      "share-error": "",
       "share-tooltip": "Paylaşılabilir bağlantıyı panoya kopyala",
       "upload-tooltip": "Geçici profilleri yükle",
       "view-recording-rules": "Kayıt kurallarını göster"
@@ -173,10 +189,12 @@
     "error-flamegraph-com": "flamegraph.com'a dışa aktarılamadı.",
     "error-loading-profile": "Flamebearer profil verileri yüklenirken hata oluştu.",
     "error-png": "png biçiminde dışa aktarılamadı.",
+    "error-png-no-canvas": "",
     "error-pprof": "pprof biçiminde dışa aktarılamadı.",
     "json": "json",
     "json-label": "json",
     "png": "png",
+    "png-disabled-description": "",
     "png-label": "png",
     "pprof": "pprof",
     "tooltip": "Profil verilerini dışa aktar"
@@ -200,12 +218,11 @@
       "remove": "Profil kimliği seçiciyi sorgudan kaldır",
       "tooltip": "Alev grafiği sorgusuna bir profil kimliği seçici eklediniz ({{profileIdSelector}})."
     },
-    "settings-error": {
-      "message": "Bazı özellikler (ör. daraltılmış alev grafikleri) beklendiği gibi çalışmayabilir. Lütfen sayfayı yeniden yüklemeyi deneyin, aksaklık için özür dileriz.",
-      "title": "Eklenti ayarları alınırken hata oluştu."
-    },
     "span-selector": {
-      "added": "Zaman aralığı seçici eklendi",
+      "filter-label": "",
+      "filter-operator": "",
+      "filter-value": "",
+      "name": "",
       "remove": "Zaman aralığı seçiciyi sorgudan kaldır",
       "tooltip": "Alev grafiği sorgusuna bir zaman aralığı seçici eklediniz ({{spanSelector}})."
     },
@@ -238,10 +255,10 @@
     "context-menu": {
       "label": "İşlev ayrıntıları"
     },
+    "copy-error": "",
     "copy-to-clipboard": "Panoya kopyala",
     "fetch-error": "İşlev ayrıntıları alınırken hata oluştu.",
     "file": "Dosya",
-    "file-path-copied": "Dosya yolu panoya kopyalandı!",
     "file-tooltip": "Bu işlevin tanımlandığı dosya yolu",
     "function-name": "İşlev adı",
     "github": {
@@ -295,6 +312,10 @@
     "button": "Geri bildirim gönder"
   },
   "grid": {
+    "empty-state": {
+      "no-profiles": "",
+      "no-results": "Sonuç yok"
+    },
     "error": {
       "title": "Sorgu hatası!"
     },
@@ -321,6 +342,37 @@
       "clear": "Aramayı temizle"
     }
   },
+  "heatmap": {
+    "exemplar": {
+      "select": ""
+    },
+    "exemplar-table": {
+      "clear-selection": "",
+      "col-actions": "",
+      "col-duration": "",
+      "col-span-id": "",
+      "col-span-name": "",
+      "col-timestamp": "",
+      "col-trace-id": "",
+      "copied": "",
+      "copy-to-clipboard": "",
+      "empty": "",
+      "open-flamegraph": "",
+      "open-trace": "",
+      "select-exemplar": "",
+      "select-tempo": "",
+      "tempo-datasource": "",
+      "tempo-placeholder": "",
+      "title": "",
+      "trace-lookup-failed": ""
+    },
+    "menu": {
+      "open-in-explore": ""
+    },
+    "trace-drawer": {
+      "title": ""
+    }
+  },
   "labels": {
     "compare": {
       "aria-label": "",
@@ -344,7 +396,6 @@
       "include-tooltip": "Filtrelerde \"{{label}}\" etiketini dâhil et"
     },
     "grid": {
-      "no-results": "Sonuç yok",
       "refresh-tooltip": "Ekrandaki tüm panelleri tamamen yenilemek için tıklayın"
     },
     "stats-panel": {
@@ -445,11 +496,19 @@
     "commit-sha": "SHA yürütme: {{shortCommitSha}}",
     "contribute": "Katkıda bulunun",
     "documentation": "Belgeler",
-    "grafana-version": "Grafana {{edition}} {{version}} sürümü ({{env}})",
+    "grafana-version": "",
     "last-update": "Son güncelleme: {{updated}}",
     "report-issue": "Sorun bildir",
     "title": "Eklenti bilgileri",
     "version": "Grafana Profiles Drilldown {{version}} sürümü"
+  },
+  "profiles": {
+    "kg-annotations": {
+      "insights-label": "",
+      "severity-critical": "",
+      "severity-info": "",
+      "severity-warning": ""
+    }
   },
   "query-analysis": {
     "blocks": "Bloklar",
@@ -547,7 +606,7 @@
       "no-searches": "Gösterilecek kayıtlı arama yok.",
       "no-searches-tooltip": "Yüklenecek kayıtlı arama yok",
       "remove-tooltip": "Kaldır",
-      "saved-query-tooltip": "Kaydedilen sorguyu yükle",
+      "saved-query-tooltip": "",
       "select": "Seçin",
       "select-pyroscope-query": "Lütfen bir Pyroscope sorgusu seçin.",
       "title": "Önceden kaydedilmiş bir aramayı yükleyin",
@@ -561,7 +620,7 @@
       "existing-search-warning": "Aynı sorguya sahip, daha önceden kaydedilmiş bir arama var: {{title}}",
       "info-message": "Kayıtlı aramalar tarayıcınızda yerel olarak depolanır ve yalnızca bu cihazda kullanılabilir.",
       "save": "Kaydet",
-      "saved-queries-tooltip": "Kayıtlı Sorgular'a kaydet",
+      "saved-queries-tooltip": "",
       "success-body": "Arama başarıyla kaydedildi.",
       "success-message": "Arama başarıyla kaydedildi.",
       "success-title": "Başarılı",
@@ -595,7 +654,9 @@
         "tooltip": "İşlev ayrıntıları özelliği, kaynak kullanımının kaynak kodu satırlarıyla eşleştirilmesini sağlar. GitHub entegrasyonu yapılandırılmışsa kaynak kodu GitHub'dan indirilecektir."
       },
       "fetch-error": {
-        "message": "Lütfen sayfayı yeniden yüklemeyi deneyin, aksaklık için özür dileriz.",
+        "cloud-hint": "",
+        "message": "",
+        "oss-hint": "",
         "title": "Eklenti ayarları alınırken hata oluştu."
       },
       "flame-graph": {
@@ -620,7 +681,9 @@
   },
   "timeseries": {
     "menu": {
+      "add-to-dashboard": "",
       "exemplars": "Temsilî veriler",
+      "labels": "",
       "open-in-explore": "Keşfet'te aç",
       "scale-linear": "Doğrusal",
       "scale-log2": "Günlük Kaydı2",

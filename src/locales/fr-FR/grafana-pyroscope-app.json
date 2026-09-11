@@ -8,6 +8,12 @@
     "fav": {
       "favorite": "Favori",
       "unfavorite": "Retirer des favoris"
+    },
+    "span-exemplar-toggle": {
+      "aria-label": "",
+      "span-heatmap": "",
+      "time-series": "",
+      "unavailable": ""
     }
   },
   "ad-hoc": {
@@ -22,6 +28,9 @@
     "tabs": {
       "diff-view": "",
       "single-view": "Vue simple"
+    },
+    "upload": {
+      "diff-converted-to-single": ""
     },
     "view": {
       "title": "Vue ad hoc"
@@ -55,6 +64,9 @@
   "back-button": {
     "aria-label": "Retour à Profiles Drilldown",
     "label": "Retour à Profiles Drilldown"
+  },
+  "common": {
+    "not-available": ""
   },
   "create-recording-rule": {
     "cancel": "Annuler",
@@ -129,10 +141,6 @@
       "label": "Préréglages de comparaison",
       "placeholder": "Choisissez un préréglage"
     },
-    "settings-error": {
-      "message": "Certaines fonctionnalités peuvent ne pas fonctionner comme prévu (par exemple, les options d’exportation des graphiques en flamme). Veuillez essayer de recharger la page. Nous vous prions de nous excuser pour la gêne occasionnée.",
-      "title": "Erreur lors de la récupération des paramètres du plugin."
-    },
     "title": "Graphique en flammes de comparaison pour {{serviceName}} ({{profileMetricType}})"
   },
   "error-page": {
@@ -140,7 +148,14 @@
     "banner-title": "Erreur fatale !",
     "title": "Grafana Profiles Drilldown"
   },
+  "explore-service-heatmap": {
+    "description": "",
+    "title": ""
+  },
   "explorer": {
+    "add-to-dashboard": {
+      "modal-title": ""
+    },
     "exploration-type": {
       "all-services": "Tous les services",
       "all-services-description": "Vue d’ensemble de tous les services, pour tout type de profil donné",
@@ -159,6 +174,7 @@
       "add-recording-rule": "Ajouter une règle d’enregistrement",
       "recording-rules-tooltip": "Règles d’enregistrement",
       "settings-tooltip": "Afficher/modifier les paramètres du locataire",
+      "share-error": "",
       "share-tooltip": "Copier le lien à partager dans le presse-papiers",
       "upload-tooltip": "Importer des profils ad hoc",
       "view-recording-rules": "Afficher les règles d’enregistrement"
@@ -173,10 +189,12 @@
     "error-flamegraph-com": "Échec de l’exportation vers flamegraph.com.",
     "error-loading-profile": "Une erreur est survenue lors du chargement des données de profil Flamebearer.",
     "error-png": "Échec de l’exportation au format PNG.",
+    "error-png-no-canvas": "",
     "error-pprof": "Échec de l’exportation au format PProf.",
     "json": "json",
     "json-label": "json",
     "png": "png",
+    "png-disabled-description": "",
     "png-label": "png",
     "pprof": "pprof",
     "tooltip": "Exporter les données de profil"
@@ -200,12 +218,11 @@
       "remove": "Supprimer le sélecteur d’identifiant de profil de la requête",
       "tooltip": "Vous avez ajouté un sélecteur d’ID de profil à la requête de graphique en flamme ({{profileIdSelector}})."
     },
-    "settings-error": {
-      "message": "Certaines fonctionnalités peuvent ne pas fonctionner comme prévu (par exemple, les graphiques en flamme réduits). Veuillez essayer de recharger la page. Nous vous prions de nous excuser pour la gêne occasionnée.",
-      "title": "Erreur lors de la récupération des paramètres du plugin."
-    },
     "span-selector": {
-      "added": "Sélecteur de plage ajouté",
+      "filter-label": "",
+      "filter-operator": "",
+      "filter-value": "",
+      "name": "",
       "remove": "Supprimer le sélecteur de plage de la requête",
       "tooltip": "Vous avez ajouté un sélecteur de plage à la requête du graphique en flamme ({{spanSelector}})."
     },
@@ -238,10 +255,10 @@
     "context-menu": {
       "label": "Détails de la fonction"
     },
+    "copy-error": "",
     "copy-to-clipboard": "Copier dans le presse-papiers",
     "fetch-error": "Erreur lors de la récupération des détails de la fonction.",
     "file": "Fichier",
-    "file-path-copied": "Chemin du fichier copié dans le presse-papiers.",
     "file-tooltip": "Chemin du fichier où cette fonction est définie",
     "function-name": "Nom de fonction",
     "github": {
@@ -295,6 +312,10 @@
     "button": "Donner un avis"
   },
   "grid": {
+    "empty-state": {
+      "no-profiles": "",
+      "no-results": "Aucun résultat"
+    },
     "error": {
       "title": "Erreur de requête !"
     },
@@ -321,6 +342,37 @@
       "clear": "Effacer la recherche"
     }
   },
+  "heatmap": {
+    "exemplar": {
+      "select": ""
+    },
+    "exemplar-table": {
+      "clear-selection": "",
+      "col-actions": "",
+      "col-duration": "",
+      "col-span-id": "",
+      "col-span-name": "",
+      "col-timestamp": "",
+      "col-trace-id": "",
+      "copied": "",
+      "copy-to-clipboard": "",
+      "empty": "",
+      "open-flamegraph": "",
+      "open-trace": "",
+      "select-exemplar": "",
+      "select-tempo": "",
+      "tempo-datasource": "",
+      "tempo-placeholder": "",
+      "title": "",
+      "trace-lookup-failed": ""
+    },
+    "menu": {
+      "open-in-explore": ""
+    },
+    "trace-drawer": {
+      "title": ""
+    }
+  },
   "labels": {
     "compare": {
       "aria-label": "",
@@ -344,7 +396,6 @@
       "include-tooltip": "Inclure « {{label}} » dans les filtres"
     },
     "grid": {
-      "no-results": "Aucun résultat",
       "refresh-tooltip": "Cliquez pour actualiser complètement tous les panneaux présents à l’écran"
     },
     "stats-panel": {
@@ -445,11 +496,19 @@
     "commit-sha": "Commit SHA : {{shortCommitSha}}",
     "contribute": "Contribuer",
     "documentation": "Documentation",
-    "grafana-version": "Grafana {{edition}} v{{version}} ({{env}})",
+    "grafana-version": "",
     "last-update": "Dernière mise à jour : {{updated}}",
     "report-issue": "Signaler un problème",
     "title": "Informations sur le plugin",
     "version": "Grafana Profiles Drilldown, version {{version}}"
+  },
+  "profiles": {
+    "kg-annotations": {
+      "insights-label": "",
+      "severity-critical": "",
+      "severity-info": "",
+      "severity-warning": ""
+    }
   },
   "query-analysis": {
     "blocks": "Blocs",
@@ -547,7 +606,7 @@
       "no-searches": "Aucune recherche enregistrée à afficher.",
       "no-searches-tooltip": "Aucune recherche enregistrée à charger",
       "remove-tooltip": "Supprimer",
-      "saved-query-tooltip": "Charger la requête enregistrée",
+      "saved-query-tooltip": "",
       "select": "Sélectionner",
       "select-pyroscope-query": "Veuillez sélectionner une requête Pyroscope.",
       "title": "Charger une recherche enregistrée précédemment",
@@ -561,7 +620,7 @@
       "existing-search-warning": "Une recherche a été enregistrée précédemment avec la même requête : {{title}}",
       "info-message": "Les recherches enregistrées sont stockées localement dans votre navigateur et ne seront disponibles que sur cet appareil.",
       "save": "Enregistrer",
-      "saved-queries-tooltip": "Enregistrer dans les requêtes enregistrées",
+      "saved-queries-tooltip": "",
       "success-body": "Recherche enregistrée avec succès.",
       "success-message": "Recherche enregistrée avec succès.",
       "success-title": "Succès",
@@ -595,7 +654,9 @@
         "tooltip": "La fonctionnalité Détails de fonction permet de mettre en correspondance l’utilisation des ressources et les lignes du code source. Si l’intégration GitHub est configurée, le code source sera téléchargé depuis GitHub."
       },
       "fetch-error": {
-        "message": "Veuillez essayer de recharger la page. Nous vous prions de nous excuser pour la gêne occasionnée.",
+        "cloud-hint": "",
+        "message": "",
+        "oss-hint": "",
         "title": "Erreur lors de la récupération des paramètres du plugin."
       },
       "flame-graph": {
@@ -620,7 +681,9 @@
   },
   "timeseries": {
     "menu": {
+      "add-to-dashboard": "",
       "exemplars": "Exemples",
+      "labels": "",
       "open-in-explore": "Ouvrir dans Explorer",
       "scale-linear": "Linéaire",
       "scale-log2": "Log2",

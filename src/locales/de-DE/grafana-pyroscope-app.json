@@ -8,6 +8,12 @@
     "fav": {
       "favorite": "Favorisieren",
       "unfavorite": "Favorisieren rückgängig"
+    },
+    "span-exemplar-toggle": {
+      "aria-label": "",
+      "span-heatmap": "",
+      "time-series": "",
+      "unavailable": ""
     }
   },
   "ad-hoc": {
@@ -22,6 +28,9 @@
     "tabs": {
       "diff-view": "",
       "single-view": "Einzelansicht"
+    },
+    "upload": {
+      "diff-converted-to-single": ""
     },
     "view": {
       "title": "Ad-hoc-Ansicht"
@@ -55,6 +64,9 @@
   "back-button": {
     "aria-label": "Zurück zu Profiles Drilldown",
     "label": "Zurück zu Profiles Drilldown"
+  },
+  "common": {
+    "not-available": ""
   },
   "create-recording-rule": {
     "cancel": "Abbrechen",
@@ -129,10 +141,6 @@
       "label": "Voreinstellungen für Vergleich",
       "placeholder": "Voreinstellung auswählen"
     },
-    "settings-error": {
-      "message": "Einige Funktionen funktionieren möglicherweise nicht wie erwartet (z. B. Exportoptionen für Flammendiagramme). Bitte versuchen Sie, die Seite neu zu laden. Entschuldigen Sie die Unannehmlichkeiten.",
-      "title": "Beim Abrufen der Plugin-Einstellungen ist ein Fehler aufgetreten!"
-    },
     "title": "Diff-Flammendiagramm für {{serviceName}} ({{profileMetricType}})"
   },
   "error-page": {
@@ -140,7 +148,14 @@
     "banner-title": "Schwerwiegender Fehler!",
     "title": "Grafana Profiles Drilldown"
   },
+  "explore-service-heatmap": {
+    "description": "",
+    "title": ""
+  },
   "explorer": {
+    "add-to-dashboard": {
+      "modal-title": ""
+    },
     "exploration-type": {
       "all-services": "Alle Dienste",
       "all-services-description": "Überblick über alle Dienste für jeden Profiltyp",
@@ -159,6 +174,7 @@
       "add-recording-rule": "Aufnahmeregel hinzufügen",
       "recording-rules-tooltip": "Aufnahmeregeln",
       "settings-tooltip": "Mandanteneinstellungen anzeigen/bearbeiten",
+      "share-error": "",
       "share-tooltip": "Teilbaren Link in die Zwischenablage kopieren",
       "upload-tooltip": "Ad-hoc-Profile hochladen",
       "view-recording-rules": "Aufnahmeregeln anzeigen"
@@ -173,10 +189,12 @@
     "error-flamegraph-com": "Export nach flamegraph.com fehlgeschlagen!",
     "error-loading-profile": "Beim Laden der Flamebearer-Profildaten ist ein Fehler aufgetreten!",
     "error-png": "Export nach PNG fehlgeschlagen!",
+    "error-png-no-canvas": "",
     "error-pprof": "Export nach PPROF fehlgeschlagen!",
     "json": "json",
     "json-label": "json",
     "png": "png",
+    "png-disabled-description": "",
     "png-label": "png",
     "pprof": "pprof",
     "tooltip": "Profildaten exportieren"
@@ -200,12 +218,11 @@
       "remove": "Profil-ID-Selektor aus der Abfrage entfernen",
       "tooltip": "Sie haben der Flammendiagramm-Abfrage ({{profileIdSelector}}) einen Profil-ID-Selektor hinzugefügt."
     },
-    "settings-error": {
-      "message": "Einige Funktionen funktionieren möglicherweise nicht wie erwartet (z. B. eingeklappte Flammendiagramme). Bitte versuchen Sie, die Seite neu zu laden. Entschuldigen Sie die Unannehmlichkeiten.",
-      "title": "Beim Abrufen der Plugin-Einstellungen ist ein Fehler aufgetreten!"
-    },
     "span-selector": {
-      "added": "Span-Selektor hinzugefügt",
+      "filter-label": "",
+      "filter-operator": "",
+      "filter-value": "",
+      "name": "",
       "remove": "Span-Selektor aus der Abfrage entfernen",
       "tooltip": "Sie haben der Flammendiagramm-Abfrage ({{spanSelector}}) einen Span-Selektor hinzugefügt."
     },
@@ -238,10 +255,10 @@
     "context-menu": {
       "label": "Funktionsdetails"
     },
+    "copy-error": "",
     "copy-to-clipboard": "In die Zwischenablage kopieren",
     "fetch-error": "Beim Abrufen der Funktionsdetails ist ein Fehler aufgetreten!",
     "file": "Datei",
-    "file-path-copied": "Dateipfad in die Zwischenablage kopiert!",
     "file-tooltip": "Dateipfad, in dem diese Funktion festgelegt ist",
     "function-name": "Funktionsname",
     "github": {
@@ -295,6 +312,10 @@
     "button": "Feedback geben"
   },
   "grid": {
+    "empty-state": {
+      "no-profiles": "",
+      "no-results": "Keine Ergebnisse"
+    },
     "error": {
       "title": "Abfragefehler!"
     },
@@ -321,6 +342,37 @@
       "clear": "Suche löschen"
     }
   },
+  "heatmap": {
+    "exemplar": {
+      "select": ""
+    },
+    "exemplar-table": {
+      "clear-selection": "",
+      "col-actions": "",
+      "col-duration": "",
+      "col-span-id": "",
+      "col-span-name": "",
+      "col-timestamp": "",
+      "col-trace-id": "",
+      "copied": "",
+      "copy-to-clipboard": "",
+      "empty": "",
+      "open-flamegraph": "",
+      "open-trace": "",
+      "select-exemplar": "",
+      "select-tempo": "",
+      "tempo-datasource": "",
+      "tempo-placeholder": "",
+      "title": "",
+      "trace-lookup-failed": ""
+    },
+    "menu": {
+      "open-in-explore": ""
+    },
+    "trace-drawer": {
+      "title": ""
+    }
+  },
   "labels": {
     "compare": {
       "aria-label": "",
@@ -344,7 +396,6 @@
       "include-tooltip": "„{{label}}“ in die Filter aufnehmen"
     },
     "grid": {
-      "no-results": "Keine Ergebnisse",
       "refresh-tooltip": "Klicken Sie hier, um alle auf dem Bildschirm angezeigten Panels vollständig zu aktualisieren"
     },
     "stats-panel": {
@@ -445,11 +496,19 @@
     "commit-sha": "Commit SHA: {{shortCommitSha}}",
     "contribute": "Beitragen",
     "documentation": "Dokumentation",
-    "grafana-version": "Grafana {{edition}} Ver. {{version}} ({{env}})",
+    "grafana-version": "",
     "last-update": "Letztes Update: {{updated}}",
     "report-issue": "Problem melden",
     "title": "Plugin-Info",
     "version": "Grafana Profiles Drilldown Ver. {{version}}"
+  },
+  "profiles": {
+    "kg-annotations": {
+      "insights-label": "",
+      "severity-critical": "",
+      "severity-info": "",
+      "severity-warning": ""
+    }
   },
   "query-analysis": {
     "blocks": "Blöcke",
@@ -547,7 +606,7 @@
       "no-searches": "Keine gespeicherten Suchen zum Anzeigen vorhanden.",
       "no-searches-tooltip": "Keine gespeicherten Suchen zum Laden vorhanden",
       "remove-tooltip": "Entfernen",
-      "saved-query-tooltip": "Gespeicherte Abfrage laden",
+      "saved-query-tooltip": "",
       "select": "Auswählen",
       "select-pyroscope-query": "Bitte wählen Sie eine Pyroscope-Abfrage aus.",
       "title": "Zuvor gespeicherte Suche laden",
@@ -561,7 +620,7 @@
       "existing-search-warning": "Es gibt eine zuvor gespeicherte Suche mit derselben Abfrage: {{title}}",
       "info-message": "Gespeicherte Suchen werden lokal in Ihrem Browser gespeichert und sind nur auf diesem Gerät verfügbar.",
       "save": "Speichern",
-      "saved-queries-tooltip": "In „Gespeicherte Abfragen“ speichern",
+      "saved-queries-tooltip": "",
       "success-body": "Suche erfolgreich gespeichert.",
       "success-message": "Suche erfolgreich gespeichert.",
       "success-title": "Erfolg",
@@ -595,7 +654,9 @@
         "tooltip": "Die Funktionsdetails-Funktion ermöglicht die Zuordnung der Ressourcennutzung zu Quellcodezeilen. Wenn die GitHub-Integration konfiguriert ist, wird der Quellcode von GitHub heruntergeladen."
       },
       "fetch-error": {
-        "message": "Bitte versuchen Sie, die Seite neu zu laden. Entschuldigen Sie die Unannehmlichkeiten.",
+        "cloud-hint": "",
+        "message": "",
+        "oss-hint": "",
         "title": "Beim Abrufen der Plugin-Einstellungen ist ein Fehler aufgetreten!"
       },
       "flame-graph": {
@@ -620,7 +681,9 @@
   },
   "timeseries": {
     "menu": {
+      "add-to-dashboard": "",
       "exemplars": "Exemplare",
+      "labels": "",
       "open-in-explore": "In Explore öffnen",
       "scale-linear": "Linear",
       "scale-log2": "Log2",

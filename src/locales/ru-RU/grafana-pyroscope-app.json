@@ -8,6 +8,12 @@
     "fav": {
       "favorite": "Добавить в избранное",
       "unfavorite": "Удалить из избранного"
+    },
+    "span-exemplar-toggle": {
+      "aria-label": "",
+      "span-heatmap": "",
+      "time-series": "",
+      "unavailable": ""
     }
   },
   "ad-hoc": {
@@ -22,6 +28,9 @@
     "tabs": {
       "diff-view": "",
       "single-view": "Единое представление"
+    },
+    "upload": {
+      "diff-converted-to-single": ""
     },
     "view": {
       "title": "Специальное представление"
@@ -55,6 +64,9 @@
   "back-button": {
     "aria-label": "Назад в Profiles Drilldown",
     "label": "Назад в Profiles Drilldown"
+  },
+  "common": {
+    "not-available": ""
   },
   "create-recording-rule": {
     "cancel": "Отмена",
@@ -129,10 +141,6 @@
       "label": "Предустановки сравнения",
       "placeholder": "Выбрать предустановку"
     },
-    "settings-error": {
-      "message": "Некоторые функции могут работать некорректно (например, параметры экспорта flame-графиков). Попробуйте перезагрузить страницу. Приносим извинения за неудобства.",
-      "title": "Ошибка при получении параметров плагина"
-    },
     "title": "Flame-график различий для {{serviceName}} ({{profileMetricType}})"
   },
   "error-page": {
@@ -140,7 +148,14 @@
     "banner-title": "Критическая ошибка",
     "title": "Grafana Profiles Drilldown"
   },
+  "explore-service-heatmap": {
+    "description": "",
+    "title": ""
+  },
   "explorer": {
+    "add-to-dashboard": {
+      "modal-title": ""
+    },
     "exploration-type": {
       "all-services": "Все службы",
       "all-services-description": "Обзор всех служб для любого типа профиля",
@@ -159,6 +174,7 @@
       "add-recording-rule": "Добавление правила записи",
       "recording-rules-tooltip": "Правила записи",
       "settings-tooltip": "Просмотр/редактирование параметров клиента",
+      "share-error": "",
       "share-tooltip": "Копирование ссылки для совместного доступа в буфер обмена",
       "upload-tooltip": "Добавление специальных профилей",
       "view-recording-rules": "Просмотр правил записи"
@@ -173,10 +189,12 @@
     "error-flamegraph-com": "Ошибка экспорта на flamegraph.com",
     "error-loading-profile": "Ошибка при загрузке данных профиля Flamebearer",
     "error-png": "Ошибка экспорта в PNG",
+    "error-png-no-canvas": "",
     "error-pprof": "Ошибка экспорта в pprof",
     "json": "JSON",
     "json-label": "JSON",
     "png": "PNG",
+    "png-disabled-description": "",
     "png-label": "PNG",
     "pprof": "pprof",
     "tooltip": "Экспорт данных профиля"
@@ -200,12 +218,11 @@
       "remove": "Удалить селектор идентификатора профиля из запроса",
       "tooltip": "Вы добавили селектор идентификатора профиля в запрос flame-графика ({{profileIdSelector}})."
     },
-    "settings-error": {
-      "message": "Некоторые функции могут работать некорректно (например, свернутые flame-графики). Попробуйте перезагрузить страницу. Приносим извинения за неудобства.",
-      "title": "Ошибка при получении параметров плагина"
-    },
     "span-selector": {
-      "added": "Селектор диапазона добавлен",
+      "filter-label": "",
+      "filter-operator": "",
+      "filter-value": "",
+      "name": "",
       "remove": "Удалить селектор диапазона из запроса",
       "tooltip": "Вы добавили селектор диапазона в запрос flame-графика ({{spanSelector}})."
     },
@@ -238,10 +255,10 @@
     "context-menu": {
       "label": "Сведения о функции"
     },
+    "copy-error": "",
     "copy-to-clipboard": "Копировать в буфер обмена",
     "fetch-error": "Ошибка при получении сведений о функции",
     "file": "Файл",
-    "file-path-copied": "Путь к файлу скопирован в буфер обмена",
     "file-tooltip": "Путь к файлу, в котором задана эта функция",
     "function-name": "Имя функции",
     "github": {
@@ -295,6 +312,10 @@
     "button": "Отправить отзыв"
   },
   "grid": {
+    "empty-state": {
+      "no-profiles": "",
+      "no-results": "Нет результатов"
+    },
     "error": {
       "title": "Ошибка запроса"
     },
@@ -319,6 +340,37 @@
     "quick-filter": {
       "aria-label": "Быстрый фильтр",
       "clear": "Очистить поиск"
+    }
+  },
+  "heatmap": {
+    "exemplar": {
+      "select": ""
+    },
+    "exemplar-table": {
+      "clear-selection": "",
+      "col-actions": "",
+      "col-duration": "",
+      "col-span-id": "",
+      "col-span-name": "",
+      "col-timestamp": "",
+      "col-trace-id": "",
+      "copied": "",
+      "copy-to-clipboard": "",
+      "empty": "",
+      "open-flamegraph": "",
+      "open-trace": "",
+      "select-exemplar": "",
+      "select-tempo": "",
+      "tempo-datasource": "",
+      "tempo-placeholder": "",
+      "title": "",
+      "trace-lookup-failed": ""
+    },
+    "menu": {
+      "open-in-explore": ""
+    },
+    "trace-drawer": {
+      "title": ""
     }
   },
   "labels": {
@@ -346,7 +398,6 @@
       "include-tooltip": "Включить «{{label}}» в фильтры"
     },
     "grid": {
-      "no-results": "Нет результатов",
       "refresh-tooltip": "Нажмите, чтобы полностью обновить все панели, отображаемые на экране"
     },
     "stats-panel": {
@@ -447,11 +498,19 @@
     "commit-sha": "Выполнить SHA-хеширование: {{shortCommitSha}}",
     "contribute": "Внести вклад",
     "documentation": "Документация",
-    "grafana-version": "Grafana {{edition}}, версия {{version}} ({{env}})",
+    "grafana-version": "",
     "last-update": "Последнее обновление: {{updated}}",
     "report-issue": "Сообщить о проблеме",
     "title": "О плагине",
     "version": "Grafana Profiles Drilldown, версия {{version}}"
+  },
+  "profiles": {
+    "kg-annotations": {
+      "insights-label": "",
+      "severity-critical": "",
+      "severity-info": "",
+      "severity-warning": ""
+    }
   },
   "query-analysis": {
     "blocks": "Блоки",
@@ -549,7 +608,7 @@
       "no-searches": "Нет сохраненных поисковых запросов для отображения.",
       "no-searches-tooltip": "Нет сохраненных поисковых запросов для загрузки",
       "remove-tooltip": "Удалить",
-      "saved-query-tooltip": "Загрузить сохраненный запрос",
+      "saved-query-tooltip": "",
       "select": "Выбрать",
       "select-pyroscope-query": "Выберите запрос Pyroscope.",
       "title": "Загрузить ранее сохраненный поисковый запрос",
@@ -563,7 +622,7 @@
       "existing-search-warning": "Ранее был сохранен поисковый запрос с таким же содержанием: {{title}}",
       "info-message": "Сохраненные поисковые запросы хранятся локально в вашем браузере и будут доступны только на этом устройстве.",
       "save": "Сохранить",
-      "saved-queries-tooltip": "Сохранить в сохраненных запросах",
+      "saved-queries-tooltip": "",
       "success-body": "Поисковый запрос сохранен.",
       "success-message": "Поисковый запрос сохранен.",
       "success-title": "Выполнено",
@@ -597,7 +656,9 @@
         "tooltip": "Сведения о функции позволяют сопоставить использование ресурсов со строками исходного кода. Если настроена интеграция с GitHub, исходный код будет загружен из GitHub."
       },
       "fetch-error": {
-        "message": "Попробуйте перезагрузить страницу. Приносим извинения за неудобства.",
+        "cloud-hint": "",
+        "message": "",
+        "oss-hint": "",
         "title": "Ошибка при получении параметров плагина"
       },
       "flame-graph": {
@@ -622,7 +683,9 @@
   },
   "timeseries": {
     "menu": {
+      "add-to-dashboard": "",
       "exemplars": "Образцы",
+      "labels": "",
       "open-in-explore": "Открыть в Explore",
       "scale-linear": "Линейная",
       "scale-log2": "Log2",

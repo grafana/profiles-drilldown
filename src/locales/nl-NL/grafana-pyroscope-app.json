@@ -8,6 +8,12 @@
     "fav": {
       "favorite": "Favoriet",
       "unfavorite": "Maak los van favorieten"
+    },
+    "span-exemplar-toggle": {
+      "aria-label": "",
+      "span-heatmap": "",
+      "time-series": "",
+      "unavailable": ""
     }
   },
   "ad-hoc": {
@@ -22,6 +28,9 @@
     "tabs": {
       "diff-view": "",
       "single-view": "Enkele weergave"
+    },
+    "upload": {
+      "diff-converted-to-single": ""
     },
     "view": {
       "title": "Ad-hocweergave"
@@ -55,6 +64,9 @@
   "back-button": {
     "aria-label": "Terug naar Profiles Drilldown",
     "label": "Terug naar Profiles Drilldown"
+  },
+  "common": {
+    "not-available": ""
   },
   "create-recording-rule": {
     "cancel": "Annuleren",
@@ -129,10 +141,6 @@
       "label": "Vergelijkingsvoorinstellingen",
       "placeholder": "Kies een voorinstelling"
     },
-    "settings-error": {
-      "message": "Sommige functies werken mogelijk niet zoals verwacht (bijv. exportopties voor flame graphs). Probeer de pagina opnieuw te laden. Sorry voor het ongemak.",
-      "title": "Er is een fout opgetreden bij het ophalen van de plug-ininstellingen!"
-    },
     "title": "Diff flame Graph voor {{serviceName}} ({{profileMetricType}})"
   },
   "error-page": {
@@ -140,7 +148,14 @@
     "banner-title": "Fatale fout!",
     "title": "Grafana Profiles Drilldown"
   },
+  "explore-service-heatmap": {
+    "description": "",
+    "title": ""
+  },
   "explorer": {
+    "add-to-dashboard": {
+      "modal-title": ""
+    },
     "exploration-type": {
       "all-services": "Alle services",
       "all-services-description": "Overzicht van alle services, voor elk profieltype",
@@ -159,6 +174,7 @@
       "add-recording-rule": "Opnameregel toevoegen",
       "recording-rules-tooltip": "Opnameregels",
       "settings-tooltip": "Tenantinstellingen bekijken/bewerken",
+      "share-error": "",
       "share-tooltip": "Deelbare link naar het klembord kopiëren",
       "upload-tooltip": "Ad-hocprofielen uploaden",
       "view-recording-rules": "Opnameregels bekijken"
@@ -173,10 +189,12 @@
     "error-flamegraph-com": "Kan niet exporteren naar flamegraph.com!",
     "error-loading-profile": "Er is een fout opgetreden bij het laden van flamebearer-profielgegevens!",
     "error-png": "Kan niet exporteren naar png!",
+    "error-png-no-canvas": "",
     "error-pprof": "Kan niet exporteren naar pprof!",
     "json": "json",
     "json-label": "json",
     "png": "png",
+    "png-disabled-description": "",
     "png-label": "png",
     "pprof": "pprof",
     "tooltip": "Profielgegevens exporteren"
@@ -200,12 +218,11 @@
       "remove": "Profiel-ID-kiezer uit query verwijderen",
       "tooltip": "Je hebt een profiel-ID-selector toegevoegd aan de Flamegraph-query ({{profileIdSelector}})."
     },
-    "settings-error": {
-      "message": "Sommige functies werken mogelijk niet zoals verwacht (bijv. ingeklapte flame graphs). Probeer de pagina opnieuw te laden. Sorry voor het ongemak.",
-      "title": "Er is een fout opgetreden bij het ophalen van de plug-ininstellingen!"
-    },
     "span-selector": {
-      "added": "Span-selector toegevoegd",
+      "filter-label": "",
+      "filter-operator": "",
+      "filter-value": "",
+      "name": "",
       "remove": "Span-selector uit query verwijderen",
       "tooltip": "Je hebt een span-selector toegevoegd aan de Flamegraph-query ({{spanSelector}})."
     },
@@ -238,10 +255,10 @@
     "context-menu": {
       "label": "Functiedetails"
     },
+    "copy-error": "",
     "copy-to-clipboard": "Kopiëren naar klembord",
     "fetch-error": "Er is een fout opgetreden bij het ophalen van functiedetails!",
     "file": "Bestand",
-    "file-path-copied": "Bestandspad naar klembord gekopieerd!",
     "file-tooltip": "Bestandspad waarin die functie is gedefinieerd",
     "function-name": "Functienaam",
     "github": {
@@ -295,6 +312,10 @@
     "button": "Feedback geven"
   },
   "grid": {
+    "empty-state": {
+      "no-profiles": "",
+      "no-results": "Geen resultaten"
+    },
     "error": {
       "title": "Queryfout!"
     },
@@ -321,6 +342,37 @@
       "clear": "Zoekopdracht wissen"
     }
   },
+  "heatmap": {
+    "exemplar": {
+      "select": ""
+    },
+    "exemplar-table": {
+      "clear-selection": "",
+      "col-actions": "",
+      "col-duration": "",
+      "col-span-id": "",
+      "col-span-name": "",
+      "col-timestamp": "",
+      "col-trace-id": "",
+      "copied": "",
+      "copy-to-clipboard": "",
+      "empty": "",
+      "open-flamegraph": "",
+      "open-trace": "",
+      "select-exemplar": "",
+      "select-tempo": "",
+      "tempo-datasource": "",
+      "tempo-placeholder": "",
+      "title": "",
+      "trace-lookup-failed": ""
+    },
+    "menu": {
+      "open-in-explore": ""
+    },
+    "trace-drawer": {
+      "title": ""
+    }
+  },
   "labels": {
     "compare": {
       "aria-label": "",
@@ -344,7 +396,6 @@
       "include-tooltip": "'{{label}}' opnemen in de filters"
     },
     "grid": {
-      "no-results": "Geen resultaten",
       "refresh-tooltip": "Klik om alle panelen op het scherm volledig te vernieuwen"
     },
     "stats-panel": {
@@ -445,11 +496,19 @@
     "commit-sha": "Commit-SHA: {{shortCommitSha}}",
     "contribute": "Bijdragen",
     "documentation": "Documentatie",
-    "grafana-version": "Grafana {{edition}} v{{version}} ({{env}})",
+    "grafana-version": "",
     "last-update": "Laatste update: {{updated}}",
     "report-issue": "Een probleem melden",
     "title": "Plugin-informatie",
     "version": "Grafana Profiles Drilldown v{{version}}"
+  },
+  "profiles": {
+    "kg-annotations": {
+      "insights-label": "",
+      "severity-critical": "",
+      "severity-info": "",
+      "severity-warning": ""
+    }
   },
   "query-analysis": {
     "blocks": "Blokken",
@@ -547,7 +606,7 @@
       "no-searches": "Geen opgeslagen zoekopdrachten om weer te geven.",
       "no-searches-tooltip": "Geen opgeslagen zoekopdrachten om te laden",
       "remove-tooltip": "Verwijderen",
-      "saved-query-tooltip": "Opgeslagen query laden",
+      "saved-query-tooltip": "",
       "select": "Selecteren",
       "select-pyroscope-query": "Selecteer een Pyroscope-query.",
       "title": "Een eerder opgeslagen zoekopdracht laden",
@@ -561,7 +620,7 @@
       "existing-search-warning": "Er is al een eerder opgeslagen zoekopdracht met dezelfde zoekterm: {{title}}",
       "info-message": "Opgeslagen zoekopdrachten worden lokaal in je browser opgeslagen en zijn alleen op dit apparaat beschikbaar.",
       "save": "Opslaan",
-      "saved-queries-tooltip": "Opslaan in Opgeslagen queries",
+      "saved-queries-tooltip": "",
       "success-body": "Zoekopdracht is opgeslagen.",
       "success-message": "Zoekopdracht is opgeslagen.",
       "success-title": "Succes",
@@ -595,7 +654,9 @@
         "tooltip": "Met de functiedetailsfunctie kan het bronnengebruik worden gekoppeld aan regels broncode. Als de GitHub-integratie is geconfigureerd, wordt de broncode van GitHub gedownload."
       },
       "fetch-error": {
-        "message": "Probeer de pagina opnieuw te laden. Sorry voor het ongemak.",
+        "cloud-hint": "",
+        "message": "",
+        "oss-hint": "",
         "title": "Er is een fout opgetreden bij het ophalen van de plug-ininstellingen!"
       },
       "flame-graph": {
@@ -620,7 +681,9 @@
   },
   "timeseries": {
     "menu": {
+      "add-to-dashboard": "",
       "exemplars": "Voorbeelden",
+      "labels": "",
       "open-in-explore": "Openen in Verkennen",
       "scale-linear": "Lineair",
       "scale-log2": "Log2",

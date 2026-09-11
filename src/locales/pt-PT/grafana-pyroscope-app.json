@@ -8,6 +8,12 @@
     "fav": {
       "favorite": "Adicionar como favorito",
       "unfavorite": "Remover dos favoritos"
+    },
+    "span-exemplar-toggle": {
+      "aria-label": "",
+      "span-heatmap": "",
+      "time-series": "",
+      "unavailable": ""
     }
   },
   "ad-hoc": {
@@ -22,6 +28,9 @@
     "tabs": {
       "diff-view": "",
       "single-view": "Vista única"
+    },
+    "upload": {
+      "diff-converted-to-single": ""
     },
     "view": {
       "title": "Vista ad hoc"
@@ -55,6 +64,9 @@
   "back-button": {
     "aria-label": "Voltar a Profiles Drilldown",
     "label": "Voltar a Profiles Drilldown"
+  },
+  "common": {
+    "not-available": ""
   },
   "create-recording-rule": {
     "cancel": "Cancelar",
@@ -129,10 +141,6 @@
       "label": "Predefinições de comparação",
       "placeholder": "Escolher uma predefinição"
     },
-    "settings-error": {
-      "message": "Algumas funcionalidades podem não funcionar como esperado (por exemplo, as opções de exportação de flamegraph). Tente atualizar a página. Lamentamos o incómodo.",
-      "title": "Erro ao recuperar as configurações do plugin!"
-    },
     "title": "Gráfico de chamas de diferenças para {{serviceName}} ({{profileMetricType}})"
   },
   "error-page": {
@@ -140,7 +148,14 @@
     "banner-title": "Erro fatal!",
     "title": "Grafana Profiles Drilldown"
   },
+  "explore-service-heatmap": {
+    "description": "",
+    "title": ""
+  },
   "explorer": {
+    "add-to-dashboard": {
+      "modal-title": ""
+    },
     "exploration-type": {
       "all-services": "Todos os serviços",
       "all-services-description": "Visão geral de todos os serviços, para qualquer tipo de perfil",
@@ -159,6 +174,7 @@
       "add-recording-rule": "Adicionar regra de gravação",
       "recording-rules-tooltip": "Regras de gravação",
       "settings-tooltip": "Ver/editar definições do inquilino",
+      "share-error": "",
       "share-tooltip": "Copiar link partilhável para a área de transferência",
       "upload-tooltip": "Carregar perfis ad hoc",
       "view-recording-rules": "Ver regras de gravação"
@@ -173,10 +189,12 @@
     "error-flamegraph-com": "Falha ao exportar para flamegraph.com!",
     "error-loading-profile": "Erro ao carregar dados de perfil do flamebearer!",
     "error-png": "Falha ao exportar para png!",
+    "error-png-no-canvas": "",
     "error-pprof": "Falha ao exportar para pprof!",
     "json": "json",
     "json-label": "json",
     "png": "png",
+    "png-disabled-description": "",
     "png-label": "png",
     "pprof": "pprof",
     "tooltip": "Exportar dados de perfil"
@@ -200,12 +218,11 @@
       "remove": "Remover o seletor de ID de perfil da consulta",
       "tooltip": "Adicionou um seletor de ID de perfil à consulta de gráfico de chamas ({{profileIdSelector}})."
     },
-    "settings-error": {
-      "message": "Algumas funcionalidades podem não funcionar como esperado (por exemplo, gráficos de chamas recolhidos). Tente atualizar a página. Lamentamos o incómodo.",
-      "title": "Erro ao recuperar as configurações do plugin!"
-    },
     "span-selector": {
-      "added": "Seletor de intervalo adicionado",
+      "filter-label": "",
+      "filter-operator": "",
+      "filter-value": "",
+      "name": "",
       "remove": "Remover o seletor de intervalo da consulta",
       "tooltip": "Adicionou um seletor de intervalo à consulta de gráfico de chamas ({{spanSelector}})."
     },
@@ -238,10 +255,10 @@
     "context-menu": {
       "label": "Detalhes da função"
     },
+    "copy-error": "",
     "copy-to-clipboard": "Copiar para a área de transferência",
     "fetch-error": "Erro ao obter detalhes da função!",
     "file": "Ficheiro",
-    "file-path-copied": "Caminho do ficheiro copiado para a área de transferência!",
     "file-tooltip": "Caminho do ficheiro onde essa função está definida",
     "function-name": "Nome da função",
     "github": {
@@ -295,6 +312,10 @@
     "button": "Dar feedback"
   },
   "grid": {
+    "empty-state": {
+      "no-profiles": "",
+      "no-results": "Sem resultados"
+    },
     "error": {
       "title": "Erro de consulta!"
     },
@@ -321,6 +342,37 @@
       "clear": "Limpar a pesquisa"
     }
   },
+  "heatmap": {
+    "exemplar": {
+      "select": ""
+    },
+    "exemplar-table": {
+      "clear-selection": "",
+      "col-actions": "",
+      "col-duration": "",
+      "col-span-id": "",
+      "col-span-name": "",
+      "col-timestamp": "",
+      "col-trace-id": "",
+      "copied": "",
+      "copy-to-clipboard": "",
+      "empty": "",
+      "open-flamegraph": "",
+      "open-trace": "",
+      "select-exemplar": "",
+      "select-tempo": "",
+      "tempo-datasource": "",
+      "tempo-placeholder": "",
+      "title": "",
+      "trace-lookup-failed": ""
+    },
+    "menu": {
+      "open-in-explore": ""
+    },
+    "trace-drawer": {
+      "title": ""
+    }
+  },
   "labels": {
     "compare": {
       "aria-label": "",
@@ -344,7 +396,6 @@
       "include-tooltip": "Incluir \"{{label}}\" nos filtros"
     },
     "grid": {
-      "no-results": "Sem resultados",
       "refresh-tooltip": "Clique para atualizar completamente todos os painéis presentes no ecrã"
     },
     "stats-panel": {
@@ -445,11 +496,19 @@
     "commit-sha": "Aplicar alteração SHA: {{shortCommitSha}}",
     "contribute": "Contribuir",
     "documentation": "Documentação",
-    "grafana-version": "Grafana {{edition}} v{{version}} ({{env}})",
+    "grafana-version": "",
     "last-update": "Última atualização: {{updated}}",
     "report-issue": "Comunicar um problema",
     "title": "Informações do plugin",
     "version": "Grafana Profiles Drilldown v{{version}}"
+  },
+  "profiles": {
+    "kg-annotations": {
+      "insights-label": "",
+      "severity-critical": "",
+      "severity-info": "",
+      "severity-warning": ""
+    }
   },
   "query-analysis": {
     "blocks": "Blocos",
@@ -547,7 +606,7 @@
       "no-searches": "Não há pesquisas guardadas para mostrar.",
       "no-searches-tooltip": "Não há pesquisas guardadas para carregar",
       "remove-tooltip": "Remover",
-      "saved-query-tooltip": "Carregar consulta guardada",
+      "saved-query-tooltip": "",
       "select": "Selecionar",
       "select-pyroscope-query": "Selecione uma consulta Pyroscope.",
       "title": "Carregar uma pesquisa guardada anteriormente",
@@ -561,7 +620,7 @@
       "existing-search-warning": "Existe uma pesquisa guardada anteriormente com a mesma consulta: {{title}}",
       "info-message": "As pesquisas guardadas são armazenadas localmente no seu navegador e só estarão disponíveis neste dispositivo.",
       "save": "Guardar",
-      "saved-queries-tooltip": "Guardar em Consultas guardadas",
+      "saved-queries-tooltip": "",
       "success-body": "Pesquisa guardada com sucesso.",
       "success-message": "Pesquisa guardada com sucesso.",
       "success-title": "Sucesso",
@@ -595,7 +654,9 @@
         "tooltip": "A funcionalidade de detalhes da função permite mapear a utilização de recursos para linhas de código-fonte. Se a integração com o GitHub estiver configurada, o código-fonte será transferido do GitHub."
       },
       "fetch-error": {
-        "message": "Tente atualizar a página. Lamentamos o incómodo.",
+        "cloud-hint": "",
+        "message": "",
+        "oss-hint": "",
         "title": "Erro ao recuperar as configurações do plugin!"
       },
       "flame-graph": {
@@ -620,7 +681,9 @@
   },
   "timeseries": {
     "menu": {
+      "add-to-dashboard": "",
       "exemplars": "Exemplos",
+      "labels": "",
       "open-in-explore": "Abrir em Explorar",
       "scale-linear": "Linear",
       "scale-log2": "Log2",
