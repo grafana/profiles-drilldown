@@ -49,6 +49,8 @@ export const INITIAL_MAX_NODES = 16384;
 // An 'other' directly under the root cannot be targeted with a call site, so the only way to see inside it is a
 // bigger budget for the whole profile. Rare, and bounded by the server side limit.
 const BUDGET_ESCALATION = 4;
+// Pyroscope refuses a request whose maxNodes is above this, so the padding below must not push us over it.
+const SERVER_MAX_NODES = 1 << 20;
 const MAX_BUDGET = 1 << 20;
 
 const CONCURRENCY = 2;
@@ -102,7 +104,9 @@ async function fetchSubtree(query: ProgressiveQuery, callSite: string[], budget:
   const to = query.timeRange.to.valueOf();
 
   const request: DataQueryRequest<PyroscopeProfileQuery> = {
-    requestId: `progressive-flame-graph-${from}-${to}-${callSite.join('|')}`,
+    // The budget is part of the id: backendSrv cancels an in-flight request as soon as another one with the same
+    // requestId starts, so escalating the budget for a call site would otherwise abort the request already on the wire.
+    requestId: `progressive-flame-graph-${from}-${to}-${budget}-${callSite.join('|')}`,
     targets: [
       {
         refId: 'progressive',
@@ -111,7 +115,7 @@ async function fetchSubtree(query: ProgressiveQuery, callSite: string[], budget:
         labelSelector: query.labelSelector,
         // The call site and the root count against maxNodes, so pad the budget to keep the detail of the subtree the
         // same at any depth.
-        maxNodes: budget + callSite.length + 1,
+        maxNodes: Math.min(budget + callSite.length + 1, SERVER_MAX_NODES),
         ...(callSite.length > 0 && { stackTraceSelector: callSite }),
         datasource: { type: 'grafana-pyroscope-datasource', uid: query.dataSourceUid },
       },
@@ -149,6 +153,9 @@ export function startProgressiveRefinement(
 ): ProgressiveController {
   const queue: RefineTask[] = [];
   const pendingByPath = new Map<string, RefineTask>();
+  // Call sites with a request on the wire. A rescan triggered by another merge sees their 'other' still in place,
+  // precisely because the answer has not arrived yet, and would re-queue them at a higher budget for nothing.
+  const inFlight = new Set<string>();
   const loading = new Map<string, string[][]>();
   // Highest budget already queried per subtree. The initial query counts as the root having been asked at the base
   // budget, so the root is only re-queried if it escalates.
@@ -186,6 +193,10 @@ export function startProgressiveRefinement(
     // Never ask the same subtree the same question twice: without this a subtree that stays truncated at a given
     // budget would be re-queued for ever.
     if ((attempted.get(key) ?? 0) >= task.budget) {
+      return;
+    }
+
+    if (inFlight.has(key)) {
       return;
     }
 
@@ -298,6 +309,7 @@ export function startProgressiveRefinement(
     attempted.set(task.path.join(' '), task.budget);
 
     const loadingKey = task.path.join(' ');
+    inFlight.add(loadingKey);
     loading.set(loadingKey, collectVisibleOtherPaths(target, task.path, view));
     emit(false, false);
 
@@ -327,9 +339,16 @@ export function startProgressiveRefinement(
 
       mergeChildren(mergeTarget, refinedTarget);
       treeChanged = true;
-      scanVisible();
     } finally {
+      inFlight.delete(loadingKey);
       loading.delete(loadingKey);
+
+      // Rescan only once this call site is off the wire, so that a subtree which came back still truncated can be
+      // asked again at a higher budget. Before emit, so the reported pending count includes whatever this queues.
+      if (treeChanged) {
+        scanVisible();
+      }
+
       emit(false, treeChanged);
     }
   };
