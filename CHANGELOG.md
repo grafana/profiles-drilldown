@@ -1,5 +1,32 @@
 # Changelog
 
+## [2.3.1](https://github.com/grafana/profiles-drilldown/compare/v2.3.0...v2.3.1) (2026-09-11)
+
+
+### 🐛 Bug Fixes
+
+* **deps:** bump pnpm overrides for CVE remediation ([#1115](https://github.com/grafana/profiles-drilldown/issues/1115)) ([dd4735f](https://github.com/grafana/profiles-drilldown/commit/dd4735f7913f4df2148007c29ac725f3a4bd9c57))
+* **deps:** remediate smol-toml vulnerability ([#1120](https://github.com/grafana/profiles-drilldown/issues/1120)) ([5fe4255](https://github.com/grafana/profiles-drilldown/commit/5fe425515015feaeebd274afbdc2a00233a08a70))
+* Issue with share button copying ([#1035](https://github.com/grafana/profiles-drilldown/issues/1035)) ([20ec037](https://github.com/grafana/profiles-drilldown/commit/20ec037791355bcba767c65dd0aa32ecf2e767d3))
+* scope diff view filters to their own panel time range ([#1099](https://github.com/grafana/profiles-drilldown/issues/1099)) ([34022af](https://github.com/grafana/profiles-drilldown/commit/34022af58965abd3a4524a99ec00ee3610caf590))
+* **security/high/:** update pnpm to v11.11.0 [security] ([#1112](https://github.com/grafana/profiles-drilldown/issues/1112)) ([2ea7a6f](https://github.com/grafana/profiles-drilldown/commit/2ea7a6fd511d849b143e1b01e3864404f13992b7))
+* **security/medium/:** update dependency react-router-dom to v6.30.5 [security] ([#1102](https://github.com/grafana/profiles-drilldown/issues/1102)) ([f4715e4](https://github.com/grafana/profiles-drilldown/commit/f4715e45c38966422cef5491792dddb7738f4fa9))
+* Upload failure for diff profile ([#1048](https://github.com/grafana/profiles-drilldown/issues/1048)) ([68138cf](https://github.com/grafana/profiles-drilldown/commit/68138cf84f78a65e638f77f3cc43c9bb4de1006e))
+
+
+### 🧹 Chore
+
+* Bump crowdin version ([#1123](https://github.com/grafana/profiles-drilldown/issues/1123)) ([17cacaa](https://github.com/grafana/profiles-drilldown/commit/17cacaa64778786b9054f1a338bb58118164e8f0))
+* **ci:** add cp-update workflow with GitHub App token broker ([#1116](https://github.com/grafana/profiles-drilldown/issues/1116)) ([e0cc577](https://github.com/grafana/profiles-drilldown/commit/e0cc577f9b698f8f97a383c31415bed3007de275))
+* **deps:** update dependency i18next-cli to v1.73.1 ([#1109](https://github.com/grafana/profiles-drilldown/issues/1109)) ([d4af03b](https://github.com/grafana/profiles-drilldown/commit/d4af03bde1dcfa9e88c37b55057fd42539eaec52))
+* **deps:** update golang docker tag to v1.27.1 ([#1110](https://github.com/grafana/profiles-drilldown/issues/1110)) ([e88c35a](https://github.com/grafana/profiles-drilldown/commit/e88c35a7b608762f3dfcf3f805c3720d4e451ca4))
+* **deps:** update golang:1.26.5 docker digest to 705e964 ([#1108](https://github.com/grafana/profiles-drilldown/issues/1108)) ([ec5604b](https://github.com/grafana/profiles-drilldown/commit/ec5604b4fa0694003f0c341ce8eaf85760fbea2e))
+* **deps:** update grafana/shared-workflows/lint-pr-title action to v1.2.4 ([#1111](https://github.com/grafana/profiles-drilldown/issues/1111)) ([92653a2](https://github.com/grafana/profiles-drilldown/commit/92653a2e107aa1f214190c1d9acc9f295b2de755))
+* move codeowners to whole drilldown squad ([#1119](https://github.com/grafana/profiles-drilldown/issues/1119)) ([9b5149e](https://github.com/grafana/profiles-drilldown/commit/9b5149eefa335deb137eccdf60df11856a6cb824))
+* Remove pyroscopeUTF8LabelNames feature toggle ([#1117](https://github.com/grafana/profiles-drilldown/issues/1117)) ([697c8d0](https://github.com/grafana/profiles-drilldown/commit/697c8d05e55a9a4434bf7ca316f6f9edb8ad8a2b))
+* Update packages ([#1107](https://github.com/grafana/profiles-drilldown/issues/1107)) ([42a8a0d](https://github.com/grafana/profiles-drilldown/commit/42a8a0dbd7e8e273bb933b52640ee93aca25046c))
+* Upgrade workspace overrides ([#1118](https://github.com/grafana/profiles-drilldown/issues/1118)) ([5c31a5d](https://github.com/grafana/profiles-drilldown/commit/5c31a5d16c7dd94c3081f7dffacbc8a79a3f70ba))
+
 ## [2.3.0](https://github.com/grafana/profiles-drilldown/compare/v2.2.0...v2.3.0) (2026-08-21)
 
 
