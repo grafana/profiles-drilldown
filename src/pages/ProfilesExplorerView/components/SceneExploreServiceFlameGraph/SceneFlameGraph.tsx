@@ -1,13 +1,14 @@
 import { css } from '@emotion/css';
 import { createTheme, DataFrame, GrafanaTheme2, LoadingState, TimeRange } from '@grafana/data';
-// TODO: onFocusChange and loadingPaths are not in a released @grafana/flamegraph yet (see grafana/grafana#132316).
+// TODO: onVisibleTruncatedPathsChange and loadingPaths are not in a released @grafana/flamegraph yet
+// (see grafana/grafana#132316).
 // Until it ships, point the dependency at a local build:
 //   "@grafana/flamegraph": "file:./grafana-flamegraph-local.tgz"
 import { FlameGraph, Props as FlameGraphProps } from '@grafana/flamegraph';
 import { t, Trans } from '@grafana/i18n';
 import {
-  sceneGraph,
   SceneComponentProps,
+  sceneGraph,
   SceneObjectBase,
   SceneObjectState,
   SceneQueryRunner,
@@ -61,7 +62,6 @@ interface SceneFlameGraphState extends SceneObjectState {
   lastTimeRange?: TimeRange;
   progressiveFrame?: DataFrame;
   progressiveProgress?: ProgressiveProgress;
-  focusPath?: string[];
   exportMenu: SceneExportMenu;
   aiPanel: SceneAiPanel;
   functionDetailsPanel: SceneFunctionDetailsPanel;
@@ -138,9 +138,8 @@ export class SceneFlameGraph extends SceneObjectBase<SceneFlameGraphState> {
   private startProgressiveRefinement(frame: DataFrame, timeRange: TimeRange) {
     this.stopProgressiveRefinement();
 
-    // The flame graph keeps the focus across a data change, and does so without reporting a change, so the focus path
-    // is kept here too and handed to the new controller below. If the path is gone from the new data, resolving it
-    // simply finds nothing and no queries are made.
+    // Nothing is queried until the flame graph has rendered this frame and reported what it shows, which it does for
+    // every new profile, so the new controller picks up wherever the user currently is.
     this.setState({ progressiveFrame: frame, progressiveProgress: undefined });
 
     if (!this.progressiveQuery?.enabled) {
@@ -170,26 +169,15 @@ export class SceneFlameGraph extends SceneObjectBase<SceneFlameGraphState> {
         labelSelector,
         timeRange,
         unit: frame.fields.find((field) => field.name === 'value')?.config?.unit ?? 'short',
-        // Whether an 'other' node is worth querying depends on how wide it is drawn, so measure the rendered graph.
-        // Zero means it has not been laid out yet, and nothing counts as visible until it has.
-        getViewWidth: () => document.querySelector('[data-testid="flameGraph"]')?.clientWidth ?? 0,
       },
       (progressiveFrame, progressiveProgress) => {
         this.setState({ progressiveFrame, progressiveProgress });
       }
     );
-
-    this.refiner.setFocusPath(this.state.focusPath);
   }
 
-  /** The width the flame graph is drawn at decides what counts as visible, so re-check when it changes. */
-  onViewWidthChange = () => {
-    this.refiner?.rescan();
-  };
-
-  setFocusPath = (focusPath: string[] | undefined) => {
-    this.setState({ focusPath });
-    this.refiner?.setFocusPath(focusPath);
+  setVisibleTruncated = (paths: string[][]) => {
+    this.refiner?.setVisibleTruncated(paths);
   };
 
   buildTitle() {
@@ -223,14 +211,15 @@ export class SceneFlameGraph extends SceneObjectBase<SceneFlameGraphState> {
       createRecordingRuleModal,
       progressiveFrame,
       progressiveProgress,
-      focusPath,
     } = this.useState();
 
     // Progressive loading only makes sense for the plain profile view: a span or profile id selector already narrows
     // the query down to something small. Settings can fail to load (the settings API is not available on every
     // backend), in which case fall back to the default rather than silently turning the feature off.
     const progressiveEnabled = Boolean(
-      (settings?.progressiveFlamegraphs ?? DEFAULT_SETTINGS.progressiveFlamegraphs) && !spanSelector && !profileIdSelector
+      (settings?.progressiveFlamegraphs ?? DEFAULT_SETTINGS.progressiveFlamegraphs) &&
+        !spanSelector &&
+        !profileIdSelector
     );
     this.setProgressiveQuery(progressiveEnabled);
 
@@ -291,13 +280,11 @@ export class SceneFlameGraph extends SceneObjectBase<SceneFlameGraphState> {
         progressive: {
           enabled: progressiveEnabled,
           progress: progressiveProgress,
-          focusPath,
         },
       },
       actions: {
         getTheme,
-        setFocusPath: this.setFocusPath,
-        onViewWidthChange: this.onViewWidthChange,
+        setVisibleTruncated: this.setVisibleTruncated,
       },
     };
   };
@@ -325,21 +312,6 @@ export class SceneFlameGraph extends SceneObjectBase<SceneFlameGraphState> {
     const spanSelector = getSceneVariableValue(model, 'spanSelector');
     const profileIdSelector = getSceneVariableValue(model, 'profileIdSelector');
     const { data, actions } = model.useSceneFlameGraph(spanSelector, profileIdSelector);
-
-    // The flame graph settles into its final width after the panes lay out, and the user can resize it afterwards.
-    // Both change what counts as a visible 'other' node, so re-check when the width changes.
-    useEffect(() => {
-      const canvas = document.querySelector('[data-testid="flameGraph"]');
-
-      if (!canvas || typeof ResizeObserver === 'undefined') {
-        return;
-      }
-
-      const observer = new ResizeObserver(() => actions.onViewWidthChange());
-      observer.observe(canvas);
-
-      return () => observer.disconnect();
-    }, [actions, data.profileData]);
 
     const sidePanel = useToggleSidePanel();
     const gitHubIntegration = useGitHubIntegration(sidePanel);
@@ -438,7 +410,7 @@ export class SceneFlameGraph extends SceneObjectBase<SceneFlameGraphState> {
                 />
               }
               keepFocusOnDataChange
-              onFocusChange={actions.setFocusPath}
+              onVisibleTruncatedPathsChange={actions.setVisibleTruncated}
               loadingPaths={data.progressive.progress?.loadingPaths}
               enableNewUI={true}
             />

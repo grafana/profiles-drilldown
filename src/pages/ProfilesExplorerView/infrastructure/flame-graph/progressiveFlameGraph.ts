@@ -4,36 +4,33 @@ import {
   DataQueryRequest,
   DataQueryResponse,
   DataSourceApi,
-  TimeRange,
   dateTime,
+  TimeRange,
 } from '@grafana/data';
 import { getDataSourceSrv } from '@grafana/runtime';
 import { logger } from '@shared/infrastructure/tracking/logger';
 import { lastValueFrom, Observable } from 'rxjs';
 
 import {
-  collectVisibleOtherPaths,
   countNodes,
   dataFrameToTree,
-  findVisibleOtherParents,
-  hasVisibleOther,
-  isPrefix,
   mergeChildren,
   ProfileTreeNode,
   resolvePath,
-  samePath,
   treeToDataFrame,
-  ViewGeometry,
 } from './progressiveProfileTree';
 
 /**
  * Progressive flame graph loading.
  *
  * The first query is an ordinary one, so nothing extra is paid for a profile that arrives complete. Further queries
- * are made only where the user can actually see truncation: for every 'other' node wide enough to be drawn as a real
- * bar, the subtree above it is re-queried with a call site selector, which spends the whole node budget inside that
- * subtree and so resolves every 'other' within it at once. Focusing a node re-runs the same rule against the zoomed
- * view, where slivers that were too narrow to see become visible.
+ * are made only where the user can actually see truncation: the flame graph reports the call paths of the 'other'
+ * nodes the active view is showing, and for each of them the subtree above it is re-queried with a call site
+ * selector, which spends the whole node budget inside that subtree and so resolves every 'other' within it at once.
+ *
+ * Deciding what the user can see belongs to the flame graph package, not here: a bar is visible when it is wide
+ * enough to read, a call tree row when its ancestors are expanded, and only the package knows which view is on
+ * screen. So focusing, zooming, resizing and expanding all reach this controller the same way, as a new set of paths.
  *
  * A query costs the backend about the same whatever its maxNodes is (the read path reads and symbolizes everything
  * matching the selector either way, maxNodes only trims what comes back), so a call site query is far cheaper than
@@ -54,7 +51,7 @@ const SERVER_MAX_NODES = 1 << 20;
 const MAX_BUDGET = 1 << 20;
 
 const CONCURRENCY = 2;
-// Safety net only: a focus or search change starts a new cycle.
+// Safety net only: a change in what the flame graph shows starts a new cycle.
 const MAX_REQUESTS_PER_CYCLE = 16;
 
 export interface ProgressiveProgress {
@@ -72,23 +69,26 @@ export interface ProgressiveQuery {
   labelSelector: string;
   timeRange: TimeRange;
   unit: string;
-  /** Width of the rendered flame graph, used to tell a visible 'other' node from a sliver. */
-  getViewWidth: () => number;
 }
 
 export interface ProgressiveController {
-  /** Call path of the focused node, or undefined when the focus is reset. */
-  setFocusPath(path: string[] | undefined): void;
-  /** Re-evaluate what is visible, for instance after the flame graph was laid out or resized. */
-  rescan(): void;
-  /** While a search is active every 'other' node is greyed out, so focus refinement pauses. */
-  setSearchActive(active: boolean): void;
+  /**
+   * Call paths of the truncated nodes the user can currently see, as reported by the flame graph. Anything not in the
+   * set is either resolved already or not on screen, so this is the whole of what drives refinement.
+   */
+  setVisibleTruncated(paths: string[][]): void;
   cancel(): void;
 }
 
 type RefineTask = {
+  /** Call site to re-query, relative to the root. */
   path: string[];
   budget: number;
+  /**
+   * The truncated nodes this refinement is meant to resolve, for the loading markers and to tell whether an earlier,
+   * broader refinement has already dealt with them.
+   */
+  truncated: string[][];
 };
 
 interface PyroscopeProfileQuery extends DataQuery {
@@ -98,7 +98,11 @@ interface PyroscopeProfileQuery extends DataQuery {
   stackTraceSelector?: string[];
 }
 
-async function fetchSubtree(query: ProgressiveQuery, callSite: string[], budget: number): Promise<DataFrame | undefined> {
+async function fetchSubtree(
+  query: ProgressiveQuery,
+  callSite: string[],
+  budget: number
+): Promise<DataFrame | undefined> {
   const dataSource: DataSourceApi = await getDataSourceSrv().get(query.dataSourceUid);
   const from = query.timeRange.from.valueOf();
   const to = query.timeRange.to.valueOf();
@@ -141,9 +145,9 @@ async function fetchSubtree(query: ProgressiveQuery, callSite: string[], budget:
 }
 
 /**
- * Refines the tree in place, calling onUpdate with a new data frame after every merged response. The returned
- * controller stays alive after the initial upgrade so that focus changes can trigger further refinement; cancel it
- * when the data it was built from is replaced.
+ * Refines the tree in place, calling onUpdate with a new data frame after every merged response. Nothing is queried
+ * until the flame graph reports what it is showing; the controller then stays alive so that later reports can trigger
+ * further refinement. Cancel it when the data it was built from is replaced.
  */
 export function startProgressiveRefinement(
   root: ProfileTreeNode,
@@ -153,7 +157,7 @@ export function startProgressiveRefinement(
 ): ProgressiveController {
   const queue: RefineTask[] = [];
   const pendingByPath = new Map<string, RefineTask>();
-  // Call sites with a request on the wire. A rescan triggered by another merge sees their 'other' still in place,
+  // Call sites with a request on the wire. A report triggered by another merge sees their 'other' still in place,
   // precisely because the answer has not arrived yet, and would re-queue them at a higher budget for nothing.
   const inFlight = new Set<string>();
   const loading = new Map<string, string[][]>();
@@ -164,22 +168,10 @@ export function startProgressiveRefinement(
   // The flame graph reports and expects paths that start at the synthetic root ('total'), while paths here are
   // relative to it: that is also what a call site selector needs, since the root is not a real frame.
   const rootName = root.name;
-  const toRelative = (path: string[] | undefined) =>
-    path && path[0] === rootName ? path.slice(1) : path;
+  const toRelative = (path: string[]) => (path[0] === rootName ? path.slice(1) : path);
   const toAbsolute = (path: string[]) => [rootName, ...path];
 
-  const currentView = (): ViewGeometry | null => {
-    if (searchActive) {
-      return null;
-    }
-
-    const viewRoot = focusPath ? resolvePath(root, focusPath) : root;
-
-    return viewRoot ? { viewTotal: viewRoot.total, widthPx: query.getViewWidth() } : null;
-  };
-
-  let focusPath: string[] | undefined;
-  let searchActive = false;
+  let visibleKey = '';
   let cancelled = false;
   let active = 0;
   let cycleRequests = 0;
@@ -204,6 +196,7 @@ export function startProgressiveRefinement(
 
     if (existing) {
       existing.budget = Math.max(existing.budget, task.budget);
+      existing.truncated = task.truncated;
       return;
     }
 
@@ -211,55 +204,11 @@ export function startProgressiveRefinement(
     queue.push(task);
   };
 
-  /** Queues the subtrees above every 'other' node the user can currently see. */
-  const scanVisible = () => {
-    const view = currentView();
-
-    if (!view) {
-      return;
-    }
-
-    const scanRoot = focusPath ? resolvePath(root, focusPath) : root;
-
-    if (!scanRoot) {
-      return;
-    }
-
-    for (const parentPath of findVisibleOtherParents(scanRoot, focusPath ?? [], view)) {
-      const key = parentPath.join(' ');
-      const previous = attempted.get(key) ?? 0;
-      // A call site query spends the whole budget inside the subtree, so the base budget is enough. Only the root,
-      // which no call site can target, has to escalate to see anything new.
-      const budget = parentPath.length === 0 ? previous * BUDGET_ESCALATION : Math.max(INITIAL_MAX_NODES, previous * BUDGET_ESCALATION);
-
-      if (budget <= MAX_BUDGET) {
-        push({ path: parentPath, budget });
-      }
-    }
-  };
-
-  const isEligible = (task: RefineTask) => {
-    if (searchActive) {
-      return false;
-    }
-
-    if (!focusPath) {
-      return true;
-    }
-
-    // While focused, everything outside the focused subtree is greyed out.
-    return isPrefix(task.path, focusPath) || isPrefix(focusPath, task.path);
-  };
-
-  const takeBestEligible = (): RefineTask | undefined => {
+  const takeShallowest = (): RefineTask | undefined => {
     // Shallowest first: a broader refinement covers the deeper ones.
     let best = -1;
 
     for (let i = 0; i < queue.length; i++) {
-      if (!isEligible(queue[i])) {
-        continue;
-      }
-
       if (best === -1 || queue[i].path.length < queue[best].path.length) {
         best = i;
       }
@@ -273,6 +222,45 @@ export function startProgressiveRefinement(
     pendingByPath.delete(task.path.join(' '));
 
     return task;
+  };
+
+  /**
+   * A call site query spends the whole budget inside the subtree, so the base budget is enough. Only the root, which
+   * no call site can target, has to escalate to see anything new.
+   */
+  const nextBudget = (callSite: string[]) => {
+    const previous = attempted.get(callSite.join(' ')) ?? 0;
+    const escalated = previous * BUDGET_ESCALATION;
+
+    return callSite.length === 0 ? escalated : Math.max(INITIAL_MAX_NODES, escalated);
+  };
+
+  /**
+   * Groups the reported truncated nodes by the call site above them, since that is what a query can target and one
+   * query there resolves every truncated node under it at once.
+   */
+  const groupByCallSite = (paths: string[][]) => {
+    const byCallSite = new Map<string, RefineTask>();
+
+    for (const path of paths) {
+      const truncated = toRelative(path);
+
+      if (!truncated.length) {
+        continue;
+      }
+
+      const callSite = truncated.slice(0, -1);
+      const key = callSite.join(' ');
+      const existing = byCallSite.get(key);
+
+      if (existing) {
+        existing.truncated.push(truncated);
+      } else {
+        byCallSite.set(key, { path: callSite, budget: nextBudget(callSite), truncated: [truncated] });
+      }
+    }
+
+    return byCallSite;
   };
 
   const emit = (done: boolean, treeChanged: boolean) => {
@@ -294,23 +282,16 @@ export function startProgressiveRefinement(
   };
 
   const processTask = async (task: RefineTask) => {
-    const target = resolvePath(root, task.path);
-    const view = currentView();
-
-    if (!target || !view) {
+    // An earlier, broader refinement may have resolved these already, in which case the nodes this task was queued
+    // for are no longer in the tree.
+    if (!task.truncated.some((path) => resolvePath(root, path))) {
       return;
     }
-
-    // An earlier, broader refinement may have resolved everything visible here already.
-    if (!hasVisibleOther(target, view)) {
-      return;
-    }
-
-    attempted.set(task.path.join(' '), task.budget);
 
     const loadingKey = task.path.join(' ');
+    attempted.set(loadingKey, task.budget);
     inFlight.add(loadingKey);
-    loading.set(loadingKey, collectVisibleOtherPaths(target, task.path, view));
+    loading.set(loadingKey, task.truncated);
     emit(false, false);
 
     let treeChanged = false;
@@ -343,12 +324,9 @@ export function startProgressiveRefinement(
       inFlight.delete(loadingKey);
       loading.delete(loadingKey);
 
-      // Rescan only once this call site is off the wire, so that a subtree which came back still truncated can be
-      // asked again at a higher budget. Before emit, so the reported pending count includes whatever this queues.
-      if (treeChanged) {
-        scanVisible();
-      }
-
+      // No re-scan here. The merged frame goes out to the flame graph, which reports what it now shows: fewer
+      // truncated nodes, possibly new ones a level deeper, and the same ones again where the answer was still
+      // truncated, which is what escalates the budget.
       emit(false, treeChanged);
     }
   };
@@ -381,7 +359,7 @@ export function startProgressiveRefinement(
     }
 
     while (active < CONCURRENCY && cycleRequests < MAX_REQUESTS_PER_CYCLE) {
-      const task = takeBestEligible();
+      const task = takeShallowest();
 
       if (!task) {
         break;
@@ -396,39 +374,28 @@ export function startProgressiveRefinement(
     }
   };
 
-  scanVisible();
-  pump();
-
   return {
-    setFocusPath(path: string[] | undefined) {
-      const relativePath = toRelative(path);
-
-      if (cancelled || samePath(relativePath, focusPath)) {
-        return;
-      }
-
-      focusPath = relativePath;
-      cycleRequests = 0;
-      // Zooming into a subtree makes slivers inside it wide enough to see, and so worth querying.
-      scanVisible();
-      pump();
-    },
-    rescan() {
+    setVisibleTruncated(paths: string[][]) {
       if (cancelled) {
         return;
       }
 
-      scanVisible();
-      pump();
-    },
-    setSearchActive(active: boolean) {
-      if (cancelled || active === searchActive) {
-        return;
+      const byCallSite = groupByCallSite(paths);
+      const key = [...byCallSite.keys()].sort().join('\n');
+
+      if (key !== visibleKey) {
+        visibleKey = key;
+        // A different set of call sites on screen means the user moved: focused, expanded a row, resized the pane.
+        // The cap is there to stop one such move fanning out without limit, not to limit a session.
+        cycleRequests = 0;
       }
 
-      searchActive = active;
-      cycleRequests = 0;
-      scanVisible();
+      for (const task of byCallSite.values()) {
+        if (task.budget <= MAX_BUDGET) {
+          push(task);
+        }
+      }
+
       pump();
     },
     cancel() {

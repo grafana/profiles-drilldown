@@ -1,4 +1,4 @@
-import { DataFrame, FieldType, createDataFrame } from '@grafana/data';
+import { createDataFrame, DataFrame, FieldType } from '@grafana/data';
 
 /**
  * Tree utilities for progressive flame graph loading: the coarse profile returned by the initial query is turned into
@@ -7,10 +7,6 @@ import { DataFrame, FieldType, createDataFrame } from '@grafana/data';
 
 // Pyroscope names the node standing in for a truncated subtree 'other' (see model.truncatedNodeName).
 export const TRUNCATED_NODE_NAME = 'other';
-
-// Bars this narrow or narrower are drawn muted and unlabelled by the flame graph (MUTE_THRESHOLD in
-// @grafana/flamegraph), so an 'other' node below this width is not something the user can actually see.
-const MUTE_THRESHOLD_PX = 10;
 
 export type ProfileTreeNode = {
   name: string;
@@ -111,70 +107,6 @@ export function countNodes(node: ProfileTreeNode): number {
 }
 
 /**
- * Paths of the 'other' nodes in the subtree that the user can see. A refinement resolves every 'other' below it, but
- * only the visible ones are worth marking as loading: the rest are slivers the flame graph draws muted anyway.
- */
-export function collectVisibleOtherPaths(
-  node: ProfileTreeNode,
-  path: string[],
-  view: ViewGeometry,
-  out: string[][] = []
-): string[][] {
-  for (const child of node.children) {
-    if (child.name === TRUNCATED_NODE_NAME) {
-      if (isVisible(child.total, view)) {
-        out.push([...path, TRUNCATED_NODE_NAME]);
-      }
-    } else {
-      collectVisibleOtherPaths(child, [...path, child.name], view, out);
-    }
-  }
-
-  return out;
-}
-
-/**
- * How the flame graph currently draws the tree: the total of the subtree that fills the width (the focused node, or
- * the root when nothing is focused) and how wide that is on screen. Together they decide what the user can see.
- */
-export type ViewGeometry = {
-  viewTotal: number;
-  widthPx: number;
-};
-
-/** Whether a node of this size is drawn as a real bar rather than a muted sliver. */
-export function isVisible(total: number, view: ViewGeometry): boolean {
-  return view.viewTotal > 0 && (total / view.viewTotal) * view.widthPx > MUTE_THRESHOLD_PX;
-}
-
-/** Whether the subtree contains an 'other' node the user can actually see, and so is worth another query. */
-export function hasVisibleOther(node: ProfileTreeNode, view: ViewGeometry): boolean {
-  return node.children.some((child) =>
-    child.name === TRUNCATED_NODE_NAME ? isVisible(child.total, view) : hasVisibleOther(child, view)
-  );
-}
-
-/** Paths of the parents of the visible 'other' nodes in the subtree. */
-export function findVisibleOtherParents(
-  node: ProfileTreeNode,
-  path: string[],
-  view: ViewGeometry,
-  out: string[][] = []
-): string[][] {
-  for (const child of node.children) {
-    if (child.name === TRUNCATED_NODE_NAME) {
-      if (isVisible(child.total, view)) {
-        out.push(path);
-      }
-    } else {
-      findVisibleOtherParents(child, [...path, child.name], view, out);
-    }
-  }
-
-  return out;
-}
-
-/**
  * Replaces the target's children with the refined ones, keeping an existing child subtree when it is already more
  * detailed than the refinement, so that a broad refinement landing late never discards a deeper one.
  */
@@ -190,16 +122,4 @@ export function mergeChildren(target: ProfileTreeNode, refined: ProfileTreeNode)
 
     return refinedChild;
   });
-}
-
-export function isPrefix(prefix: string[], path: string[]): boolean {
-  return prefix.length <= path.length && prefix.every((name, i) => name === path[i]);
-}
-
-export function samePath(a: string[] | undefined, b: string[] | undefined): boolean {
-  if (!a || !b) {
-    return a === b;
-  }
-
-  return a.length === b.length && a.every((name, i) => name === b[i]);
 }

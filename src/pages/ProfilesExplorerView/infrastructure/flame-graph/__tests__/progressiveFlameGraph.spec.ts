@@ -1,7 +1,12 @@
 import { type DataFrame, type DataQueryRequest, dateTime, type TimeRange } from '@grafana/data';
 import { getDataSourceSrv } from '@grafana/runtime';
 
-import { INITIAL_MAX_NODES, type ProgressiveProgress, startProgressiveRefinement } from '../progressiveFlameGraph';
+import {
+  INITIAL_MAX_NODES,
+  type ProgressiveController,
+  type ProgressiveProgress,
+  startProgressiveRefinement,
+} from '../progressiveFlameGraph';
 import { type ProfileTreeNode, treeToDataFrame } from '../progressiveProfileTree';
 
 jest.mock('@grafana/runtime', () => ({
@@ -12,7 +17,7 @@ jest.mock('@shared/infrastructure/tracking/logger', () => ({
   logger: { error: jest.fn() },
 }));
 
-/** Drains the promise cascade of a refinement round: fetch -> merge -> rescan -> next request. */
+/** Drains the promise cascade of a refinement round: fetch -> merge -> next request. */
 const flush = () => new Promise((resolve) => setTimeout(resolve, 0));
 
 const node = (name: string, total: number, self: number, children: ProfileTreeNode[] = []): ProfileTreeNode => ({
@@ -29,7 +34,7 @@ const timeRange = {
   to: dateTime(1_700_000_600_000),
 } as TimeRange;
 
-/** A tree with a visible 'other' under each of two separate parents. */
+/** A tree with a truncated node under each of two separate parents. */
 function twoTruncatedBranches() {
   return node('total', 1000, 0, [
     node('A', 500, 0, [node('a1', 300, 300), other(200)]),
@@ -72,7 +77,9 @@ function stubDataSource() {
     await flush();
   };
 
-  return { captured, pending, resolveFor };
+  const callSites = () => captured.map((c) => c.callSite.join('|'));
+
+  return { captured, callSites, pending, resolveFor };
 }
 
 function refine(root: ProfileTreeNode, onUpdate?: (progress: ProgressiveProgress) => void) {
@@ -85,28 +92,62 @@ function refine(root: ProfileTreeNode, onUpdate?: (progress: ProgressiveProgress
       labelSelector: '{service_name="svc"}',
       timeRange,
       unit: 'ns',
-      getViewWidth: () => 1000,
     },
     (_frame, progress) => onUpdate?.(progress)
   );
+}
+
+/**
+ * Stands in for the flame graph, which reports the truncated nodes the active view is showing. Every truncated node
+ * still in the tree counts as visible here, which is what a call tree with all its rows expanded would report.
+ */
+function reportVisibleTruncated(controller: ProgressiveController, root: ProfileTreeNode) {
+  const paths: string[][] = [];
+
+  const walk = (node: ProfileTreeNode, path: string[]) => {
+    for (const child of node.children) {
+      if (child.name === 'other') {
+        paths.push([...path, child.name]);
+      } else {
+        walk(child, [...path, child.name]);
+      }
+    }
+  };
+
+  walk(root, [root.name]);
+  controller.setVisibleTruncated(paths);
 }
 
 /** The refined answer for A: same totals, but the truncated child resolved into real symbols. */
 const refinedA = () =>
   node('total', 1000, 0, [node('A', 500, 0, [node('a1', 300, 300), node('a2', 120, 120), node('a3', 80, 80)])]);
 
+/** The refined answer for A, still truncated: the budget was not enough to resolve it. */
+const stillTruncatedA = () => node('total', 1000, 0, [node('A', 500, 0, [node('a1', 300, 300), other(200)])]);
+
 const childNames = (root: ProfileTreeNode, name: string) =>
   root.children.find((c) => c.name === name)!.children.map((c) => c.name);
 
 describe('startProgressiveRefinement', () => {
-  it('queries the parent of every visible truncated node once', async () => {
-    const { captured, resolveFor } = stubDataSource();
-    const root = twoTruncatedBranches();
-    const controller = refine(root);
+  it('queries nothing until the flame graph reports what it is showing', async () => {
+    const { captured } = stubDataSource();
+    const controller = refine(twoTruncatedBranches());
 
     await flush();
 
-    expect(captured.map((c) => c.callSite)).toEqual([['A'], ['B']]);
+    expect(captured).toHaveLength(0);
+    controller.cancel();
+  });
+
+  it('queries the parent of every reported truncated node once', async () => {
+    const { callSites, resolveFor } = stubDataSource();
+    const root = twoTruncatedBranches();
+    const controller = refine(root);
+
+    reportVisibleTruncated(controller, root);
+    await flush();
+
+    expect(callSites()).toEqual(['A', 'B']);
 
     await resolveFor(['A'], refinedA());
 
@@ -114,20 +155,53 @@ describe('startProgressiveRefinement', () => {
     controller.cancel();
   });
 
-  it('does not re-query a call site while its request is still in flight', async () => {
-    const { captured, resolveFor } = stubDataSource();
+  it('ignores the truncated nodes the view does not show', async () => {
+    const { callSites } = stubDataSource();
     const root = twoTruncatedBranches();
     const controller = refine(root);
 
+    // A call tree with A expanded and B collapsed shows only A's truncated child.
+    controller.setVisibleTruncated([['total', 'A', 'other']]);
     await flush();
-    expect(captured).toHaveLength(2);
 
-    // B lands first. Merging it rescans, and A's 'other' is necessarily still in the tree because A's own request has
-    // not come back yet. Re-queueing A here would abort the request already on the wire, because backendSrv cancels
-    // an in-flight request as soon as another one with the same requestId starts.
+    expect(callSites()).toEqual(['A']);
+    controller.cancel();
+  });
+
+  it('marks the reported nodes as loading until their call site comes back', async () => {
+    const { resolveFor } = stubDataSource();
+    const root = twoTruncatedBranches();
+    const updates: ProgressiveProgress[] = [];
+    const controller = refine(root, (progress) => updates.push(progress));
+
+    controller.setVisibleTruncated([['total', 'A', 'other']]);
+    await flush();
+
+    expect(updates.at(-1)?.loadingPaths).toEqual([['total', 'A', 'other']]);
+
+    await resolveFor(['A'], refinedA());
+
+    expect(updates.at(-1)?.loadingPaths).toEqual([]);
+    controller.cancel();
+  });
+
+  it('does not re-query a call site while its request is still in flight', async () => {
+    const { callSites, resolveFor } = stubDataSource();
+    const root = twoTruncatedBranches();
+    const controller = refine(root);
+
+    reportVisibleTruncated(controller, root);
+    await flush();
+    expect(callSites()).toEqual(['A', 'B']);
+
+    // B lands first. The merged frame is re-reported, and A's truncated node is necessarily still in it because A's
+    // own request has not come back yet. Re-queueing A here would abort the request already on the wire, because
+    // backendSrv cancels an in-flight request as soon as another one with the same requestId starts.
     await resolveFor(['B'], node('total', 1000, 0, [node('B', 500, 0, [node('b1', 300, 300), node('b2', 200, 200)])]));
+    reportVisibleTruncated(controller, root);
+    await flush();
 
-    expect(captured.filter((c) => c.callSite.join('|') === 'A')).toHaveLength(1);
+    expect(callSites().filter((callSite) => callSite === 'A')).toHaveLength(1);
 
     // A still completes and merges normally.
     await resolveFor(['A'], refinedA());
@@ -135,16 +209,73 @@ describe('startProgressiveRefinement', () => {
     controller.cancel();
   });
 
-  it('gives every request its own requestId so none of them cancels another', async () => {
-    const { captured, resolveFor } = stubDataSource();
-    // A single branch whose refinement comes back still truncated, so the budget escalates.
-    const root = node('total', 1000, 0, [node('A', 500, 0, [node('a1', 300, 300), other(200)])]);
+  it('skips a queued call site whose truncated nodes a broader refinement has resolved', async () => {
+    const { callSites, resolveFor } = stubDataSource();
+    // Truncated both directly under each branch and a level deeper, so the deeper call sites are queued behind the
+    // broader ones that cover them.
+    const root = node('total', 1000, 0, [
+      node('A', 500, 0, [node('a1', 300, 0, [node('a11', 200, 200), other(100)]), other(200)]),
+      node('B', 500, 0, [node('b1', 300, 0, [node('b11', 200, 200), other(100)]), other(200)]),
+    ]);
     const controller = refine(root);
 
+    reportVisibleTruncated(controller, root);
+    await flush();
+    expect(callSites()).toEqual(['A', 'B']);
+
+    // A comes back fully resolved, so there is nothing left for the queued A|a1 to ask about.
+    await resolveFor(
+      ['A'],
+      node('total', 1000, 0, [
+        node('A', 500, 0, [
+          node('a1', 300, 0, [node('a11', 200, 200), node('a12', 60, 60), node('a13', 40, 40)]),
+          node('a2', 200, 200),
+        ]),
+      ])
+    );
     await flush();
 
-    for (let i = 0; i < 4 && captured.length > i; i++) {
-      await resolveFor(['A'], node('total', 1000, 0, [node('A', 500, 0, [node('a1', 300, 300), other(200)])]));
+    expect(callSites()).not.toContain('A|a1');
+    expect(callSites()).toContain('B|b1');
+    controller.cancel();
+  });
+
+  it('escalates the budget only after the previous answer for that call site arrived', async () => {
+    const { captured, resolveFor } = stubDataSource();
+    const root = stillTruncatedA();
+    const controller = refine(root);
+
+    reportVisibleTruncated(controller, root);
+    await flush();
+    expect(captured).toHaveLength(1);
+    expect(maxNodesOf(captured[0])).toBe(INITIAL_MAX_NODES + 2);
+
+    // Re-reporting the same node while the request is on the wire must not escalate.
+    reportVisibleTruncated(controller, root);
+    await flush();
+    expect(captured).toHaveLength(1);
+
+    await resolveFor(['A'], stillTruncatedA());
+    reportVisibleTruncated(controller, root);
+    await flush();
+
+    expect(captured).toHaveLength(2);
+    expect(maxNodesOf(captured[1])).toBeGreaterThan(maxNodesOf(captured[0]));
+    controller.cancel();
+  });
+
+  it('gives every request its own requestId so none of them cancels another', async () => {
+    const { captured, pending, resolveFor } = stubDataSource();
+    const root = stillTruncatedA();
+    const controller = refine(root);
+
+    reportVisibleTruncated(controller, root);
+    await flush();
+
+    while (pending.length) {
+      await resolveFor(['A'], stillTruncatedA());
+      reportVisibleTruncated(controller, root);
+      await flush();
     }
 
     const ids = captured.map((c) => c.request.requestId);
@@ -153,41 +284,21 @@ describe('startProgressiveRefinement', () => {
     controller.cancel();
   });
 
-  it('escalates the budget only after the previous answer for that call site arrived', async () => {
-    const { captured, resolveFor } = stubDataSource();
-    const root = node('total', 1000, 0, [node('A', 500, 0, [node('a1', 300, 300), other(200)])]);
-    const controller = refine(root);
-
-    await flush();
-    expect(captured).toHaveLength(1);
-    expect(maxNodesOf(captured[0])).toBe(INITIAL_MAX_NODES + 2);
-
-    await resolveFor(['A'], node('total', 1000, 0, [node('A', 500, 0, [node('a1', 300, 300), other(200)])]));
-
-    expect(captured).toHaveLength(2);
-    expect(maxNodesOf(captured[1])).toBeGreaterThan(maxNodesOf(captured[0]));
-    controller.cancel();
-  });
-
   it('never asks for more nodes than Pyroscope allows', async () => {
-    const { captured, resolveFor } = stubDataSource();
-    // An 'other' directly under the root can only be opened up by raising the budget for the whole profile, so this
-    // escalates all the way to the ceiling.
-    const root = node('total', 1000, 0, [node('a1', 300, 300), other(700)]);
+    const { captured, pending, resolveFor } = stubDataSource();
+    // A truncated node directly under the root can only be opened up by raising the budget for the whole profile, so
+    // this escalates all the way to the ceiling.
+    const truncatedRoot = () => node('total', 1000, 0, [node('a1', 300, 300), other(700)]);
+    const root = truncatedRoot();
     const controller = refine(root);
 
+    reportVisibleTruncated(controller, root);
     await flush();
 
-    for (let i = 0; i < 8; i++) {
-      if (!captured.length) {
-        break;
-      }
-
-      try {
-        await resolveFor([], node('total', 1000, 0, [node('a1', 300, 300), other(700)]));
-      } catch {
-        break;
-      }
+    while (pending.length) {
+      await resolveFor([], truncatedRoot());
+      reportVisibleTruncated(controller, root);
+      await flush();
     }
 
     const requested = captured.map(maxNodesOf);
