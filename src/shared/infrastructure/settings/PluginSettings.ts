@@ -4,6 +4,7 @@ export type PluginSettings = {
   enableFlameGraphDotComExport: boolean;
   enableFunctionDetails: boolean;
   enableMetricsFromProfiles?: boolean;
+  progressiveFlamegraphs?: boolean;
 };
 
 export const DEFAULT_SETTINGS: PluginSettings = Object.freeze({
@@ -12,4 +13,5 @@ export const DEFAULT_SETTINGS: PluginSettings = Object.freeze({
   enableFlameGraphDotComExport: true,
   enableFunctionDetails: true,
   enableMetricsFromProfiles: false,
+  progressiveFlamegraphs: true,
 });
