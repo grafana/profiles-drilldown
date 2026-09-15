@@ -24,7 +24,7 @@ Select a view by choosing an **Exploration** tab: **All services**, **Profile ty
 
 <!-- screenshots need to be updated -->
 
-![Select an Exploration type to begin](/media/docs/explore-profiles/v1.17.0/profiles-drilldown-exploration-bar-v1.17.0.png)
+<!-- Screenshot hidden until major UI refresh: ![Select an Exploration type to begin](/media/docs/explore-profiles/v1.17.0/profiles-drilldown-exploration-bar-v1.17.0.png) -->
 
 You can refine a selected view by selecting a service, profile type, label, or flame graph from one of the charts.
 Click and drag on an area of interest to see more detail.
@@ -139,21 +139,23 @@ Determining which view to use frames the rest of your investigation.
 
 The **All services** view is the default view when you first open Profiles Drilldown.
 
-![The All services view](/media/docs/explore-profiles/v1.17.0/profiles-drilldown-homescreen-v1.17.0.png)
+Use the **Filters** bar to narrow the services shown in this view. When you open a service in the **Flame graph** view, the filters you set here are applied there too, so you can keep exploring without losing your place. Your **All services** filters stay in place when you return. These filters apply only to the **All services** view, not to the **Labels** or **Diff flame graph** views.
+
+<!-- Screenshot hidden until major UI refresh: ![The All services view](/media/docs/explore-profiles/v1.17.0/profiles-drilldown-homescreen-v1.17.0.png) -->
 
 ### Profile types
 
 The **Profile types** view shows one chart for each profile type available for the selected service.
 You can select to display the charts in a grid or one chart per row.
 
-![Profile types](/media/docs/explore-profiles/v1.17.0/profiles-drilldown-profile-types-v1.17.0.png)
+<!-- Screenshot hidden until major UI refresh: ![Profile types](/media/docs/explore-profiles/v1.17.0/profiles-drilldown-profile-types-v1.17.0.png) -->
 
 ### Labels
 
 The Labels view lets you navigate and analyze performance data through labels.
 This feature is crucial for identifying performance anomalies and understanding the behavior of different application segments under various conditions.
 
-![Labels view](/media/docs/explore-profiles/v1.17.0/profiles-drilldown-labels-v1.17.0.png)
+<!-- Screenshot hidden until major UI refresh: ![Labels view](/media/docs/explore-profiles/v1.17.0/profiles-drilldown-labels-v1.17.0.png) -->
 
 ### Flame graphs
 
@@ -169,10 +171,22 @@ In this view, you can also:
 - Search for functions in the flame graph.
 - Change the color scheme.
 - Expand or collapse all call stacks.
-- Toggle between top table, flame graph, or both views.
+- Toggle between the top table, flame graph, and call tree, or show a combination of views.
 - Export profile data.
 
-![Flame graphs](/media/docs/explore-profiles/v1.17.0/profiles-drilldown-flamegraph-2-v1.17.0.png)
+<!-- Screenshot hidden until major UI refresh: ![Flame graphs](/media/docs/explore-profiles/v1.17.0/profiles-drilldown-flamegraph-2-v1.17.0.png) -->
+
+#### Profiles to Traces
+
+{{< docs/public-preview product="Profiles to Traces" >}}
+
+In the **Flame graph** view, use the **Profile timeline visualization** toggle to switch between **Time series** and **Span heatmap**.
+The span heatmap plots span-level profile exemplars, so you can move from aggregated profiles to the individual spans and traces behind them.
+
+Select a Tempo data source to load trace details.
+From the **Top span exemplars** table, you can **Open flame graph** to view the flame graph for a single span, or **Open trace** to view the associated trace from your Tempo data source.
+
+For the steps to use the span heatmap, refer to [Investigate trends and spikes](../investigate/#move-from-profiles-to-traces).
 
 ### Diff flame graph
 
@@ -188,7 +202,7 @@ To configure comparisons more quickly, you can use:
 - **Comparison presets** to apply saved or predefined comparisons.
 - **Sync time ranges** to keep baseline and comparison windows aligned.
 
-![Diff flame graph](/media/docs/explore-profiles/v1.17.0/profiles-drilldown-diff-flamegraph-v1.17.0.png)
+![Diff flame graph](/media/docs/explore-profiles/v2.2/profiles-drilldown-diff-flamegraph-v2.2.0.png)
 
 <!-- from old screenshot of cpu usage profile Red represents an increase in CPU usage from the baseline to the comparison and green represents a decrease. -->
 
@@ -205,4 +219,4 @@ In this view, you can also use:
 - **Grid** or **Rows** layout options.
 - **Hide panels without data** to simplify the display.
 
-![Favorites](/media/docs/explore-profiles/v1.17.0/profiles-drilldown-favorites-v1.17.0.png)
+<!-- Screenshot hidden until major UI refresh: ![Favorites](/media/docs/explore-profiles/v1.17.0/profiles-drilldown-favorites-v1.17.0.png) -->

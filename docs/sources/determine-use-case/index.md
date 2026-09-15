@@ -25,7 +25,7 @@ For either use case, the first step is to identify areas of interest by reviewin
 Selecting different profile types lets you focus on memory allocation, CPU processes, allocation sizes, blocks, or lock contention.
 
 The available profile types depend on how you have instrumented your app to generate profiling data.
-For more information, refer to [Profiling types](../concepts/#profile-types/) for help selecting a profile type to match your use case.
+For more information, refer to [Profiling types](../concepts/#profile-types) for help selecting a profile type to match your use case.
 Refer to [Understand profile types](https://grafana.com/docs/pyroscope/latest/view-and-analyze-profile-data/profiling-types/) to learn about profile types and instrumentation methods.
 
 After you identify the problem process or service, you can filter and explore using labels and flame graphs to investigate at lower levels.
