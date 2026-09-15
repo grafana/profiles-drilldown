@@ -54,6 +54,11 @@ overrides:
   ws: '>=8.21.3'
   browserslist: '>=4.28.7'
   smol-toml: '>=1.7.1'
+  # Grafana externalizes React Router v6 until its upstream router migration lands:
+  # https://github.com/grafana/grafana/issues/129933
+  # GHSA-wrjc-x8rr-h8h6 has no compatible v6 package fix, so URL-derived navigation is hardened in-app.
+  # GHSA-337j-9hxr-rhxg affects SSR hydration; this browser plugin does not use SSR.
+  'react-router@^6': ^6.30.6
 minimumReleaseAgeExclude:
   # Renovate security update: pnpm@11.11.0
   - pnpm@11.11.0

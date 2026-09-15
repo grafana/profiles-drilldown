@@ -3,6 +3,7 @@ import { useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { PLUGIN_BASE_URL, ROUTES } from '../../../constants';
+import { normalizeInternalPathname } from './normalizeInternalPathname';
 import { useSettingsExtensions } from './useSettingsExtensions';
 
 export function useSettingsView() {
@@ -39,7 +40,7 @@ export function useSettingsView() {
           backUrl.searchParams.set('maxNodes', String(maxNodesFromUrl));
         }
 
-        navigate(`${backUrl.pathname}${backUrl.search}`);
+        navigate(`${normalizeInternalPathname(backUrl.pathname)}${backUrl.search}`);
       },
     },
   };

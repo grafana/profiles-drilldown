@@ -36,6 +36,7 @@ overrides:
   ws: '>=8.21.3'
   browserslist: '>=4.28.7'
   smol-toml: '>=1.7.1'
+  react-router@^6: ^6.30.6
 
 importers:
 
