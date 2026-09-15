@@ -21,6 +21,11 @@ interface SceneHeatmapState extends SceneObjectState {
   body: VizPanel;
 }
 
+interface HeatmapPanelOptions {
+  yAxis?: Record<string, unknown>;
+  exemplars?: { color: string };
+}
+
 const EXEMPLAR_COLOR_DEFAULT = 'rgba(31, 120, 193, 0.7)';
 const EXEMPLAR_COLOR_SELECTED = 'rgba(255, 152, 0, 1)';
 
@@ -95,6 +100,14 @@ export class SceneHeatmap extends SceneObjectBase<SceneHeatmapState> {
   ) {
     const timeRange = sceneGraph.getTimeRange(this).state.value;
     const annotations: DataFrame[] = [];
+    const currentOptions = this.state.body.state.options as HeatmapPanelOptions;
+    let options = {
+      ...currentOptions,
+      yAxis: {
+        ...currentOptions.yAxis,
+        min: getHeatmapYAxisMin(frame),
+      },
+    };
 
     if (exemplarFrame) {
       const idField = exemplarFrame.fields.find((f) => f.name === 'Id');
@@ -148,13 +161,10 @@ export class SceneHeatmap extends SceneObjectBase<SceneHeatmapState> {
       annotations.push(highlightedFrame ?? exemplarFrame);
 
       const exemplarColor = highlightedFrame ? EXEMPLAR_COLOR_SELECTED : EXEMPLAR_COLOR_DEFAULT;
-      this.state.body.setState({
-        options: {
-          ...this.state.body.state.options,
-          exemplars: { color: exemplarColor },
-        },
-      });
+      options = { ...options, exemplars: { color: exemplarColor } };
     }
+
+    this.state.body.setState({ options });
 
     (this.state.body.state.$data as SceneDataNode).setState({
       data: {
@@ -170,6 +180,33 @@ export class SceneHeatmap extends SceneObjectBase<SceneHeatmapState> {
     const { body } = model.useState();
     return <body.Component model={body} />;
   }
+}
+
+export function getHeatmapYAxisMin(frame: DataFrame | undefined): number {
+  const [lowestBucketStart, nextBucketStart] = getDistinctYBucketStarts(frame);
+  if (lowestBucketStart === undefined) {
+    return 0;
+  }
+
+  const bucketSize = nextBucketStart === undefined ? lowestBucketStart : nextBucketStart - lowestBucketStart;
+  return Math.max(0, lowestBucketStart - bucketSize);
+}
+
+function getDistinctYBucketStarts(frame: DataFrame | undefined): number[] {
+  const yMinField = frame?.fields.find((field) => field.name === 'yMin');
+  if (!yMinField || yMinField.values.length === 0) {
+    return [];
+  }
+
+  const bucketStarts = new Set<number>();
+  for (let index = 0; index < yMinField.values.length; index++) {
+    const value = yMinField.values[index];
+    if (typeof value === 'number') {
+      bucketStarts.add(value);
+    }
+  }
+
+  return [...bucketStarts].sort((a, b) => a - b);
 }
 
 function getDataLinkString(event: DataLinkClickEvent, variableNames: string[]): string | undefined {
