@@ -32,9 +32,11 @@ import {
  * enough to read, a call tree row when its ancestors are expanded, and only the package knows which view is on
  * screen. So focusing, zooming, resizing and expanding all reach this controller the same way, as a new set of paths.
  *
- * A query costs the backend about the same whatever its maxNodes is (the read path reads and symbolizes everything
- * matching the selector either way, maxNodes only trims what comes back), so a call site query is far cheaper than
- * raising maxNodes for the whole profile, and bounded in payload size too.
+ * What makes this affordable is the node budget, not the selector. The read path reads and symbolizes everything
+ * matching the label selector either way, so narrowing to a call site barely changes the latency at a given budget;
+ * what the call site buys is a bounded payload and detail spent where the user is looking, rather than a bigger
+ * budget over the whole profile. Measured on a dev cell over 24h: ~0.9 s for the whole tree at 256 nodes, ~2.5 s at
+ * 16384 whether or not a call site is set, and a floor of ~0.7 s that no selector or budget gets below.
  *
  * See https://github.com/grafana/grafana-pyroscope-datasource/issues/49.
  */
@@ -43,8 +45,7 @@ import {
 // comes from re-querying subtrees rather than from a bigger budget.
 export const INITIAL_MAX_NODES = 16384;
 
-// An 'other' directly under the root cannot be targeted with a call site, so the only way to see inside it is a
-// bigger budget for the whole profile. Rare, and bounded by the server side limit.
+// How much more to ask for when a call site came back still truncated.
 const BUDGET_ESCALATION = 4;
 // Pyroscope refuses a request whose maxNodes is above this, so the padding below must not push us over it.
 const SERVER_MAX_NODES = 1 << 20;
@@ -161,9 +162,8 @@ export function startProgressiveRefinement(
   // precisely because the answer has not arrived yet, and would re-queue them at a higher budget for nothing.
   const inFlight = new Set<string>();
   const loading = new Map<string, string[][]>();
-  // Highest budget already queried per subtree. The initial query counts as the root having been asked at the base
-  // budget, so the root is only re-queried if it escalates.
-  const attempted = new Map<string, number>([['', INITIAL_MAX_NODES]]);
+  // Highest budget already queried per call site.
+  const attempted = new Map<string, number>();
 
   // The flame graph reports and expects paths that start at the synthetic root ('total'), while paths here are
   // relative to it: that is also what a call site selector needs, since the root is not a real frame.
@@ -225,14 +225,13 @@ export function startProgressiveRefinement(
   };
 
   /**
-   * A call site query spends the whole budget inside the subtree, so the base budget is enough. Only the root, which
-   * no call site can target, has to escalate to see anything new.
+   * A call site query spends the whole budget inside the subtree, so the base budget is enough until an answer comes
+   * back still truncated.
    */
   const nextBudget = (callSite: string[]) => {
     const previous = attempted.get(callSite.join(' ')) ?? 0;
-    const escalated = previous * BUDGET_ESCALATION;
 
-    return callSite.length === 0 ? escalated : Math.max(INITIAL_MAX_NODES, escalated);
+    return Math.max(INITIAL_MAX_NODES, previous * BUDGET_ESCALATION);
   };
 
   /**
@@ -245,7 +244,11 @@ export function startProgressiveRefinement(
     for (const path of paths) {
       const truncated = toRelative(path);
 
-      if (!truncated.length) {
+      // A truncated node directly under the root has no call site above it, so the only way to see inside it is a
+      // bigger budget for the whole profile - which is the thing progressive loading exists to avoid. Leaving it
+      // alone costs one unresolved row; asking for it costs a re-query of everything. The top table's truncation
+      // notice is what accounts for the time it holds.
+      if (truncated.length < 2) {
         continue;
       }
 

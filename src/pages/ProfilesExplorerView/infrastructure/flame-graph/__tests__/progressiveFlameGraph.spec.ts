@@ -286,17 +286,15 @@ describe('startProgressiveRefinement', () => {
 
   it('never asks for more nodes than Pyroscope allows', async () => {
     const { captured, pending, resolveFor } = stubDataSource();
-    // A truncated node directly under the root can only be opened up by raising the budget for the whole profile, so
-    // this escalates all the way to the ceiling.
-    const truncatedRoot = () => node('total', 1000, 0, [node('a1', 300, 300), other(700)]);
-    const root = truncatedRoot();
+    const root = stillTruncatedA();
     const controller = refine(root);
 
     reportVisibleTruncated(controller, root);
     await flush();
 
+    // A call site that keeps coming back truncated escalates until it hits the ceiling.
     while (pending.length) {
-      await resolveFor([], truncatedRoot());
+      await resolveFor(['A'], stillTruncatedA());
       reportVisibleTruncated(controller, root);
       await flush();
     }
@@ -305,6 +303,19 @@ describe('startProgressiveRefinement', () => {
     expect(requested.length).toBeGreaterThan(1);
     // Pyroscope answers 'max flamegraph nodes limit N is greater than allowed 1048576' above this.
     expect(Math.max(...requested)).toBeLessThanOrEqual(1 << 20);
+    controller.cancel();
+  });
+
+  it('leaves a truncated node directly under the root alone', async () => {
+    const { captured } = stubDataSource();
+    // Nothing above it to target with a call site, so the only lever would be a bigger budget for the whole profile.
+    const root = node('total', 1000, 0, [node('a1', 300, 300), other(700)]);
+    const controller = refine(root);
+
+    reportVisibleTruncated(controller, root);
+    await flush();
+
+    expect(captured).toHaveLength(0);
     controller.cancel();
   });
 });
