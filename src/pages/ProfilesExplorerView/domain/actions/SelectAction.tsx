@@ -1,6 +1,6 @@
 import { css } from '@emotion/css';
 import { SceneComponentProps, SceneObject, SceneObjectBase, SceneObjectState } from '@grafana/scenes';
-import { Button, IconButton, IconName, useStyles2 } from '@grafana/ui';
+import { Button, IconName, useStyles2 } from '@grafana/ui';
 import { reportInteraction } from '@shared/domain/reportInteraction';
 import { getProfileMetric, ProfileMetricId } from '@shared/infrastructure/profile-metrics/getProfileMetric';
 import { merge } from 'lodash';
@@ -145,26 +145,13 @@ export class SelectAction extends SceneObjectBase<SelectActionState> {
     const accessibleName = ariaLabel || label || '';
     const tooltipText = tooltip?.(item, model) ?? accessibleName;
 
-    if (icon && !label) {
-      return (
-        <IconButton
-          className={styles.iconButton}
-          name={icon}
-          aria-label={accessibleName}
-          variant="secondary"
-          size="sm"
-          tooltip={tooltipText}
-          tooltipPlacement="top"
-          onClick={model.onClick}
-        />
-      );
-    }
-
+    // Icon-only actions must stay on `Button`. Grafana IconButton sets aria-label from `tooltip`,
+    // which would replace names like "Flame graph" with the longer hover text and break E2E locators.
     return (
       <Button
-        className={styles.selectButton}
+        className={label ? styles.selectButton : styles.iconButton}
         aria-label={accessibleName}
-        variant="primary"
+        variant={label ? 'primary' : 'secondary'}
         size="sm"
         fill="text"
         onClick={model.onClick}
