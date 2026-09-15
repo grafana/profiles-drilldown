@@ -1,6 +1,6 @@
 import { css } from '@emotion/css';
 import { SceneComponentProps, SceneObject, SceneObjectBase, SceneObjectState } from '@grafana/scenes';
-import { Button, IconName, useStyles2 } from '@grafana/ui';
+import { Button, IconButton, IconName, useStyles2 } from '@grafana/ui';
 import { reportInteraction } from '@shared/domain/reportInteraction';
 import { getProfileMetric, ProfileMetricId } from '@shared/infrastructure/profile-metrics/getProfileMetric';
 import { merge } from 'lodash';
@@ -51,7 +51,8 @@ const Events = new Map<ActionType, EventLookup>([
   [
     'view-flame-graph',
     Object.freeze({
-      label: 'Flame graph',
+      ariaLabel: 'Flame graph',
+      icon: 'fire',
       tooltip: ({ queryRunnerParams }, model) => {
         const serviceName = queryRunnerParams.serviceName || getSceneVariableValue(model, 'serviceName');
         const profileMetricId = queryRunnerParams.profileMetricId || getSceneVariableValue(model, 'profileMetricId');
@@ -64,6 +65,7 @@ const Events = new Map<ActionType, EventLookup>([
     'view-labels',
     Object.freeze({
       label: 'Labels',
+      icon: 'tag-alt',
       tooltip: ({ queryRunnerParams }, model) => {
         const serviceName = queryRunnerParams.serviceName || getSceneVariableValue(model, 'serviceName');
         return `Explore the labels of ${serviceName}`;
@@ -75,6 +77,7 @@ const Events = new Map<ActionType, EventLookup>([
     'view-profiles',
     Object.freeze({
       label: 'Profile types',
+      icon: 'gf-grid',
       tooltip: ({ queryRunnerParams }, model) => {
         const serviceName = queryRunnerParams.serviceName || getSceneVariableValue(model, 'serviceName');
         return `View the profile types of ${serviceName}`;
@@ -139,17 +142,34 @@ export class SelectAction extends SceneObjectBase<SelectActionState> {
   public static Component = ({ model }: SceneComponentProps<SelectAction>) => {
     const styles = useStyles2(getStyles);
     const { ariaLabel, label, icon, tooltip, item } = model.useState();
+    const accessibleName = ariaLabel || label || '';
+    const tooltipText = tooltip?.(item, model) ?? accessibleName;
+
+    if (icon && !label) {
+      return (
+        <IconButton
+          className={styles.iconButton}
+          name={icon}
+          aria-label={accessibleName}
+          variant="secondary"
+          size="sm"
+          tooltip={tooltipText}
+          tooltipPlacement="top"
+          onClick={model.onClick}
+        />
+      );
+    }
 
     return (
       <Button
         className={styles.selectButton}
-        aria-label={ariaLabel || label}
+        aria-label={accessibleName}
         variant="primary"
         size="sm"
         fill="text"
         onClick={model.onClick}
         icon={icon}
-        tooltip={tooltip?.(item, model)}
+        tooltip={tooltipText}
         tooltipPlacement="top"
       >
         {label}
@@ -162,5 +182,8 @@ const getStyles = () => ({
   selectButton: css`
     margin: 0;
     padding: 0;
+  `,
+  iconButton: css`
+    margin: 0;
   `,
 });

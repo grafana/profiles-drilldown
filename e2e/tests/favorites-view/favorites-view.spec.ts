@@ -14,7 +14,7 @@ test.describe('Favorites view', () => {
     await exploreProfilesPage.clickOnPanelAction('ride-sharing-app', 'Favorite');
 
     await exploreProfilesPage.selectProfileType('process_cpu/samples');
-    await exploreProfilesPage.clickOnPanelAction('ride-sharing-app', 'Labels');
+    await exploreProfilesPage.clickOnPanelMenuAction('ride-sharing-app', 'Labels');
     await exploreProfilesPage.assertNoSpinner();
     await exploreProfilesPage.enterQuickFilterText('vehicle');
     await exploreProfilesPage.clickOnPanelAction('vehicle (4)', 'Favorite');
@@ -81,7 +81,7 @@ test.describe('Favorites view', () => {
 
   test.describe('Panel actions', () => {
     test('Labels action without "group by"', async ({ exploreProfilesPage }) => {
-      await exploreProfilesPage.clickOnPanelAction('ride-sharing-app · inuse_space (memory)', 'Labels');
+      await exploreProfilesPage.clickOnPanelMenuAction('ride-sharing-app · inuse_space (memory)', 'Labels');
 
       await exploreProfilesPage.asserSelectedExplorationType('Labels');
       await exploreProfilesPage.assertSelectedService('ride-sharing-app');
@@ -95,7 +95,10 @@ test.describe('Favorites view', () => {
     });
 
     test('Labels action with "group by"', async ({ exploreProfilesPage }) => {
-      await exploreProfilesPage.clickOnPanelAction('ride-sharing-app · samples (process_cpu) · vehicle (4)', 'Labels');
+      await exploreProfilesPage.clickOnPanelMenuAction(
+        'ride-sharing-app · samples (process_cpu) · vehicle (4)',
+        'Labels'
+      );
 
       await exploreProfilesPage.asserSelectedExplorationType('Labels');
       await exploreProfilesPage.assertSelectedService('ride-sharing-app');

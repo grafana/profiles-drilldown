@@ -83,7 +83,7 @@ test.describe('All services view', () => {
 
   test.describe('Panel actions', () => {
     test('Profile types action', async ({ exploreProfilesPage }) => {
-      await exploreProfilesPage.clickOnPanelAction('ride-sharing-app', 'Profile types');
+      await exploreProfilesPage.clickOnPanelMenuAction('ride-sharing-app', 'Profile types');
 
       await exploreProfilesPage.asserSelectedExplorationType('Profile types');
       await exploreProfilesPage.assertSelectedService('ride-sharing-app');
@@ -94,7 +94,7 @@ test.describe('All services view', () => {
     test('Labels action', async ({ exploreProfilesPage }) => {
       await exploreProfilesPage.selectProfileType('memory/alloc_space');
 
-      await exploreProfilesPage.clickOnPanelAction('ride-sharing-app', 'Labels');
+      await exploreProfilesPage.clickOnPanelMenuAction('ride-sharing-app', 'Labels');
 
       await exploreProfilesPage.asserSelectedExplorationType('Labels');
       await exploreProfilesPage.assertSelectedService('ride-sharing-app');
