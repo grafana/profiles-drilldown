@@ -57,7 +57,7 @@ export type Interactions = {
     source: 'trace-id' | 'action';
   };
   g_pyroscope_app_export_profile: {
-    format: 'png' | 'json' | 'pprof' | 'flamegraph.com';
+    format: 'png' | 'json' | 'pprof' | 'gcx' | 'flamegraph.com';
   };
   g_pyroscope_app_fav_action_clicked: {
     favAfterClick: boolean;
