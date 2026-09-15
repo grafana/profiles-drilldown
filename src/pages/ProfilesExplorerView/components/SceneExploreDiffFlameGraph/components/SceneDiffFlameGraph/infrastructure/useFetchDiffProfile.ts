@@ -1,5 +1,6 @@
 import { TimeRange } from '@grafana/data';
 import { useMaxNodesFromUrl } from '@shared/domain/url-params/useMaxNodesFromUrl';
+import { FlamebearerProfile } from '@shared/types/FlamebearerProfile';
 import { useQuery } from '@tanstack/react-query';
 
 import { DataSourceProxyClientBuilder } from '../../../../../infrastructure/series/http/DataSourceProxyClientBuilder';
@@ -26,7 +27,7 @@ export function useFetchDiffProfile({
 
   const diffProfileApiClient = DataSourceProxyClientBuilder.build(dataSourceUid, DiffProfileApiClient);
 
-  const { isFetching, error, data, refetch } = useQuery({
+  const { isFetching, error, data, refetch } = useQuery<{ profile: FlamebearerProfile }>({
     // for UX: keep previous data while fetching -> profile does not re-render with empty panels when refreshing
     placeholderData: (previousData) => previousData,
     enabled: Boolean(enabled && maxNodes),
@@ -35,16 +36,14 @@ export function useFetchDiffProfile({
       'diff-profile',
       dataSourceUid,
       baselineQuery,
-      baselineTimeRange.from.unix(),
-      baselineTimeRange.to.unix(),
+      baselineTimeRange.from.valueOf(),
+      baselineTimeRange.to.valueOf(),
       comparisonQuery,
-      comparisonTimeRange.from.unix(),
-      comparisonTimeRange.to.unix(),
+      comparisonTimeRange.from.valueOf(),
+      comparisonTimeRange.to.valueOf(),
       maxNodes,
     ],
-    queryFn: () => {
-      diffProfileApiClient.abort();
-
+    queryFn: ({ signal }) => {
       const params = {
         leftQuery: baselineQuery,
         leftTimeRange: baselineTimeRange,
@@ -53,13 +52,7 @@ export function useFetchDiffProfile({
         maxNodes,
       };
 
-      return diffProfileApiClient.get(params).then((json) => ({
-        profile: {
-          version: json.version,
-          flamebearer: json.flamebearer,
-          metadata: json.metadata,
-        },
-      }));
+      return diffProfileApiClient.get(params, signal).then((profile) => ({ profile }));
     },
   });
 

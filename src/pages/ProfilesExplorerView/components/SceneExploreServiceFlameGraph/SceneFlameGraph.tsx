@@ -4,6 +4,7 @@ import { FlameGraph, Props as FlameGraphProps } from '@grafana/flamegraph';
 import { t, Trans } from '@grafana/i18n';
 import {
   SceneComponentProps,
+  sceneGraph,
   SceneObjectBase,
   SceneObjectState,
   SceneQueryRunner,
@@ -24,9 +25,12 @@ import { Unsubscribable } from 'rxjs';
 
 import { useBuildPyroscopeQuery } from '../../domain/useBuildPyroscopeQuery';
 import { useGrafanaAssistant } from '../../domain/useGrafanaAssistant';
+import { ProfilesDataSourceVariable } from '../../domain/variables/ProfilesDataSourceVariable';
 import { getSceneVariableValue } from '../../helpers/getSceneVariableValue';
 import { deferSceneQueryRunnerRun } from '../../infrastructure/deferSceneQueryRunnerRun';
 import { buildFlameGraphQueryRunner } from '../../infrastructure/flame-graph/buildFlameGraphQueryRunner';
+import { useFunctionTable } from '../../infrastructure/functions/useFunctionTable';
+import { useSandwich } from '../../infrastructure/sandwich/useSandwich';
 import { PYROSCOPE_DATA_SOURCE } from '../../infrastructure/pyroscope-data-sources';
 import { AIButton } from '../SceneAiPanel/components/AiButton/AIButton';
 import { SceneAiPanel } from '../SceneAiPanel/SceneAiPanel';
@@ -47,6 +51,7 @@ interface SceneFlameGraphState extends SceneObjectState {
   $timeRange?: SceneTimeRange;
   $data: SceneQueryRunner;
   lastTimeRange?: TimeRange;
+  sandwichLabel?: string;
   exportMenu: SceneExportMenu;
   aiPanel: SceneAiPanel;
   functionDetailsPanel: SceneFunctionDetailsPanel;
@@ -98,6 +103,12 @@ export class SceneFlameGraph extends SceneObjectBase<SceneFlameGraphState> {
     };
   }
 
+  // Held in scene state so a sandwich that is open across a refresh is re-fetched rather than
+  // silently falling back to the one computed from the truncated tree.
+  setSandwichLabel = (sandwichLabel: string | undefined) => {
+    this.setState({ sandwichLabel });
+  };
+
   buildTitle() {
     const serviceName = getSceneVariableValue(this, 'serviceName');
     const profileMetricId = getSceneVariableValue(this, 'profileMetricId');
@@ -119,8 +130,16 @@ export class SceneFlameGraph extends SceneObjectBase<SceneFlameGraphState> {
 
     const [maxNodes] = useMaxNodesFromUrl();
     const { settings } = useFetchPluginSettings();
-    const { $timeRange, $data, lastTimeRange, exportMenu, aiPanel, functionDetailsPanel, createRecordingRuleModal } =
-      this.useState();
+    const {
+      $timeRange,
+      $data,
+      lastTimeRange,
+      exportMenu,
+      aiPanel,
+      functionDetailsPanel,
+      createRecordingRuleModal,
+      sandwichLabel,
+    } = this.useState();
 
     useEffect(() => {
       const runner = buildFlameGraphQueryRunner({
@@ -145,14 +164,42 @@ export class SceneFlameGraph extends SceneObjectBase<SceneFlameGraphState> {
     const hasProfileData = Number(profileData?.length) > 1;
 
     const query = useBuildPyroscopeQuery(this, 'filters');
+    const dataSourceUid = sceneGraph.findByKeyAndType(this, 'dataSource', ProfilesDataSourceVariable).useState()
+      .value as string;
+    const { value: timeRange } = sceneGraph.getTimeRange(this).useState();
+    const functions = useFunctionTable({
+      dataSourceUid,
+      refreshSource: this.getRoot(),
+      enabled: Boolean(dataSourceUid && query && timeRange.from.valueOf() && timeRange.to.valueOf()),
+      left: { query, timeRange, spanSelector, profileIdSelector },
+      maxNodes,
+    });
+
+    const sandwich = useSandwich({
+      dataSourceUid,
+      refreshSource: this.getRoot(),
+      // Only while a function is actually sandwiched. Nothing is prefetched: the request costs about
+      // what the flame graph itself costs.
+      enabled: Boolean(sandwichLabel && dataSourceUid && query && timeRange.from.valueOf() && timeRange.to.valueOf()),
+      function: sandwichLabel,
+      query,
+      timeRange,
+      spanSelector,
+      profileIdSelector,
+      maxNodes,
+    });
 
     return {
       data: {
         title: this.buildTitle(),
-        isLoading: isFetchingProfileData,
+        isLoading: isFetchingProfileData || functions.isFetching || sandwich.isFetching,
         isFetchingProfileData,
         hasProfileData,
         profileData,
+        functionTable: functions.functionTable,
+        fetchFunctionsError: functions.error,
+        sandwich: sandwich.sandwich,
+        fetchSandwichError: sandwich.error,
         spanSelector,
         fetchProfileError,
         settings,
@@ -175,6 +222,7 @@ export class SceneFlameGraph extends SceneObjectBase<SceneFlameGraphState> {
       },
       actions: {
         getTheme,
+        setSandwichLabel: this.setSandwichLabel,
       },
     };
   };
@@ -285,9 +333,20 @@ export class SceneFlameGraph extends SceneObjectBase<SceneFlameGraphState> {
             />
           )}
 
+          {data.fetchFunctionsError && (
+            <InlineBanner
+              severity="error"
+              title={t('flame-graph.error-loading-functions', 'Error while loading function table!')}
+              error={data.fetchFunctionsError}
+            />
+          )}
+
           {!data.fetchProfileError && (
             <FlameGraph
               data={data.profileData as any}
+              functionTable={data.functionTable}
+              sandwich={data.sandwich}
+              onSandwichChange={actions.setSandwichLabel}
               disableCollapsing={!data.settings?.collapsedFlamegraphs}
               getTheme={actions.getTheme as any}
               getExtraContextMenuButtons={extraContextMenuButtons}

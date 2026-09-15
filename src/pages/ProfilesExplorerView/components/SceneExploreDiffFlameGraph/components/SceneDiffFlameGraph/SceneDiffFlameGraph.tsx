@@ -5,6 +5,7 @@ import { SceneComponentProps, sceneGraph, SceneObjectBase, SceneObjectState } fr
 import { Spinner, useStyles2 } from '@grafana/ui';
 import { FlameGraph } from '@shared/components/FlameGraph/FlameGraph';
 import { reportInteraction } from '@shared/domain/reportInteraction';
+import { useMaxNodesFromUrl } from '@shared/domain/url-params/useMaxNodesFromUrl';
 import { useToggleSidePanel } from '@shared/domain/useToggleSidePanel';
 import { getProfileMetric, ProfileMetricId } from '@shared/infrastructure/profile-metrics/getProfileMetric';
 import { useFetchPluginSettings } from '@shared/infrastructure/settings/useFetchPluginSettings';
@@ -19,6 +20,7 @@ import { useBuildPyroscopeQuery } from '../../../../domain/useBuildPyroscopeQuer
 import { useGrafanaAssistant } from '../../../../domain/useGrafanaAssistant';
 import { ProfilesDataSourceVariable } from '../../../../domain/variables/ProfilesDataSourceVariable';
 import { getSceneVariableValue } from '../../../../helpers/getSceneVariableValue';
+import { useFunctionTable } from '../../../../infrastructure/functions/useFunctionTable';
 import { AnalyzeDiffFlameGraph } from '../../../AnalyzeDiffFlameGraph';
 import { AIButton } from '../../../SceneAiPanel/components/AiButton/AIButton';
 import { SceneAiPanel } from '../../../SceneAiPanel/SceneAiPanel';
@@ -65,6 +67,7 @@ export class SceneDiffFlameGraph extends SceneObjectBase<SceneDiffFlameGraphStat
     const comparisonQuery = useBuildPyroscopeQuery(this, 'filtersComparison');
 
     const { settings } = useFetchPluginSettings();
+    const [maxNodes] = useMaxNodesFromUrl();
 
     const dataSourceUid = sceneGraph.findByKeyAndType(this, 'dataSource', ProfilesDataSourceVariable).useState()
       .value as string;
@@ -93,6 +96,15 @@ export class SceneDiffFlameGraph extends SceneObjectBase<SceneDiffFlameGraphStat
       comparisonQuery,
     });
 
+    const functions = useFunctionTable({
+      dataSourceUid,
+      refreshSource: this.getRoot(),
+      enabled: isDiffQueryEnabled,
+      left: { query: baselineQuery, timeRange: baselineTimeRange },
+      right: { query: comparisonQuery, timeRange: comparisonTimeRange },
+      maxNodes,
+    });
+
     const noProfileDataAvailable =
       isDiffQueryEnabled && !isFetching && !fetchProfileError && profile?.flamebearer.numTicks === 0;
 
@@ -104,7 +116,9 @@ export class SceneDiffFlameGraph extends SceneObjectBase<SceneDiffFlameGraphStat
     return {
       data: {
         title: this.buildTitle(),
-        isLoading: isFetching,
+        isLoading: isFetching || functions.isFetching,
+        functionTable: functions.functionTable,
+        fetchFunctionsError: functions.error,
         fetchProfileError,
         noProfileDataAvailable,
         shouldDisplayFlamegraph,
@@ -215,10 +229,19 @@ export class SceneDiffFlameGraph extends SceneObjectBase<SceneDiffFlameGraphStat
             />
           )}
 
+          {data.fetchFunctionsError && (
+            <InlineBanner
+              severity="error"
+              title={t('flame-graph.error-loading-functions', 'Error while loading function table!')}
+              error={data.fetchFunctionsError}
+            />
+          )}
+
           {data.shouldDisplayFlamegraph && (
             <FlameGraph
               diff={true}
               profile={data.profile}
+              functionTable={data.functionTable}
               enableFlameGraphDotComExport={data.settings?.enableFlameGraphDotComExport}
               collapsedFlamegraphs={data.settings?.collapsedFlamegraphs}
               /** Grafana assistant does not support diff flame graphs yet, we will use LLM plugin if enabled */
