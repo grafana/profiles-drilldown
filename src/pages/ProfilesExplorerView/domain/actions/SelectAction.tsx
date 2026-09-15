@@ -51,7 +51,8 @@ const Events = new Map<ActionType, EventLookup>([
   [
     'view-flame-graph',
     Object.freeze({
-      label: 'Flame graph',
+      ariaLabel: 'Flame graph',
+      icon: 'fire',
       tooltip: ({ queryRunnerParams }, model) => {
         const serviceName = queryRunnerParams.serviceName || getSceneVariableValue(model, 'serviceName');
         const profileMetricId = queryRunnerParams.profileMetricId || getSceneVariableValue(model, 'profileMetricId');
@@ -64,6 +65,7 @@ const Events = new Map<ActionType, EventLookup>([
     'view-labels',
     Object.freeze({
       label: 'Labels',
+      icon: 'tag-alt',
       tooltip: ({ queryRunnerParams }, model) => {
         const serviceName = queryRunnerParams.serviceName || getSceneVariableValue(model, 'serviceName');
         return `Explore the labels of ${serviceName}`;
@@ -75,6 +77,7 @@ const Events = new Map<ActionType, EventLookup>([
     'view-profiles',
     Object.freeze({
       label: 'Profile types',
+      icon: 'gf-grid',
       tooltip: ({ queryRunnerParams }, model) => {
         const serviceName = queryRunnerParams.serviceName || getSceneVariableValue(model, 'serviceName');
         return `View the profile types of ${serviceName}`;
@@ -139,17 +142,21 @@ export class SelectAction extends SceneObjectBase<SelectActionState> {
   public static Component = ({ model }: SceneComponentProps<SelectAction>) => {
     const styles = useStyles2(getStyles);
     const { ariaLabel, label, icon, tooltip, item } = model.useState();
+    const accessibleName = ariaLabel || label || '';
+    const tooltipText = tooltip?.(item, model) ?? accessibleName;
 
+    // Icon-only actions must stay on `Button`. Grafana IconButton sets aria-label from `tooltip`,
+    // which would replace names like "Flame graph" with the longer hover text and break E2E locators.
     return (
       <Button
-        className={styles.selectButton}
-        aria-label={ariaLabel || label}
-        variant="primary"
+        className={label ? styles.selectButton : styles.iconButton}
+        aria-label={accessibleName}
+        variant={label ? 'primary' : 'secondary'}
         size="sm"
         fill="text"
         onClick={model.onClick}
         icon={icon}
-        tooltip={tooltip?.(item, model)}
+        tooltip={tooltipText}
         tooltipPlacement="top"
       >
         {label}
@@ -162,5 +169,8 @@ const getStyles = () => ({
   selectButton: css`
     margin: 0;
     padding: 0;
+  `,
+  iconButton: css`
+    margin: 0;
   `,
 });
