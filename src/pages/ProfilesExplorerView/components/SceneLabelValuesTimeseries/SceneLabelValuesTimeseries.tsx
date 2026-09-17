@@ -42,7 +42,7 @@ import {
 import { GridItemData } from '../SceneByVariableRepeaterGrid/types/GridItemData';
 import { RangeAnnotation } from '../SceneExploreDiffFlameGraph/components/SceneComparePanel/domain/RangeAnnotation';
 import { TimeseriesReprocess } from './domain/events/TimeseriesReprocess';
-import { SceneTimeseriesMenu, moveSelectActionsToMenu } from './SceneTimeseriesMenu';
+import { moveSelectActionsToMenu, SceneTimeseriesMenu } from './SceneTimeseriesMenu';
 
 interface SceneLabelValuesTimeseriesState extends SceneObjectState {
   item: GridItemData;
@@ -395,7 +395,7 @@ export class SceneLabelValuesTimeseries extends SceneObjectBase<SceneLabelValues
 
     const getSeriesColor = (index: number) =>
       hasHighlightedSeries
-        ? { mode: 'fixed', fixedColor: config.theme2.isDark ? '#383838' : '#c7c7c7' }
+        ? { mode: 'fixed', fixedColor: config.theme2.colors.text.disabled }
         : { mode: 'fixed', fixedColor: getColorByIndex(item.index + index) };
 
     const overrides = series

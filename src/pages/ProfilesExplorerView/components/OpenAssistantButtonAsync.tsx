@@ -105,7 +105,9 @@ const getStyles = (theme: GrafanaTheme2) => {
     inset: 0,
     borderRadius: outerRadius,
     cornerShape: 'squircle',
-    background: 'linear-gradient(90deg, rgb(168, 85, 247), rgb(249, 115, 22))',
+    background: `linear-gradient(90deg, ${theme.visualization.getColorByName('purple')}, ${
+      theme.colors.accent?.main ?? theme.visualization.getColorByName('orange')
+    })`,
     zIndex: -2,
     pointerEvents: 'none' as const,
   };

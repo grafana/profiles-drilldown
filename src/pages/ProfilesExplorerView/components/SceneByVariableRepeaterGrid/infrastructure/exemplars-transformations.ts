@@ -8,6 +8,7 @@ import {
   FieldType,
 } from '@grafana/data';
 import { t } from '@grafana/i18n';
+import { config } from '@grafana/runtime';
 import { CustomTransformerDefinition, sceneGraph, SceneObject } from '@grafana/scenes';
 import { map, Observable } from 'rxjs';
 
@@ -34,7 +35,7 @@ export const highlightedSeriesOverrides = {
     },
     {
       id: 'color',
-      value: { mode: 'fixed', fixedColor: '#3d71d9' },
+      value: { mode: 'fixed', fixedColor: config.theme2.visualization.getColorByName('blue') },
     },
   ],
 };

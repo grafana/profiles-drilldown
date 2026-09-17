@@ -122,7 +122,7 @@ const getStyles = (theme: GrafanaTheme2) => ({
     }
   `,
   searchLink: css`
-    color: rgb(255, 136, 51);
+    color: ${theme.colors.accent?.main ?? theme.colors.warning.main};
     border: 1px solid transparent;
     padding: 2px 4px;
     cursor: pointer;
@@ -132,7 +132,7 @@ const getStyles = (theme: GrafanaTheme2) => ({
     &:focus,
     &:active {
       box-sizing: border-box;
-      border: 1px solid rgb(255, 136, 51, 0.8);
+      border: 1px solid ${theme.colors.accent?.border ?? theme.colors.warning.border};
       border-radius: ${theme.shape.radius.sm || theme.shape.radius.default};
     }
   `,

@@ -23,25 +23,16 @@ export function SpanSelectorLabel(props: Props) {
         )}
         placement="top"
       >
-        <span
-          aria-label={t('flame-graph.span-selector.filter-label', 'Filter label')}
-          className={styles.label}
-        >
+        <span aria-label={t('flame-graph.span-selector.filter-label', 'Filter label')} className={styles.label}>
           {t('flame-graph.span-selector.name', 'Span')}
         </span>
       </Tooltip>
 
-      <span
-        aria-label={t('flame-graph.span-selector.filter-operator', 'Filter operator')}
-        className={styles.chip}
-      >
+      <span aria-label={t('flame-graph.span-selector.filter-operator', 'Filter operator')} className={styles.chip}>
         =
       </span>
 
-      <span
-        aria-label={t('flame-graph.span-selector.filter-value', 'Filter value')}
-        className={styles.chip}
-      >
+      <span aria-label={t('flame-graph.span-selector.filter-value', 'Filter value')} className={styles.chip}>
         {spanSelector}
       </span>
 
@@ -56,55 +47,56 @@ export function SpanSelectorLabel(props: Props) {
   );
 }
 
-const activeBackgroundColor = 'rgb(61, 113, 217)';
-const activeTextColor = '#fff';
+const getStyles = (theme: GrafanaTheme2) => {
+  const activeBackgroundColor = theme.colors.accent?.main ?? theme.colors.primary.main;
+  const activeTextColor = theme.colors.accent?.contrastText ?? theme.colors.primary.contrastText;
 
-const getStyles = (theme: GrafanaTheme2) => ({
-  container: css`
-    margin-top: 5px;
-    display: flex;
-    align-items: center;
-    overflow: hidden;
-    border: 1px solid ${activeBackgroundColor};
-    border-radius: ${theme.shape.radius.sm || theme.shape.radius.default};
+  return {
+    container: css`
+      margin-top: 5px;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      border: 1px solid ${activeBackgroundColor};
+      border-radius: ${theme.shape.radius.sm || theme.shape.radius.default};
 
-    & > :last-child {
-      border-left: 1px solid ${activeBackgroundColor};
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
-    }
-  `,
+      & > :last-child {
+        border-left: 1px solid ${activeBackgroundColor};
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+    `,
 
-  chip: css`
-    align-items: center;
-    background: ${theme.colors.background.primary};
-    color: ${theme.colors.text.maxContrast};
-    display: inline-flex;
-    height: 30px;
-    padding: ${theme.spacing(0, 1)};
-  `,
+    chip: css`
+      align-items: center;
+      background: ${theme.colors.background.primary};
+      color: ${theme.colors.text.maxContrast};
+      display: inline-flex;
+      height: 30px;
+      padding: ${theme.spacing(0, 1)};
+    `,
 
-  label: css`
-    align-items: center;
-    background: ${activeBackgroundColor};
-    color: ${activeTextColor};
-    display: inline-flex;
-    height: 30px;
-    padding: ${theme.spacing(0, 1)};
-  `,
+    label: css`
+      align-items: center;
+      background: ${activeBackgroundColor};
+      color: ${activeTextColor};
+      display: inline-flex;
+      height: 30px;
+      padding: ${theme.spacing(0, 1)};
+    `,
 
-  removeButton: css`
-    cursor: pointer;
-    height: 30px;
+    removeButton: css`
+      cursor: pointer;
+      height: 30px;
 
-    &:hover {
-      background-color: ${theme.colors.background.secondary};
-    }
+      &:hover {
+        background-color: ${theme.colors.background.secondary};
+      }
 
-    & svg {
-      width: 12px;
-      height: 12px;
-    }
-  `,
-
-});
+      & svg {
+        width: 12px;
+        height: 12px;
+      }
+    `,
+  };
+};

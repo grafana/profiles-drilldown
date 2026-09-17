@@ -12,7 +12,6 @@ import { useOnboardingModal } from '../domain/useOnboardingModal';
 import { StyledLink } from './StyledLink';
 
 /** This was extracted from the former `styles.module.scss` */
-// TODO Use more spacial and color parameters from `theme`
 const getStyles = (theme: GrafanaTheme2) => ({
   onboardingRow: css`
     background: ${theme.colors.background.secondary};
@@ -61,11 +60,11 @@ const getStyles = (theme: GrafanaTheme2) => ({
     border-radius: ${theme.shape.radius.lg || theme.shape.radius.default};
   `,
   onboardingPanelNumber: css`
-    color: rgb(236, 109, 19);
+    color: ${theme.colors.accent?.main ?? theme.visualization.getColorByName('orange')};
     text-align: center;
     display: grid;
     place-items: center;
-    background-image: linear-gradient(135deg, currentcolor, 75%, rgb(204, 204, 220));
+    background-image: linear-gradient(135deg, currentcolor, 75%, ${theme.colors.border.medium});
     border-radius: 100%;
     font-size: 2.5rem;
     line-height: 5rem;
@@ -73,17 +72,14 @@ const getStyles = (theme: GrafanaTheme2) => ({
     width: 5rem;
     margin-bottom: 1em;
   `,
-  // TODO use theme.colors
   color2: css`
-    color: rgb(190, 85, 190);
+    color: ${theme.visualization.getColorByName('purple')};
   `,
-  // TODO use theme.colors
   color3: css`
-    color: rgb(126, 108, 218);
+    color: ${theme.visualization.getColorByName('blue')};
   `,
-  // FIXME use theme.colors
   onboardingPanelNumberSpan: css`
-    color: rgb(220, 220, 220);
+    color: ${theme.colors.primary.contrastText};
   `,
   onboardingPanelDescription: css`
     text-align: justify;
