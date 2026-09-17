@@ -78,33 +78,44 @@ const FilterButtonsComponent = (props: FilterButtonsProps) => {
 export const FilterButtons = memo(FilterButtonsComponent);
 
 const getStyles = (theme: GrafanaTheme2) => {
+  const outlineColor = theme.colors.border.medium;
+  const selectedColor = theme.colors.accent?.main ?? theme.colors.text.primary;
+
   return {
     container: css`
       display: flex;
       justify-content: center;
     `,
     includeButton: css`
-      border-radius: ${theme.shape.radius.md || theme.shape.radius.default} 0 0 ${theme.shape.radius.md || theme.shape.radius.default};
+      && {
+        border-radius: ${theme.shape.radius.md || theme.shape.radius.default} 0 0
+          ${theme.shape.radius.md || theme.shape.radius.default};
+        border-color: ${outlineColor};
+      }
 
-      &:not(.selected) {
+      &&:not(.selected) {
         border-right: none;
       }
 
-      &.selected {
-        color: ${theme.colors.accent?.text ?? theme.colors.primary.text};
-        border-color: ${theme.colors.accent?.border ?? theme.colors.primary.border};
+      &&.selected {
+        color: ${selectedColor};
+        border-color: ${selectedColor};
       }
     `,
     excludeButton: css`
-      border-radius: 0 ${theme.shape.radius.md || theme.shape.radius.default} ${theme.shape.radius.md || theme.shape.radius.default} 0;
+      && {
+        border-radius: 0 ${theme.shape.radius.md || theme.shape.radius.default}
+          ${theme.shape.radius.md || theme.shape.radius.default} 0;
+        border-color: ${outlineColor};
+      }
 
-      &:not(.selected) {
+      &&:not(.selected) {
         border-left: none;
       }
 
-      &.selected {
-        color: ${theme.colors.accent?.text ?? theme.colors.primary.text};
-        border-color: ${theme.colors.accent?.border ?? theme.colors.primary.border};
+      &&.selected {
+        color: ${selectedColor};
+        border-color: ${selectedColor};
       }
     `,
   };
