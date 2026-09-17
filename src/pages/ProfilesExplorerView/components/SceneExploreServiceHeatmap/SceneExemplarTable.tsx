@@ -568,7 +568,7 @@ const getStyles = (theme: GrafanaTheme2) => ({
 
     tbody tr {
       background: ${theme.colors.action.selected};
-      outline: 1px solid ${theme.colors.primary.border};
+      outline: 1px solid ${theme.colors.accent?.border ?? theme.colors.primary.border};
       outline-offset: -1px;
     }
   `,

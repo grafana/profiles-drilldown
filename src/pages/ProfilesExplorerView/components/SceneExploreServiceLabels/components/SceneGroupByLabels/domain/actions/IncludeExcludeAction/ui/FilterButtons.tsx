@@ -48,7 +48,7 @@ const FilterButtonsComponent = (props: FilterButtonsProps) => {
       <Button
         size="sm"
         fill="outline"
-        variant={include.isSelected ? 'primary' : 'secondary'}
+        variant="secondary"
         aria-selected={include.isSelected}
         className={cx(styles.includeButton, include.isSelected && 'selected')}
         onClick={include.onClick}
@@ -61,7 +61,7 @@ const FilterButtonsComponent = (props: FilterButtonsProps) => {
       <Button
         size="sm"
         fill="outline"
-        variant={exclude.isSelected ? 'primary' : 'secondary'}
+        variant="secondary"
         aria-selected={exclude.isSelected}
         className={cx(styles.excludeButton, exclude.isSelected && 'selected')}
         onClick={exclude.onClick}
@@ -89,12 +89,22 @@ const getStyles = (theme: GrafanaTheme2) => {
       &:not(.selected) {
         border-right: none;
       }
+
+      &.selected {
+        color: ${theme.colors.accent?.text ?? theme.colors.primary.text};
+        border-color: ${theme.colors.accent?.border ?? theme.colors.primary.border};
+      }
     `,
     excludeButton: css`
       border-radius: 0 ${theme.shape.radius.md || theme.shape.radius.default} ${theme.shape.radius.md || theme.shape.radius.default} 0;
 
       &:not(.selected) {
         border-left: none;
+      }
+
+      &.selected {
+        color: ${theme.colors.accent?.text ?? theme.colors.primary.text};
+        border-color: ${theme.colors.accent?.border ?? theme.colors.primary.border};
       }
     `,
   };
