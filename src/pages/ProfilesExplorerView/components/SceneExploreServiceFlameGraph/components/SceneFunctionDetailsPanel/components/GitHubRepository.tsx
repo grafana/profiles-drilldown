@@ -8,7 +8,7 @@ import { useGitHubContext } from './GitHubContextProvider/useGitHubContext';
 
 const getStyles = (theme: GrafanaTheme2) => ({
   ellipsis: css`
-    color: ${theme.colors.accent?.text ?? theme.colors.text.link};
+    color: ${theme.colors.text.link};
     text-overflow: ellipsis;
     overflow: hidden;
     direction: rtl;

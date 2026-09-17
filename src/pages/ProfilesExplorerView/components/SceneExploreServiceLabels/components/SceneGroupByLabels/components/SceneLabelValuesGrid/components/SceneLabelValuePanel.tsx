@@ -110,5 +110,10 @@ const getStyles = (theme: GrafanaTheme2) => ({
   `,
   timeseriesPanel: css`
     flex-grow: 1;
+
+    & [data-viz-panel-key] > * {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
   `,
 });

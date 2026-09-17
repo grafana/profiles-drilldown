@@ -15,7 +15,7 @@ type ChicletProps = {
 
 export const getStyles = (theme: GrafanaTheme2) => {
   const activeBackgroundColor = theme.colors.accent?.main ?? theme.colors.primary.main;
-  const activeTextColor = theme.colors.accent?.contrastText ?? theme.colors.primary.contrastText;
+  const activeTextColor = theme.colors.accent?.contrastText ?? theme.colors.getContrastText(activeBackgroundColor);
   const inactiveBorderColor = theme.colors.border.medium;
 
   return {
