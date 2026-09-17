@@ -16,6 +16,7 @@ export const QUERY_LIBRARY_FEATURE_FLAG_KEY = 'queryLibrary' as const;
 const queryLibraryKey: keyof FeatureToggles = QUERY_LIBRARY_FEATURE_FLAG_KEY;
 const kgAnnotationsInPyroscopeKey = 'kgAnnotationsInPyroscope' as keyof FeatureToggles;
 const feedbackButtonKey = 'feedbackButton' as keyof FeatureToggles;
+const visualDesignRefreshKey = 'grafana.visualDesignRefresh';
 
 export function useFlagMetricsFromProfiles(): boolean {
   return useBooleanFlagDetails(metricsFromProfilesKey, false).value;
@@ -27,6 +28,10 @@ export function useFlagGrafanaAssistantInProfilesDrilldown(): boolean {
 
 export function useFlagFeedbackButton(): boolean {
   return useBooleanFlagDetails(feedbackButtonKey, true).value;
+}
+
+export function useFlagVisualDesignRefresh(): boolean {
+  return useBooleanFlagDetails(visualDesignRefreshKey, false).value;
 }
 
 export function getProfilesHeatmapFromOpenFeature(): boolean {

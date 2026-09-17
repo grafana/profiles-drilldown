@@ -6,7 +6,7 @@ import { ButtonGroup, ClipboardButton, Dropdown, ErrorBoundary, Field, Icon, Men
 import { SaveSearchButton } from '@shared/components/SavedSearches/SaveSearchButton';
 import { displayError } from '@shared/domain/displayStatus';
 import { reportInteraction } from '@shared/domain/reportInteraction';
-import { useFlagMetricsFromProfiles } from '@shared/infrastructure/featureFlags/featureFlags';
+import { useFlagMetricsFromProfiles, useFlagVisualDesignRefresh } from '@shared/infrastructure/featureFlags/featureFlags';
 import { useFetchPluginSettings } from '@shared/infrastructure/settings/useFetchPluginSettings';
 import { PluginInfo } from './PluginInfo';
 import React from 'react';
@@ -33,7 +33,8 @@ export type PluginHeaderToolbarProps = {
 
 export function PluginHeaderToolbar(props: PluginHeaderToolbarProps) {
   const chromeHeaderHeight = useChromeHeaderHeight?.();
-  const styles = useStyles2(getStyles, chromeHeaderHeight ?? 0, props.isEmbedded ?? false);
+  const visualDesignRefresh = useFlagVisualDesignRefresh();
+  const styles = useStyles2(getStyles, chromeHeaderHeight ?? 0, props.isEmbedded ?? false, visualDesignRefresh);
 
   const { data, actions } = usePluginHeaderToolbar(props);
 
@@ -202,9 +203,18 @@ export function PluginHeaderToolbar(props: PluginHeaderToolbarProps) {
   );
 }
 
-const getStyles = (theme: GrafanaTheme2, chromeHeaderHeight: number, isEmbedded: boolean) => ({
+const getStyles = (
+  theme: GrafanaTheme2,
+  chromeHeaderHeight: number,
+  isEmbedded: boolean,
+  visualDesignRefresh: boolean
+) => ({
   header: css`
-    background-color: ${isEmbedded ? theme.colors.background.primary : theme.colors.background.canvas};
+    background-color: ${visualDesignRefresh
+      ? theme.colors.background.page
+      : isEmbedded
+        ? theme.colors.background.primary
+        : theme.colors.background.canvas};
     position: sticky;
     top: ${isEmbedded ? 0 : chromeHeaderHeight}px;
     z-index: 1;
