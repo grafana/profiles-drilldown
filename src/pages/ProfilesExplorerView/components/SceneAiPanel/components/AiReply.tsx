@@ -132,7 +132,7 @@ const getStyles = (theme: GrafanaTheme2) => ({
     &:focus,
     &:active {
       box-sizing: border-box;
-      border: 1px solid ${theme.colors.accent?.border ?? theme.colors.warning.border};
+      border: 1px solid ${theme.colors.accent?.main ?? theme.colors.warning.main};
       border-radius: ${theme.shape.radius.sm || theme.shape.radius.default};
     }
   `,
