@@ -64,8 +64,9 @@ const getStyles = (theme: GrafanaTheme2) => ({
     margin-top: 5px;
     display: flex;
     align-items: center;
+    overflow: hidden;
     border: 1px solid ${activeBackgroundColor};
-    border-radius: 2px;
+    border-radius: ${theme.shape.radius.sm || theme.shape.radius.default};
 
     & > :last-child {
       border-left: 1px solid ${activeBackgroundColor};

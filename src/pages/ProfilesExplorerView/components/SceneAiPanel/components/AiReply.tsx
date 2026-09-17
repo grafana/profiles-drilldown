@@ -1,4 +1,5 @@
 import { css } from '@emotion/css';
+import { GrafanaTheme2 } from '@grafana/data';
 import { t } from '@grafana/i18n';
 import { useStyles2 } from '@grafana/ui';
 import { sanitizeHref } from '@shared/domain/sanitize';
@@ -107,7 +108,7 @@ export function AiReply({ reply }: AiReplyProps) {
   );
 }
 
-const getStyles = () => ({
+const getStyles = (theme: GrafanaTheme2) => ({
   container: css`
     width: 100%;
     height: 100%;
@@ -132,7 +133,7 @@ const getStyles = () => ({
     &:active {
       box-sizing: border-box;
       border: 1px solid rgb(255, 136, 51, 0.8);
-      border-radius: 4px;
+      border-radius: ${theme.shape.radius.sm || theme.shape.radius.default};
     }
   `,
 });

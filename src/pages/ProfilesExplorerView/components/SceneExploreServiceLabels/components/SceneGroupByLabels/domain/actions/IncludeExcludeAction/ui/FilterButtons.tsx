@@ -84,14 +84,14 @@ const getStyles = (theme: GrafanaTheme2) => {
       justify-content: center;
     `,
     includeButton: css`
-      border-radius: ${theme.shape.radius.default} 0 0 ${theme.shape.radius.default};
+      border-radius: ${theme.shape.radius.md || theme.shape.radius.default} 0 0 ${theme.shape.radius.md || theme.shape.radius.default};
 
       &:not(.selected) {
         border-right: none;
       }
     `,
     excludeButton: css`
-      border-radius: 0 ${theme.shape.radius.default} ${theme.shape.radius.default} 0;
+      border-radius: 0 ${theme.shape.radius.md || theme.shape.radius.default} ${theme.shape.radius.md || theme.shape.radius.default} 0;
 
       &:not(.selected) {
         border-left: none;

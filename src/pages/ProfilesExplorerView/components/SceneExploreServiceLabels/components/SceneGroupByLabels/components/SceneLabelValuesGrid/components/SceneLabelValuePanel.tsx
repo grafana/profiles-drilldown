@@ -91,6 +91,8 @@ const getStyles = (theme: GrafanaTheme2) => ({
 
     box-sizing: border-box;
     border: 1px solid transparent;
+    border-radius: ${theme.shape.radius.lg || theme.shape.radius.default};
+    overflow: hidden;
     &.selected {
       border: 1px solid ${theme.colors.primary.main};
     }
@@ -108,10 +110,5 @@ const getStyles = (theme: GrafanaTheme2) => ({
   `,
   timeseriesPanel: css`
     flex-grow: 1;
-
-    & [data-viz-panel-key] > * {
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
-    }
   `,
 });

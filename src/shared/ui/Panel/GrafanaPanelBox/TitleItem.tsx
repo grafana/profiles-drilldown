@@ -56,7 +56,7 @@ const getStyles = (theme: GrafanaTheme2) => {
     label: 'panel-header-item',
     cursor: 'auto',
     border: 'none',
-    borderRadius: `${theme.shape.radius.default}`,
+    borderRadius: `${theme.shape.radius.sm || theme.shape.radius.default}`,
     padding: `${theme.spacing(0, 1)}`,
     height: `${theme.spacing(theme.components.panel.headerHeight)}`,
     display: 'flex',

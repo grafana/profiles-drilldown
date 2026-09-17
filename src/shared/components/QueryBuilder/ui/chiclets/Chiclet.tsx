@@ -21,8 +21,9 @@ export const getStyles = (theme: GrafanaTheme2) => ({
   chiclet: css`
     display: flex;
     align-items: center;
+    overflow: hidden;
     border: 1px solid ${activeBackgroundColor};
-    border-radius: 2px;
+    border-radius: ${theme.shape.radius.sm || theme.shape.radius.default};
 
     & > button {
       height: 30px;
@@ -48,9 +49,7 @@ export const getStyles = (theme: GrafanaTheme2) => ({
   `,
   partialChiclet: css`
     border-color: ${inactiveBorderColor};
-    border-right: 0;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
+    overflow: hidden;
 
     & > :first-child {
       background-color: ${theme.colors.background.secondary};

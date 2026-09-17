@@ -58,7 +58,7 @@ const getStyles = (theme: GrafanaTheme2) => ({
     margin-left: 16px;
     margin-top: 16px;
     margin-bottom: 16px;
-    border-radius: 3px;
+    border-radius: ${theme.shape.radius.lg || theme.shape.radius.default};
   `,
   onboardingPanelNumber: css`
     color: rgb(236, 109, 19);

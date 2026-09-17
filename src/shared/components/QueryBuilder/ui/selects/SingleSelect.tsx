@@ -1,17 +1,9 @@
-import { css } from '@emotion/css';
 import { SelectableValue } from '@grafana/data';
-import { Select, useStyles2 } from '@grafana/ui';
+import { Select } from '@grafana/ui';
 import React, { useEffect, useState } from 'react';
 
 import { getMessages } from '../constants';
 import { SingleEditionInput } from '../inputs/SingleEditionInput';
-
-export const getStyles = () => ({
-  select: css`
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-  `,
-});
 
 type SingleSelectProps = {
   suggestions: any;
@@ -44,7 +36,6 @@ function useEnsureIsOpenHack(isVisible: boolean) {
 }
 
 export function SingleSelect({ suggestions, onFocus, onChange, onKeyDown, onCloseMenu }: SingleSelectProps) {
-  const styles = useStyles2(getStyles);
   const isOpen = useEnsureIsOpenHack(suggestions.isVisible);
 
   if (suggestions.allowCustomValue) {
@@ -60,7 +51,6 @@ export function SingleSelect({ suggestions, onFocus, onChange, onKeyDown, onClos
 
   return (
     <Select
-      className={styles.select}
       placeholder={suggestions.placeholder}
       loadingMessage={getMessages().LOADING}
       closeMenuOnSelect={false}

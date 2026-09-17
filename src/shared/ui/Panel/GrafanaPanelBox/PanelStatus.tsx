@@ -37,7 +37,7 @@ const getStyles = (theme: GrafanaTheme2) => {
       padding: theme.spacing(padding),
       width: theme.spacing(headerHeight),
       height: theme.spacing(headerHeight),
-      borderRadius: theme.shape.radius.default,
+      borderRadius: theme.shape.radius.sm || theme.shape.radius.default,
     }),
   };
 };

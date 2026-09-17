@@ -203,12 +203,7 @@ export function PluginHeaderToolbar(props: PluginHeaderToolbarProps) {
   );
 }
 
-const getStyles = (
-  theme: GrafanaTheme2,
-  chromeHeaderHeight: number,
-  isEmbedded: boolean,
-  visualDesignRefresh: boolean
-) => ({
+const getStyles = (theme: GrafanaTheme2, chromeHeaderHeight: number, isEmbedded: boolean, visualDesignRefresh: boolean) => ({
   header: css`
     background-color: ${visualDesignRefresh
       ? theme.colors.background.page

@@ -93,8 +93,7 @@ const getStyles = (theme: GrafanaTheme2) => ({
     background-color: ${theme.colors.background.canvas};
     padding: ${theme.spacing(1)};
     border: 1px solid ${theme.colors.border.weak};
-    border-right: none;
-    border-radius: 2px 0 0 2px;
+    border-radius: ${theme.shape.radius.lg || theme.shape.radius.default};
   `,
   title: css`
     font-size: 24px;
