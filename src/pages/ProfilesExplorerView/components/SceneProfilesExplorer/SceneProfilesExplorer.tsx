@@ -28,6 +28,7 @@ import {
 } from '@shared/infrastructure/featureFlags/featureFlags';
 import { ensureOpenFeaturePluginInitialized } from '@shared/infrastructure/featureFlags/openFeature';
 import { DomainHookReturnValue } from '@shared/types/DomainHookReturnValue';
+import { PluginHeaderToolbar } from '@shared/ui/PluginHeaderToolbar';
 import React, { useState } from 'react';
 
 import { setupKeyboardShortcuts } from '../../../../services/keyboardShortcuts';
@@ -66,7 +67,6 @@ import { FunctionVersionProvider } from '../SceneExploreServiceFlameGraph/compon
 import { RemoveProfileIdSelector } from '../SceneExploreServiceFlameGraph/domain/events/RemoveProfileIdSelector';
 import { RemoveSpanSelector } from '../SceneExploreServiceFlameGraph/domain/events/RemoveSpanSelector';
 import { SceneExploreServiceFlameGraph } from '../SceneExploreServiceFlameGraph/SceneExploreServiceFlameGraph';
-import { PluginHeaderToolbar } from '@shared/ui/PluginHeaderToolbar';
 
 export interface SceneProfilesExplorerState extends Partial<EmbeddedSceneState> {
   $timeRange: SceneTimeRange;
@@ -516,11 +516,9 @@ export class SceneProfilesExplorer extends SceneObjectBase<SceneProfilesExplorer
     // preserve existing filters only when switching to "Labels", "Flame graph" or "Diff flame graph"
     // if not, they will be added to the queries without any notice on the UI
     if (
-      ![
-        ExplorationType.LABELS,
-        ExplorationType.FLAME_GRAPH,
-        ExplorationType.DIFF_FLAME_GRAPH,
-      ].includes(nextExplorationType as ExplorationType)
+      ![ExplorationType.LABELS, ExplorationType.FLAME_GRAPH, ExplorationType.DIFF_FLAME_GRAPH].includes(
+        nextExplorationType as ExplorationType
+      )
     ) {
       sceneGraph.findByKeyAndType(this, 'filters', FiltersVariable).reset();
     }

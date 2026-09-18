@@ -23,25 +23,16 @@ export function SpanSelectorLabel(props: Props) {
         )}
         placement="top"
       >
-        <span
-          aria-label={t('flame-graph.span-selector.filter-label', 'Filter label')}
-          className={styles.label}
-        >
+        <span aria-label={t('flame-graph.span-selector.filter-label', 'Filter label')} className={styles.label}>
           {t('flame-graph.span-selector.name', 'Span')}
         </span>
       </Tooltip>
 
-      <span
-        aria-label={t('flame-graph.span-selector.filter-operator', 'Filter operator')}
-        className={styles.chip}
-      >
+      <span aria-label={t('flame-graph.span-selector.filter-operator', 'Filter operator')} className={styles.chip}>
         =
       </span>
 
-      <span
-        aria-label={t('flame-graph.span-selector.filter-value', 'Filter value')}
-        className={styles.chip}
-      >
+      <span aria-label={t('flame-graph.span-selector.filter-value', 'Filter value')} className={styles.chip}>
         {spanSelector}
       </span>
 
@@ -105,5 +96,4 @@ const getStyles = (theme: GrafanaTheme2) => ({
       height: 12px;
     }
   `,
-
 });

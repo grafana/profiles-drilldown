@@ -8,7 +8,7 @@
 | ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------- |
 | **`AGENTS.md`** (this file)          | **Entry point.** Pyroscope & profiling workflow, expected vs bug, Scenes patterns, security. Points to every other doc below.   |
 | **`CONTRIBUTING.md`**                | **Human contributors.** Dev setup, issues vs PRs, i18n, PR checklist, link to GenAI policy.                                     |
-| **`docs/genai.md`**                  | **AI-assisted contributions.** Disclosure, acceptable use, Profiles Drilldown-specific pitfalls.                                  |
+| **`docs/genai.md`**                  | **AI-assisted contributions.** Disclosure, acceptable use, Profiles Drilldown-specific pitfalls.                                |
 | **`.config/AGENTS/instructions.md`** | **Plugin tooling only** — webpack, `plugin.json`, E2E, rules about `.config`.                                                   |
 | **`docs/project-intent.md`**         | **Why** we built the app — philosophy, principles. Use when reasoning about tradeoffs or scope.                                 |
 | **`docs/application-structure.md`**  | **How the product is organized** — user journeys, views, exploration types, links in/out. Use when changing UI or URL behavior. |

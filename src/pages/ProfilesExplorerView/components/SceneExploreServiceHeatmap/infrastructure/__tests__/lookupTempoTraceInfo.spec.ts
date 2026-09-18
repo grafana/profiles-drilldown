@@ -31,7 +31,12 @@ describe('lookupTempoTraceInfo', () => {
       let data: DataFrame[] = [];
 
       if (target.query.includes('span-a') && target.query.includes('span-b')) {
-        data = [buildSpanFrame([{ spanId: 'span-a', traceId: 'trace-1' }, { spanId: 'span-b', traceId: 'trace-2' }])];
+        data = [
+          buildSpanFrame([
+            { spanId: 'span-a', traceId: 'trace-1' },
+            { spanId: 'span-b', traceId: 'trace-2' },
+          ]),
+        ];
       } else if (target.query.includes('span-c')) {
         data = [buildSpanFrame([{ spanId: 'span-c', traceId: 'trace-3' }])];
       }
@@ -55,7 +60,9 @@ describe('lookupTempoTraceInfo', () => {
 
     expect(query).toHaveBeenCalledTimes(2);
 
-    const [firstRequest, secondRequest] = query.mock.calls.map(([request]) => request as DataQueryRequest<TempoSpanQuery>);
+    const [firstRequest, secondRequest] = query.mock.calls.map(
+      ([request]) => request as DataQueryRequest<TempoSpanQuery>
+    );
 
     expect(firstRequest.targets[0].query).toBe('{span:id="span-a" || span:id="span-b"}');
     expect(firstRequest.range.from.valueOf()).toBe(970_000);
@@ -93,7 +100,9 @@ describe('lookupTempoTraceInfo', () => {
   it('keeps successful windows when another window fails', async () => {
     const query = jest.fn((request: DataQueryRequest<TempoSpanQuery>) => {
       if (request.targets[0].query.includes('span-a')) {
-        return Promise.resolve({ data: [buildSpanFrame([{ spanId: 'span-a', traceId: 'trace-1' }])] } as DataQueryResponse);
+        return Promise.resolve({
+          data: [buildSpanFrame([{ spanId: 'span-a', traceId: 'trace-1' }])],
+        } as DataQueryResponse);
       }
       return Promise.reject(new Error('Tempo unavailable'));
     });

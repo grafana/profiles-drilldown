@@ -21,10 +21,10 @@ import {
   EventOpenAddToDashboard,
   getPanelData,
 } from '../../domain/actions/addToDashboard';
-import { getExploreUrl } from '../../helpers/getExploreUrl';
-import { TimeSeriesQuery } from '../../infrastructure/timeseries/buildTimeSeriesQueryRunner';
 import { FavAction } from '../../domain/actions/FavAction';
 import { SelectAction } from '../../domain/actions/SelectAction';
+import { getExploreUrl } from '../../helpers/getExploreUrl';
+import { TimeSeriesQuery } from '../../infrastructure/timeseries/buildTimeSeriesQueryRunner';
 import { SceneLabelValuesTimeseries } from './SceneLabelValuesTimeseries';
 
 /**
