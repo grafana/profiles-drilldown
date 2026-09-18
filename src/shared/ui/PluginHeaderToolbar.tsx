@@ -221,13 +221,14 @@ const getStyles = (
   chromeHeaderHeight: number,
   isEmbedded: boolean,
   visualDesignRefresh: boolean
-) => ({
-  header: css`
-    background-color: ${visualDesignRefresh && theme.colors.background.page
-      ? theme.colors.background.page
-      : isEmbedded
-      ? theme.colors.background.primary
-      : theme.colors.background.canvas};
+) => {
+  const headerBackground = isEmbedded
+    ? theme.colors.background.primary
+    : (visualDesignRefresh && theme.colors.background.page) || theme.colors.background.canvas;
+
+  return {
+    header: css`
+    background-color: ${headerBackground};
     position: sticky;
     top: ${isEmbedded ? 0 : chromeHeaderHeight}px;
     z-index: 1;
@@ -339,4 +340,5 @@ const getStyles = (
       min-width: 112px;
     }
   `,
-});
+  };
+};
