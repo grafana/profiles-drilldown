@@ -4,6 +4,7 @@ import { t } from '@grafana/i18n';
 import { getDataSourceSrv } from '@grafana/runtime';
 import { SceneComponentProps, sceneGraph, SceneObjectBase, SceneObjectState } from '@grafana/scenes';
 import { Column, Field as FormField, IconButton, InteractiveTable, Pagination, Select, Spinner, useStyles2 } from '@grafana/ui';
+import { useFlagVisualDesignRefresh } from '@shared/infrastructure/featureFlags/featureFlags';
 import { getProfileMetric, ProfileMetricId } from '@shared/infrastructure/profile-metrics/getProfileMetric';
 import { reportInteraction } from '@shared/domain/reportInteraction';
 import React, { useMemo } from 'react';
@@ -276,7 +277,8 @@ export class SceneExemplarTable extends SceneObjectBase<SceneExemplarTableState>
   }
 
   static Component({ model }: SceneComponentProps<SceneExemplarTable>) {
-    const styles = useStyles2(getStyles);
+    const visualDesignRefresh = useFlagVisualDesignRefresh();
+    const styles = useStyles2(getStyles, visualDesignRefresh);
     const { rows, traceInfoBySpanId, loadingSpanIds, tempoDatasources, traceLookupFailed, page } = model.useState();
 
     let selectedSpanId: string | undefined;
@@ -520,7 +522,7 @@ export class SceneExemplarTable extends SceneObjectBase<SceneExemplarTableState>
   }
 }
 
-const getStyles = (theme: GrafanaTheme2) => ({
+const getStyles = (theme: GrafanaTheme2, visualDesignRefresh: boolean) => ({
   container: css`
     display: flex;
     flex-direction: column;
@@ -568,7 +570,11 @@ const getStyles = (theme: GrafanaTheme2) => ({
 
     tbody tr {
       background: ${theme.colors.action.selected};
-      outline: 1px solid ${theme.colors.accent?.main ?? theme.colors.border.strong};
+      outline: 1px solid ${
+        visualDesignRefresh
+          ? theme.colors.accent?.main ?? theme.colors.border.strong
+          : theme.colors.primary.border
+      };
       outline-offset: -1px;
     }
   `,

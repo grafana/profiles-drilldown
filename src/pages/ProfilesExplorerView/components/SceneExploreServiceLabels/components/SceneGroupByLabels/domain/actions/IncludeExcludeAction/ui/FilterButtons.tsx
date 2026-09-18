@@ -2,6 +2,7 @@ import { css, cx } from '@emotion/css';
 import { GrafanaTheme2 } from '@grafana/data';
 import { t, Trans } from '@grafana/i18n';
 import { Button, useStyles2 } from '@grafana/ui';
+import { useFlagVisualDesignRefresh } from '@shared/infrastructure/featureFlags/featureFlags';
 import React, { memo } from 'react';
 
 type FilterButtonsProps = {
@@ -39,7 +40,8 @@ function getStatus({ status, label, onInclude, onExclude, onClear }: FilterButto
 
 // Kindly borrowed and adapted from https://github.com/grafana/explore-logs/blob/main/src/Components/FilterButton.tsx :)
 const FilterButtonsComponent = (props: FilterButtonsProps) => {
-  const styles = useStyles2(getStyles);
+  const visualDesignRefresh = useFlagVisualDesignRefresh();
+  const styles = useStyles2(getStyles, visualDesignRefresh);
 
   const { include, exclude } = getStatus(props);
 
@@ -48,7 +50,7 @@ const FilterButtonsComponent = (props: FilterButtonsProps) => {
       <Button
         size="sm"
         fill="outline"
-        variant="secondary"
+        variant={include.isSelected && !visualDesignRefresh ? 'primary' : 'secondary'}
         aria-selected={include.isSelected}
         className={cx(styles.includeButton, include.isSelected && 'selected')}
         onClick={include.onClick}
@@ -61,7 +63,7 @@ const FilterButtonsComponent = (props: FilterButtonsProps) => {
       <Button
         size="sm"
         fill="outline"
-        variant="secondary"
+        variant={exclude.isSelected && !visualDesignRefresh ? 'primary' : 'secondary'}
         aria-selected={exclude.isSelected}
         className={cx(styles.excludeButton, exclude.isSelected && 'selected')}
         onClick={exclude.onClick}
@@ -77,9 +79,11 @@ const FilterButtonsComponent = (props: FilterButtonsProps) => {
 
 export const FilterButtons = memo(FilterButtonsComponent);
 
-const getStyles = (theme: GrafanaTheme2) => {
+const getStyles = (theme: GrafanaTheme2, visualDesignRefresh: boolean) => {
   const outlineColor = theme.colors.border.medium;
-  const selectedColor = theme.colors.accent?.main ?? theme.colors.text.primary;
+  const selectedColor = visualDesignRefresh
+    ? theme.colors.accent?.main ?? theme.colors.primary.main
+    : theme.colors.primary.main;
 
   return {
     container: css`
