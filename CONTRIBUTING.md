@@ -117,6 +117,22 @@ In case of doubt, have a look at ["Profiles Drilldown frontend architecture"](do
 
 We use [ESLint](https://eslint.org/) and [Prettier](https://prettier.io/) to lint and format our code. These will be run in a pre-commit hook, but you can also setup your IDE to run them on save.
 
+#### Configure precommit hooks
+
+We use pre-commit hooks (via [lefthook](https://github.com/evilmartians/lefthook)) to lint, fix, and format code as you commit your changes.
+
+To install the precommit hooks:
+
+```sh
+pnpm lefthook install
+```
+
+To remove precommit hooks:
+
+```sh
+pnpm lefthook uninstall
+```
+
 ### Commit messages and PR titles
 
 We use [conventional commits](https://www.conventionalcommits.org/) to format our commit messages. This allows us to automatically generate changelogs and version bumps.
