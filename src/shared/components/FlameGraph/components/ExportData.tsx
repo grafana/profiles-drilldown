@@ -8,13 +8,22 @@ import { ExportMenu } from './ExportMenu';
 export type ExportDataProps = {
   profile: FlamebearerProfile;
   enableFlameGraphDotComExport?: boolean;
+  onCopyGcxCommands?: () => void | Promise<void>;
 };
 
 function ExportDataComponent(props: ExportDataProps) {
-  const { profile, enableFlameGraphDotComExport } = props;
+  const { profile, enableFlameGraphDotComExport, onCopyGcxCommands } = props;
 
   return (
-    <Dropdown overlay={<ExportMenu profile={profile} enableFlameGraphDotComExport={enableFlameGraphDotComExport} />}>
+    <Dropdown
+      overlay={
+        <ExportMenu
+          profile={profile}
+          enableFlameGraphDotComExport={enableFlameGraphDotComExport}
+          onCopyGcxCommands={onCopyGcxCommands}
+        />
+      }
+    >
       <Button
         icon="download-alt"
         size="sm"

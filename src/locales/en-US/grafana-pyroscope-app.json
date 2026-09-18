@@ -121,8 +121,10 @@
       "tooltip-time-picker": "Time picker",
       "tooltip-time-picker-description": "Time range zoom in (default behaviour)"
     },
+    "error-gcx-copy": "Failed to copy gcx commands to clipboard!",
     "error-loading-profile": "Error while loading profile data!",
     "explain-button": "Explain Diff Flame Graph",
+    "gcx-copied": "gcx commands copied to clipboard!",
     "missing-selections": {
       "auto-select": "Auto-select",
       "how-to-alt": "How to view the diff flame graph",
@@ -187,10 +189,16 @@
   "export-menu": {
     "aria-label": "Export profile data",
     "error-flamegraph-com": "Failed to export to flamegraph.com!",
+    "error-gcx-copy": "Failed to copy gcx command to clipboard!",
     "error-loading-profile": "Error while loading flamebearer profile data!",
     "error-png": "Failed to export to png!",
     "error-png-no-canvas": "Please ensure the flame graph is visible before exporting to png.",
     "error-pprof": "Failed to export to pprof!",
+    "gcx-command": "gcx command",
+    "gcx-command-tooltip": "Copy the gcx command to download this profile as pprof",
+    "gcx-commands": "gcx commands",
+    "gcx-commands-tooltip": "Copy the gcx commands to download the baseline and comparison profiles as pprof",
+    "gcx-copied": "gcx command copied to clipboard!",
     "json": "json",
     "json-label": "json",
     "png": "png",
