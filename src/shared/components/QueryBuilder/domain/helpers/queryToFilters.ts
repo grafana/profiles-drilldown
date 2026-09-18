@@ -1,6 +1,6 @@
 import { t } from '@grafana/i18n';
-
 import { generateUUID } from '@shared/domain/generateUUID';
+
 import { FilterKind, Filters, OperatorKind } from '../types';
 import { buildIsEmptyFilter } from './buildIsEmptyFilter';
 

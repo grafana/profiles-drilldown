@@ -1,11 +1,5 @@
 import { AdHocVariableFilter } from '@grafana/data';
-import {
-  AdHocFiltersVariable,
-  EmbeddedScene,
-  SceneCanvasText,
-  SceneVariableSet,
-  sceneGraph,
-} from '@grafana/scenes';
+import { AdHocFiltersVariable, EmbeddedScene, SceneCanvasText, sceneGraph, SceneVariableSet } from '@grafana/scenes';
 
 import {
   FILTER_EXPRESSION_WITH_LEADING_COMMA,

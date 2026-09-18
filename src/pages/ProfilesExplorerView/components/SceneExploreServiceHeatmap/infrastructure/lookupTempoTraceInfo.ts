@@ -1,4 +1,12 @@
-import { DataFrame, DataQuery, DataQueryRequest, DataQueryResponse, DataSourceApi, dateTime, Field } from '@grafana/data';
+import {
+  DataFrame,
+  DataQuery,
+  DataQueryRequest,
+  DataQueryResponse,
+  DataSourceApi,
+  dateTime,
+  Field,
+} from '@grafana/data';
 import { getDataSourceSrv } from '@grafana/runtime';
 import { lastValueFrom, Observable } from 'rxjs';
 

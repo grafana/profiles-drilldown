@@ -8,7 +8,6 @@ export function getDisplayedExemplarRows<T extends { spanId?: string; timestamp:
   }
 
   return rows.filter(
-    (row) =>
-      row.spanId === selectedSpanId && (selectedTimestamp === undefined || row.timestamp === selectedTimestamp)
+    (row) => row.spanId === selectedSpanId && (selectedTimestamp === undefined || row.timestamp === selectedTimestamp)
   );
 }

@@ -8,12 +8,12 @@ We love accepting contributions! To help us create a safe and positive community
 
 Use [GitHub Issues](https://github.com/grafana/profiles-drilldown/issues/new) to report bugs, ask questions, or propose larger changes.
 
-| Situation | What to do |
-|-----------|------------|
-| **Bug** — something is broken or regressed | [Open a bug report](https://github.com/grafana/profiles-drilldown/issues/new?template=bug_report.md) with reproduction steps, expected vs actual behavior, Grafana/Pyroscope versions, and screenshots or recordings if helpful. |
-| **Small fix** — typo, clear one-file change, docs tweak | Open a pull request directly; link a related issue if one exists. |
-| **Feature or larger change** — new UI, behavior change, refactor | [Open a feature request](https://github.com/grafana/profiles-drilldown/issues/new?template=feature_request.md) to discuss scope, or open a draft PR with context in the description. |
-| **Documentation only** | Open a PR and add the `type/doc` label. |
+| Situation                                                        | What to do                                                                                                                                                                                                                       |
+| ---------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Bug** — something is broken or regressed                       | [Open a bug report](https://github.com/grafana/profiles-drilldown/issues/new?template=bug_report.md) with reproduction steps, expected vs actual behavior, Grafana/Pyroscope versions, and screenshots or recordings if helpful. |
+| **Small fix** — typo, clear one-file change, docs tweak          | Open a pull request directly; link a related issue if one exists.                                                                                                                                                                |
+| **Feature or larger change** — new UI, behavior change, refactor | [Open a feature request](https://github.com/grafana/profiles-drilldown/issues/new?template=feature_request.md) to discuss scope, or open a draft PR with context in the description.                                             |
+| **Documentation only**                                           | Open a PR and add the `type/doc` label.                                                                                                                                                                                          |
 
 For bugs, check [Pyroscope](https://grafana.com/docs/grafana/latest/datasources/pyroscope/) and [Grafana profiling](https://grafana.com/docs/grafana/latest/explore/simplified-exploration/profiles/) behavior first — missing profile data outside the selected time window or filters may be expected, not a plugin bug.
 

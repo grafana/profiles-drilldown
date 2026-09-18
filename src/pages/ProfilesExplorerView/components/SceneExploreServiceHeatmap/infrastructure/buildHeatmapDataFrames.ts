@@ -34,9 +34,7 @@ export function buildHeatmapDataFrame(
     return null;
   }
 
-  const sortedSlots = slots
-    .map(normalizeHeatmapSlotBuckets)
-    .sort((a, b) => Number(a.timestamp) - Number(b.timestamp));
+  const sortedSlots = slots.map(normalizeHeatmapSlotBuckets).sort((a, b) => Number(a.timestamp) - Number(b.timestamp));
 
   const xMaxValues: number[] = [];
   const yMinValues: number[] = [];
@@ -245,8 +243,7 @@ export function buildHighlightedExemplarDataFrame(
 
   const matchingIndex = idField.values.findIndex(
     (spanId, index) =>
-      spanId === selectedSpanId &&
-      (selectedTimestamp === undefined || timeField.values[index] === selectedTimestamp)
+      spanId === selectedSpanId && (selectedTimestamp === undefined || timeField.values[index] === selectedTimestamp)
   );
   if (matchingIndex < 0) {
     return undefined;

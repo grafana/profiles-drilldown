@@ -1,7 +1,7 @@
 import { t } from '@grafana/i18n';
+import { generateUUID } from '@shared/domain/generateUUID';
 import { assign } from 'xstate';
 
-import { generateUUID } from '@shared/domain/generateUUID';
 import { LabelsApiClient } from '../../../../pages/ProfilesExplorerView/infrastructure/labels/http/LabelsApiClient';
 import { labelsRepository } from '../../../infrastructure/labels/labelsRepository';
 import { areFiltersEqual } from './helpers/areFiltersEqual';

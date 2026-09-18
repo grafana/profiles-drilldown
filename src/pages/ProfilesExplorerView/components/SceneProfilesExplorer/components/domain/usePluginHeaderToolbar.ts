@@ -1,5 +1,6 @@
 import { SceneObject, SceneVariable } from '@grafana/scenes';
 import { reportInteraction } from '@shared/domain/reportInteraction';
+import type { PluginHeaderToolbarProps } from '@shared/ui/PluginHeaderToolbar';
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { PLUGIN_BASE_URL, ROUTES } from 'src/constants';
@@ -7,7 +8,6 @@ import { getSceneVariableValue } from 'src/pages/ProfilesExplorerView/helpers/ge
 
 import { ProfilesDataSourceVariable } from '../../../../domain/variables/ProfilesDataSourceVariable';
 import { ExplorationType } from '../../SceneProfilesExplorer';
-import type { PluginHeaderToolbarProps } from '@shared/ui/PluginHeaderToolbar';
 
 export function usePluginHeaderToolbar({
   explorationType,
