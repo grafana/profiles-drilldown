@@ -90,11 +90,12 @@ const getStyles = (theme: GrafanaTheme2) => ({
     flex-direction: column;
     justify-content: space-between;
     width: 100%;
-    background-color: ${theme.colors.background.canvas};
+    background-color: ${theme.colors.background.primary};
     padding: ${theme.spacing(1)};
     border: 1px solid ${theme.colors.border.weak};
     border-right: none;
-    border-radius: 0;
+    border-radius: ${theme.shape.radius.lg || theme.shape.radius.default} 0 0
+      ${theme.shape.radius.lg || theme.shape.radius.default};
   `,
   title: css`
     font-size: 24px;
