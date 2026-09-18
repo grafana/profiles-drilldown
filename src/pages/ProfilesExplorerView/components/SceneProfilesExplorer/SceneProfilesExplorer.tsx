@@ -1,5 +1,5 @@
-import { css } from '@emotion/css';
-import { AdHocVariableFilter } from '@grafana/data';
+import { css, cx } from '@emotion/css';
+import { AdHocVariableFilter, GrafanaTheme2 } from '@grafana/data';
 import { t } from '@grafana/i18n';
 import { locationService } from '@grafana/runtime';
 import {
@@ -631,7 +631,7 @@ export class SceneProfilesExplorer extends SceneObjectBase<SceneProfilesExplorer
             }}
           />
 
-          <div className={styles.body} data-testid="sceneBody">
+          <div className={cx(styles.body, isEmbedded && styles.embeddedBody)} data-testid="sceneBody">
             {body && <body.Component model={body} />}
           </div>
 
@@ -656,10 +656,14 @@ export class SceneProfilesExplorer extends SceneObjectBase<SceneProfilesExplorer
   }
 }
 
-const getStyles = () => ({
+const getStyles = (theme: GrafanaTheme2) => ({
   body: css`
     position: relative;
     z-index: 0;
     background: transparent;
+  `,
+  embeddedBody: css`
+    padding-left: ${theme.spacing(2)};
+    padding-right: ${theme.spacing(2)};
   `,
 });

@@ -232,6 +232,8 @@ const getStyles = (
     top: ${isEmbedded ? 0 : chromeHeaderHeight}px;
     z-index: 1;
     padding-bottom: ${theme.spacing(2)};
+    padding-left: ${isEmbedded ? theme.spacing(2) : 0};
+    padding-right: ${isEmbedded ? theme.spacing(2) : 0};
   `,
   appControls: css`
     display: flex;
