@@ -1,4 +1,5 @@
 import { css } from '@emotion/css';
+import { GrafanaTheme2 } from '@grafana/data';
 import { t } from '@grafana/i18n';
 import { SceneComponentProps, SceneObjectBase, SceneObjectState, VariableDependencyConfig } from '@grafana/scenes';
 import { IconButton, useStyles2 } from '@grafana/ui';
@@ -107,9 +108,9 @@ export class FavAction extends SceneObjectBase<FavActionState> {
   };
 }
 
-const getStyles = () => ({
+const getStyles = (theme: GrafanaTheme2) => ({
   favedButton: css`
-    color: #f2cc0d;
+    color: ${theme.visualization.getColorByName('yellow')};
     margin: 0;
   `,
   notFavedbutton: css`

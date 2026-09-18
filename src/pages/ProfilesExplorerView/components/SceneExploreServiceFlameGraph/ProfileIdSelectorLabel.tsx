@@ -60,61 +60,64 @@ export function ProfileIdSelectorLabel(props: Props) {
     </div>
   );
 }
-const activeBackgroundColor = 'rgb(61, 113, 217)';
-const activeTextColor = '#fff';
+const getStyles = (theme: GrafanaTheme2) => {
+  const activeBackgroundColor = theme.colors.accent?.main ?? theme.colors.primary.main;
+  const activeTextColor = theme.colors.accent?.contrastText ?? theme.colors.getContrastText(activeBackgroundColor);
 
-const getStyles = (theme: GrafanaTheme2) => ({
-  container: css`
-    margin-top: 5px;
-    display: flex;
-    align-items: center;
-    border: 1px solid ${activeBackgroundColor};
-    border-radius: 2px;
+  return {
+    container: css`
+      margin-top: 5px;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      border: 1px solid ${activeBackgroundColor};
+      border-radius: ${theme.shape.radius.sm || theme.shape.radius.default};
 
-    & > button {
-      height: 30px;
-      background-color: ${theme.colors.background.primary};
-      color: ${theme.colors.text.maxContrast};
-    }
+      & > button {
+        height: 30px;
+        background-color: ${theme.colors.background.primary};
+        color: ${theme.colors.text.maxContrast};
+      }
 
-    & > :first-child {
-      background-color: ${activeBackgroundColor};
-      color: ${activeTextColor};
-      border-radius: 0;
+      & > :first-child {
+        background-color: ${activeBackgroundColor};
+        color: ${activeTextColor};
+        border-radius: 0;
 
+        &:hover {
+          cursor: not-allowed !important;
+        }
+      }
+
+      & > :last-child {
+        border-left: 1px solid ${activeBackgroundColor};
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+    `,
+
+    removeButton: css`
       &:hover {
+        background-color: ${theme.colors.background.secondary};
+      }
+
+      & svg {
+        width: 12px;
+        height: 12px;
+      }
+    `,
+
+    profileIdSelectorLabel: css`
+      &:hover {
+        opacity: 1 !important;
+      }
+    `,
+
+    noInteraction: css`
+      &:hover {
+        background-color: ${theme.colors.background.secondary};
         cursor: not-allowed !important;
       }
-    }
-
-    & > :last-child {
-      border-left: 1px solid ${activeBackgroundColor};
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
-    }
-  `,
-
-  removeButton: css`
-    &:hover {
-      background-color: ${theme.colors.background.secondary};
-    }
-
-    & svg {
-      width: 12px;
-      height: 12px;
-    }
-  `,
-
-  profileIdSelectorLabel: css`
-    &:hover {
-      opacity: 1 !important;
-    }
-  `,
-
-  noInteraction: css`
-    &:hover {
-      background-color: ${theme.colors.background.secondary};
-      cursor: not-allowed !important;
-    }
-  `,
-});
+    `,
+  };
+};

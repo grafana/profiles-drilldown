@@ -91,8 +91,10 @@ const getStyles = (theme: GrafanaTheme2) => ({
 
     box-sizing: border-box;
     border: 1px solid transparent;
+    border-radius: ${theme.shape.radius.lg || theme.shape.radius.default};
+    overflow: hidden;
     &.selected {
-      border: 1px solid ${theme.colors.primary.main};
+      border: 1px solid ${theme.colors.accent?.main ?? theme.colors.primary.main};
     }
 
     & > div {

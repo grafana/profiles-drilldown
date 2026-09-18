@@ -2,6 +2,7 @@ import { css, cx } from '@emotion/css';
 import { GrafanaTheme2 } from '@grafana/data';
 import { t, Trans } from '@grafana/i18n';
 import { Button, useStyles2 } from '@grafana/ui';
+import { useFlagVisualDesignRefresh } from '@shared/infrastructure/featureFlags/featureFlags';
 import React, { memo } from 'react';
 
 type FilterButtonsProps = {
@@ -39,7 +40,8 @@ function getStatus({ status, label, onInclude, onExclude, onClear }: FilterButto
 
 // Kindly borrowed and adapted from https://github.com/grafana/explore-logs/blob/main/src/Components/FilterButton.tsx :)
 const FilterButtonsComponent = (props: FilterButtonsProps) => {
-  const styles = useStyles2(getStyles);
+  const visualDesignRefresh = useFlagVisualDesignRefresh();
+  const styles = useStyles2(getStyles, visualDesignRefresh);
 
   const { include, exclude } = getStatus(props);
 
@@ -48,7 +50,7 @@ const FilterButtonsComponent = (props: FilterButtonsProps) => {
       <Button
         size="sm"
         fill="outline"
-        variant={include.isSelected ? 'primary' : 'secondary'}
+        variant={include.isSelected && !visualDesignRefresh ? 'primary' : 'secondary'}
         aria-selected={include.isSelected}
         className={cx(styles.includeButton, include.isSelected && 'selected')}
         onClick={include.onClick}
@@ -61,7 +63,7 @@ const FilterButtonsComponent = (props: FilterButtonsProps) => {
       <Button
         size="sm"
         fill="outline"
-        variant={exclude.isSelected ? 'primary' : 'secondary'}
+        variant={exclude.isSelected && !visualDesignRefresh ? 'primary' : 'secondary'}
         aria-selected={exclude.isSelected}
         className={cx(styles.excludeButton, exclude.isSelected && 'selected')}
         onClick={exclude.onClick}
@@ -77,24 +79,47 @@ const FilterButtonsComponent = (props: FilterButtonsProps) => {
 
 export const FilterButtons = memo(FilterButtonsComponent);
 
-const getStyles = (theme: GrafanaTheme2) => {
+const getStyles = (theme: GrafanaTheme2, visualDesignRefresh: boolean) => {
+  const outlineColor = theme.colors.border.medium;
+  const selectedColor = visualDesignRefresh
+    ? theme.colors.accent?.main ?? theme.colors.primary.main
+    : theme.colors.primary.main;
+
   return {
     container: css`
       display: flex;
       justify-content: center;
     `,
     includeButton: css`
-      border-radius: ${theme.shape.radius.default} 0 0 ${theme.shape.radius.default};
+      && {
+        border-radius: ${theme.shape.radius.md || theme.shape.radius.default} 0 0
+          ${theme.shape.radius.md || theme.shape.radius.default};
+        border-color: ${outlineColor};
+      }
 
-      &:not(.selected) {
+      &&:not(.selected) {
         border-right: none;
+      }
+
+      &&.selected {
+        color: ${selectedColor};
+        border-color: ${selectedColor};
       }
     `,
     excludeButton: css`
-      border-radius: 0 ${theme.shape.radius.default} ${theme.shape.radius.default} 0;
+      && {
+        border-radius: 0 ${theme.shape.radius.md || theme.shape.radius.default}
+          ${theme.shape.radius.md || theme.shape.radius.default} 0;
+        border-color: ${outlineColor};
+      }
 
-      &:not(.selected) {
+      &&:not(.selected) {
         border-left: none;
+      }
+
+      &&.selected {
+        color: ${selectedColor};
+        border-color: ${selectedColor};
       }
     `,
   };

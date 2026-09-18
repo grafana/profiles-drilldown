@@ -557,7 +557,7 @@ const getStyles = (theme: GrafanaTheme2, color: string) => ({
     background-color: ${theme.colors.background.primary};
     padding: ${theme.spacing(1)} ${theme.spacing(1)} 0 ${theme.spacing(1)};
     border: 1px solid ${theme.colors.border.weak};
-    border-radius: 2px;
+    border-radius: ${theme.shape.radius.lg || theme.shape.radius.default};
     width: 100%;
   `,
   panelHeader: css`
@@ -593,7 +593,7 @@ const getStyles = (theme: GrafanaTheme2, color: string) => ({
     margin: 0;
     background: ${theme.colors.secondary.main};
     border: 1px solid ${theme.colors.secondary.border};
-    border-radius: ${theme.shape.radius.default};
+    border-radius: ${theme.shape.radius.md || theme.shape.radius.default};
 
     &:hover {
       background: ${theme.colors.secondary.shade};
