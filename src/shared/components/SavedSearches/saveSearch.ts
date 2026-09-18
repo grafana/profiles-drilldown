@@ -1,7 +1,7 @@
 import { config } from '@grafana/runtime';
-import { generateUUID } from '@shared/domain/generateUUID';
 import { SceneObject } from '@grafana/scenes';
 import { DataQuery } from '@grafana/schema';
+import { generateUUID } from '@shared/domain/generateUUID';
 import { getQueryLibraryFromOpenFeature } from '@shared/infrastructure/featureFlags/featureFlags';
 import { logger } from '@shared/infrastructure/tracking/logger';
 import { ReactNode, useCallback, useState } from 'react';

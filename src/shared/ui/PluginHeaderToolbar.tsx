@@ -2,22 +2,32 @@ import { css, cx } from '@emotion/css';
 import { GrafanaTheme2 } from '@grafana/data';
 import { t } from '@grafana/i18n';
 import { useChromeHeaderHeight, usePluginComponent } from '@grafana/runtime';
-import { ButtonGroup, ClipboardButton, Dropdown, ErrorBoundary, Field, Icon, Menu, ToolbarButton, useStyles2 } from '@grafana/ui';
+import {
+  ButtonGroup,
+  ClipboardButton,
+  Dropdown,
+  ErrorBoundary,
+  Field,
+  Icon,
+  Menu,
+  ToolbarButton,
+  useStyles2,
+} from '@grafana/ui';
 import { SaveSearchButton } from '@shared/components/SavedSearches/SaveSearchButton';
 import { displayError } from '@shared/domain/displayStatus';
 import { reportInteraction } from '@shared/domain/reportInteraction';
 import { useFlagMetricsFromProfiles } from '@shared/infrastructure/featureFlags/featureFlags';
 import { useFetchPluginSettings } from '@shared/infrastructure/settings/useFetchPluginSettings';
-import { PluginInfo } from './PluginInfo';
 import React from 'react';
-
+import { getShareableUrlText } from 'src/pages/ProfilesExplorerView/components/SceneProfilesExplorer/components/domain/builsShareableUrl';
+import { usePluginHeaderToolbar } from 'src/pages/ProfilesExplorerView/components/SceneProfilesExplorer/components/domain/usePluginHeaderToolbar';
+import { ExplorationTypeSelector } from 'src/pages/ProfilesExplorerView/components/SceneProfilesExplorer/components/ui/ExplorationTypeSelector';
 import {
   SceneProfilesExplorer,
   SceneProfilesExplorerState,
 } from 'src/pages/ProfilesExplorerView/components/SceneProfilesExplorer/SceneProfilesExplorer';
-import { usePluginHeaderToolbar } from 'src/pages/ProfilesExplorerView/components/SceneProfilesExplorer/components/domain/usePluginHeaderToolbar';
-import { getShareableUrlText } from 'src/pages/ProfilesExplorerView/components/SceneProfilesExplorer/components/domain/builsShareableUrl';
-import { ExplorationTypeSelector } from 'src/pages/ProfilesExplorerView/components/SceneProfilesExplorer/components/ui/ExplorationTypeSelector';
+
+import { PluginInfo } from './PluginInfo';
 
 export type PluginHeaderToolbarProps = {
   model: SceneProfilesExplorer;

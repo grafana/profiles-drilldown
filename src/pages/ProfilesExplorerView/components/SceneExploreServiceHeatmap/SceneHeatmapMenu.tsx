@@ -5,10 +5,10 @@ import { quoteLabelName, quoteLabelValue } from '@shared/components/QueryBuilder
 import { reportInteraction } from '@shared/domain/reportInteraction';
 import React from 'react';
 
+import { FavAction } from '../../domain/actions/FavAction';
 import { FiltersVariable } from '../../domain/variables/FiltersVariable/FiltersVariable';
 import { getExploreUrl } from '../../helpers/getExploreUrl';
 import { TimeSeriesQuery } from '../../infrastructure/timeseries/buildTimeSeriesQueryRunner';
-import { FavAction } from '../../domain/actions/FavAction';
 
 interface SceneHeatmapMenuState extends SceneObjectState {
   favAction: FavAction;

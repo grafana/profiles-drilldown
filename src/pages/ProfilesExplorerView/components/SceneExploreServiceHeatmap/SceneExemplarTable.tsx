@@ -3,9 +3,18 @@ import { DataSourceJsonData, getValueFormat, GrafanaTheme2 } from '@grafana/data
 import { t } from '@grafana/i18n';
 import { getDataSourceSrv } from '@grafana/runtime';
 import { SceneComponentProps, sceneGraph, SceneObjectBase, SceneObjectState } from '@grafana/scenes';
-import { Column, Field as FormField, IconButton, InteractiveTable, Pagination, Select, Spinner, useStyles2 } from '@grafana/ui';
-import { getProfileMetric, ProfileMetricId } from '@shared/infrastructure/profile-metrics/getProfileMetric';
+import {
+  Column,
+  Field as FormField,
+  IconButton,
+  InteractiveTable,
+  Pagination,
+  Select,
+  Spinner,
+  useStyles2,
+} from '@grafana/ui';
 import { reportInteraction } from '@shared/domain/reportInteraction';
+import { getProfileMetric, ProfileMetricId } from '@shared/infrastructure/profile-metrics/getProfileMetric';
 import React, { useMemo } from 'react';
 
 import { EventViewServiceFlameGraph } from '../../domain/events/EventViewServiceFlameGraph';
@@ -99,7 +108,10 @@ export class SceneExemplarTable extends SceneObjectBase<SceneExemplarTableState>
         return;
       }
 
-      if (newState.selectedSpanId !== prevState.selectedSpanId || newState.selectedTimestamp !== prevState.selectedTimestamp) {
+      if (
+        newState.selectedSpanId !== prevState.selectedSpanId ||
+        newState.selectedTimestamp !== prevState.selectedTimestamp
+      ) {
         this.setPage(0, true);
       }
     });
@@ -338,10 +350,7 @@ export class SceneExemplarTable extends SceneObjectBase<SceneExemplarTableState>
           cell: (props) => {
             const row = getRow(props);
             return row.spanId ? (
-              <CopyableId
-                value={row.spanId}
-                display={row.spanId.slice(0, 16) + (row.spanId.length > 16 ? '…' : '')}
-              />
+              <CopyableId value={row.spanId} display={row.spanId.slice(0, 16) + (row.spanId.length > 16 ? '…' : '')} />
             ) : (
               t('common.not-available', '–')
             );

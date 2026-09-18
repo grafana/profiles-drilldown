@@ -4,8 +4,8 @@ import {
   ConstantVariable,
   EmbeddedScene,
   SceneCanvasText,
-  SceneVariableSet,
   sceneGraph,
+  SceneVariableSet,
 } from '@grafana/scenes';
 
 import {

@@ -18,10 +18,7 @@ describe('buildHeatmapDataFrame', () => {
   it('returns null without slots or heatmap cells', () => {
     expect(buildHeatmapDataFrame({ slots: [] } as unknown as HeatmapSeries, 'ms')).toBeNull();
     expect(
-      buildHeatmapDataFrame(
-        { slots: [{ timestamp: 1000, yMin: [], counts: [] }] } as unknown as HeatmapSeries,
-        'ms'
-      )
+      buildHeatmapDataFrame({ slots: [{ timestamp: 1000, yMin: [], counts: [] }] } as unknown as HeatmapSeries, 'ms')
     ).toBeNull();
   });
 
@@ -153,7 +150,7 @@ describe('normalizeHeatmapSlotBuckets', () => {
 
 describe('getXBucketSize', () => {
   it('returns the smallest positive difference between timestamps', () => {
-    const slots = [4000, 1000, 1000, 3000].map((timestamp) => ({ timestamp }) as unknown as HeatmapSlot);
+    const slots = [4000, 1000, 1000, 3000].map((timestamp) => ({ timestamp } as unknown as HeatmapSlot));
 
     expect(getXBucketSize(slots)).toBe(1000);
   });

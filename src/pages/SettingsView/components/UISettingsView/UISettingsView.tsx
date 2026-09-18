@@ -33,8 +33,8 @@ export function UISettingsView({ children }: { children: React.ReactNode }) {
           <ul className={styles.fetchErrorList}>
             <li>
               <Trans i18nKey="settings.ui.fetch-error.cloud-hint">
-                On Grafana Cloud, check with your organization administrator that you have permission to read and
-                write plugin settings for this data source.
+                On Grafana Cloud, check with your organization administrator that you have permission to read and write
+                plugin settings for this data source.
               </Trans>
             </li>
             <li>

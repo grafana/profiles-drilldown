@@ -19,11 +19,11 @@ jobs:
       pull-requests: read
     with:
       branch: ${{ github.event_name == 'push' && github.ref_name || github.ref }}
-      
+
       # On push to main: deploy to dev,ops (CI runs first inside the CD workflow).
       # On PRs run CI only, no publish/deploy.
       environment: ${{ (github.event_name == 'push' && github.ref_name == 'main') && 'dev,ops' || 'none' }}
-      
+
       # Deploy provisioned plugin to Grafana Cloud
       grafana-cloud-deployment-type: provisioned
       auto-merge-environments: dev,ops

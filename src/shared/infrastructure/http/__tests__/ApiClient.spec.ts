@@ -84,7 +84,9 @@ describe('ApiClient', () => {
           const { ApiClient } = require('../ApiClient');
 
           setWindowLocation(
-            new URL('http://localhost:3000/a/grafana-pyroscope-app/single?var-dataSource=grafanacloud-profiles-test-bis')
+            new URL(
+              'http://localhost:3000/a/grafana-pyroscope-app/single?var-dataSource=grafanacloud-profiles-test-bis'
+            )
           );
 
           const apiClient = new ApiClient();

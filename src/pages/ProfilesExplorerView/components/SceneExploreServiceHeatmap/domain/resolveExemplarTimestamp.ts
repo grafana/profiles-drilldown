@@ -33,8 +33,7 @@ export function resolveExemplarTimestamp(
   }
 
   return candidates.reduce(
-    (best, timestamp) =>
-      Math.abs(timestamp - approxTimestamp) < Math.abs(best - approxTimestamp) ? timestamp : best,
+    (best, timestamp) => (Math.abs(timestamp - approxTimestamp) < Math.abs(best - approxTimestamp) ? timestamp : best),
     candidates[0]
   );
 }

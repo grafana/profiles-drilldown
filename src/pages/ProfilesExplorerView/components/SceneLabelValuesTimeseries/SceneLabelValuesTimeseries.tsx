@@ -42,7 +42,7 @@ import {
 import { GridItemData } from '../SceneByVariableRepeaterGrid/types/GridItemData';
 import { RangeAnnotation } from '../SceneExploreDiffFlameGraph/components/SceneComparePanel/domain/RangeAnnotation';
 import { TimeseriesReprocess } from './domain/events/TimeseriesReprocess';
-import { SceneTimeseriesMenu, moveSelectActionsToMenu } from './SceneTimeseriesMenu';
+import { moveSelectActionsToMenu, SceneTimeseriesMenu } from './SceneTimeseriesMenu';
 
 interface SceneLabelValuesTimeseriesState extends SceneObjectState {
   item: GridItemData;

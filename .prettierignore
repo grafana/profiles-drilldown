@@ -14,3 +14,5 @@ PprofRequest*.ts
 
 # ignore the generated pyroscope-api
 src/shared/pyroscope-api/
+
+e2e/tests/flame-graph-view/fixtures/*.json
