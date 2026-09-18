@@ -37,7 +37,7 @@ import { addRefId, addStats } from '../SceneByVariableRepeaterGrid/infrastructur
 import {
   addExemplarTransformations,
   HIGHLIGHTED_SERIES_REF_ID,
-  highlightedSeriesOverrides,
+  getHighlightedSeriesOverrides,
 } from '../SceneByVariableRepeaterGrid/infrastructure/exemplars-transformations';
 import { GridItemData } from '../SceneByVariableRepeaterGrid/types/GridItemData';
 import { RangeAnnotation } from '../SceneExploreDiffFlameGraph/components/SceneComparePanel/domain/RangeAnnotation';
@@ -413,7 +413,7 @@ export class SceneLabelValuesTimeseries extends SceneObjectBase<SceneLabelValues
         };
       });
 
-    return [...overrides, highlightedSeriesOverrides];
+    return [...overrides, getHighlightedSeriesOverrides()];
   }
 
   updateItem(partialItem: Partial<GridItemData>) {

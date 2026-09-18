@@ -26,19 +26,21 @@ import { GridItemData } from '../types/GridItemData';
 export const HIGHLIGHTED_EXEMPLAR_REF_ID = 'highlightedExemplar';
 export const HIGHLIGHTED_SERIES_REF_ID = 'highlightedSeries';
 
-export const highlightedSeriesOverrides = {
-  matcher: { id: FieldMatcherID.byFrameRefID, options: HIGHLIGHTED_SERIES_REF_ID },
-  properties: [
-    {
-      id: 'displayName',
-      value: 'selected profile: $profileIdSelector',
-    },
-    {
-      id: 'color',
-      value: { mode: 'fixed', fixedColor: config.theme2.visualization.getColorByName('blue') },
-    },
-  ],
-};
+export function getHighlightedSeriesOverrides() {
+  return {
+    matcher: { id: FieldMatcherID.byFrameRefID, options: HIGHLIGHTED_SERIES_REF_ID },
+    properties: [
+      {
+        id: 'displayName',
+        value: 'selected profile: $profileIdSelector',
+      },
+      {
+        id: 'color',
+        value: { mode: 'fixed', fixedColor: config.theme2.visualization.getColorByName('blue') },
+      },
+    ],
+  };
+}
 
 export class ExemplarTransformations {
   static addExemplarTransformations(sceneObject: SceneObject, item: GridItemData): CustomTransformerDefinition[] {
