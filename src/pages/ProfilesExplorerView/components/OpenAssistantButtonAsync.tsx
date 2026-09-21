@@ -94,7 +94,7 @@ const getStyles = (theme: GrafanaTheme2) => {
   const underlyingColor = theme.colors.background.canvas;
 
   const borderWidth = 1;
-  const outerRadius = theme.shape.radius.default;
+  const outerRadius = theme.shape.radius.md || theme.shape.radius.default;
   // inner radius = outer radius - border width, but take at least 1px
   const innerRadius = `max(calc(${outerRadius} - ${borderWidth}px), 1px)`;
 
@@ -105,7 +105,9 @@ const getStyles = (theme: GrafanaTheme2) => {
     inset: 0,
     borderRadius: outerRadius,
     cornerShape: 'squircle',
-    background: 'linear-gradient(90deg, rgb(168, 85, 247), rgb(249, 115, 22))',
+    background: `linear-gradient(90deg, ${theme.visualization.getColorByName('purple')}, ${
+      theme.colors.accent?.main ?? theme.visualization.getColorByName('orange')
+    })`,
     zIndex: -2,
     pointerEvents: 'none' as const,
   };

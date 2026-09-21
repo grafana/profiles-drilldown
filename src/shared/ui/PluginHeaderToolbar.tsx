@@ -2,22 +2,35 @@ import { css, cx } from '@emotion/css';
 import { GrafanaTheme2 } from '@grafana/data';
 import { t } from '@grafana/i18n';
 import { useChromeHeaderHeight, usePluginComponent } from '@grafana/runtime';
-import { ButtonGroup, ClipboardButton, Dropdown, ErrorBoundary, Field, Icon, Menu, ToolbarButton, useStyles2 } from '@grafana/ui';
+import {
+  ButtonGroup,
+  ClipboardButton,
+  Dropdown,
+  ErrorBoundary,
+  Field,
+  Icon,
+  Menu,
+  ToolbarButton,
+  useStyles2,
+} from '@grafana/ui';
 import { SaveSearchButton } from '@shared/components/SavedSearches/SaveSearchButton';
 import { displayError } from '@shared/domain/displayStatus';
 import { reportInteraction } from '@shared/domain/reportInteraction';
-import { useFlagMetricsFromProfiles } from '@shared/infrastructure/featureFlags/featureFlags';
+import {
+  useFlagMetricsFromProfiles,
+  useFlagVisualDesignRefresh,
+} from '@shared/infrastructure/featureFlags/featureFlags';
 import { useFetchPluginSettings } from '@shared/infrastructure/settings/useFetchPluginSettings';
-import { PluginInfo } from './PluginInfo';
 import React from 'react';
-
+import { getShareableUrlText } from 'src/pages/ProfilesExplorerView/components/SceneProfilesExplorer/components/domain/builsShareableUrl';
+import { usePluginHeaderToolbar } from 'src/pages/ProfilesExplorerView/components/SceneProfilesExplorer/components/domain/usePluginHeaderToolbar';
+import { ExplorationTypeSelector } from 'src/pages/ProfilesExplorerView/components/SceneProfilesExplorer/components/ui/ExplorationTypeSelector';
 import {
   SceneProfilesExplorer,
   SceneProfilesExplorerState,
 } from 'src/pages/ProfilesExplorerView/components/SceneProfilesExplorer/SceneProfilesExplorer';
-import { usePluginHeaderToolbar } from 'src/pages/ProfilesExplorerView/components/SceneProfilesExplorer/components/domain/usePluginHeaderToolbar';
-import { getShareableUrlText } from 'src/pages/ProfilesExplorerView/components/SceneProfilesExplorer/components/domain/builsShareableUrl';
-import { ExplorationTypeSelector } from 'src/pages/ProfilesExplorerView/components/SceneProfilesExplorer/components/ui/ExplorationTypeSelector';
+
+import { PluginInfo } from './PluginInfo';
 
 export type PluginHeaderToolbarProps = {
   model: SceneProfilesExplorer;
@@ -33,7 +46,8 @@ export type PluginHeaderToolbarProps = {
 
 export function PluginHeaderToolbar(props: PluginHeaderToolbarProps) {
   const chromeHeaderHeight = useChromeHeaderHeight?.();
-  const styles = useStyles2(getStyles, chromeHeaderHeight ?? 0, props.isEmbedded ?? false);
+  const visualDesignRefresh = useFlagVisualDesignRefresh();
+  const styles = useStyles2(getStyles, chromeHeaderHeight ?? 0, props.isEmbedded ?? false, visualDesignRefresh);
 
   const { data, actions } = usePluginHeaderToolbar(props);
 
@@ -202,13 +216,25 @@ export function PluginHeaderToolbar(props: PluginHeaderToolbarProps) {
   );
 }
 
-const getStyles = (theme: GrafanaTheme2, chromeHeaderHeight: number, isEmbedded: boolean) => ({
-  header: css`
-    background-color: ${isEmbedded ? theme.colors.background.primary : theme.colors.background.canvas};
+const getStyles = (
+  theme: GrafanaTheme2,
+  chromeHeaderHeight: number,
+  isEmbedded: boolean,
+  visualDesignRefresh: boolean
+) => {
+  const headerBackground = isEmbedded
+    ? theme.colors.background.primary
+    : (visualDesignRefresh && theme.colors.background.page) || theme.colors.background.canvas;
+
+  return {
+    header: css`
+    background-color: ${headerBackground};
     position: sticky;
     top: ${isEmbedded ? 0 : chromeHeaderHeight}px;
     z-index: 1;
     padding-bottom: ${theme.spacing(2)};
+    padding-left: ${isEmbedded ? theme.spacing(2) : 0};
+    padding-right: ${isEmbedded ? theme.spacing(2) : 0};
   `,
   appControls: css`
     display: flex;
@@ -314,4 +340,5 @@ const getStyles = (theme: GrafanaTheme2, chromeHeaderHeight: number, isEmbedded:
       min-width: 112px;
     }
   `,
-});
+  };
+};

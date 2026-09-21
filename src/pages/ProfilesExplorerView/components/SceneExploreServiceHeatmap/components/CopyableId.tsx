@@ -55,7 +55,7 @@ const getStyles = (theme: GrafanaTheme2) => ({
     display: inline-flex;
     align-items: center;
     gap: ${theme.spacing(0.5)};
-    border-radius: ${theme.shape.radius.default};
+    border-radius: ${theme.shape.radius.sm || theme.shape.radius.default};
     padding: ${theme.spacing(0, 0.25)};
 
     &:hover {

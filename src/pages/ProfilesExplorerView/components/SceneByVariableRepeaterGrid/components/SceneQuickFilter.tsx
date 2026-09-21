@@ -119,7 +119,7 @@ export class SceneQuickFilter extends SceneObjectBase<SceneQuickFilterState> {
 const getStyles = (theme: GrafanaTheme2) => ({
   resultsCount: css`
     margin-right: ${theme.spacing(1)};
-    border-radius: 11px;
+    border-radius: ${theme.shape.radius.pill || '11px'};
     padding: 2px 8px;
     color: ${theme.colors.text.primary};
     background-color: ${theme.colors.background.secondary};

@@ -1,5 +1,6 @@
-import { DataFrame, DataLinkClickEvent, LoadingState } from '@grafana/data';
+import { colorManipulator, DataFrame, DataLinkClickEvent, LoadingState } from '@grafana/data';
 import { t } from '@grafana/i18n';
+import { config } from '@grafana/runtime';
 import {
   PanelBuilders,
   SceneComponentProps,
@@ -21,8 +22,13 @@ interface SceneHeatmapState extends SceneObjectState {
   body: VizPanel;
 }
 
-const EXEMPLAR_COLOR_DEFAULT = 'rgba(31, 120, 193, 0.7)';
-const EXEMPLAR_COLOR_SELECTED = 'rgba(255, 152, 0, 1)';
+function getExemplarColors() {
+  const { visualization, colors } = config.theme2;
+  return {
+    default: colorManipulator.alpha(visualization.getColorByName('blue'), 0.7),
+    selected: colors.accent?.main ?? visualization.getColorByName('orange'),
+  };
+}
 
 export class SceneHeatmap extends SceneObjectBase<SceneHeatmapState> {
   constructor() {
@@ -41,7 +47,7 @@ export class SceneHeatmap extends SceneObjectBase<SceneHeatmapState> {
       .setOption('cellGap', 1)
       .setOption('color', { scheme: 'Spectral', steps: 64 })
       .setOption('tooltip', { mode: TooltipDisplayMode.Single, yHistogram: true, showColorScale: true })
-      .setOption('exemplars', { color: EXEMPLAR_COLOR_DEFAULT })
+      .setOption('exemplars', { color: getExemplarColors().default })
       .setData(new SceneDataNode())
       .build();
   }
@@ -147,7 +153,8 @@ export class SceneHeatmap extends SceneObjectBase<SceneHeatmapState> {
       const highlightedFrame = buildHighlightedExemplarDataFrame(exemplarFrame, selectedSpanId, selectedTimestamp);
       annotations.push(highlightedFrame ?? exemplarFrame);
 
-      const exemplarColor = highlightedFrame ? EXEMPLAR_COLOR_SELECTED : EXEMPLAR_COLOR_DEFAULT;
+      const exemplarColors = getExemplarColors();
+      const exemplarColor = highlightedFrame ? exemplarColors.selected : exemplarColors.default;
       this.state.body.setState({
         options: {
           ...this.state.body.state.options,

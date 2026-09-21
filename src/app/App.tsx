@@ -30,7 +30,7 @@ export function App() {
             <Onboarding>
               <div className={styles.pageContainer}>
                 <PluginPage layout={PageLayoutType.Custom}>
-                  <div className="pyroscope-app">
+                  <div className={`pyroscope-app ${styles.content}`}>
                     <Routes />
                   </div>
                 </PluginPage>
@@ -47,8 +47,10 @@ const getStyles = (theme: GrafanaTheme2) => ({
   pageContainer: css`
     display: flex;
     flex-direction: column;
-    padding: ${theme.spacing(1)} ${theme.spacing(2)} ${theme.spacing(2)} ${theme.spacing(2)};
     flex-basis: 100%;
     flex-grow: 1;
+  `,
+  content: css`
+    padding: 0 ${theme.spacing(2)} ${theme.spacing(2)} ${theme.spacing(2)};
   `,
 });

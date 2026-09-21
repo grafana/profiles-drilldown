@@ -151,7 +151,7 @@ export class SelectAction extends SceneObjectBase<SelectActionState> {
       <Button
         className={label ? styles.selectButton : styles.iconButton}
         aria-label={accessibleName}
-        variant={label ? 'primary' : 'secondary'}
+        variant="secondary"
         size="sm"
         fill="text"
         onClick={model.onClick}

@@ -12,95 +12,95 @@ import { useOnboardingModal } from '../domain/useOnboardingModal';
 import { StyledLink } from './StyledLink';
 
 /** This was extracted from the former `styles.module.scss` */
-// TODO Use more spacial and color parameters from `theme`
-const getStyles = (theme: GrafanaTheme2) => ({
-  onboardingRow: css`
-    background: ${theme.colors.background.secondary};
-    display: flex;
-    margin-top: 16px;
-    gap: 20px;
-    padding: 20px;
-    margin-bottom: 2.5rem;
-  `,
-  onboardingParagraph: css`
-    padding: 20px 64px;
-    text-align: center;
-    line-height: 2;
-    flex: 1;
-    margin: 0;
-  `,
-  onboardingPanel: css`
-    flex: 1;
-    display: flex;
-    flex-flow: column wrap;
-    -webkit-box-align: center;
-    align-items: center;
-    margin-top: 16px;
-    text-align: center;
-  `,
-  onboardingPanelHeader: css`
-    line-height: 1.5;
-    margin-bottom: 1em;
-  `,
-  onboardingPanelImage: css`
-    width: 5rem;
-    margin-bottom: 1em;
-  `,
-  hero: css`
-    display: flex;
-    flex-direction: row;
-  `,
-  heroTitles: css`
-    flex: 1;
-  `,
-  heroImage: css`
-    width: 40%;
-    margin-left: 16px;
-    margin-top: 16px;
-    margin-bottom: 16px;
-    border-radius: 3px;
-  `,
-  onboardingPanelNumber: css`
-    color: rgb(236, 109, 19);
-    text-align: center;
-    display: grid;
-    place-items: center;
-    background-image: linear-gradient(135deg, currentcolor, 75%, rgb(204, 204, 220));
-    border-radius: 100%;
-    font-size: 2.5rem;
-    line-height: 5rem;
-    height: 5rem;
-    width: 5rem;
-    margin-bottom: 1em;
-  `,
-  // TODO use theme.colors
-  color2: css`
-    color: rgb(190, 85, 190);
-  `,
-  // TODO use theme.colors
-  color3: css`
-    color: rgb(126, 108, 218);
-  `,
-  // FIXME use theme.colors
-  onboardingPanelNumberSpan: css`
-    color: rgb(220, 220, 220);
-  `,
-  onboardingPanelDescription: css`
-    text-align: justify;
-    text-align: center;
-    line-height: 1.66;
-    margin-top: 0;
-  `,
-  title: css`
-    margin-bottom: 0.5em;
-    line-height: 1.5;
-  `,
-  subtitle: css`
-    margin-bottom: 1em;
-    line-height: 1.5;
-    font-size: 1.25rem;
-  `,
-});
+const getStyles = (theme: GrafanaTheme2) => {
+  const numberColor = theme.colors.accent?.main ?? theme.visualization.getColorByName('orange');
+
+  return {
+    onboardingRow: css`
+      background: ${theme.colors.background.secondary};
+      display: flex;
+      margin-top: 16px;
+      gap: 20px;
+      padding: 20px;
+      margin-bottom: 2.5rem;
+    `,
+    onboardingParagraph: css`
+      padding: 20px 64px;
+      text-align: center;
+      line-height: 2;
+      flex: 1;
+      margin: 0;
+    `,
+    onboardingPanel: css`
+      flex: 1;
+      display: flex;
+      flex-flow: column wrap;
+      -webkit-box-align: center;
+      align-items: center;
+      margin-top: 16px;
+      text-align: center;
+    `,
+    onboardingPanelHeader: css`
+      line-height: 1.5;
+      margin-bottom: 1em;
+    `,
+    onboardingPanelImage: css`
+      width: 5rem;
+      margin-bottom: 1em;
+    `,
+    hero: css`
+      display: flex;
+      flex-direction: row;
+    `,
+    heroTitles: css`
+      flex: 1;
+    `,
+    heroImage: css`
+      width: 40%;
+      margin-left: 16px;
+      margin-top: 16px;
+      margin-bottom: 16px;
+      border-radius: ${theme.shape.radius.lg || theme.shape.radius.default};
+    `,
+    onboardingPanelNumber: css`
+      color: ${numberColor};
+      text-align: center;
+      display: grid;
+      place-items: center;
+      background-image: linear-gradient(135deg, currentcolor, 75%, ${theme.colors.border.medium});
+      border-radius: 100%;
+      font-size: 2.5rem;
+      line-height: 5rem;
+      height: 5rem;
+      width: 5rem;
+      margin-bottom: 1em;
+    `,
+    color2: css`
+      color: ${theme.visualization.getColorByName('purple')};
+    `,
+    color3: css`
+      color: ${theme.visualization.getColorByName('blue')};
+    `,
+    onboardingPanelNumberSpan: css`
+      color: ${theme.colors.getContrastText(numberColor)};
+    `,
+    onboardingPanelDescription: css`
+      text-align: justify;
+      text-align: center;
+      line-height: 1.66;
+      margin-top: 0;
+    `,
+    title: css`
+      margin-bottom: 0.5em;
+      line-height: 1.5;
+    `,
+    subtitle: css`
+      margin-bottom: 1em;
+      line-height: 1.5;
+      font-size: 1.25rem;
+    `,
+  };
+};
 
 export function OnboardingModal() {
   const styles = useStyles2(getStyles);

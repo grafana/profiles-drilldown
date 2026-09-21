@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 
 const getStyles = (theme: GrafanaTheme2) => ({
   loadingIcon: css`
-    color: ${theme.colors.primary.main};
+    color: ${theme.colors.accent?.main ?? theme.colors.primary.main};
     font-size: 48px;
     margin-bottom: ${theme.spacing(2)};
     display: flex;
