@@ -726,6 +726,8 @@
       "placeholder_other": "Select a service ({{count}})",
       "unmatched-tooltip": "\"{{serviceName}}\" does not appear in the list of services returned for this data source and time range. Please select a different service from the dropdown."
     },
-    "span-selector": { "label": "Span selector" }
+    "span-selector": {
+      "label": "Span selector"
+    }
   }
 }
