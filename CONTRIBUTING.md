@@ -115,11 +115,11 @@ In case of doubt, have a look at ["Profiles Drilldown frontend architecture"](do
 
 ### Lint and format your code
 
-We use [ESLint](https://eslint.org/) and [Prettier](https://prettier.io/) to lint and format our code. These will be run in a pre-commit hook, but you can also setup your IDE to run them on save.
+We use [ESLint](https://eslint.org/) and [Prettier](https://prettier.io/) to lint and format our code. The pre-commit hook runs Prettier, and you can also set up your IDE to run these tools on save.
 
 #### Configure precommit hooks
 
-We use pre-commit hooks (via [lefthook](https://github.com/evilmartians/lefthook)) to lint, fix, and format code as you commit your changes.
+We use a pre-commit hook (via [Lefthook](https://github.com/evilmartians/lefthook)) to format staged JavaScript and TypeScript files as you commit your changes.
 
 To install the precommit hooks:
 
