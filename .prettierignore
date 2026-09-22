@@ -16,3 +16,5 @@ PprofRequest*.ts
 src/shared/pyroscope-api/
 
 e2e/tests/flame-graph-view/fixtures/*.json
+
+pnpm-lock.yaml
