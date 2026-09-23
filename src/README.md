@@ -21,7 +21,7 @@ To use Grafana Profiles Drilldown with Grafana Cloud, you need:
 
 To use Grafana Profiles Drilldown with self-hosted Grafana open source or Grafana Enterprise, you need:
 
-- Your own Grafana instance running 11.0 or newer
+- Your own Grafana instance running 13.1.0 or newer
 - Pyroscope 1.7 or newer
 - A configured [Pyroscope data source](https://grafana.com/docs/grafana/latest/datasources/pyroscope/) receiving profiling data
 
