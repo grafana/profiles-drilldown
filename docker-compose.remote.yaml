@@ -20,7 +20,7 @@ services:
       OPENAI_API_KEY: $OPENAI_API_KEY
       OPENAI_ORGANIZATION_ID: $OPENAI_ORGANIZATION_ID
       GF_FEATURE_TOGGLES_ENABLE: ${GF_FEATURE_TOGGLES_ENABLE:-localizationForPlugins}
-    env_file: ".env"
+    env_file: '.env'
 
   qdrant:
     image: qdrant/qdrant:v1.17.0@sha256:f1c7272cdac52b38c1a0e89313922d940ba50afd90d593a1605dbbc214e66ffb

@@ -166,7 +166,10 @@ describe('SceneExploreServiceFlameGraph', () => {
       allServicesFiltersVariable = createMockFiltersVariable();
       profileMetricVariable = createMockProfileMetricVariable();
 
-      const changeableVariableStub = { changeValueTo: jest.fn(), subscribeToState: jest.fn().mockReturnValue({ unsubscribe: jest.fn() }) };
+      const changeableVariableStub = {
+        changeValueTo: jest.fn(),
+        subscribeToState: jest.fn().mockReturnValue({ unsubscribe: jest.fn() }),
+      };
 
       jest.spyOn(sceneGraph, 'findByKeyAndType').mockImplementation((_obj: any, key: string) => {
         const mocks: Record<string, any> = {

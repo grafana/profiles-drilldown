@@ -16,7 +16,9 @@ export function useCreateRecordingRule() {
           await mutate(rule);
           displaySuccess([`Recording rule ${rule.metricName} created successfully!`]);
         } catch (e) {
-          displayError(e as Error, [`Failed to save recording rule ${rule.metricName}. Reason: ${(e as Error).message}.`]);
+          displayError(e as Error, [
+            `Failed to save recording rule ${rule.metricName}. Reason: ${(e as Error).message}.`,
+          ]);
         }
       },
     },

@@ -8,12 +8,12 @@ We love accepting contributions! To help us create a safe and positive community
 
 Use [GitHub Issues](https://github.com/grafana/profiles-drilldown/issues/new) to report bugs, ask questions, or propose larger changes.
 
-| Situation | What to do |
-|-----------|------------|
-| **Bug** — something is broken or regressed | [Open a bug report](https://github.com/grafana/profiles-drilldown/issues/new?template=bug_report.md) with reproduction steps, expected vs actual behavior, Grafana/Pyroscope versions, and screenshots or recordings if helpful. |
-| **Small fix** — typo, clear one-file change, docs tweak | Open a pull request directly; link a related issue if one exists. |
-| **Feature or larger change** — new UI, behavior change, refactor | [Open a feature request](https://github.com/grafana/profiles-drilldown/issues/new?template=feature_request.md) to discuss scope, or open a draft PR with context in the description. |
-| **Documentation only** | Open a PR and add the `type/doc` label. |
+| Situation                                                        | What to do                                                                                                                                                                                                                       |
+| ---------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Bug** — something is broken or regressed                       | [Open a bug report](https://github.com/grafana/profiles-drilldown/issues/new?template=bug_report.md) with reproduction steps, expected vs actual behavior, Grafana/Pyroscope versions, and screenshots or recordings if helpful. |
+| **Small fix** — typo, clear one-file change, docs tweak          | Open a pull request directly; link a related issue if one exists.                                                                                                                                                                |
+| **Feature or larger change** — new UI, behavior change, refactor | [Open a feature request](https://github.com/grafana/profiles-drilldown/issues/new?template=feature_request.md) to discuss scope, or open a draft PR with context in the description.                                             |
+| **Documentation only**                                           | Open a PR and add the `type/doc` label.                                                                                                                                                                                          |
 
 For bugs, check [Pyroscope](https://grafana.com/docs/grafana/latest/datasources/pyroscope/) and [Grafana profiling](https://grafana.com/docs/grafana/latest/explore/simplified-exploration/profiles/) behavior first — missing profile data outside the selected time window or filters may be expected, not a plugin bug.
 
@@ -115,7 +115,23 @@ In case of doubt, have a look at ["Profiles Drilldown frontend architecture"](do
 
 ### Lint and format your code
 
-We use [ESLint](https://eslint.org/) and [Prettier](https://prettier.io/) to lint and format our code. These will be run in a pre-commit hook, but you can also setup your IDE to run them on save.
+We use [ESLint](https://eslint.org/) and [Prettier](https://prettier.io/) to lint and format our code. The pre-commit hook runs Prettier, and you can also set up your IDE to run these tools on save.
+
+#### Configure precommit hooks
+
+We use a pre-commit hook (via [Lefthook](https://github.com/evilmartians/lefthook)) to format staged JavaScript and TypeScript files as you commit your changes.
+
+To install the precommit hooks:
+
+```sh
+pnpm lefthook install
+```
+
+To remove precommit hooks:
+
+```sh
+pnpm lefthook uninstall
+```
 
 ### Commit messages and PR titles
 

@@ -463,25 +463,13 @@ export class SceneExploreServiceFlameGraph extends SceneObjectBase<SceneExploreS
 
   static Component({ model }: SceneComponentProps<SceneExploreServiceFlameGraph>) {
     const styles = useStyles2(getStyles);
-    const {
-      mainTimeseries,
-      body,
-      spanHeatmap,
-      showSpanHeatmap,
-      heatmapMenu,
-      spanToggleAction,
-    } = model.useState();
+    const { mainTimeseries, body, spanHeatmap, showSpanHeatmap, heatmapMenu, spanToggleAction } = model.useState();
     const showHeatmapPanel = model.profilesHeatmapEnabled && showSpanHeatmap && spanHeatmap;
 
     return (
       <div className={styles.flex}>
         {showHeatmapPanel ? (
-          <SpanHeatmapPanel
-            model={model}
-            spanHeatmap={spanHeatmap}
-            menu={heatmapMenu}
-            spanToggle={spanToggleAction}
-          />
+          <SpanHeatmapPanel model={model} spanHeatmap={spanHeatmap} menu={heatmapMenu} spanToggle={spanToggleAction} />
         ) : (
           // we use CSS here and Scenes Flex layout because we encountered a problem where the Flamegraph would not respect each panel width,
           // resulting in a cropped flame graph when opening the side panel

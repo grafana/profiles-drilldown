@@ -3,8 +3,14 @@ import { sceneGraph } from '@grafana/scenes';
 import { SceneExploreServiceFlameGraph } from '../../SceneExploreServiceFlameGraph/SceneExploreServiceFlameGraph';
 import { ExplorationType, SceneProfilesExplorer } from '../SceneProfilesExplorer';
 
-jest.mock('../../SceneByVariableRepeaterGrid/components/SceneEmptyState/ui/img/grot-404-dark.svg', () => 'grot-404-dark.svg');
-jest.mock('../../SceneByVariableRepeaterGrid/components/SceneEmptyState/ui/img/grot-404-light.svg', () => 'grot-404-light.svg');
+jest.mock(
+  '../../SceneByVariableRepeaterGrid/components/SceneEmptyState/ui/img/grot-404-dark.svg',
+  () => 'grot-404-dark.svg'
+);
+jest.mock(
+  '../../SceneByVariableRepeaterGrid/components/SceneEmptyState/ui/img/grot-404-light.svg',
+  () => 'grot-404-light.svg'
+);
 jest.mock('../../SceneExploreDiffFlameGraph/SceneExploreDiffFlameGraph', () => {
   const { SceneObjectBase } = jest.requireActual('@grafana/scenes');
 

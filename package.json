@@ -120,6 +120,7 @@
     "jest-css-modules-transform": "4.4.2",
     "jest-environment-jsdom": "30.4.1",
     "knip": "5.32.0",
+    "lefthook": "2.1.14",
     "prettier": "2.8.8",
     "replace-in-file-webpack-plugin": "1.0.6",
     "sass": "1.103.1",

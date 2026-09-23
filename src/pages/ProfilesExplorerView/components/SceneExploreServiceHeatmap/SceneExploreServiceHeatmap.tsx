@@ -222,7 +222,11 @@ export class SceneExploreServiceHeatmap extends SceneObjectBase<SceneExploreServ
 
     try {
       const response = await selectHeatmap(spanHeatmapQuery.dataSourceUid, spanHeatmapQuery.request);
-      const heatmapState = buildSpanHeatmapState(response, spanHeatmapQuery.profileTypeId, spanHeatmapQuery.request.step);
+      const heatmapState = buildSpanHeatmapState(
+        response,
+        spanHeatmapQuery.profileTypeId,
+        spanHeatmapQuery.request.step
+      );
 
       if (requestId !== this.fetchRequestId) {
         return;

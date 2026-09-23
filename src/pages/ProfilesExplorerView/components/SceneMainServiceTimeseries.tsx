@@ -10,10 +10,10 @@ import {
 import { getProfileMetric, ProfileMetricId } from '@shared/infrastructure/profile-metrics/getProfileMetric';
 import React from 'react';
 
-import { FiltersVariable } from '../domain/variables/FiltersVariable/FiltersVariable';
-import { SpanExemplarToggleAction } from '../domain/actions/SpanExemplarToggleAction';
 import { FavAction } from '../domain/actions/FavAction';
 import { SelectAction } from '../domain/actions/SelectAction';
+import { SpanExemplarToggleAction } from '../domain/actions/SpanExemplarToggleAction';
+import { FiltersVariable } from '../domain/variables/FiltersVariable/FiltersVariable';
 import { GroupByVariable } from '../domain/variables/GroupByVariable/GroupByVariable';
 import { ProfileMetricVariable } from '../domain/variables/ProfileMetricVariable';
 import { ServiceNameVariable } from '../domain/variables/ServiceNameVariable/ServiceNameVariable';
