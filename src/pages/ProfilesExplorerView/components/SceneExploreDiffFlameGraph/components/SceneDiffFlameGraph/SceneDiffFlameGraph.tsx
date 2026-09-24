@@ -4,7 +4,6 @@ import { t, Trans } from '@grafana/i18n';
 import { SceneComponentProps, sceneGraph, SceneObjectBase, SceneObjectState } from '@grafana/scenes';
 import { Spinner, useStyles2 } from '@grafana/ui';
 import { FlameGraph } from '@shared/components/FlameGraph/FlameGraph';
-import { displayError, displaySuccess } from '@shared/domain/displayStatus';
 import { reportInteraction } from '@shared/domain/reportInteraction';
 import { useMaxNodesFromUrl } from '@shared/domain/url-params/useMaxNodesFromUrl';
 import { useToggleSidePanel } from '@shared/domain/useToggleSidePanel';
@@ -19,7 +18,8 @@ import { PyroscopeLogo } from '@shared/ui/PyroscopeLogo';
 import React, { useEffect, useMemo } from 'react';
 
 import { buildGcxPprofCommand } from '../../../../domain/buildGcxPprofCommand';
-import { getPprofExportFilename } from '../../../../domain/getPprofExportFilename';
+import { copyGcxCommandToClipboard } from '../../../../domain/copyGcxCommandToClipboard';
+import { getExportFilename } from '../../../../domain/getExportFilename';
 import { useBuildPyroscopeQuery } from '../../../../domain/useBuildPyroscopeQuery';
 import { useGrafanaAssistant } from '../../../../domain/useGrafanaAssistant';
 import { ProfilesDataSourceVariable } from '../../../../domain/variables/ProfilesDataSourceVariable';
@@ -114,26 +114,20 @@ export class SceneDiffFlameGraph extends SceneObjectBase<SceneDiffFlameGraphStat
         query: baselineQuery,
         timeRange: baselineTimeRange,
         maxNodes: effectiveMaxNodes,
-        filename: `${getPprofExportFilename(baselineQuery, baselineTimeRange)}_baseline.pb.gz`,
+        filename: `${getExportFilename(baselineQuery, baselineTimeRange)}_baseline.pb.gz`,
       });
       const comparisonCommand = buildGcxPprofCommand({
         dataSourceUid,
         query: comparisonQuery,
         timeRange: comparisonTimeRange,
         maxNodes: effectiveMaxNodes,
-        filename: `${getPprofExportFilename(comparisonQuery, comparisonTimeRange)}_comparison.pb.gz`,
+        filename: `${getExportFilename(comparisonQuery, comparisonTimeRange)}_comparison.pb.gz`,
       });
 
-      try {
-        await navigator.clipboard.writeText(`${baselineCommand}\n${comparisonCommand}`);
-        reportInteraction('g_pyroscope_app_export_profile', { format: 'gcx' });
-        displaySuccess([t('diff-flame-graph.gcx-copied', 'gcx commands copied to clipboard!')]);
-      } catch (error) {
-        displayError(error as Error, [
-          t('diff-flame-graph.error-gcx-copy', 'Failed to copy gcx commands to clipboard!'),
-          (error as Error).message,
-        ]);
-      }
+      await copyGcxCommandToClipboard(`${baselineCommand}\n${comparisonCommand}`, {
+        success: t('diff-flame-graph.gcx-copied', 'gcx commands copied to clipboard!'),
+        error: t('diff-flame-graph.error-gcx-copy', 'Failed to copy gcx commands to clipboard!'),
+      });
     };
 
     return {
