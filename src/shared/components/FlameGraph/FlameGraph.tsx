@@ -12,6 +12,7 @@ type FlameGraphProps = {
   diff?: boolean;
   vertical?: boolean;
   enableFlameGraphDotComExport?: boolean;
+  onCopyGcxCommands?: () => void | Promise<void>;
   collapsedFlamegraphs?: boolean;
   getExtraContextMenuButtons?: Props['getExtraContextMenuButtons'];
   showAnalyzeWithAssistant?: boolean;
@@ -22,6 +23,7 @@ function FlameGraphComponent({
   diff,
   vertical,
   enableFlameGraphDotComExport,
+  onCopyGcxCommands,
   collapsedFlamegraphs,
   getExtraContextMenuButtons,
   showAnalyzeWithAssistant,
@@ -44,7 +46,13 @@ function FlameGraphComponent({
     <GrafanaFlameGraph
       data={dataFrame as any}
       disableCollapsing={!collapsedFlamegraphs}
-      extraHeaderElements={<ExportData profile={profile} enableFlameGraphDotComExport={enableFlameGraphDotComExport} />}
+      extraHeaderElements={
+        <ExportData
+          profile={profile}
+          enableFlameGraphDotComExport={enableFlameGraphDotComExport}
+          onCopyGcxCommands={onCopyGcxCommands}
+        />
+      }
       vertical={vertical}
       getTheme={getTheme as any}
       getExtraContextMenuButtons={getExtraContextMenuButtons}

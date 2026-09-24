@@ -160,6 +160,8 @@ export class SceneFlameGraph extends SceneObjectBase<SceneFlameGraphState> {
           menu: exportMenu,
           query,
           timeRange: lastTimeRange,
+          profileIdSelector,
+          spanSelector,
         },
         ai: {
           panel: aiPanel,
@@ -296,6 +298,8 @@ export class SceneFlameGraph extends SceneObjectBase<SceneFlameGraphState> {
                   model={data.export.menu}
                   query={data.export.query}
                   timeRange={data.export.timeRange}
+                  profileIdSelector={data.export.profileIdSelector}
+                  spanSelector={data.export.spanSelector}
                 />
               }
               keepFocusOnDataChange
