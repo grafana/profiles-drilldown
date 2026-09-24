@@ -8,6 +8,8 @@ We love accepting contributions! To help us create a safe and positive community
 
 Use [GitHub Issues](https://github.com/grafana/profiles-drilldown/issues/new) to report bugs, ask questions, or propose larger changes.
 
+**Use the issue templates.** Do not file a blank issue. Choose [bug report](.github/ISSUE_TEMPLATE/bug_report.md) or [feature request](.github/ISSUE_TEMPLATE/feature_request.md).
+
 | Situation                                                        | What to do                                                                                                                                                                                                                       |
 | ---------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Bug** — something is broken or regressed                       | [Open a bug report](https://github.com/grafana/profiles-drilldown/issues/new?template=bug_report.md) with reproduction steps, expected vs actual behavior, Grafana/Pyroscope versions, and screenshots or recordings if helpful. |
@@ -139,6 +141,10 @@ We use [conventional commits](https://www.conventionalcommits.org/) to format ou
 
 When opening a Pull Request (PR), please make sure that the title is properly prefixed with one of the following type: `feat`, `fix`, `docs`, `test`, `ci`, `refactor`, `perf`, `chore` or `revert`.
 
+### Signed commits
+
+Human contributions must use **signed commits** so they show as verified on GitHub. Approved repository automation (Dependabot, release-please, and similar) is exempt.
+
 ### Test your code
 
 We encourage you to write tests, whether they are unit tests or end-to-end tests. They will give us the confidence that the plugin behaves as intended and help us capture any regression early.
@@ -147,10 +153,12 @@ For end-to-end testing (E2E), please have a look at our [E2E testing documentati
 
 ### Before you open a pull request
 
-- Fill out the [pull request template](.github/pull_request_template.md) with a clear summary and test steps.
+- Fill out the [pull request template](.github/pull_request_template.md) with a clear summary and test steps. For UI changes, put **before/after screenshots** in the How to test section.
+- Sign every commit so it is verified on GitHub (see [Signed commits](#signed-commits)).
 - Use a [conventional commit](https://www.conventionalcommits.org/) style PR title (enforced by CI).
 - Run `pnpm run lint`, `pnpm run typecheck`, and `pnpm run test:ci` locally.
 - Add or update tests when behavior changes. Prefer focused unit tests (Jest) or Playwright E2E when UI flows are affected.
+- If the UI changed, attach **before/after screenshots** in the pull request.
 - Do not modify files under `.config/` unless you are following the plugin-tools guidance in `.config/AGENTS/instructions.md`.
 
 ### Internationalization (i18n)
