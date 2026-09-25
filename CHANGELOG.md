@@ -1,5 +1,23 @@
 # Changelog
 
+## [2.4.0](https://github.com/grafana/profiles-drilldown/compare/v2.3.1...v2.4.0) (2026-09-25)
+
+
+### 🎉 Features
+
+* copy gcx pprof commands ([#1088](https://github.com/grafana/profiles-drilldown/issues/1088)) ([b32d7f6](https://github.com/grafana/profiles-drilldown/commit/b32d7f63945dc2dfdd753a5a08713319109aaec0))
+
+
+### 📝 Documentation
+
+* require signed commits in CONTRIBUTING and UI screenshots ([#1141](https://github.com/grafana/profiles-drilldown/issues/1141)) ([8f29606](https://github.com/grafana/profiles-drilldown/commit/8f296064654b6fdde3197638dd5e5accbd5903db))
+
+
+### 🧹 Chore
+
+* add pre-commit hook ([#1135](https://github.com/grafana/profiles-drilldown/issues/1135)) ([9784712](https://github.com/grafana/profiles-drilldown/commit/978471240e23596d995614b76ddd3078b35ec9f3))
+* **deps:** lock file maintenance ([#1136](https://github.com/grafana/profiles-drilldown/issues/1136)) ([11e1594](https://github.com/grafana/profiles-drilldown/commit/11e159480c8793c8c6263d3dc46ab310a0e9b313))
+
 ## [2.3.1](https://github.com/grafana/profiles-drilldown/compare/v2.3.0...v2.3.1) (2026-09-21)
 
 
