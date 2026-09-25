@@ -59,7 +59,7 @@ export default function SettingsView() {
     ),
   };
   const pluginTabs = data.components.map((Component) => {
-    // get title from plugin meta (works in Grafana 11.6+)
+    // get title from plugin meta (works in Grafana 13.1+)
     const title =
       (Component as ComponentWithMeta).meta?.title || t('settings.tabs.unknown-extension', 'Unknown Extension');
 
