@@ -98,6 +98,19 @@ In the Profiles toolbar, you can also use these features while investigating:
 - **Copy shareable link** to capture the current investigation state and share it with teammates.
 - **View/edit tenant settings** to adjust settings such as collapsed flame graphs, function details, and maximum node count.
 
+### Export profile data
+
+On **Flame graph** and **Diff flame graph** views, select **Export profile data** to save or copy the current profile.
+
+In the **Flame graph** view, the menu includes:
+
+- **png** — Saves a PNG image of the flame graph canvas. This option is unavailable in the top table-only view; switch to a view that shows the flame graph.
+- **json** — Downloads the flamebearer profile as JSON.
+- **pprof** — Downloads the merged profile as a gzip-compressed pprof file (`.pb.gz`).
+- **gcx command** — Copies a `gcx profiles query` command to the clipboard so you can download the same profile as pprof from the [gcx](https://github.com/grafana/gcx) Grafana CLI.
+
+In the **Diff flame graph** view, the menu includes **png**, **json**, and **gcx commands**. **gcx commands** copies two `gcx profiles query` commands (baseline and comparison) so you can download both profiles as pprof.
+
 ### Add a time series panel to a dashboard
 
 You can save a time series visualization from Profiles Drilldown to a Grafana dashboard to monitor it alongside your other observability data.
