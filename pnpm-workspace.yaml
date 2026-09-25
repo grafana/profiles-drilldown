@@ -57,7 +57,9 @@ overrides:
   # Grafana externalizes React Router v6 until its upstream router migration lands:
   # https://github.com/grafana/grafana/issues/129933
   # Keep transitive v6 dependencies aligned with the host runtime.
-  'react-router@^6': ^6.30.6
+  'react-router@^6': ^8.0.0
 minimumReleaseAgeExclude:
   # Renovate security update: pnpm@11.11.0
   - pnpm@11.11.0
+  # Renovate security update: react-router@8.4.0
+  - react-router@8.4.0
