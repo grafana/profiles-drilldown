@@ -121,8 +121,10 @@
       "tooltip-time-picker": "Pemilih waktu",
       "tooltip-time-picker-description": "Perbesar rentang waktu (perilaku default)"
     },
+    "error-gcx-copy": "",
     "error-loading-profile": "Terjadi kesalahan saat memuat data profil!",
     "explain-button": "Jelaskan Diff Flame Graph",
+    "gcx-copied": "",
     "missing-selections": {
       "auto-select": "Pilih otomatis",
       "how-to-alt": "Cara melihat Diff Flame Graph",
@@ -187,10 +189,16 @@
   "export-menu": {
     "aria-label": "Ekspor data profil",
     "error-flamegraph-com": "Gagal mengekspor ke flamegraph.com!",
+    "error-gcx-copy": "",
     "error-loading-profile": "Terjadi kesalahan saat memuat data profil Flamebearer!",
     "error-png": "Gagal mengekspor ke png!",
     "error-png-no-canvas": "",
     "error-pprof": "Gagal mengekspor ke pprof!",
+    "gcx-command": "",
+    "gcx-command-tooltip": "",
+    "gcx-commands": "",
+    "gcx-commands-tooltip": "",
+    "gcx-copied": "",
     "json": "json",
     "json-label": "json",
     "png": "png",

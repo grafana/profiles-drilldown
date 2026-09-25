@@ -121,8 +121,10 @@
       "tooltip-time-picker": "タイムピッカー",
       "tooltip-time-picker-description": "時間範囲ズームイン（デフォルトの動作）"
     },
+    "error-gcx-copy": "",
     "error-loading-profile": "プロファイルデータの読み込み中にエラーが発生しました！",
     "explain-button": "差分フレームグラフを説明する",
+    "gcx-copied": "",
     "missing-selections": {
       "auto-select": "自動選択",
       "how-to-alt": "差分フレームグラフの表示方法",
@@ -187,10 +189,16 @@
   "export-menu": {
     "aria-label": "プロファイルデータをエクスポート",
     "error-flamegraph-com": "flamegraph.comへのエクスポートに失敗しました！",
+    "error-gcx-copy": "",
     "error-loading-profile": "Flamebearerプロファイルデータの読み込み中にエラーが発生しました！",
     "error-png": "pngへのエクスポートに失敗しました！",
     "error-png-no-canvas": "",
     "error-pprof": "pprofへのエクスポートに失敗しました！",
+    "gcx-command": "",
+    "gcx-command-tooltip": "",
+    "gcx-commands": "",
+    "gcx-commands-tooltip": "",
+    "gcx-copied": "",
     "json": "json",
     "json-label": "json",
     "png": "png",

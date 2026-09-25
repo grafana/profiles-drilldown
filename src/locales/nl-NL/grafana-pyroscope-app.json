@@ -121,8 +121,10 @@
       "tooltip-time-picker": "Tijdkiezer",
       "tooltip-time-picker-description": "Tijdsbereik inzoomen (standaardgedrag)"
     },
+    "error-gcx-copy": "",
     "error-loading-profile": "Er is een fout opgetreden bij het laden van profielgegevens!",
     "explain-button": "Leg de Diff Flame Graph uit",
+    "gcx-copied": "",
     "missing-selections": {
       "auto-select": "Automatisch selecteren",
       "how-to-alt": "Hoe de diff flame graph te bekijken",
@@ -187,10 +189,16 @@
   "export-menu": {
     "aria-label": "Profielgegevens exporteren",
     "error-flamegraph-com": "Kan niet exporteren naar flamegraph.com!",
+    "error-gcx-copy": "",
     "error-loading-profile": "Er is een fout opgetreden bij het laden van flamebearer-profielgegevens!",
     "error-png": "Kan niet exporteren naar png!",
     "error-png-no-canvas": "",
     "error-pprof": "Kan niet exporteren naar pprof!",
+    "gcx-command": "",
+    "gcx-command-tooltip": "",
+    "gcx-commands": "",
+    "gcx-commands-tooltip": "",
+    "gcx-copied": "",
     "json": "json",
     "json-label": "json",
     "png": "png",

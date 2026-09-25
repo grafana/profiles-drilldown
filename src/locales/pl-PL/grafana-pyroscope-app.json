@@ -121,8 +121,10 @@
       "tooltip-time-picker": "Selektor godziny",
       "tooltip-time-picker-description": "Przybliż zakres czasu (działanie domyślne)"
     },
+    "error-gcx-copy": "",
     "error-loading-profile": "Błąd podczas wczytywania danych profilu",
     "explain-button": "Wyjaśnij wykres płomieniowy różnic",
+    "gcx-copied": "",
     "missing-selections": {
       "auto-select": "Automatyczny wybór",
       "how-to-alt": "Jak wyświetlić wykres płomieniowy różnic",
@@ -187,10 +189,16 @@
   "export-menu": {
     "aria-label": "Eksportuj dane profilowe",
     "error-flamegraph-com": "Nie udało się wyeksportować do flamegraph.com",
+    "error-gcx-copy": "",
     "error-loading-profile": "Błąd podczas wczytywania danych profilu Flamebearer",
     "error-png": "Nie udało się wyeksportować do formatu PNG",
     "error-png-no-canvas": "",
     "error-pprof": "Nie udało się wyeksportować do formatu PPROF",
+    "gcx-command": "",
+    "gcx-command-tooltip": "",
+    "gcx-commands": "",
+    "gcx-commands-tooltip": "",
+    "gcx-copied": "",
     "json": "json",
     "json-label": "json",
     "png": "png",

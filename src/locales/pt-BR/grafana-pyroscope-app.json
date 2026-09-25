@@ -121,8 +121,10 @@
       "tooltip-time-picker": "Seletor de horário",
       "tooltip-time-picker-description": "Aproximar o intervalo de tempo (comportamento padrão)"
     },
+    "error-gcx-copy": "",
     "error-loading-profile": "Erro ao carregar os dados do perfil!",
     "explain-button": "Explicar gráfico de chama de diferenças",
+    "gcx-copied": "",
     "missing-selections": {
       "auto-select": "Seleção automática",
       "how-to-alt": "Como visualizar o gráfico de chama de diferenças",
@@ -187,10 +189,16 @@
   "export-menu": {
     "aria-label": "Exportar dados de perfil",
     "error-flamegraph-com": "Falha ao exportar para flamegraph.com!",
+    "error-gcx-copy": "",
     "error-loading-profile": "Erro ao carregar os dados do perfil do Flamebearer!",
     "error-png": "Falha ao exportar para PNG!",
     "error-png-no-canvas": "",
     "error-pprof": "Falha ao exportar para pprof!",
+    "gcx-command": "",
+    "gcx-command-tooltip": "",
+    "gcx-commands": "",
+    "gcx-commands-tooltip": "",
+    "gcx-copied": "",
     "json": "json",
     "json-label": "json",
     "png": "png",

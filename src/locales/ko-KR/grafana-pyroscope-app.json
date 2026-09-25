@@ -121,8 +121,10 @@
       "tooltip-time-picker": "시간 선택기",
       "tooltip-time-picker-description": "시간 범위 확대(기본 동작)"
     },
+    "error-gcx-copy": "",
     "error-loading-profile": "프로필 데이터를 불러오는 동안 오류가 발생했습니다!",
     "explain-button": "차등 플레임 그래프 설명",
+    "gcx-copied": "",
     "missing-selections": {
       "auto-select": "자동 선택",
       "how-to-alt": "차등 플레임 그래프를 보는 방법",
@@ -187,10 +189,16 @@
   "export-menu": {
     "aria-label": "프로필 데이터 내보내기",
     "error-flamegraph-com": "flamegraph.com으로 내보내지 못했습니다!",
+    "error-gcx-copy": "",
     "error-loading-profile": "Flamebearer 프로필 데이터를 불러오는 동안 오류가 발생했습니다!",
     "error-png": "png로 내보내지 못했습니다!",
     "error-png-no-canvas": "",
     "error-pprof": "pprof로 내보내지 못했습니다!",
+    "gcx-command": "",
+    "gcx-command-tooltip": "",
+    "gcx-commands": "",
+    "gcx-commands-tooltip": "",
+    "gcx-copied": "",
     "json": "json",
     "json-label": "json",
     "png": "png",

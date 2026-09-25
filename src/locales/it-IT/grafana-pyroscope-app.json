@@ -121,8 +121,10 @@
       "tooltip-time-picker": "Strumento di selezione ora",
       "tooltip-time-picker-description": "Ingrandimento dell'intervallo temporale (comportamento predefinito)"
     },
+    "error-gcx-copy": "",
     "error-loading-profile": "Errore durante il caricamento dei dati del profilo!",
     "explain-button": "Spiega il grafico di fiamma delle differenze",
+    "gcx-copied": "",
     "missing-selections": {
       "auto-select": "Selezione automatica",
       "how-to-alt": "Come visualizzare il grafico di fiamma delle differenze",
@@ -187,10 +189,16 @@
   "export-menu": {
     "aria-label": "Esporta dati di profilo",
     "error-flamegraph-com": "Impossibile esportare su flamegraph.com!",
+    "error-gcx-copy": "",
     "error-loading-profile": "Errore durante il caricamento dei dati del profilo Flamebearer!",
     "error-png": "Impossibile esportare in png!",
     "error-png-no-canvas": "",
     "error-pprof": "Impossibile esportare in pprof!",
+    "gcx-command": "",
+    "gcx-command-tooltip": "",
+    "gcx-commands": "",
+    "gcx-commands-tooltip": "",
+    "gcx-copied": "",
     "json": "json",
     "json-label": "json",
     "png": "png",
