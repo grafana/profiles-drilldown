@@ -172,7 +172,7 @@ In this view, you can also:
 - Change the color scheme.
 - Expand or collapse all call stacks.
 - Toggle between the top table, flame graph, and call tree, or show a combination of views.
-- Export profile data.
+- Export profile data (refer to [Export profile data](../investigate/#export-profile-data)).
 
 <!-- Screenshot hidden until major UI refresh: ![Flame graphs](/media/docs/explore-profiles/v1.17.0/profiles-drilldown-flamegraph-2-v1.17.0.png) -->
 
@@ -201,6 +201,8 @@ To configure comparisons more quickly, you can use:
 - **Auto-select** to choose a comparison range automatically.
 - **Comparison presets** to apply saved or predefined comparisons.
 - **Sync time ranges** to keep baseline and comparison windows aligned.
+
+You can also export profile data from this view (refer to [Export profile data](../investigate/#export-profile-data)).
 
 ![Diff flame graph](/media/docs/explore-profiles/v2.2/profiles-drilldown-diff-flamegraph-v2.2.0.png)
 
