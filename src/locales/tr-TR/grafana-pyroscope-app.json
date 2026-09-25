@@ -121,8 +121,10 @@
       "tooltip-time-picker": "Zaman seçici",
       "tooltip-time-picker-description": "Zaman aralığını büyüt (varsayılan davranış)"
     },
+    "error-gcx-copy": "",
     "error-loading-profile": "Profil verileri yüklenirken hata oluştu.",
     "explain-button": "Alev Grafiği Farklarını Açıkla",
+    "gcx-copied": "",
     "missing-selections": {
       "auto-select": "Otomatik seçim",
       "how-to-alt": "Alev grafiği farkları nasıl görüntülenir?",
@@ -187,10 +189,16 @@
   "export-menu": {
     "aria-label": "Profil verilerini dışa aktar",
     "error-flamegraph-com": "flamegraph.com'a dışa aktarılamadı.",
+    "error-gcx-copy": "",
     "error-loading-profile": "Flamebearer profil verileri yüklenirken hata oluştu.",
     "error-png": "png biçiminde dışa aktarılamadı.",
     "error-png-no-canvas": "",
     "error-pprof": "pprof biçiminde dışa aktarılamadı.",
+    "gcx-command": "",
+    "gcx-command-tooltip": "",
+    "gcx-commands": "",
+    "gcx-commands-tooltip": "",
+    "gcx-copied": "",
     "json": "json",
     "json-label": "json",
     "png": "png",

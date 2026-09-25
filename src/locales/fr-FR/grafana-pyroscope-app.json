@@ -121,8 +121,10 @@
       "tooltip-time-picker": "Sélecteur d’heure",
       "tooltip-time-picker-description": "Zoom avant sur la plage temporelle (comportement par défaut)"
     },
+    "error-gcx-copy": "",
     "error-loading-profile": "Une erreur est survenue lors du chargement des données de profil.",
     "explain-button": "Expliquer le graphique en flammes de comparaison",
+    "gcx-copied": "",
     "missing-selections": {
       "auto-select": "Sélection automatique",
       "how-to-alt": "Comment afficher le graphique en flammes de comparaison",
@@ -187,10 +189,16 @@
   "export-menu": {
     "aria-label": "Exporter les données de profil",
     "error-flamegraph-com": "Échec de l’exportation vers flamegraph.com.",
+    "error-gcx-copy": "",
     "error-loading-profile": "Une erreur est survenue lors du chargement des données de profil Flamebearer.",
     "error-png": "Échec de l’exportation au format PNG.",
     "error-png-no-canvas": "",
     "error-pprof": "Échec de l’exportation au format PProf.",
+    "gcx-command": "",
+    "gcx-command-tooltip": "",
+    "gcx-commands": "",
+    "gcx-commands-tooltip": "",
+    "gcx-copied": "",
     "json": "json",
     "json-label": "json",
     "png": "png",

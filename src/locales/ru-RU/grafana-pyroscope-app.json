@@ -121,8 +121,10 @@
       "tooltip-time-picker": "Указатель времени",
       "tooltip-time-picker-description": "Увеличение временного диапазона (действие по умолчанию)"
     },
+    "error-gcx-copy": "",
     "error-loading-profile": "Ошибка при загрузке данных профиля",
     "explain-button": "Объяснить flame-график различий",
+    "gcx-copied": "",
     "missing-selections": {
       "auto-select": "Автоматический выбор",
       "how-to-alt": "Как посмотреть flame-график различий",
@@ -187,10 +189,16 @@
   "export-menu": {
     "aria-label": "Экспорт данных профиля",
     "error-flamegraph-com": "Ошибка экспорта на flamegraph.com",
+    "error-gcx-copy": "",
     "error-loading-profile": "Ошибка при загрузке данных профиля Flamebearer",
     "error-png": "Ошибка экспорта в PNG",
     "error-png-no-canvas": "",
     "error-pprof": "Ошибка экспорта в pprof",
+    "gcx-command": "",
+    "gcx-command-tooltip": "",
+    "gcx-commands": "",
+    "gcx-commands-tooltip": "",
+    "gcx-copied": "",
     "json": "JSON",
     "json-label": "JSON",
     "png": "PNG",

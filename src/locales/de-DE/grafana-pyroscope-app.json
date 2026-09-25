@@ -121,8 +121,10 @@
       "tooltip-time-picker": "Zeitauswahl",
       "tooltip-time-picker-description": "Zeitbereich vergrößern (Standardverhalten)"
     },
+    "error-gcx-copy": "",
     "error-loading-profile": "Beim Laden der Profildaten ist ein Fehler aufgetreten!",
     "explain-button": "Diff-Flammendiagramm erklären",
+    "gcx-copied": "",
     "missing-selections": {
       "auto-select": "Automatische Auswahl",
       "how-to-alt": "So zeigen Sie das Diff-Flammendiagramm an",
@@ -187,10 +189,16 @@
   "export-menu": {
     "aria-label": "Profildaten exportieren",
     "error-flamegraph-com": "Export nach flamegraph.com fehlgeschlagen!",
+    "error-gcx-copy": "",
     "error-loading-profile": "Beim Laden der Flamebearer-Profildaten ist ein Fehler aufgetreten!",
     "error-png": "Export nach PNG fehlgeschlagen!",
     "error-png-no-canvas": "",
     "error-pprof": "Export nach PPROF fehlgeschlagen!",
+    "gcx-command": "",
+    "gcx-command-tooltip": "",
+    "gcx-commands": "",
+    "gcx-commands-tooltip": "",
+    "gcx-copied": "",
     "json": "json",
     "json-label": "json",
     "png": "png",

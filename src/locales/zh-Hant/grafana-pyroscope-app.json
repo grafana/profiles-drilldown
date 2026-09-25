@@ -121,8 +121,10 @@
       "tooltip-time-picker": "時間選擇器",
       "tooltip-time-picker-description": "時間範圍放大（預設行為）"
     },
+    "error-gcx-copy": "",
     "error-loading-profile": "載入設定檔資料時發生錯誤！",
     "explain-button": "解釋差異火焰圖",
+    "gcx-copied": "",
     "missing-selections": {
       "auto-select": "自動選擇",
       "how-to-alt": "如何檢視差異火焰圖",
@@ -187,10 +189,16 @@
   "export-menu": {
     "aria-label": "匯出設定檔資料",
     "error-flamegraph-com": "無法匯出至 flamegraph.com！",
+    "error-gcx-copy": "",
     "error-loading-profile": "載入 Flamebearer 設定檔資料時發生錯誤！",
     "error-png": "無法匯出為 PNG 檔案！",
     "error-png-no-canvas": "",
     "error-pprof": "無法匯出至 pprof！",
+    "gcx-command": "",
+    "gcx-command-tooltip": "",
+    "gcx-commands": "",
+    "gcx-commands-tooltip": "",
+    "gcx-copied": "",
     "json": "json",
     "json-label": "json",
     "png": "png",

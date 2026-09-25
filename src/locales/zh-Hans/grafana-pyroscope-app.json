@@ -121,8 +121,10 @@
       "tooltip-time-picker": "时间选择器",
       "tooltip-time-picker-description": "时间范围放大（默认行为）"
     },
+    "error-gcx-copy": "",
     "error-loading-profile": "加载配置文件数据时出错！",
     "explain-button": "解释差异火焰图",
+    "gcx-copied": "",
     "missing-selections": {
       "auto-select": "自动选择",
       "how-to-alt": "如何查看差异火焰图",
@@ -187,10 +189,16 @@
   "export-menu": {
     "aria-label": "导出配置文件数据",
     "error-flamegraph-com": "导出到 flamegraph.com 失败！",
+    "error-gcx-copy": "",
     "error-loading-profile": "加载 Flamebearer 配置文件数据时出错！",
     "error-png": "导出到 png 失败！",
     "error-png-no-canvas": "",
     "error-pprof": "导出到 pprof 失败！",
+    "gcx-command": "",
+    "gcx-command-tooltip": "",
+    "gcx-commands": "",
+    "gcx-commands-tooltip": "",
+    "gcx-copied": "",
     "json": "json",
     "json-label": "json",
     "png": "png",

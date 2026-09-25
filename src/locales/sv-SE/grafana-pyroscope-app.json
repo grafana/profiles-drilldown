@@ -121,8 +121,10 @@
       "tooltip-time-picker": "Tidsväljare",
       "tooltip-time-picker-description": "Zooma in tidsintervall (standardbeteende)"
     },
+    "error-gcx-copy": "",
     "error-loading-profile": "Fel vid laddning av profildata!",
     "explain-button": "Förklara diff-flamgrafen",
+    "gcx-copied": "",
     "missing-selections": {
       "auto-select": "Välj automatiskt",
       "how-to-alt": "Så här visar du diff-flamgrafen",
@@ -187,10 +189,16 @@
   "export-menu": {
     "aria-label": "Exportera profildata",
     "error-flamegraph-com": "Det gick inte att exportera till flamegraph.com!",
+    "error-gcx-copy": "",
     "error-loading-profile": "Fel vid laddning av Flamebearer-profildata!",
     "error-png": "Det gick inte att exportera till PNG!",
     "error-png-no-canvas": "",
     "error-pprof": "Det gick inte att exportera till PPROF!",
+    "gcx-command": "",
+    "gcx-command-tooltip": "",
+    "gcx-commands": "",
+    "gcx-commands-tooltip": "",
+    "gcx-copied": "",
     "json": "json",
     "json-label": "json",
     "png": "png",

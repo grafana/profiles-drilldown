@@ -121,8 +121,10 @@
       "tooltip-time-picker": "Időkiválasztó",
       "tooltip-time-picker-description": "Nagyítás az időintervallumra (alapértelmezett működés)"
     },
+    "error-gcx-copy": "",
     "error-loading-profile": "Hiba történt a profiladatok betöltésekor!",
     "explain-button": "Eltérési lángdiagram magyarázata",
+    "gcx-copied": "",
     "missing-selections": {
       "auto-select": "Automatikus kijelölés",
       "how-to-alt": "Az eltérési lángdiagram megtekintésének módja",
@@ -187,10 +189,16 @@
   "export-menu": {
     "aria-label": "Profiladatok exportálása",
     "error-flamegraph-com": "A flamegraph.com webhelyre történő exportálás nem sikerült!",
+    "error-gcx-copy": "",
     "error-loading-profile": "Hiba történt a flamebearer-profiladatok betöltésekor!",
     "error-png": "A PNG-fájlba történő exportálás nem sikerült!",
     "error-png-no-canvas": "",
     "error-pprof": "A pprof-fájlba történő exportálás nem sikerült!",
+    "gcx-command": "",
+    "gcx-command-tooltip": "",
+    "gcx-commands": "",
+    "gcx-commands-tooltip": "",
+    "gcx-copied": "",
     "json": "json",
     "json-label": "json",
     "png": "png",

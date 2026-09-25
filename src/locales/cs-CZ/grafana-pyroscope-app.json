@@ -121,8 +121,10 @@
       "tooltip-time-picker": "Volič času",
       "tooltip-time-picker-description": "Přiblížení časového rozsahu (výchozí chování)"
     },
+    "error-gcx-copy": "",
     "error-loading-profile": "Při načítání dat profilu došlo k chybě!",
     "explain-button": "Vysvětlit rozdílový flame graf",
+    "gcx-copied": "",
     "missing-selections": {
       "auto-select": "Automatický výběr",
       "how-to-alt": "Jak zobrazit rozdílový flame graf",
@@ -187,10 +189,16 @@
   "export-menu": {
     "aria-label": "Exportovat data profilu",
     "error-flamegraph-com": "Export na flamegraph.com se nezdařil!",
+    "error-gcx-copy": "",
     "error-loading-profile": "Při načítání dat profilu flamebearer došlo k chybě!",
     "error-png": "Export do formátu PNG se nezdařil!",
     "error-png-no-canvas": "",
     "error-pprof": "Export do formátu pprof se nezdařil!",
+    "gcx-command": "",
+    "gcx-command-tooltip": "",
+    "gcx-commands": "",
+    "gcx-commands-tooltip": "",
+    "gcx-copied": "",
     "json": "json",
     "json-label": "json",
     "png": "png",
