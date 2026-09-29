@@ -172,7 +172,7 @@ In this view, you can also:
 - Change the color scheme.
 - Expand or collapse all call stacks.
 - Toggle between the top table, flame graph, and call tree, or show a combination of views.
-- Export profile data.
+- Export profile data. Open **Export profile data** to download **png**, **json**, or **pprof**. Choose **gcx command** to copy a `gcx profiles query` command to your clipboard so you can download the same profile as pprof from the command line. PNG export is available when the flame graph canvas is visible.
 
 <!-- Screenshot hidden until major UI refresh: ![Flame graphs](/media/docs/explore-profiles/v1.17.0/profiles-drilldown-flamegraph-2-v1.17.0.png) -->
 
@@ -201,6 +201,8 @@ To configure comparisons more quickly, you can use:
 - **Auto-select** to choose a comparison range automatically.
 - **Comparison presets** to apply saved or predefined comparisons.
 - **Sync time ranges** to keep baseline and comparison windows aligned.
+
+You can also open **Export profile data** to download **png** or **json**, or choose **gcx commands** to copy `gcx profiles query` commands for the baseline and comparison profiles as pprof.
 
 ![Diff flame graph](/media/docs/explore-profiles/v2.2/profiles-drilldown-diff-flamegraph-v2.2.0.png)
 
