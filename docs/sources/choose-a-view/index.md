@@ -172,9 +172,19 @@ In this view, you can also:
 - Change the color scheme.
 - Expand or collapse all call stacks.
 - Toggle between the top table, flame graph, and call tree, or show a combination of views.
-- Export profile data. Open **Export profile data** to download **png**, **json**, or **pprof**. Choose **gcx command** to copy a `gcx profiles query` command to your clipboard so you can download the same profile as pprof from the command line. PNG export is available when the flame graph canvas is visible.
+- Export profile data.
 
 <!-- Screenshot hidden until major UI refresh: ![Flame graphs](/media/docs/explore-profiles/v1.17.0/profiles-drilldown-flamegraph-2-v1.17.0.png) -->
+
+#### Export profile data
+
+To export profile data, click the **Export profile data** download icon above the flame graph.
+The options depend on the view:
+
+- **Flame graph**: Download **png**, **json**, or **pprof**, or select **gcx command** to copy a `gcx profiles query` command that downloads the profile as a pprof file.
+- **Diff flame graph**: Download **png** or **json**, or select **gcx commands** to copy two `gcx profiles query` commands that download the baseline and comparison profiles as pprof files.
+
+**png** is only available when the flame graph is showing.
 
 #### Profiles to Traces
 
@@ -202,7 +212,7 @@ To configure comparisons more quickly, you can use:
 - **Comparison presets** to apply saved or predefined comparisons.
 - **Sync time ranges** to keep baseline and comparison windows aligned.
 
-You can also open **Export profile data** to download **png** or **json**, or choose **gcx commands** to copy `gcx profiles query` commands for the baseline and comparison profiles as pprof.
+To export a diff flame graph, refer to [Export profile data](#export-profile-data).
 
 ![Diff flame graph](/media/docs/explore-profiles/v2.2/profiles-drilldown-diff-flamegraph-v2.2.0.png)
 
