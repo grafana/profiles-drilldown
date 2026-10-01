@@ -266,11 +266,11 @@ importers:
         specifier: 1.0.6
         version: 1.0.6
       sass:
-        specifier: 1.103.1
-        version: 1.103.1
+        specifier: 1.105.0
+        version: 1.105.0
       sass-loader:
         specifier: 13.3.1
-        version: 13.3.1(sass@1.103.1)(webpack@5.109.2)
+        version: 13.3.1(sass@1.105.0)(webpack@5.109.2)
       style-loader:
         specifier: 3.3.3
         version: 3.3.3(webpack@5.109.2)
@@ -5557,8 +5557,8 @@ packages:
       sass-embedded:
         optional: true
 
-  sass@1.103.1:
-    resolution: {integrity: sha512-9icZURbP51S6S0QGoyaeqk9uB06GNWxsFYWfH5RgpFgqK5FA8tJcM3AdVxrZEVJ7dz+L87nG95gBKf4VuaMHGw==}
+  sass@1.105.0:
+    resolution: {integrity: sha512-4EjSuRTyG8M4yRXXY1PT9OUV5zz23xBxJkbIAprohKHqf6HOU4MCpE3U3vAC+iO1gxobBjESNbcj8rYAQZWnyA==}
     engines: {node: '>=20.19.0'}
     hasBin: true
 
@@ -12644,15 +12644,15 @@ snapshots:
 
   safer-buffer@2.1.2: {}
 
-  sass-loader@13.3.1(sass@1.103.1)(webpack@5.109.2):
+  sass-loader@13.3.1(sass@1.105.0)(webpack@5.109.2):
     dependencies:
       klona: 2.0.6
       neo-async: 2.6.2
       webpack: 5.109.2(@swc/core@1.16.2(@swc/helpers@0.5.23))(postcss@8.5.28)(webpack-cli@5.1.4)
     optionalDependencies:
-      sass: 1.103.1
+      sass: 1.105.0
 
-  sass@1.103.1:
+  sass@1.105.0:
     dependencies:
       chokidar: 5.0.0
       immutable: 5.1.9
