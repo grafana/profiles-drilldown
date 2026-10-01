@@ -85,7 +85,7 @@
     "@openfeature/web-sdk": "1.10.0",
     "@playwright/test": "1.59.0",
     "@stylistic/eslint-plugin-ts": "2.13.0",
-    "@swc/core": "1.16.1",
+    "@swc/core": "1.16.2",
     "@swc/jest": "0.2.39",
     "@tanstack/eslint-plugin-query": "5.51.1",
     "@testing-library/jest-dom": "6.9.1",
