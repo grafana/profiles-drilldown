@@ -10,6 +10,7 @@ import { InlineBanner } from '@shared/ui/InlineBanner';
 import { Panel } from '@shared/ui/Panel/Panel';
 import React, { useMemo, useState } from 'react';
 
+import { StackFrameFilter } from '../../../../domain/StackFrameFilter';
 import { useBuildPyroscopeQuery } from '../../../../domain/useBuildPyroscopeQuery';
 import { ProfilesDataSourceVariable } from '../../../../domain/variables/ProfilesDataSourceVariable';
 import { getSceneVariableValue } from '../../../../helpers/getSceneVariableValue';
@@ -38,7 +39,11 @@ export class SceneFunctionDetailsPanel extends SceneObjectBase<SceneFunctionDeta
     super({ key: 'function-details-panel' });
   }
 
-  useSceneFunctionDetailsPanel = (stackTrace: StackTrace, timeRange: TimeRange): DomainHookReturnValue => {
+  useSceneFunctionDetailsPanel = (
+    stackTrace: StackTrace,
+    timeRange: TimeRange,
+    frameFilter?: StackFrameFilter
+  ): DomainHookReturnValue => {
     const dataSourceUid = sceneGraph.findByKeyAndType(this, 'dataSource', ProfilesDataSourceVariable).useState()
       .value as string;
     const dataSourceName = sceneGraph.findByKeyAndType(this, 'dataSource', ProfilesDataSourceVariable).useState()
@@ -51,7 +56,7 @@ export class SceneFunctionDetailsPanel extends SceneObjectBase<SceneFunctionDeta
       functionsDetails,
       error: fetchFunctionDetailsError,
       isFetching,
-    } = useFetchFunctionsDetails({ dataSourceUid, query, timeRange, stackTrace, profileIdSelector });
+    } = useFetchFunctionsDetails({ dataSourceUid, query, timeRange, stackTrace, profileIdSelector, frameFilter });
 
     const [prevFunctionsDetails, setPrevFunctionsDetails] = useState<FunctionDetails[]>();
     const [currentFunctionDetails, setCurrentFunctionDetails] = useState<FunctionDetails>(functionsDetails[0]);
@@ -131,14 +136,16 @@ export class SceneFunctionDetailsPanel extends SceneObjectBase<SceneFunctionDeta
     model,
     timeRange,
     stackTrace,
+    frameFilter,
     onClose,
   }: SceneComponentProps<SceneFunctionDetailsPanel> & {
     timeRange: TimeRange;
     stackTrace: StackTrace;
+    frameFilter?: StackFrameFilter;
     onClose: () => void;
   }) => {
     const styles = useStyles2(getStyles);
-    const { data, actions } = model.useSceneFunctionDetailsPanel(stackTrace, timeRange);
+    const { data, actions } = model.useSceneFunctionDetailsPanel(stackTrace, timeRange, frameFilter);
 
     return (
       <Panel

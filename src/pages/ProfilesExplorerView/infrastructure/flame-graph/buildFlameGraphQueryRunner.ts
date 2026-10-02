@@ -1,6 +1,7 @@
 import { SceneQueryRunner } from '@grafana/scenes';
 import { quoteLabelName } from '@shared/components/QueryBuilder/domain/helpers/quoteLabelName';
 
+import { hasStackFrameFilter, StackFrameFilter } from '../../domain/StackFrameFilter';
 import { PYROSCOPE_DATA_SOURCE } from '../pyroscope-data-sources';
 import { TimeSeriesQueryRunnerParams } from '../timeseries/TimeSeriesQueryRunnerParams';
 import { withPreventInvalidQuery } from '../withPreventInvalidQuery';
@@ -9,6 +10,7 @@ type FlameGraphQueryRunnerParams = TimeSeriesQueryRunnerParams & {
   maxNodes?: number;
   spanSelector?: string;
   profileIdSelector?: string;
+  frameFilter?: StackFrameFilter;
 };
 
 export function buildFlameGraphQueryRunner({
@@ -16,6 +18,7 @@ export function buildFlameGraphQueryRunner({
   maxNodes,
   spanSelector,
   profileIdSelector,
+  frameFilter,
   extraFilterVariables,
 }: FlameGraphQueryRunnerParams) {
   const completeFilters = filters ? [...filters] : [];
@@ -38,6 +41,7 @@ export function buildFlameGraphQueryRunner({
         maxNodes,
         ...(spanSelector && { spanSelector: [spanSelector] }),
         ...(profileIdSelector && { profileIdSelector: [profileIdSelector] }),
+        ...(frameFilter && hasStackFrameFilter(frameFilter) && { frameFilter }),
       },
     ],
   });

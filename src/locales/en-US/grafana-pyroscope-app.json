@@ -200,11 +200,13 @@
     "gcx-commands-tooltip": "Copy the gcx commands to download the baseline and comparison profiles as pprof",
     "gcx-copied": "gcx command copied to clipboard!",
     "json": "json",
+    "json-frame-filter-disabled": "JSON export does not support stack frame filters",
     "json-label": "json",
     "png": "png",
     "png-disabled-description": "Switch to the flame graph view to export it as a png",
     "png-label": "png",
     "pprof": "pprof",
+    "pprof-span-disabled": "Pprof export does not support span selection",
     "tooltip": "Export profile data"
   },
   "exposed-components": {
@@ -218,6 +220,16 @@
   "flame-graph": {
     "error-loading-profile": "Error while loading profile data!",
     "explain-button": "Explain Flame Graph",
+    "frame-filter": "Filter stack frames",
+    "frame-filter-active": "Stack frames: filtered",
+    "frame-filter-apply": "Apply",
+    "frame-filter-clear": "Clear filters",
+    "frame-filter-exclude-exact": "Exclude exact function names",
+    "frame-filter-exclude-regex": "Exclude function name regexes",
+    "frame-filter-help": "Enter one function name or RE2 regex per line. All include conditions must match the stack; any exclude condition removes it. This filters the flame graph and function details; the timeline remains unfiltered.",
+    "frame-filter-include-exact": "Include exact function names",
+    "frame-filter-include-regex": "Include function name regexes",
+    "frame-filter-title": "Filter samples by stack frames",
     "profile-id-selector": {
       "filter-label": "Filter label",
       "filter-operator": "Filter operator",
