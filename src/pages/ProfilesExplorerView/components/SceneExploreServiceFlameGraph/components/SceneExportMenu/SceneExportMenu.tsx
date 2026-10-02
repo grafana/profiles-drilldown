@@ -16,6 +16,7 @@ import saveAs from 'file-saver';
 import React from 'react';
 
 import { buildGcxPprofCommand } from '../../../../domain/buildGcxPprofCommand';
+import { hasStackFrameFilter, StackFrameFilter } from '../../../../domain/StackFrameFilter';
 import { ProfilesDataSourceVariable } from '../../../../domain/variables/ProfilesDataSourceVariable';
 import { ProfileApiClient } from '../../../../infrastructure/profiles/ProfileApiClient';
 import { DataSourceProxyClientBuilder } from '../../../../infrastructure/series/http/DataSourceProxyClientBuilder';
@@ -30,6 +31,7 @@ type ExtraProps = {
   timeRange: TimeRange;
   profileIdSelector?: string;
   spanSelector?: string;
+  frameFilter?: StackFrameFilter;
 };
 
 export class SceneExportMenu extends SceneObjectBase<SceneExportMenuState> {
@@ -70,6 +72,8 @@ export class SceneExportMenu extends SceneObjectBase<SceneExportMenuState> {
     query,
     timeRange,
     maxNodes,
+    frameFilter,
+    profileIdSelector,
   }: ExtraProps & { dataSourceUid: string; maxNodes: number | null }): Promise<Blob | null> {
     const pprofApiClient = DataSourceProxyClientBuilder.build(dataSourceUid, PprofApiClient);
 
@@ -80,6 +84,8 @@ export class SceneExportMenu extends SceneObjectBase<SceneExportMenuState> {
         query,
         timeRange,
         maxNodes: maxNodes || DEFAULT_SETTINGS.maxNodes,
+        frameFilter,
+        profileIdSelector,
       });
       profile = await new Response(blob.stream().pipeThrough(new CompressionStream('gzip'))).blob();
     } catch (error) {
@@ -93,7 +99,13 @@ export class SceneExportMenu extends SceneObjectBase<SceneExportMenuState> {
     return profile;
   }
 
-  useSceneExportMenu = ({ query, timeRange, profileIdSelector, spanSelector }: ExtraProps): DomainHookReturnValue => {
+  useSceneExportMenu = ({
+    query,
+    timeRange,
+    profileIdSelector,
+    spanSelector,
+    frameFilter,
+  }: ExtraProps): DomainHookReturnValue => {
     const dataSourceUid = sceneGraph.findByKeyAndType(this, 'dataSource', ProfilesDataSourceVariable).useState()
       .value as string;
 
@@ -146,7 +158,14 @@ export class SceneExportMenu extends SceneObjectBase<SceneExportMenuState> {
     const downloadPprof = async () => {
       reportInteraction('g_pyroscope_app_export_profile', { format: 'pprof' });
 
-      const profile = await this.fetchPprofProfile({ dataSourceUid, query, timeRange, maxNodes });
+      const profile = await this.fetchPprofProfile({
+        dataSourceUid,
+        query,
+        timeRange,
+        maxNodes,
+        frameFilter,
+        profileIdSelector,
+      });
       if (!profile) {
         return;
       }
@@ -217,6 +236,8 @@ export class SceneExportMenu extends SceneObjectBase<SceneExportMenuState> {
       data: {
         shouldDisplayFlamegraphDotCom: Boolean(settings?.enableFlameGraphDotComExport),
         isPngExportDisabled,
+        isFrameFiltered: Boolean(frameFilter && hasStackFrameFilter(frameFilter)),
+        isPprofExportDisabled: Boolean(spanSelector),
       },
       actions: {
         downloadPng,
@@ -228,8 +249,21 @@ export class SceneExportMenu extends SceneObjectBase<SceneExportMenuState> {
     };
   };
 
-  static Component = ({ model, query, timeRange }: SceneComponentProps<SceneExportMenu> & ExtraProps) => {
-    const { data, actions } = model.useSceneExportMenu({ query, timeRange });
+  static Component = ({
+    model,
+    query,
+    timeRange,
+    frameFilter,
+    profileIdSelector,
+    spanSelector,
+  }: SceneComponentProps<SceneExportMenu> & ExtraProps) => {
+    const { data, actions } = model.useSceneExportMenu({
+      query,
+      timeRange,
+      frameFilter,
+      profileIdSelector,
+      spanSelector,
+    });
 
     return (
       <Dropdown
@@ -245,8 +279,26 @@ export class SceneExportMenu extends SceneObjectBase<SceneExportMenuState> {
               }
               onClick={actions.downloadPng}
             />
-            <Menu.Item label={t('export-menu.json', 'json')} onClick={actions.downloadJson} />
-            <Menu.Item label={t('export-menu.pprof', 'pprof')} onClick={actions.downloadPprof} />
+            <Menu.Item
+              label={t('export-menu.json', 'json')}
+              onClick={actions.downloadJson}
+              disabled={data.isFrameFiltered}
+              description={
+                data.isFrameFiltered
+                  ? t('export-menu.json-frame-filter-disabled', 'JSON export does not support stack frame filters')
+                  : undefined
+              }
+            />
+            <Menu.Item
+              label={t('export-menu.pprof', 'pprof')}
+              onClick={actions.downloadPprof}
+              disabled={data.isPprofExportDisabled}
+              description={
+                data.isPprofExportDisabled
+                  ? t('export-menu.pprof-span-disabled', 'Pprof export does not support span selection')
+                  : undefined
+              }
+            />
             <Menu.Divider />
             <Tooltip
               content={t('export-menu.gcx-command-tooltip', 'Copy the gcx command to download this profile as pprof')}
@@ -254,6 +306,7 @@ export class SceneExportMenu extends SceneObjectBase<SceneExportMenuState> {
               <Menu.Item
                 icon="copy"
                 label={t('export-menu.gcx-command', 'gcx command')}
+                disabled={data.isFrameFiltered}
                 onClick={actions.copyGcxCommand}
               />
             </Tooltip>

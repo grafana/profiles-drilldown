@@ -33,6 +33,17 @@ function getLabelSelector(runner: any): string {
 }
 
 describe('buildFlameGraphQueryRunner', () => {
+  it('passes exact and regex frame filters to the datasource query', () => {
+    const frameFilter = {
+      includeFunctionNames: ['main.work'],
+      excludeFunctionNames: ['main.idle'],
+      includeFunctionNameRegexes: ['^main\\.'],
+      excludeFunctionNameRegexes: ['sleep$'],
+    };
+    const runner = buildFlameGraphQueryRunner({ frameFilter });
+    expect(runner.state.queries[0].frameFilter).toEqual(frameFilter);
+  });
+
   describe('extraFilterVariables', () => {
     it('appends extraFilterVariables to the label selector', () => {
       const runner = buildFlameGraphQueryRunner({

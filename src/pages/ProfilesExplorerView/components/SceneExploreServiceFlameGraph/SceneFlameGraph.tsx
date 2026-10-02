@@ -6,6 +6,7 @@ import {
   SceneComponentProps,
   SceneObjectBase,
   SceneObjectState,
+  SceneObjectUrlValues,
   SceneQueryRunner,
   SceneTimeRange,
 } from '@grafana/scenes';
@@ -22,6 +23,7 @@ import { PyroscopeLogo } from '@shared/ui/PyroscopeLogo';
 import React, { useEffect, useMemo, useState } from 'react';
 import { Unsubscribable } from 'rxjs';
 
+import { emptyStackFrameFilter, hasStackFrameFilter, StackFrameFilter } from '../../domain/StackFrameFilter';
 import { useBuildPyroscopeQuery } from '../../domain/useBuildPyroscopeQuery';
 import { useGrafanaAssistant } from '../../domain/useGrafanaAssistant';
 import { getSceneVariableValue } from '../../helpers/getSceneVariableValue';
@@ -42,6 +44,7 @@ import { RemoveSpanSelector } from './domain/events/RemoveSpanSelector';
 import { ProfileIdSelectorLabel } from './ProfileIdSelectorLabel';
 import { SceneExploreServiceFlameGraph } from './SceneExploreServiceFlameGraph';
 import { SpanSelectorLabel } from './SpanSelectorLabel';
+import { StackFrameFilterButton } from './StackFrameFilterButton';
 
 interface SceneFlameGraphState extends SceneObjectState {
   $timeRange?: SceneTimeRange;
@@ -51,6 +54,7 @@ interface SceneFlameGraphState extends SceneObjectState {
   aiPanel: SceneAiPanel;
   functionDetailsPanel: SceneFunctionDetailsPanel;
   createRecordingRuleModal: SceneCreateRecordingRuleModal;
+  frameFilter: StackFrameFilter;
 }
 
 // I've tried to use a SplitLayout for the body without any success (left: flame graph, right: explain flame graph content)
@@ -68,6 +72,7 @@ export class SceneFlameGraph extends SceneObjectBase<SceneFlameGraphState> {
       aiPanel: new SceneAiPanel(),
       functionDetailsPanel: new SceneFunctionDetailsPanel(),
       createRecordingRuleModal: new SceneCreateRecordingRuleModal(),
+      frameFilter: emptyStackFrameFilter(),
     });
 
     this.addActivationHandler(this.onActivate.bind(this));
@@ -98,6 +103,34 @@ export class SceneFlameGraph extends SceneObjectBase<SceneFlameGraphState> {
     };
   }
 
+  getUrlState() {
+    return hasStackFrameFilter(this.state.frameFilter) ? { frameFilter: JSON.stringify(this.state.frameFilter) } : {};
+  }
+
+  updateFromUrl(values: SceneObjectUrlValues) {
+    if (typeof values.frameFilter !== 'string') {
+      if (hasStackFrameFilter(this.state.frameFilter)) {
+        this.setState({ frameFilter: emptyStackFrameFilter() });
+      }
+      return;
+    }
+    try {
+      const parsed = JSON.parse(values.frameFilter);
+      const filter = emptyStackFrameFilter();
+      for (const key of Object.keys(filter) as Array<keyof StackFrameFilter>) {
+        if (!Array.isArray(parsed[key]) || !parsed[key].every((value: unknown) => typeof value === 'string')) {
+          return;
+        }
+        filter[key] = parsed[key];
+      }
+      if (JSON.stringify(filter) !== JSON.stringify(this.state.frameFilter)) {
+        this.setState({ frameFilter: filter });
+      }
+    } catch {
+      // Ignore malformed links.
+    }
+  }
+
   buildTitle() {
     const serviceName = getSceneVariableValue(this, 'serviceName');
     const profileMetricId = getSceneVariableValue(this, 'profileMetricId');
@@ -119,18 +152,27 @@ export class SceneFlameGraph extends SceneObjectBase<SceneFlameGraphState> {
 
     const [maxNodes] = useMaxNodesFromUrl();
     const { settings } = useFetchPluginSettings();
-    const { $timeRange, $data, lastTimeRange, exportMenu, aiPanel, functionDetailsPanel, createRecordingRuleModal } =
-      this.useState();
+    const {
+      $timeRange,
+      $data,
+      lastTimeRange,
+      exportMenu,
+      aiPanel,
+      functionDetailsPanel,
+      createRecordingRuleModal,
+      frameFilter,
+    } = this.useState();
 
     useEffect(() => {
       const runner = buildFlameGraphQueryRunner({
         maxNodes,
         spanSelector,
         profileIdSelector,
+        frameFilter,
       });
       this.setState({ $data: runner });
       return deferSceneQueryRunnerRun(runner);
-    }, [$timeRange, maxNodes, spanSelector, profileIdSelector]);
+    }, [$timeRange, maxNodes, spanSelector, profileIdSelector, frameFilter]);
 
     const $dataState = $data.useState();
     const loadingState = $dataState?.data?.state;
@@ -154,6 +196,7 @@ export class SceneFlameGraph extends SceneObjectBase<SceneFlameGraphState> {
         hasProfileData,
         profileData,
         spanSelector,
+        frameFilter,
         fetchProfileError,
         settings,
         export: {
@@ -162,6 +205,7 @@ export class SceneFlameGraph extends SceneObjectBase<SceneFlameGraphState> {
           timeRange: lastTimeRange,
           profileIdSelector,
           spanSelector,
+          frameFilter,
         },
         ai: {
           panel: aiPanel,
@@ -266,6 +310,10 @@ export class SceneFlameGraph extends SceneObjectBase<SceneFlameGraphState> {
                   removeProfileIdSelector={() => model.removeProfileIdSelector()}
                 />
               )}
+              <StackFrameFilterButton
+                value={data.frameFilter}
+                onApply={(frameFilter) => model.setState({ frameFilter })}
+              />
               {!hideAIButton && (
                 <AIButton
                   disabled={isAiButtonDisabled || sidePanel.isOpen('ai')}
@@ -300,6 +348,7 @@ export class SceneFlameGraph extends SceneObjectBase<SceneFlameGraphState> {
                   timeRange={data.export.timeRange}
                   profileIdSelector={data.export.profileIdSelector}
                   spanSelector={data.export.spanSelector}
+                  frameFilter={data.export.frameFilter}
                 />
               }
               keepFocusOnDataChange
@@ -317,6 +366,7 @@ export class SceneFlameGraph extends SceneObjectBase<SceneFlameGraphState> {
             model={data.gitHub.panel}
             timeRange={data.gitHub.timeRange}
             stackTrace={gitHubIntegration.data.stacktrace}
+            frameFilter={data.frameFilter}
             onClose={sidePanel.close}
           />
         )}
