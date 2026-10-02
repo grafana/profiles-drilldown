@@ -2,7 +2,7 @@ import { TimeRange } from '@grafana/data';
 import { t } from '@grafana/i18n';
 import { SceneComponentProps, sceneGraph, SceneObjectBase, SceneObjectState } from '@grafana/scenes';
 import { Button, Dropdown, Menu, Tooltip } from '@grafana/ui';
-import { displayError, displaySuccess } from '@shared/domain/displayStatus';
+import { displayError } from '@shared/domain/displayStatus';
 import { reportInteraction } from '@shared/domain/reportInteraction';
 import { saveProfileJsonToFile } from '@shared/domain/saveProfileJsonToFile';
 import { useMaxNodesFromUrl } from '@shared/domain/url-params/useMaxNodesFromUrl';
@@ -16,11 +16,12 @@ import saveAs from 'file-saver';
 import React from 'react';
 
 import { buildGcxPprofCommand } from '../../../../domain/buildGcxPprofCommand';
+import { copyGcxCommandToClipboard } from '../../../../domain/copyGcxCommandToClipboard';
+import { getExportFilename } from '../../../../domain/getExportFilename';
 import { ProfilesDataSourceVariable } from '../../../../domain/variables/ProfilesDataSourceVariable';
 import { ProfileApiClient } from '../../../../infrastructure/profiles/ProfileApiClient';
 import { DataSourceProxyClientBuilder } from '../../../../infrastructure/series/http/DataSourceProxyClientBuilder';
 import { PprofApiClient } from '../../infrastructure/PprofApiClient';
-import { getExportFilename } from './domain/getExportFilename';
 import { flamegraphDotComApiClient } from './infrastructure/flamegraphDotComApiClient';
 
 interface SceneExportMenuState extends SceneObjectState {}
@@ -168,16 +169,10 @@ export class SceneExportMenu extends SceneObjectBase<SceneExportMenuState> {
         spanIds: spanSelector ? [spanSelector] : undefined,
       });
 
-      try {
-        await navigator.clipboard.writeText(command);
-        reportInteraction('g_pyroscope_app_export_profile', { format: 'gcx' });
-        displaySuccess([t('export-menu.gcx-copied', 'gcx command copied to clipboard!')]);
-      } catch (error) {
-        displayError(error as Error, [
-          t('export-menu.error-gcx-copy', 'Failed to copy gcx command to clipboard!'),
-          (error as Error).message,
-        ]);
-      }
+      await copyGcxCommandToClipboard(command, {
+        success: t('export-menu.gcx-copied', 'gcx command copied to clipboard!'),
+        error: t('export-menu.error-gcx-copy', 'Failed to copy gcx command to clipboard!'),
+      });
     };
 
     const uploadToFlamegraphDotCom = async () => {
@@ -228,8 +223,14 @@ export class SceneExportMenu extends SceneObjectBase<SceneExportMenuState> {
     };
   };
 
-  static Component = ({ model, query, timeRange }: SceneComponentProps<SceneExportMenu> & ExtraProps) => {
-    const { data, actions } = model.useSceneExportMenu({ query, timeRange });
+  static Component = ({
+    model,
+    query,
+    timeRange,
+    profileIdSelector,
+    spanSelector,
+  }: SceneComponentProps<SceneExportMenu> & ExtraProps) => {
+    const { data, actions } = model.useSceneExportMenu({ query, timeRange, profileIdSelector, spanSelector });
 
     return (
       <Dropdown
