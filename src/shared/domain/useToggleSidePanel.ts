@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-type PanelId = 'ai' | 'function-details' | null;
+type PanelId = 'ai' | 'function-details' | 'classification' | null;
 
 type OnOpenHandler = () => void;
 
