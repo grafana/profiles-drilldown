@@ -41,6 +41,11 @@ const config = async (env: Env): Promise<Configuration> => {
 
   /* FINAL CONFIG */
 
+  if (baseConfig.cache?.type === 'filesystem') {
+    // A pnpm patch changes package contents without changing its version.
+    baseConfig.cache.buildDependencies.lockfile = [path.resolve(__dirname, 'pnpm-lock.yaml')];
+  }
+
   baseConfig.externals = [...(baseConfig.externals || []), 'i18next'];
 
   const finalConfig = merge(baseConfig, {

@@ -36,6 +36,11 @@ import { SamplingIndicatorExtensionPoint } from './components/SamplingIndicatorE
 import { SceneExportMenu } from './components/SceneExportMenu/SceneExportMenu';
 import { useGitHubIntegration } from './components/SceneFunctionDetailsPanel/domain/useGitHubIntegration';
 import { SceneFunctionDetailsPanel } from './components/SceneFunctionDetailsPanel/SceneFunctionDetailsPanel';
+import { SceneSemanticClassification } from './components/SceneSemanticClassification/SceneSemanticClassification';
+import {
+  SemanticClassificationPanel,
+  SemanticClassificationToggle,
+} from './components/SceneSemanticClassification/SemanticClassificationPanel';
 import { buildSpanTimeRange } from './domain/buildSpanTimeRange';
 import { RemoveProfileIdSelector } from './domain/events/RemoveProfileIdSelector';
 import { RemoveSpanSelector } from './domain/events/RemoveSpanSelector';
@@ -51,6 +56,7 @@ interface SceneFlameGraphState extends SceneObjectState {
   aiPanel: SceneAiPanel;
   functionDetailsPanel: SceneFunctionDetailsPanel;
   createRecordingRuleModal: SceneCreateRecordingRuleModal;
+  semantic: SceneSemanticClassification;
 }
 
 // I've tried to use a SplitLayout for the body without any success (left: flame graph, right: explain flame graph content)
@@ -68,6 +74,7 @@ export class SceneFlameGraph extends SceneObjectBase<SceneFlameGraphState> {
       aiPanel: new SceneAiPanel(),
       functionDetailsPanel: new SceneFunctionDetailsPanel(),
       createRecordingRuleModal: new SceneCreateRecordingRuleModal(),
+      semantic: new SceneSemanticClassification(),
     });
 
     this.addActivationHandler(this.onActivate.bind(this));
@@ -75,6 +82,7 @@ export class SceneFlameGraph extends SceneObjectBase<SceneFlameGraphState> {
 
   onActivate() {
     let dataSubscription: Unsubscribable | undefined;
+    const deactivateSemantic = this.state.semantic.activate();
 
     const stateSubscription = this.subscribeToState((newState, prevState) => {
       if (newState.$data === prevState.$data) {
@@ -95,6 +103,7 @@ export class SceneFlameGraph extends SceneObjectBase<SceneFlameGraphState> {
     return () => {
       stateSubscription.unsubscribe();
       dataSubscription?.unsubscribe();
+      deactivateSemantic();
     };
   }
 
@@ -153,6 +162,7 @@ export class SceneFlameGraph extends SceneObjectBase<SceneFlameGraphState> {
         isFetchingProfileData,
         hasProfileData,
         profileData,
+        loadingState,
         spanSelector,
         fetchProfileError,
         settings,
@@ -204,6 +214,8 @@ export class SceneFlameGraph extends SceneObjectBase<SceneFlameGraphState> {
     const spanSelector = getSceneVariableValue(model, 'spanSelector');
     const profileIdSelector = getSceneVariableValue(model, 'profileIdSelector');
     const { data, actions } = model.useSceneFlameGraph(spanSelector, profileIdSelector);
+    const { semantic } = model.useState();
+    const semanticProps = semantic.useFlameGraphProps({ frame: data.profileData, loadingState: data.loadingState });
     const sidePanel = useToggleSidePanel();
     const gitHubIntegration = useGitHubIntegration(sidePanel);
 
@@ -238,14 +250,21 @@ export class SceneFlameGraph extends SceneObjectBase<SceneFlameGraphState> {
       [data.isLoading, data.title, styles.spinner]
     );
 
-    const extraContextMenuButtons: FlameGraphProps['getExtraContextMenuButtons'] = (clickedItemData, data) => {
+    const extraContextMenuButtons: FlameGraphProps['getExtraContextMenuButtons'] = (clickedItemData, data, state) => {
       const ghButtons = gitHubIntegration.actions.getExtraFlameGraphMenuItems(clickedItemData, data);
       const recordingRulesButtons =
         settings?.enableMetricsFromProfiles && metricsFromProfiles
           ? recordingRulesMenu.actions.getExtraFlameGraphMenuItems(clickedItemData, data)
           : [];
 
-      return [...ghButtons, ...recordingRulesButtons];
+      const classificationButtons = semanticProps.getContextMenuButtons(state.frame).map((button) => ({
+        ...button,
+        onClick: () => {
+          sidePanel.open('classification');
+          button.onClick();
+        },
+      }));
+      return [...ghButtons, ...recordingRulesButtons, ...classificationButtons];
     };
 
     return (
@@ -264,6 +283,22 @@ export class SceneFlameGraph extends SceneObjectBase<SceneFlameGraphState> {
                 <ProfileIdSelectorLabel
                   profileIdSelector={profileIdSelector}
                   removeProfileIdSelector={() => model.removeProfileIdSelector()}
+                />
+              )}
+              {!data.fetchProfileError && (
+                <SemanticClassificationToggle
+                  model={semantic}
+                  frame={data.profileData}
+                  loadingState={data.loadingState}
+                  isOpen={sidePanel.isOpen('classification')}
+                  onToggle={() => {
+                    semantic.previewCategory();
+                    if (sidePanel.isOpen('classification')) {
+                      sidePanel.close();
+                    } else {
+                      sidePanel.open('classification');
+                    }
+                  }}
                 />
               )}
               {!hideAIButton && (
@@ -290,7 +325,9 @@ export class SceneFlameGraph extends SceneObjectBase<SceneFlameGraphState> {
           {!data.fetchProfileError && (
             <FlameGraph
               data={data.profileData as any}
-              disableCollapsing={!data.settings?.collapsedFlamegraphs}
+              disableCollapsing={!data.settings?.collapsedFlamegraphs || Boolean(semanticProps.highlightedRows)}
+              highlightedRows={semanticProps.highlightedRows}
+              getFrameTooltipContent={semanticProps.getFrameTooltipContent}
               getTheme={actions.getTheme as any}
               getExtraContextMenuButtons={extraContextMenuButtons}
               extraHeaderElements={
@@ -307,6 +344,18 @@ export class SceneFlameGraph extends SceneObjectBase<SceneFlameGraphState> {
             />
           )}
         </Panel>
+
+        {sidePanel.isOpen('classification') && (
+          <SemanticClassificationPanel
+            model={semantic}
+            frame={data.profileData}
+            loadingState={data.loadingState}
+            onClose={() => {
+              semantic.previewCategory();
+              sidePanel.close();
+            }}
+          />
+        )}
 
         {sidePanel.isOpen('ai') && (
           <data.ai.panel.Component model={data.ai.panel} fetchParams={data.ai.fetchParams} onClose={sidePanel.close} />

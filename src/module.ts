@@ -1,6 +1,7 @@
 import { AppPlugin } from '@grafana/data';
 import { AppPluginSettings } from '@shared/types/AppPluginSettings';
 
+import { SemanticConfigPage } from './app/components/SemanticConfig/SemanticConfigPage';
 import { Root } from './app/Root';
 import { SuspendedEmbeddedProfilesExploration } from './exposedComponents';
 import { EmbeddedProfilesExplorationState } from './exposedComponents/types';
@@ -10,6 +11,7 @@ export const plugin = new AppPlugin<AppPluginSettings>()
   .addLink<PluginExtensionExploreContext>(EXPLORE_TOOLBAR_ACTION)
   .addLink<PluginExtensionExploreContext>(TRACEVIEW_DETAILS_ACTION)
   .setRootPage(Root)
+  .addConfigPage({ id: 'semantic', title: 'Function Classification', body: SemanticConfigPage })
   .exposeComponent({
     id: 'grafana-pyroscope-app/embedded-profiles-exploration/v1',
     title: 'Embedded Profiles Exploration',

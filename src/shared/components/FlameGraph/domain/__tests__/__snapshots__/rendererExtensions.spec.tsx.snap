@@ -1,0 +1,73 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`@grafana/flamegraph renderer extensions existing consumers (no extension props) renders the classic flame graph and tooltip exactly as before 1`] = `
+[
+  {
+    "color": "hsl(191, 62%, 63%)",
+    "label": "root",
+    "x": 0.5,
+    "y": 0,
+  },
+  {
+    "color": "hsl(24, 69%, 60%)",
+    "label": "foo",
+    "x": 0.5,
+    "y": 22,
+  },
+  {
+    "color": "hsl(246, 40%, 65%)",
+    "label": "bar",
+    "x": 0.5,
+    "y": 44,
+  },
+  {
+    "color": "hsl(24, 69%, 60%)",
+    "label": "foo",
+    "x": 720.5,
+    "y": 22,
+  },
+  {
+    "color": "hsl(191, 62%, 63%)",
+    "label": "baz",
+    "x": 720.5,
+    "y": 44,
+  },
+]
+`;
+
+exports[`@grafana/flamegraph renderer extensions existing consumers (no extension props) renders the classic flame graph and tooltip exactly as before 2`] = `"<p class="css-wbrn5n">foo</p><p class="css-1vfc52u">Count<br>Total: <b>40</b> (40%)<br>Self: <b>10</b> (10%)<br>Samples: <b>40</b></p>"`;
+
+exports[`@grafana/flamegraph renderer extensions existing consumers (no extension props) renders the new UI flame graph exactly as before 1`] = `
+[
+  {
+    "color": "hsl(191, 62%, 63%)",
+    "label": "root",
+    "x": 0.5,
+    "y": 0,
+  },
+  {
+    "color": "hsl(24, 69%, 60%)",
+    "label": "foo",
+    "x": 0.5,
+    "y": 22,
+  },
+  {
+    "color": "hsl(246, 40%, 65%)",
+    "label": "bar",
+    "x": 0.5,
+    "y": 44,
+  },
+  {
+    "color": "hsl(24, 69%, 60%)",
+    "label": "foo",
+    "x": 720.5,
+    "y": 22,
+  },
+  {
+    "color": "hsl(191, 62%, 63%)",
+    "label": "baz",
+    "x": 720.5,
+    "y": 44,
+  },
+]
+`;
