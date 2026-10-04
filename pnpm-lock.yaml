@@ -236,8 +236,8 @@ importers:
         specifier: 13.0.6
         version: 13.0.6
       i18next-cli:
-        specifier: 1.73.1
-        version: 1.73.1(@swc/helpers@0.5.23)(@types/node@22.19.15)(react-dom@18.3.1(react@18.3.1))(typescript@5.6.2)
+        specifier: 1.74.4
+        version: 1.74.4(@swc/helpers@0.5.23)(@types/node@22.19.15)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2)
       identity-obj-proxy:
         specifier: 3.0.0
         version: 3.0.0
@@ -3819,8 +3819,8 @@ packages:
   i18next-browser-languagedetector@8.2.1:
     resolution: {integrity: sha512-bZg8+4bdmaOiApD7N7BPT9W8MLZG+nPTOFlLiJiT8uzKXFjhxw4v2ierCXOwB5sFDMtuA5G4kgYZ0AznZxQ/cw==}
 
-  i18next-cli@1.73.1:
-    resolution: {integrity: sha512-dhCKZuDV7fAp5KYI5mbazXAB26MD45Trsi4043OpynOjpimZaZRwT7spOVrB9Y1UZEXxfxjhOGQv0orMedbLtw==}
+  i18next-cli@1.74.4:
+    resolution: {integrity: sha512-VsgKIo5bVfInXelzqHFRWIORODU/MBO4LrpOUNxAAMvKWUewejYzu09JC8jrC24ezaPh4hAX65pPknmnBWqeDw==}
     engines: {node: '>=22'}
     hasBin: true
 
@@ -5393,10 +5393,6 @@ packages:
 
   react@18.3.1:
     resolution: {integrity: sha512-wS+hAgJShR0KhEvPJArfuPVN1+Hz1t0Y6n5jLrGQbkb4urgPE/0Rve+1kMB1v/oWgHgm4WIcV+i7F2pTVj+2iQ==}
-    engines: {node: '>=0.10.0'}
-
-  react@19.3.0:
-    resolution: {integrity: sha512-E8LUcbtBWt20bbl2YoHfx4ZDBdxVTfOKtCZn9cDSJ4l6/nuoApcpIBcj47t2wZoVX8g2ZHuMHbiShgCR1T5Sog==}
     engines: {node: '>=0.10.0'}
 
   readdirp@3.6.0:
@@ -10694,7 +10690,7 @@ snapshots:
     dependencies:
       '@babel/runtime': 7.29.7
 
-  i18next-cli@1.73.1(@swc/helpers@0.5.23)(@types/node@22.19.15)(react-dom@18.3.1(react@18.3.1))(typescript@5.6.2):
+  i18next-cli@1.74.4(@swc/helpers@0.5.23)(@types/node@22.19.15)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2):
     dependencies:
       '@croct/json5-parser': 0.2.2
       '@swc/core': 1.16.2(@swc/helpers@0.5.23)
@@ -10710,12 +10706,12 @@ snapshots:
       magic-string: 1.4.2
       minimatch: 10.2.6
       ora: 9.4.1
-      react: 19.3.0
-      react-i18next: 17.0.15(i18next@26.4.2(typescript@5.6.2))(react-dom@18.3.1(react@18.3.1))(react@19.3.0)(typescript@5.6.2)
+      react-i18next: 17.0.15(i18next@26.4.2(typescript@5.6.2))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2)
       yaml: 2.9.1
     transitivePeerDependencies:
       - '@swc/helpers'
       - '@types/node'
+      - react
       - react-dom
       - react-native
       - typescript
@@ -12285,13 +12281,13 @@ snapshots:
       react-dom: 18.3.1(react@18.3.1)
       typescript: 5.6.2
 
-  react-i18next@17.0.15(i18next@26.4.2(typescript@5.6.2))(react-dom@18.3.1(react@18.3.1))(react@19.3.0)(typescript@5.6.2):
+  react-i18next@17.0.15(i18next@26.4.2(typescript@5.6.2))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2):
     dependencies:
       '@babel/runtime': 7.29.7
       html-parse-stringify: 4.0.1
       i18next: 26.4.2(typescript@5.6.2)
-      react: 19.3.0
-      use-sync-external-store: 1.7.0(react@19.3.0)
+      react: 18.3.1
+      use-sync-external-store: 1.7.0(react@18.3.1)
     optionalDependencies:
       react-dom: 18.3.1(react@18.3.1)
       typescript: 5.6.2
@@ -12483,8 +12479,6 @@ snapshots:
   react@18.3.1:
     dependencies:
       loose-envify: 1.4.0
-
-  react@19.3.0: {}
 
   readdirp@3.6.0:
     dependencies:
@@ -13303,10 +13297,6 @@ snapshots:
   use-sync-external-store@1.7.0(react@18.3.1):
     dependencies:
       react: 18.3.1
-
-  use-sync-external-store@1.7.0(react@19.3.0):
-    dependencies:
-      react: 19.3.0
 
   util-deprecate@1.0.2: {}
 
