@@ -1,5 +1,6 @@
 import { ApiClient } from '@shared/infrastructure/http/ApiClient';
 import { useMutation, useQuery } from '@tanstack/react-query';
+import { useAsync } from 'react-use';
 
 import { DEFAULT_SETTINGS, PluginSettings } from './PluginSettings';
 import { useSettingsApiClient } from './settingsApiClient';
@@ -20,10 +21,17 @@ type FetchResponse = {
  */
 export function useFetchPluginSettings({ enabled }: FetchParams = {}): FetchResponse {
   const settingsApiClient = useSettingsApiClient();
+  const {
+    value: dataSources,
+    loading: dataSourcesLoading,
+    error: dataSourcesError,
+  } = useAsync(() => ApiClient.getPyroscopeDataSources(), []);
+  // Recalculate on each render: URL/storage selection can change without the datasource list changing.
+  const defaultDS = dataSources && ApiClient.findDefaultDataSource(dataSources);
 
   const { isFetching, error, data } = useQuery({
-    enabled,
-    queryKey: ['settings', 'ds-uid-' + ApiClient.selectDefaultDataSource().uid],
+    enabled: enabled !== false && Boolean(defaultDS?.uid),
+    queryKey: ['settings', 'ds-uid-' + defaultDS?.uid],
     queryFn: () =>
       settingsApiClient.get().then(
         (json) =>
@@ -41,8 +49,8 @@ export function useFetchPluginSettings({ enabled }: FetchParams = {}): FetchResp
   });
 
   return {
-    isFetching,
-    error: settingsApiClient.isAbortError(error) ? null : error,
+    isFetching: isFetching || dataSourcesLoading,
+    error: dataSourcesError ?? (settingsApiClient.isAbortError(error) ? null : error),
     settings: data,
     mutate,
   };

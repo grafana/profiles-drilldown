@@ -2,12 +2,19 @@
   "extends": "./.config/tsconfig.json",
   "include": ["./src", "./.config/types"],
   "plugins": [{ "name": "typescript-plugin-css-modules" }],
+  "ts-node": {
+    "compilerOptions": {
+      "module": "commonjs",
+      "moduleResolution": "node"
+    }
+  },
   "compilerOptions": {
     "baseUrl": "",
     "rootDir": ".",
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "jsx": "react-jsx",
+    "moduleResolution": "bundler",
     "esModuleInterop": true,
     "paths": {
       "@shared/*": ["./src/shared/*"]

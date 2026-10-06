@@ -182,7 +182,8 @@
       "share-tooltip": "Copy shareable link to the clipboard",
       "upload-tooltip": "Upload ad hoc profiles",
       "view-recording-rules": "View recording rules"
-    }
+    },
+    "initialization-error": "Failed to initialize profiles exploration"
   },
   "export-data": {
     "aria-label": "Export profile data",
@@ -211,6 +212,11 @@
   },
   "exposed-components": {
     "loading": "Loading..."
+  },
+  "exposedComponents": {
+    "EmbeddedProfilesExploration": {
+      "loading": "Loading profiling data sources... "
+    }
   },
   "favorites": {
     "data-source": {
@@ -487,6 +493,11 @@
     "error": "Failed to build optimization context",
     "prompt": "Optimize this code based on the profiling annotations."
   },
+  "pages": {
+    "ProfilesExplorerView": {
+      "loading": "Loading profiling data sources... "
+    }
+  },
   "panel-box": {
     "cancel-query": "Cancel query",
     "loading-bar": "Panel loading bar",
@@ -645,6 +656,7 @@
     }
   },
   "settings": {
+    "error": "Failed to fetch default datasource",
     "loading": "Loading...",
     "save-button": "Save settings",
     "tabs": {

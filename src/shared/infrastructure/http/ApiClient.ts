@@ -1,36 +1,82 @@
 import { DataSourceInstanceSettings, DataSourceJsonData } from '@grafana/data';
+import {
+  getDataSourceInstanceList,
+  getDataSourceInstanceSettings,
+  getDefaultDataSourceInstanceListItem,
+} from '@grafana/plugin-compat/datasources';
 import { config } from '@grafana/runtime';
 
+import {
+  NO_DATASOURCE_CONFIGURED_UID,
+  PYROSCOPE_DATA_SOURCES_TYPE,
+  PYROSCOPE_URL_SEARCH_PARAM_NAME,
+} from '../../../constants';
 import { logger } from '../tracking/logger';
 import { userStorage } from '../userStorage';
 import { HttpClient } from './HttpClient';
 
-const PYROSCOPE_DATA_SOURCES_TYPE = 'grafana-pyroscope-datasource';
-const PYROSCOPE_URL_SEARCH_PARAM_NAME = 'var-dataSource'; // matches with the Scenes library
-
 type CustomDataSourceJsonData = { overridesDefault: boolean };
 type CustomDataSourceInstanceSettings = DataSourceInstanceSettings<DataSourceJsonData & CustomDataSourceJsonData>;
+type GetPyroscopeDataSourcesResult = { settings: CustomDataSourceInstanceSettings[]; defaultUid?: string };
 
+let cache: { value: GetPyroscopeDataSourcesResult; expiresAt: number } | undefined;
+let pending: Promise<GetPyroscopeDataSourcesResult> | undefined;
+
+const CACHE_MAXAGE = 1000 * 60 * 10;
 /**
  * An HTTP client ready to fetch data from the plugin's backend
  */
 export class ApiClient extends HttpClient {
-  static getPyroscopeDataSources() {
-    return Object.values(config.datasources).filter((ds) => ds.type === PYROSCOPE_DATA_SOURCES_TYPE);
+  static async getPyroscopeDataSources(): Promise<GetPyroscopeDataSourcesResult> {
+    if (cache && Date.now() < cache.expiresAt) {
+      return cache.value;
+    }
+
+    if (pending) {
+      return pending;
+    }
+
+    pending = this.getSettingsAndDefault().finally(() => {
+      pending = undefined;
+    });
+
+    return pending;
   }
 
-  static selectDefaultDataSource() {
-    const pyroscopeDataSources = ApiClient.getPyroscopeDataSources() as CustomDataSourceInstanceSettings[];
+  private static async getSettingsAndDefault(): Promise<GetPyroscopeDataSourcesResult> {
+    const instances = await getDataSourceInstanceList({ pluginId: PYROSCOPE_DATA_SOURCES_TYPE });
+    const defaultUid = (await getDefaultDataSourceInstanceListItem(instances))?.uid;
+    const allSettings = await Promise.all(
+      instances.map((i) =>
+        getDataSourceInstanceSettings(i.uid).catch((error) =>
+          logger.error(error as Error, { message: `Failed to get settings for the datasource ${i.uid}` })
+        )
+      )
+    );
+    const settings = allSettings.filter(Boolean) as CustomDataSourceInstanceSettings[];
+    const value = { settings, defaultUid };
 
+    cache = { value, expiresAt: Date.now() + CACHE_MAXAGE };
+    return value;
+  }
+
+  static async selectDefaultDataSource(): Promise<CustomDataSourceInstanceSettings> {
+    return ApiClient.findDefaultDataSource(await ApiClient.getPyroscopeDataSources());
+  }
+
+  static findDefaultDataSource({
+    settings,
+    defaultUid,
+  }: GetPyroscopeDataSourcesResult): CustomDataSourceInstanceSettings {
     const uidFromUrl = new URL(window.location.href).searchParams.get(PYROSCOPE_URL_SEARCH_PARAM_NAME);
     const uidFromLocalStorage = userStorage.get(userStorage.KEYS.PROFILES_EXPLORER)?.dataSource;
 
     const defaultDataSource =
-      pyroscopeDataSources.find((ds) => ds.uid === uidFromUrl) ||
-      pyroscopeDataSources.find((ds) => ds.uid === uidFromLocalStorage) ||
-      pyroscopeDataSources.find((ds) => ds.jsonData.overridesDefault) ||
-      pyroscopeDataSources.find((ds) => ds.isDefault) ||
-      pyroscopeDataSources[0];
+      settings.find((ds) => ds.uid === uidFromUrl) ||
+      settings.find((ds) => ds.uid === uidFromLocalStorage) ||
+      settings.find((ds) => ds.jsonData.overridesDefault) ||
+      settings.find((ds) => ds.uid === defaultUid) ||
+      settings[0];
 
     if (!defaultDataSource) {
       logger.warn(
@@ -39,14 +85,14 @@ export class ApiClient extends HttpClient {
 
       // because we instantiate most of our API clients before exporting them,
       // we have to return a dummy data source to prevent the whole app to fail
-      return { uid: 'no-data-source-configured' };
+      return { uid: NO_DATASOURCE_CONFIGURED_UID } as CustomDataSourceInstanceSettings;
     }
 
     return defaultDataSource;
   }
 
-  static getBaseUrl() {
-    const pyroscopeDataSource = ApiClient.selectDefaultDataSource();
+  override async getBaseUrl(): Promise<string> {
+    const pyroscopeDataSource = await ApiClient.selectDefaultDataSource();
 
     let appSubUrl = config.appSubUrl || '';
     if (appSubUrl.at(-1) !== '/') {
@@ -58,7 +104,7 @@ export class ApiClient extends HttpClient {
   }
 
   constructor() {
-    super(ApiClient.getBaseUrl().toString(), {
+    super('', {
       'content-type': 'application/json',
       'X-Grafana-Org-Id': String(config.bootData?.user?.orgId || ''),
     });
