@@ -139,7 +139,9 @@
       "1h-ago-vs-now": "1 час назад и текущий момент",
       "1h-ago-vs-now-description": "Окно 30 мин",
       "24h-ago-vs-now": "24 часа назад и текущий момент",
+      "24h-ago-vs-now-description": "",
       "6h-ago-vs-now": "6 часов назад и текущий момент",
+      "6h-ago-vs-now-description": "",
       "label": "Предустановки сравнения",
       "placeholder": "Выбрать предустановку"
     },

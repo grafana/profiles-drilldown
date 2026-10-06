@@ -139,7 +139,9 @@
       "1h-ago-vs-now": "1 小時前與現在",
       "1h-ago-vs-now-description": "30 分鐘窗口",
       "24h-ago-vs-now": "24 小時前與現在",
+      "24h-ago-vs-now-description": "",
       "6h-ago-vs-now": "6 小時前與現在",
+      "6h-ago-vs-now-description": "",
       "label": "比較預設值",
       "placeholder": "選擇預設值"
     },

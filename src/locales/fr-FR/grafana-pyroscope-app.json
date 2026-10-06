@@ -139,7 +139,9 @@
       "1h-ago-vs-now": "Il y a 1 h vs maintenant",
       "1h-ago-vs-now-description": "Fenêtre de 30 min",
       "24h-ago-vs-now": "Il y a 24 heures vs maintenant",
+      "24h-ago-vs-now-description": "",
       "6h-ago-vs-now": "Il y a 6 heures vs maintenant",
+      "6h-ago-vs-now-description": "",
       "label": "Préréglages de comparaison",
       "placeholder": "Choisissez un préréglage"
     },

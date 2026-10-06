@@ -139,7 +139,9 @@
       "1h-ago-vs-now": "1시간 전 대비 현재",
       "1h-ago-vs-now-description": "30분 구간",
       "24h-ago-vs-now": "24시간 전 대비 현재",
+      "24h-ago-vs-now-description": "",
       "6h-ago-vs-now": "6시간 전 대비 현재",
+      "6h-ago-vs-now-description": "",
       "label": "비교 사전 설정",
       "placeholder": "사전 설정 선택"
     },

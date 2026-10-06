@@ -139,7 +139,9 @@
       "1h-ago-vs-now": "1 saat öncesi ve şimdi",
       "1h-ago-vs-now-description": "30 dakikalık aralık",
       "24h-ago-vs-now": "24 saat öncesi ve şimdi",
+      "24h-ago-vs-now-description": "",
       "6h-ago-vs-now": "6 saat öncesi ve şimdi",
+      "6h-ago-vs-now-description": "",
       "label": "Karşılaştırma ön ayarları",
       "placeholder": "Bir ön ayar seçin"
     },

@@ -139,7 +139,9 @@
       "1h-ago-vs-now": "Před 1 hodinou vs. teď",
       "1h-ago-vs-now-description": "30minutové okno",
       "24h-ago-vs-now": "Před 24 hodinami vs. teď",
+      "24h-ago-vs-now-description": "",
       "6h-ago-vs-now": "Před 6 hodinami vs. teď",
+      "6h-ago-vs-now-description": "",
       "label": "Předvolby srovnání",
       "placeholder": "Vyberte předvolbu"
     },

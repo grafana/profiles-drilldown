@@ -139,7 +139,9 @@
       "1h-ago-vs-now": "1時間前と今",
       "1h-ago-vs-now-description": "30分ウィンドウ",
       "24h-ago-vs-now": "24時間前と今",
+      "24h-ago-vs-now-description": "",
       "6h-ago-vs-now": "6時間前と今",
+      "6h-ago-vs-now-description": "",
       "label": "比較プリセット",
       "placeholder": "プリセットを選択"
     },
