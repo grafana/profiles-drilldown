@@ -139,7 +139,9 @@
       "1h-ago-vs-now": "Hace 1 h frente a ahora",
       "1h-ago-vs-now-description": "Intervalo de 30 min",
       "24h-ago-vs-now": "Hace 24 h frente a ahora",
+      "24h-ago-vs-now-description": "",
       "6h-ago-vs-now": "Hace 6 h frente a ahora",
+      "6h-ago-vs-now-description": "",
       "label": "Preajustes de comparación",
       "placeholder": "Elegir un valor preestablecido"
     },

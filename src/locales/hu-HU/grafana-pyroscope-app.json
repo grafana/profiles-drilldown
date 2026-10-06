@@ -139,7 +139,9 @@
       "1h-ago-vs-now": "1 órával ezelőtt és most",
       "1h-ago-vs-now-description": "30 perces intervallum",
       "24h-ago-vs-now": "24 órája és most",
+      "24h-ago-vs-now-description": "",
       "6h-ago-vs-now": "6 órája és most",
+      "6h-ago-vs-now-description": "",
       "label": "Összehasonlítási sablonok",
       "placeholder": "Válasszon egy sablont"
     },

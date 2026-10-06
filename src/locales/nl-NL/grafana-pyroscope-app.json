@@ -139,7 +139,9 @@
       "1h-ago-vs-now": "1u geleden vs. nu",
       "1h-ago-vs-now-description": "Venster van 30min",
       "24h-ago-vs-now": "24u geleden vs. nu",
+      "24h-ago-vs-now-description": "",
       "6h-ago-vs-now": "6u geleden vs. nu",
+      "6h-ago-vs-now-description": "",
       "label": "Vergelijkingsvoorinstellingen",
       "placeholder": "Kies een voorinstelling"
     },

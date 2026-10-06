@@ -139,7 +139,9 @@
       "1h-ago-vs-now": "1 ora fa rispetto ad ora",
       "1h-ago-vs-now-description": "Finestra di 30 minuti",
       "24h-ago-vs-now": "24 ore fa rispetto ad ora",
+      "24h-ago-vs-now-description": "",
       "6h-ago-vs-now": "6 ore fa rispetto ad ora",
+      "6h-ago-vs-now-description": "",
       "label": "Preimpostazioni di confronto",
       "placeholder": "Scegli una preimpostazione"
     },

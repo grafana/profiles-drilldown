@@ -139,7 +139,9 @@
       "1h-ago-vs-now": "Há 1 h vs. agora",
       "1h-ago-vs-now-description": "Janela de 30 min.",
       "24h-ago-vs-now": "Há 24 horas vs. agora",
+      "24h-ago-vs-now-description": "",
       "6h-ago-vs-now": "Há 6 horas vs. agora",
+      "6h-ago-vs-now-description": "",
       "label": "Predefinições de comparação",
       "placeholder": "Escolher uma predefinição"
     },
