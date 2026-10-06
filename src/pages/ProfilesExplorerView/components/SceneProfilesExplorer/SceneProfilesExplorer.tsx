@@ -22,10 +22,7 @@ import { LoadSearchScene } from '@shared/components/SavedSearches/LoadSearchScen
 import { displayError } from '@shared/domain/displayStatus';
 import { prepareHistoryEntry } from '@shared/domain/prepareHistoryEntry';
 import { reportInteraction } from '@shared/domain/reportInteraction';
-import {
-  getKgAnnotationsInPyroscopeFromOpenFeature,
-  getProfilesHeatmapFromOpenFeature,
-} from '@shared/infrastructure/featureFlags/featureFlags';
+import { getKgAnnotationsInPyroscopeFromOpenFeature } from '@shared/infrastructure/featureFlags/featureFlags';
 import { ensureOpenFeaturePluginInitialized } from '@shared/infrastructure/featureFlags/openFeature';
 import { DomainHookReturnValue } from '@shared/types/DomainHookReturnValue';
 import { PluginHeaderToolbar } from '@shared/ui/PluginHeaderToolbar';
@@ -233,12 +230,6 @@ export class SceneProfilesExplorer extends SceneObjectBase<SceneProfilesExplorer
               controls: [...(this.state.controls ?? []), kg.controls],
             });
           }
-        }
-
-        // Scene constructors synchronously read feature flags. Rebuild an already-open
-        // flame graph after OpenFeature resolves so it can pick up an enabled heatmap.
-        if (getProfilesHeatmapFromOpenFeature() && this.state.explorationType === ExplorationType.FLAME_GRAPH) {
-          this.setState({ body: this.buildBodyScene(ExplorationType.FLAME_GRAPH) });
         }
       });
     }
