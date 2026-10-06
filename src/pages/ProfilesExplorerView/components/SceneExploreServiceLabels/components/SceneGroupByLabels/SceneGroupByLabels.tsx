@@ -234,6 +234,8 @@ export class SceneGroupByLabels extends SceneObjectBase<SceneGroupByLabelsState>
       key: 'service-label-values-grid',
       startColorIndex,
       label,
+      serviceName: getSceneVariableValue(this, 'serviceName'),
+      profileMetricId: getSceneVariableValue(this, 'profileMetricId'),
       headerActions: (item) => [
         new SelectAction({
           type: 'view-flame-graph',

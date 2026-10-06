@@ -6,7 +6,10 @@ import { useFetchInstances } from '../infrastructure/useFetchInstances';
 export function useOnboardingModal(): DomainHookReturnValue {
   const [settingsUrl, setSettingsUrl] = useState('https://grafana.com/auth/sign-in/');
 
-  const isCloud = /\.grafana(-dev|-ops)?\.net$/.test(window.location.host);
+  // DEMO HACK: force the cloud (3-step) copy regardless of host, so the flame graph placeholder's CTA always shows
+  // the full "How to Get Started" flow for the demo recording.
+  // Revert to: /\.grafana(-dev|-ops)?\.net$/.test(window.location.host) when the demo is done.
+  const isCloud = true;
   const { instances } = useFetchInstances(isCloud);
 
   if (instances && instances.orgSlug && instances.hpInstanceId) {

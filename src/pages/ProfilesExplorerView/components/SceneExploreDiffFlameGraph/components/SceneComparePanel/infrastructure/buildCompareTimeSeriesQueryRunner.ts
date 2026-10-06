@@ -1,5 +1,6 @@
 import { SceneQueryRunner } from '@grafana/scenes';
 
+import { withHybridDataSourceQuery } from '../../../../../infrastructure/fake-profiles-from-metrics/withHybridDataSourceQuery';
 import { PYROSCOPE_DATA_SOURCE } from '../../../../../infrastructure/pyroscope-data-sources';
 import { withPreventInvalidQuery } from '../../../../../infrastructure/withPreventInvalidQuery';
 
@@ -20,5 +21,8 @@ export function buildCompareTimeSeriesQueryRunner({
     ],
   });
 
-  return withPreventInvalidQuery(queryRunner);
+  return withHybridDataSourceQuery(withPreventInvalidQuery(queryRunner), {
+    filtersExpr: `\${${filterKey}.filterExpressionWithLeadingComma}`,
+    filterVariableNames: [filterKey],
+  });
 }

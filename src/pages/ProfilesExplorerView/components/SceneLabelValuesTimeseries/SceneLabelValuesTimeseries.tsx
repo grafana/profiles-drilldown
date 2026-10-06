@@ -30,14 +30,18 @@ import { ProfileMetricVariable } from '../../domain/variables/ProfileMetricVaria
 import { formatSingleSeriesDisplayName } from '../../helpers/formatSingleSeriesDisplayName';
 import { getColorByIndex } from '../../helpers/getColorByIndex';
 import { deferSceneQueryRunnerRun } from '../../infrastructure/deferSceneQueryRunnerRun';
+import { resolveHybridQueries } from '../../infrastructure/fake-profiles-from-metrics/withHybridDataSourceQuery';
 import { getSeriesLabelFieldName } from '../../infrastructure/helpers/getSeriesLabelFieldName';
 import { LabelsDataSource } from '../../infrastructure/labels/LabelsDataSource';
-import { buildTimeSeriesQueryRunner } from '../../infrastructure/timeseries/buildTimeSeriesQueryRunner';
+import {
+  buildTimeSeriesQuery,
+  buildTimeSeriesQueryRunner,
+} from '../../infrastructure/timeseries/buildTimeSeriesQueryRunner';
 import { addRefId, addStats } from '../SceneByVariableRepeaterGrid/infrastructure/data-transformations';
 import {
   addExemplarTransformations,
-  HIGHLIGHTED_SERIES_REF_ID,
   getHighlightedSeriesOverrides,
+  HIGHLIGHTED_SERIES_REF_ID,
 } from '../SceneByVariableRepeaterGrid/infrastructure/exemplars-transformations';
 import { GridItemData } from '../SceneByVariableRepeaterGrid/types/GridItemData';
 import { RangeAnnotation } from '../SceneExploreDiffFlameGraph/components/SceneComparePanel/domain/RangeAnnotation';
@@ -282,16 +286,16 @@ export class SceneLabelValuesTimeseries extends SceneObjectBase<SceneLabelValues
       return;
     }
 
-    const { queries } = buildTimeSeriesQueryRunner(
+    const { queries: realQueries, hybridParams } = buildTimeSeriesQuery(
       item.queryRunnerParams,
       displayAllValues ? undefined : LabelsDataSource.MAX_TIMESERIES_LABEL_VALUES,
       includeExemplars
-    ).state;
+    );
 
     const queryRunner = body.state.$data?.state.$data as SceneQueryRunner;
 
     if (queryRunner) {
-      queryRunner.setState({ queries });
+      queryRunner.setState({ queries: resolveHybridQueries(queryRunner, hybridParams, realQueries) });
       queryRunner.runQueries();
     }
   }
@@ -449,18 +453,27 @@ export class SceneLabelValuesTimeseries extends SceneObjectBase<SceneLabelValues
     const menu = body.state.menu as SceneTimeseriesMenu | undefined;
     menu?.setState({ selectActions, items: menu.buildMenuItems() });
 
+    // this allows us not to have to subscribe to the data provider changes as we do in onActivate() above
     if (!isEqual(item.queryRunnerParams, updatedItem.queryRunnerParams)) {
-      const { queries } = buildTimeSeriesQueryRunner(
-        updatedItem.queryRunnerParams,
-        LabelsDataSource.MAX_TIMESERIES_LABEL_VALUES
-      ).state;
-
-      const queryRunner = body.state.$data?.state.$data as SceneQueryRunner;
-
-      // this allows us not to have to subscribe to the data provider changes as we do in onActivate() above
-      queryRunner?.setState({ queries });
-      queryRunner?.runQueries();
+      this.rerunQueries(updatedItem.queryRunnerParams);
     }
+  }
+
+  private rerunQueries(queryRunnerParams: GridItemData['queryRunnerParams']) {
+    const { body } = this.state;
+    const queryRunner = body.state.$data?.state.$data as SceneQueryRunner | undefined;
+
+    if (!queryRunner) {
+      return;
+    }
+
+    const { queries: realQueries, hybridParams } = buildTimeSeriesQuery(
+      queryRunnerParams,
+      LabelsDataSource.MAX_TIMESERIES_LABEL_VALUES
+    );
+
+    queryRunner.setState({ queries: resolveHybridQueries(queryRunner, hybridParams, realQueries) });
+    queryRunner.runQueries();
   }
 
   changeScale(scaleDistribution: ScaleDistributionConfig, axisLabel: string) {

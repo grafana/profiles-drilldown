@@ -127,7 +127,7 @@ export class SceneTimeseriesMenu extends SceneObjectBase<SceneTimeseriesMenuStat
       menuItems.unshift(
         {
           iconClassName: showExemplars ? 'eye' : 'eye-slash',
-          text: t('timeseries.menu.exemplars', 'Exemplars'),
+          text: t('timeseries.menu.exemplars', 'Exemplars...'),
           onClick: () => this.onClickToggleExemplars(),
         },
         {

@@ -1,8 +1,8 @@
 import { css } from '@emotion/css';
-import { GrafanaTheme2 } from '@grafana/data';
+import { createTheme, GrafanaTheme2 } from '@grafana/data';
 import { t, Trans } from '@grafana/i18n';
 import { SceneComponentProps, sceneGraph, SceneObjectBase, SceneObjectState } from '@grafana/scenes';
-import { Spinner, useStyles2 } from '@grafana/ui';
+import { Spinner, useStyles2, useTheme2 } from '@grafana/ui';
 import { FlameGraph } from '@shared/components/FlameGraph/FlameGraph';
 import { displayError, displaySuccess } from '@shared/domain/displayStatus';
 import { reportInteraction } from '@shared/domain/reportInteraction';
@@ -24,6 +24,9 @@ import { useBuildPyroscopeQuery } from '../../../../domain/useBuildPyroscopeQuer
 import { useGrafanaAssistant } from '../../../../domain/useGrafanaAssistant';
 import { ProfilesDataSourceVariable } from '../../../../domain/variables/ProfilesDataSourceVariable';
 import { getSceneVariableValue } from '../../../../helpers/getSceneVariableValue';
+import { FakeFlameGraphPlaceholder } from '../../../../infrastructure/fake-profiles-from-metrics/FakeFlameGraphPlaceholder';
+import { resolveDataSourceKind } from '../../../../infrastructure/fake-profiles-from-metrics/resolveDataSourceKind';
+import { SAMPLE_DIFF_FLAME_GRAPH_DATA } from '../../../../infrastructure/fake-profiles-from-metrics/sampleFlameGraphData';
 import { AnalyzeDiffFlameGraph } from '../../../AnalyzeDiffFlameGraph';
 import { AIButton } from '../../../SceneAiPanel/components/AiButton/AIButton';
 import { SceneAiPanel } from '../../../SceneAiPanel/SceneAiPanel';
@@ -75,6 +78,8 @@ export class SceneDiffFlameGraph extends SceneObjectBase<SceneDiffFlameGraphStat
     const dataSourceUid = sceneGraph.findByKeyAndType(this, 'dataSource', ProfilesDataSourceVariable).useState()
       .value as string;
 
+    const hasFakeDataSource = resolveDataSourceKind(dataSourceUid) === 'prometheus';
+
     const isDiffQueryEnabled = Boolean(
       baselineQuery &&
         comparisonQuery &&
@@ -91,7 +96,7 @@ export class SceneDiffFlameGraph extends SceneObjectBase<SceneDiffFlameGraphStat
       error: fetchProfileError,
       profile,
     } = useFetchDiffProfile({
-      enabled: isDiffQueryEnabled,
+      enabled: isDiffQueryEnabled && !hasFakeDataSource,
       dataSourceUid,
       baselineTimeRange,
       baselineQuery,
@@ -140,6 +145,7 @@ export class SceneDiffFlameGraph extends SceneObjectBase<SceneDiffFlameGraphStat
       data: {
         title: this.buildTitle(),
         isLoading: isFetching,
+        hasFakeDataSource,
         fetchProfileError,
         noProfileDataAvailable,
         shouldDisplayFlamegraph,
@@ -175,9 +181,13 @@ export class SceneDiffFlameGraph extends SceneObjectBase<SceneDiffFlameGraphStat
     const { data } = model.useSceneDiffFlameGraph();
     const sidePanel = useToggleSidePanel();
 
+    const { isLight } = useTheme2();
+    const getTheme = () => createTheme({ colors: { mode: isLight ? 'light' : 'dark' } });
+
     const { hideAIButton } = useGrafanaAssistant();
 
-    const isAiButtonDisabled = data.isLoading || data.hasMissingSelections || data.noProfileDataAvailable;
+    const isAiButtonDisabled =
+      data.isLoading || data.hasMissingSelections || data.noProfileDataAvailable || data.hasFakeDataSource;
 
     useEffect(() => {
       if (isAiButtonDisabled) {
@@ -225,14 +235,33 @@ export class SceneDiffFlameGraph extends SceneObjectBase<SceneDiffFlameGraphStat
           isLoading={data.isLoading}
           headerActions={aiActionButton}
         >
-          {data.hasMissingSelections && (
+          {data.hasFakeDataSource && (
+            <FakeFlameGraphPlaceholder
+              getTheme={getTheme}
+              data={SAMPLE_DIFF_FLAME_GRAPH_DATA}
+              title={
+                <Trans i18nKey="diff-flame-graph.fake-data-source.title">
+                  This is what your diff flame graph could look like
+                </Trans>
+              }
+              description={
+                <Trans i18nKey="diff-flame-graph.fake-data-source.description">
+                  You&apos;re comparing metrics data, not real profiles — there&apos;s no code-level diff to show yet.
+                  Configure profiling for this service to compare real stack traces between the baseline and comparison
+                  periods.
+                </Trans>
+              }
+            />
+          )}
+
+          {!data.hasFakeDataSource && data.hasMissingSelections && (
             <MissingSelectionsBanner
               onClickAutoSelect={model.onClickAutoSelect}
               onOpenLearnHow={model.onOpenLearnHow}
             />
           )}
 
-          {data.fetchProfileError && (
+          {!data.hasFakeDataSource && data.fetchProfileError && (
             <InlineBanner
               severity="error"
               title={t('diff-flame-graph.error-loading-profile', 'Error while loading profile data!')}
@@ -240,7 +269,7 @@ export class SceneDiffFlameGraph extends SceneObjectBase<SceneDiffFlameGraphStat
             />
           )}
 
-          {data.noProfileDataAvailable && (
+          {!data.hasFakeDataSource && data.noProfileDataAvailable && (
             <InlineBanner
               severity="warning"
               title={t('diff-flame-graph.no-profile-data', 'No profile data available')}
@@ -251,7 +280,7 @@ export class SceneDiffFlameGraph extends SceneObjectBase<SceneDiffFlameGraphStat
             />
           )}
 
-          {data.shouldDisplayFlamegraph && (
+          {!data.hasFakeDataSource && data.shouldDisplayFlamegraph && (
             <FlameGraph
               diff={true}
               profile={data.profile}

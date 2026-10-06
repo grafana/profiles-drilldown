@@ -26,6 +26,8 @@ import { useBuildPyroscopeQuery } from '../../domain/useBuildPyroscopeQuery';
 import { useGrafanaAssistant } from '../../domain/useGrafanaAssistant';
 import { getSceneVariableValue } from '../../helpers/getSceneVariableValue';
 import { deferSceneQueryRunnerRun } from '../../infrastructure/deferSceneQueryRunnerRun';
+import { FakeFlameGraphPlaceholder } from '../../infrastructure/fake-profiles-from-metrics/FakeFlameGraphPlaceholder';
+import { resolveDataSourceKind } from '../../infrastructure/fake-profiles-from-metrics/resolveDataSourceKind';
 import { buildFlameGraphQueryRunner } from '../../infrastructure/flame-graph/buildFlameGraphQueryRunner';
 import { PYROSCOPE_DATA_SOURCE } from '../../infrastructure/pyroscope-data-sources';
 import { AIButton } from '../SceneAiPanel/components/AiButton/AIButton';
@@ -122,7 +124,14 @@ export class SceneFlameGraph extends SceneObjectBase<SceneFlameGraphState> {
     const { $timeRange, $data, lastTimeRange, exportMenu, aiPanel, functionDetailsPanel, createRecordingRuleModal } =
       this.useState();
 
+    const dataSourceKind = resolveDataSourceKind(getSceneVariableValue(this, 'dataSource'));
+    const hasFakeDataSource = dataSourceKind === 'prometheus';
+
     useEffect(() => {
+      if (dataSourceKind !== 'pyroscope') {
+        return;
+      }
+
       const runner = buildFlameGraphQueryRunner({
         maxNodes,
         spanSelector,
@@ -130,7 +139,7 @@ export class SceneFlameGraph extends SceneObjectBase<SceneFlameGraphState> {
       });
       this.setState({ $data: runner });
       return deferSceneQueryRunnerRun(runner);
-    }, [$timeRange, maxNodes, spanSelector, profileIdSelector]);
+    }, [$timeRange, maxNodes, spanSelector, profileIdSelector, dataSourceKind]);
 
     const $dataState = $data.useState();
     const loadingState = $dataState?.data?.state;
@@ -152,6 +161,7 @@ export class SceneFlameGraph extends SceneObjectBase<SceneFlameGraphState> {
         isLoading: isFetchingProfileData,
         isFetchingProfileData,
         hasProfileData,
+        hasFakeDataSource,
         profileData,
         spanSelector,
         fetchProfileError,
@@ -279,7 +289,24 @@ export class SceneFlameGraph extends SceneObjectBase<SceneFlameGraphState> {
             </>
           }
         >
-          {data.fetchProfileError && (
+          {data.hasFakeDataSource && (
+            <FakeFlameGraphPlaceholder
+              getTheme={actions.getTheme}
+              title={
+                <Trans i18nKey="flame-graph.fake-data-source.title">
+                  This is what your flame graph could look like
+                </Trans>
+              }
+              description={
+                <Trans i18nKey="flame-graph.fake-data-source.description">
+                  You&apos;re currently exploring metrics data, not real profiles — there are no stack traces to show.
+                  Configure profiling for this service to see its actual flame graph here.
+                </Trans>
+              }
+            />
+          )}
+
+          {!data.hasFakeDataSource && data.fetchProfileError && (
             <InlineBanner
               severity="error"
               title={t('flame-graph.error-loading-profile', 'Error while loading profile data!')}
@@ -287,7 +314,7 @@ export class SceneFlameGraph extends SceneObjectBase<SceneFlameGraphState> {
             />
           )}
 
-          {!data.fetchProfileError && (
+          {!data.hasFakeDataSource && !data.fetchProfileError && (
             <FlameGraph
               data={data.profileData as any}
               disableCollapsing={!data.settings?.collapsedFlamegraphs}

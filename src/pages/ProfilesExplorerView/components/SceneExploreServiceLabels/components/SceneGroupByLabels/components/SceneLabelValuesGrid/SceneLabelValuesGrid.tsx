@@ -49,6 +49,8 @@ interface SceneLabelValuesGridState extends EmbeddedSceneState {
   isLoading: boolean;
   items: GridItemData[];
   label: string;
+  serviceName?: string;
+  profileMetricId?: string;
   startColorIndex: number;
   headerActions: (item: GridItemData, items: GridItemData[]) => VizPanelState['headerActions'];
   sortItemsFn: (a: GridItemData, b: GridItemData) => number;
@@ -67,22 +69,28 @@ export class SceneLabelValuesGrid extends SceneObjectBase<SceneLabelValuesGridSt
   constructor({
     key,
     label,
+    serviceName,
+    profileMetricId,
     startColorIndex,
     headerActions,
   }: {
     key: string;
     label: SceneLabelValuesGridState['label'];
+    serviceName?: string;
+    profileMetricId?: string;
     startColorIndex: SceneLabelValuesGridState['startColorIndex'];
     headerActions: SceneLabelValuesGridState['headerActions'];
   }) {
     super({
       key,
       label,
+      serviceName,
+      profileMetricId,
       startColorIndex,
       items: [],
       isLoading: true,
       $data: new SceneDataTransformer({
-        $data: buildLabelValuesGridQueryRunner({ label }),
+        $data: buildLabelValuesGridQueryRunner({ label, serviceName, profileMetricId }),
         transformations: [addRefId, addStats],
       }),
       hideNoData: false,
@@ -127,12 +135,19 @@ export class SceneLabelValuesGrid extends SceneObjectBase<SceneLabelValuesGridSt
   }
 
   subscribeOnceToDataChange(forceRender = false) {
-    const dataSub = this.state.$data.subscribeToState((newState) => {
-      if (newState.data?.state === LoadingState.Loading) {
+    const watchedData = this.state.$data;
+
+    const dataSub = watchedData.subscribeToState((newState) => {
+      if (!newState.data || newState.data.state === LoadingState.Loading) {
         return;
       }
 
       dataSub.unsubscribe();
+
+      if (this.state.$data !== watchedData) {
+        // $data was replaced by a concurrent refetch; renderGridItems() reads this.state.$data, so bail and let that instance's own subscription render it instead.
+        return;
+      }
 
       this.renderGridItems(forceRender);
 
@@ -248,10 +263,12 @@ export class SceneLabelValuesGrid extends SceneObjectBase<SceneLabelValuesGridSt
   }
 
   refetchData(forceRender = false) {
+    const { label, serviceName, profileMetricId } = this.state;
+
     this.setState({
       isLoading: true,
       $data: new SceneDataTransformer({
-        $data: buildLabelValuesGridQueryRunner({ label: this.state.label }),
+        $data: buildLabelValuesGridQueryRunner({ label, serviceName, profileMetricId }),
         transformations: [addRefId, addStats],
       }),
     });

@@ -14,6 +14,8 @@ import { logger } from '@shared/infrastructure/tracking/logger';
 
 import { ProfileMetricVariable } from '../../domain/variables/ProfileMetricVariable';
 import { ServiceNameVariable } from '../../domain/variables/ServiceNameVariable/ServiceNameVariable';
+import { fetchFakeSeriesFromMetrics } from '../fake-profiles-from-metrics/fetchFakeSeriesFromMetrics';
+import { resolveDataSourceKind } from '../fake-profiles-from-metrics/resolveDataSourceKind';
 import { PYROSCOPE_SERIES_DATA_SOURCE } from '../pyroscope-data-sources';
 import { formatSeriesToProfileMetrics } from './formatSeriesToProfileMetrics';
 import { formatSeriesToServices } from './formatSeriesToServices';
@@ -28,6 +30,10 @@ export class SeriesDataSource extends RuntimeDataSource {
   }
 
   async fetchSeries(dataSourceUid: string, timeRange: TimeRange, variableName?: string, matchers?: string[]) {
+    if (resolveDataSourceKind(dataSourceUid) === 'prometheus') {
+      return fetchFakeSeriesFromMetrics(dataSourceUid, timeRange, matchers);
+    }
+
     seriesRepository.setApiClient(DataSourceProxyClientBuilder.build(dataSourceUid, SeriesApiClient));
 
     try {

@@ -302,7 +302,7 @@ const getStyles = (
     margin-bottom: 0;
 
     & #dataSource {
-      width: ${theme.spacing(32)};
+      min-width: ${theme.spacing(32)};
     }
 
     &.filters {

@@ -17,6 +17,9 @@ import React from 'react';
 import { EventTimeseriesDataReceived } from '../domain/events/EventTimeseriesDataReceived';
 import { ProfileMetricVariable } from '../domain/variables/ProfileMetricVariable';
 import { getColorByIndex } from '../helpers/getColorByIndex';
+import { getSceneVariableValue } from '../helpers/getSceneVariableValue';
+import { findFakeMetricMapping } from '../infrastructure/fake-profiles-from-metrics/metricsProfileTypeMap';
+import { resolveDataSourceKind } from '../infrastructure/fake-profiles-from-metrics/resolveDataSourceKind';
 import { buildTimeSeriesQueryRunner } from '../infrastructure/timeseries/buildTimeSeriesQueryRunner';
 import { GridItemData } from './SceneByVariableRepeaterGrid/types/GridItemData';
 
@@ -111,8 +114,11 @@ export class SceneLabelValuesTable extends SceneObjectBase<SceneLabelValuesTable
 
     const profileMetricId = sceneGraph.findByKeyAndType(this, 'profileMetricId', ProfileMetricVariable).state
       .value as ProfileMetricId;
-    const profileMetric = getProfileMetric(profileMetricId);
-    const unitValue = profileMetric.unit;
+    const dataSourceUid = getSceneVariableValue(this, 'dataSource');
+    const unitValue =
+      resolveDataSourceKind(dataSourceUid) === 'prometheus'
+        ? findFakeMetricMapping(profileMetricId)?.unit ?? getProfileMetric(profileMetricId).unit
+        : getProfileMetric(profileMetricId).unit;
 
     return {
       title: cardinality > 1 ? `${item.label} (${cardinality})` : item.label,
