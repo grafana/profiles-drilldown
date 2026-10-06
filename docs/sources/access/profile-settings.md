@@ -46,7 +46,7 @@ You can export flame graphs using the **Export** option on any of the flame grap
 
 To export a flame graph:
 
-1. View a flame graph in **Explore** > **Profiles**.
+1. View a flame graph in **Drilldown** > **Profiles**.
 1. Select the **Export** icon at the end of the toolbar.
    ![Available export options for the flame graph](/media/docs/grafana-cloud/profiles/profiles-export-flamegraph.png)
 1. Choose an export option.

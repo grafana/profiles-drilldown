@@ -19,7 +19,7 @@ Your investigation begins with the big picture and then drills down using profil
 <!-- Needs to be updated - {{< youtube id="_8SbNN5DRmQ" >}} -->
 
 {{< admonition type="note" >}}
-Expand your observability journey and learn about [Explore Traces](https://grafana.com/docs/grafana-cloud/visualizations/simplified-exploration/traces/).
+Expand your observability journey and learn about [Traces Drilldown](https://grafana.com/docs/grafana-cloud/visualizations/simplified-exploration/traces/).
 {{< /admonition >}}
 
 ## Before you begin
