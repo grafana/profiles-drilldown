@@ -32,6 +32,11 @@ overrides:
   js-cookie: '>=3.0.8'
   serialize-javascript: ~7.1.0
   uuid: '>=11.1.1'
+  postcss-selector-parser: ^7.1.6
+  js-yaml@3: ^4.3.2
+  'eslint-webpack-plugin>micromatch': npm:picomatch@^2.3.2
+  '@tanstack/eslint-plugin-query>@typescript-eslint/utils': ^8.67.0
+  chokidar@4: 4.0.1
   # Grafana externalizes React Router v6 until its upstream router migration lands:
   # https://github.com/grafana/grafana/issues/129933
   # Keep transitive v6 dependencies aligned with the host runtime.
