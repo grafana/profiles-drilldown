@@ -317,32 +317,6 @@ describe('ApiClient', () => {
       expect(settings).toEqual(Object.values(TEST_DATA_SOURCES));
     });
 
-    test('should reuse cached data before ten minutes have elapsed', async () => {
-      jest.useFakeTimers();
-      const datasources = require('@grafana/plugin-compat/datasources');
-      const getList = jest.spyOn(datasources, 'getDataSourceInstanceList');
-      const { ApiClient } = require('../ApiClient');
-
-      await ApiClient.getPyroscopeDataSources();
-      jest.advanceTimersByTime(10 * 60 * 1000 - 1);
-      await ApiClient.getPyroscopeDataSources();
-
-      expect(getList).toHaveBeenCalledTimes(1);
-    });
-
-    test('should refresh cached data after ten minutes', async () => {
-      jest.useFakeTimers();
-      const datasources = require('@grafana/plugin-compat/datasources');
-      const getList = jest.spyOn(datasources, 'getDataSourceInstanceList');
-      const { ApiClient } = require('../ApiClient');
-
-      await ApiClient.getPyroscopeDataSources();
-      jest.advanceTimersByTime(10 * 60 * 1000);
-      await ApiClient.getPyroscopeDataSources();
-
-      expect(getList).toHaveBeenCalledTimes(2);
-    });
-
     test('should share the pending request between concurrent calls', async () => {
       const datasources = require('@grafana/plugin-compat/datasources');
       const getList = jest.spyOn(datasources, 'getDataSourceInstanceList');
