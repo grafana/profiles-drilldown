@@ -19,19 +19,13 @@ type CustomDataSourceJsonData = { overridesDefault: boolean };
 type CustomDataSourceInstanceSettings = DataSourceInstanceSettings<DataSourceJsonData & CustomDataSourceJsonData>;
 type GetPyroscopeDataSourcesResult = { settings: CustomDataSourceInstanceSettings[]; defaultUid?: string };
 
-let cache: { value: GetPyroscopeDataSourcesResult; expiresAt: number } | undefined;
 let pending: Promise<GetPyroscopeDataSourcesResult> | undefined;
 
-const CACHE_MAXAGE = 1000 * 60 * 10;
 /**
  * An HTTP client ready to fetch data from the plugin's backend
  */
 export class ApiClient extends HttpClient {
   static async getPyroscopeDataSources(): Promise<GetPyroscopeDataSourcesResult> {
-    if (cache && Date.now() < cache.expiresAt) {
-      return cache.value;
-    }
-
     if (pending) {
       return pending;
     }
@@ -56,7 +50,6 @@ export class ApiClient extends HttpClient {
     const settings = allSettings.filter(Boolean) as CustomDataSourceInstanceSettings[];
     const value = { settings, defaultUid };
 
-    cache = { value, expiresAt: Date.now() + CACHE_MAXAGE };
     return value;
   }
 
