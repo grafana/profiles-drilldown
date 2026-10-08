@@ -1,11 +1,15 @@
 services:
   grafana:
+    container_name: 'grafana-pyroscope-app'
     build:
+      context: ./.config
       args:
+        grafana_image: ${GRAFANA_IMAGE:-grafana-enterprise}
         grafana_version: ${GRAFANA_VERSION:-13.1.0@sha256:68a7ee3dc2c726e54b2be3533a9e1ac6baaed0893334947a6378520de28a6a76}
     ports:
       - ${GRAFANA_PORT:-3000}:3000/tcp
     volumes:
+      - ./dist:/var/lib/grafana/plugins/grafana-pyroscope-app
       - ./samples/provisioning:/etc/grafana/provisioning
       - ./samples/dashboards:/var/lib/grafana/dashboards
     environment:
@@ -17,9 +21,6 @@ services:
       OPENAI_API_KEY: $OPENAI_API_KEY
       OPENAI_ORGANIZATION_ID: $OPENAI_ORGANIZATION_ID
       GF_FEATURE_TOGGLES_ENABLE: ${GF_FEATURE_TOGGLES_ENABLE:-metricsFromProfiles,localizationForPlugins}
-    extends:
-      file: .config/docker-compose-base.yaml
-      service: grafana
 
   qdrant:
     image: qdrant/qdrant:v1.17.0@sha256:f1c7272cdac52b38c1a0e89313922d940ba50afd90d593a1605dbbc214e66ffb

@@ -5,9 +5,9 @@
   "license": "AGPL-3.0-only",
   "author": "Grafana",
   "scripts": {
-    "build": "webpack -c ./.config/webpack/webpack.config.ts --env production",
+    "build": "webpack -c webpack.config.ts --env production",
     "predev": "rm -rf node_modules/.cache",
-    "dev": "webpack -w -c ./.config/webpack/webpack.config.ts --env development",
+    "dev": "webpack -w -c webpack.config.ts --env development",
     "docs:dev": "make -C docs docs",
     "e2e:ci": " docker run --network host -v $(pwd)/e2e:/app/e2e -v $(pwd)/src:/app/src pyroscope-app-plugin-e2e:latest",
     "e2e:ci:fast": "docker run --network host -v $(pwd)/e2e:/app/e2e -v $(pwd)/src:/app/src pyroscope-app-plugin-e2e:latest --max-failures=1 --workers=3",
@@ -27,7 +27,7 @@
     "knip": "knip",
     "lint": "eslint --cache --ignore-path ./.gitignore --ext .js,.jsx,.ts,.tsx .",
     "lint:fix": "pnpm run lint --fix && prettier --write --list-different .",
-    "server": "docker compose up --build",
+    "server": "docker compose down --remove-orphans && docker compose up --build --abort-on-container-exit",
     "server:local": "docker compose down --remove-orphans && docker compose -f docker-compose.local.yaml up --build --abort-on-container-exit",
     "server:react19": "GRAFANA_VERSION=dev-preview-react19 GRAFANA_IMAGE=grafana-enterprise GF_FEATURE_TOGGLES_ENABLE=metricsFromProfiles,react19 docker compose -f ./docker-compose.yaml up --build",
     "server:remote": "docker compose down --remove-orphans && docker compose -f docker-compose.remote.yaml up --build --abort-on-container-exit",
@@ -35,8 +35,8 @@
     "sign": "sign-plugin",
     "start": "pnpm install --frozen-lockfile --ignore-scripts && pnpm dev",
     "tdd": "jest --watch --onlyChanged",
-    "test": "jest --watch --onlyChanged",
-    "test:ci": "jest --passWithNoTests --maxWorkers 4",
+    "test": "jest --onlyChanged",
+    "test:ci": "jest --passWithNoTests --maxWorkers 4 --coverage",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
