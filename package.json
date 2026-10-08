@@ -25,7 +25,7 @@
     "i18n-extract": "i18next-cli extract",
     "i18n-extract-check": "i18next-cli extract --ci",
     "knip": "knip",
-    "lint": "eslint --cache --ignore-path ./.gitignore --ext .js,.jsx,.ts,.tsx .",
+    "lint": "eslint --cache .",
     "lint:fix": "pnpm run lint --fix && prettier --write --list-different .",
     "server": "docker compose down --remove-orphans && docker compose up --build --abort-on-container-exit",
     "server:local": "docker compose down --remove-orphans && docker compose -f docker-compose.local.yaml up --build --abort-on-container-exit",
