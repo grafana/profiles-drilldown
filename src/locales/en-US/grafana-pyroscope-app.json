@@ -139,7 +139,9 @@
       "1h-ago-vs-now": "1h ago vs now",
       "1h-ago-vs-now-description": "30m window",
       "24h-ago-vs-now": "24h ago vs now",
+      "24h-ago-vs-now-description": "1h window",
       "6h-ago-vs-now": "6h ago vs now",
+      "6h-ago-vs-now-description": "1h window",
       "label": "Comparison presets",
       "placeholder": "Choose a preset"
     },

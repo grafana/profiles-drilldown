@@ -139,7 +139,9 @@
       "1h-ago-vs-now": "1 timme sedan jämfört med nu",
       "1h-ago-vs-now-description": "30-minutersfönster",
       "24h-ago-vs-now": "24 timmar sedan jämfört med nu",
+      "24h-ago-vs-now-description": "",
       "6h-ago-vs-now": "6 timmar sedan jämfört med nu",
+      "6h-ago-vs-now-description": "",
       "label": "Förinställningar för jämförelse",
       "placeholder": "Välj en förinställning"
     },

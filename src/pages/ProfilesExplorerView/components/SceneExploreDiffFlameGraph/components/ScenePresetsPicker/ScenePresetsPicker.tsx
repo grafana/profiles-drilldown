@@ -42,12 +42,12 @@ export class ScenePresetsPicker extends SceneObjectBase<ScenePresetsPickerState>
       {
         label: t('diff-flame-graph.presets.6h-ago-vs-now', '6h ago vs now'),
         value: '6h ago vs now',
-        description: t('diff-flame-graph.presets.6h-ago-vs-now', PRESET_DESCRIPTION_1H_WINDOW_DEFAULT),
+        description: t('diff-flame-graph.presets.6h-ago-vs-now-description', PRESET_DESCRIPTION_1H_WINDOW_DEFAULT),
       },
       {
         label: t('diff-flame-graph.presets.24h-ago-vs-now', '24h ago vs now'),
         value: '24h ago vs now',
-        description: t('diff-flame-graph.presets.24h-ago-vs-now', PRESET_DESCRIPTION_1H_WINDOW_DEFAULT),
+        description: t('diff-flame-graph.presets.24h-ago-vs-now-description', PRESET_DESCRIPTION_1H_WINDOW_DEFAULT),
       },
     ];
   }

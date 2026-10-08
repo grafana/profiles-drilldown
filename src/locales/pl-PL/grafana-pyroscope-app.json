@@ -139,7 +139,9 @@
       "1h-ago-vs-now": "1 godz. temu i teraz",
       "1h-ago-vs-now-description": "Przedział 30 min",
       "24h-ago-vs-now": "24 godz. temu i teraz",
+      "24h-ago-vs-now-description": "",
       "6h-ago-vs-now": "6 godz. temu i teraz",
+      "6h-ago-vs-now-description": "",
       "label": "Ustawienia wstępne porównania",
       "placeholder": "Wybierz ustawienia wstępne"
     },

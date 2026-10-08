@@ -139,7 +139,9 @@
       "1h-ago-vs-now": "1 jam lalu vs sekarang",
       "1h-ago-vs-now-description": "Rentang waktu 30 menit",
       "24h-ago-vs-now": "24 jam lalu vs sekarang",
+      "24h-ago-vs-now-description": "",
       "6h-ago-vs-now": "6 jam lalu vs sekarang",
+      "6h-ago-vs-now-description": "",
       "label": "Preset perbandingan",
       "placeholder": "Pilih preset"
     },

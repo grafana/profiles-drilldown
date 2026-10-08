@@ -139,7 +139,9 @@
       "1h-ago-vs-now": "1 hora atrás em comparação com agora",
       "1h-ago-vs-now-description": "Período de 30 min",
       "24h-ago-vs-now": "24 horas atrás em comparação com agora",
+      "24h-ago-vs-now-description": "",
       "6h-ago-vs-now": "6 horas atrás em comparação com agora",
+      "6h-ago-vs-now-description": "",
       "label": "Predefinições de comparação",
       "placeholder": "Escolha uma predefinição"
     },

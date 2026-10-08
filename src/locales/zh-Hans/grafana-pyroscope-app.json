@@ -139,7 +139,9 @@
       "1h-ago-vs-now": "1 小时前与现在",
       "1h-ago-vs-now-description": "30 分钟窗口",
       "24h-ago-vs-now": "24 小时前与现在",
+      "24h-ago-vs-now-description": "",
       "6h-ago-vs-now": "6 小时前与现在",
+      "6h-ago-vs-now-description": "",
       "label": "比较预设",
       "placeholder": "选择一个预设"
     },
