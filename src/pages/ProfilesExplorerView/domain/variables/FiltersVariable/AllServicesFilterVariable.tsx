@@ -1,18 +1,16 @@
 import { AdHocVariableFilter } from '@grafana/data';
 import { t } from '@grafana/i18n';
 import { AdHocFiltersVariable, SceneComponentProps, sceneGraph } from '@grafana/scenes';
-import { CompleteFilters } from '@shared/components/QueryBuilder/domain/types';
-import { QueryBuilder } from '@shared/components/QueryBuilder/QueryBuilder';
 import { buildFilterExpressionParts } from '@shared/components/SavedSearches/utils';
 import React, { useMemo } from 'react';
 
+import { AllServicesCombobox } from '../../../components/SceneExploreAllServices/AllServicesCombobox';
 import { ProfileMetricVariable } from '../ProfileMetricVariable';
 import { ProfilesDataSourceVariable } from '../ProfilesDataSourceVariable';
 import {
   FILTER_EXPRESSION_WITH_LEADING_COMMA,
   filterExpressionWithLeadingComma,
 } from './filterExpressionWithLeadingComma';
-import { convertPyroscopeToVariableFilter } from './filters-ops';
 
 export class AllServicesFilterVariable extends AdHocFiltersVariable {
   constructor({ key, initialFilters }: { key: string; initialFilters?: AdHocVariableFilter[] }) {
@@ -48,14 +46,8 @@ export class AllServicesFilterVariable extends AdHocFiltersVariable {
     this.setState({ filters: [] });
   }
 
-  private onQueryChange = (_query: string, filters: CompleteFilters) => {
-    this.setState({
-      filters: filters.map(convertPyroscopeToVariableFilter),
-    });
-  };
-
-  static Component = ({ model }: SceneComponentProps<AdHocFiltersVariable & { onQueryChange?: any }>) => {
-    const { key, filterExpression } = model.useState();
+  static Component = ({ model }: SceneComponentProps<AdHocFiltersVariable>) => {
+    const { filterExpression } = model.useState();
     const {
       value: { from, to },
     } = sceneGraph.getTimeRange(model).useState();
@@ -72,14 +64,13 @@ export class AllServicesFilterVariable extends AdHocFiltersVariable {
     }, [filterExpression, profileMetricId]);
 
     return (
-      <QueryBuilder
-        id={`query-builder-${key}`}
-        autoExecute
+      <AllServicesCombobox
+        key={String(dataSourceUid)}
+        model={model}
         dataSourceUid={dataSourceUid as string}
         query={query}
         from={from.unix() * 1000}
         to={to.unix() * 1000}
-        onChangeQuery={model.onQueryChange}
       />
     );
   };
