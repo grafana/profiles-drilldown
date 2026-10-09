@@ -4,23 +4,26 @@
  * In order to extend the configuration follow the steps in
  * https://grafana.com/developers/plugin-tools/how-to-guides/extend-configurations#extend-the-webpack-config
  */
-import { externals } from '../bundler/externals.ts';
-import { BuildModeWebpackPlugin } from './BuildModeWebpackPlugin.ts';
-import { DIST_DIR, SOURCE_DIR } from './constants.ts';
-import { getCPConfigVersion, getEntries, getPackageJson, getPluginJson, hasReadme, isWSL } from './utils.ts';
+
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import ESLintPlugin from 'eslint-webpack-plugin';
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import path from 'path';
 import ReplaceInFileWebpackPlugin from 'replace-in-file-webpack-plugin';
 import TerserPlugin from 'terser-webpack-plugin';
+import { SubresourceIntegrityPlugin } from 'webpack-subresource-integrity';
 import webpack, { type Configuration } from 'webpack';
 import LiveReloadPlugin from 'webpack-livereload-plugin';
-import { SubresourceIntegrityPlugin } from 'webpack-subresource-integrity';
 import VirtualModulesPlugin from 'webpack-virtual-modules';
+
+import { BuildModeWebpackPlugin } from './BuildModeWebpackPlugin.ts';
+import { DIST_DIR, SOURCE_DIR } from './constants.ts';
+import { getCPConfigVersion, getEntries, getPackageJson, getPluginJson, hasReadme, isWSL } from './utils.ts';
+import { externals } from '../bundler/externals.ts';
 
 const pluginJson = getPluginJson();
 const cpVersion = getCPConfigVersion();
+const pluginVersion = getPackageJson().version;
 
 const virtualPublicPath = new VirtualModulesPlugin({
   'node_modules/grafana-public-path.js': `
@@ -125,13 +128,18 @@ const config = async (env: Env): Promise<Configuration> => {
       minimize: Boolean(env.production),
       minimizer: [
         new TerserPlugin({
+          extractComments: {
+            banner: false,
+            filename: 'LICENSE.txt',
+          },
+
           terserOptions: {
             format: {
               comments: (_, { type, value }) => type === 'comment2' && value.trim().startsWith('[create-plugin]'),
             },
             compress: {
-              drop_console: ['log', 'info']
-            }
+              drop_console: ['log', 'info'],
+            },
           },
         }),
       ],
@@ -157,7 +165,8 @@ const config = async (env: Env): Promise<Configuration> => {
       virtualPublicPath,
       // Insert create plugin version information into the bundle
       new webpack.BannerPlugin({
-        banner: '/* [create-plugin] version: ' + cpVersion + ' */',
+        banner: `/* [create-plugin] version: ${cpVersion} */
+          /* [create-plugin] plugin: ${pluginJson.id}@${pluginVersion} */`,
         raw: true,
         entryOnly: true,
       }),
@@ -183,11 +192,12 @@ const config = async (env: Env): Promise<Configuration> => {
       new ReplaceInFileWebpackPlugin([
         {
           dir: DIST_DIR,
-          files: ['plugin.json', 'README.md'],
+          test: [/(^|\/)plugin\.json$/, /(^|\/)README\.md$/],
+
           rules: [
             {
               search: /\%VERSION\%/g,
-              replace: getPackageJson().version,
+              replace: pluginVersion,
             },
             {
               search: /\%TODAY\%/g,
@@ -201,23 +211,25 @@ const config = async (env: Env): Promise<Configuration> => {
         },
       ]),
       new SubresourceIntegrityPlugin({
-        hashFuncNames: ["sha256"],
+        hashFuncNames: ['sha256'],
       }),
-      ...(env.development ? [
-        new LiveReloadPlugin(),
-        new ForkTsCheckerWebpackPlugin({
-          async: Boolean(env.development),
-          issue: {
-            include: [{ file: '**/*.{ts,tsx}' }],
-          },
-          typescript: { configFile: path.join(process.cwd(), 'tsconfig.json') },
-        }),
-        new ESLintPlugin({
-          extensions: ['.ts', '.tsx'],
-          lintDirtyModulesOnly: Boolean(env.development), // don't lint on start, only lint changed files
-          failOnError: Boolean(env.production),
-        }),
-      ] : []),
+      ...(env.development
+        ? [
+            new LiveReloadPlugin(),
+            new ForkTsCheckerWebpackPlugin({
+              async: Boolean(env.development),
+              issue: {
+                include: [{ file: '**/*.{ts,tsx}' }],
+              },
+              typescript: { configFile: path.join(process.cwd(), 'tsconfig.json') },
+            }),
+            new ESLintPlugin({
+              extensions: ['.ts', '.tsx'],
+              lintDirtyModulesOnly: Boolean(env.development), // don't lint on start, only lint changed files
+              failOnError: Boolean(env.production),
+            }),
+          ]
+        : []),
     ],
 
     resolve: {
