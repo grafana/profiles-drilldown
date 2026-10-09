@@ -54,7 +54,9 @@ class LabelsRepository extends AbstractRepository<LabelsApiClient, MemoryCacheCl
   async listLabels({ query, from, to }: ListLabelsOptions): Promise<Suggestions> {
     LabelsRepository.assertParams(query, from, to);
 
-    const cacheParams = [this.apiClient!.baseUrl, query, from, to];
+    const apiClient = this.apiClient!;
+    const baseUrl = await apiClient.getBaseUrl();
+    const cacheParams = [baseUrl, query, from, to];
 
     const labelsFromCacheP = this.cacheClient.get(cacheParams);
     if (labelsFromCacheP) {
@@ -68,7 +70,7 @@ class LabelsRepository extends AbstractRepository<LabelsApiClient, MemoryCacheCl
       return labels;
     }
 
-    const fetchP = this.apiClient!.fetchLabels(query, from, to);
+    const fetchP = apiClient.fetchLabels(query, from, to);
     this.cacheClient.set(cacheParams, fetchP);
 
     try {
@@ -84,7 +86,9 @@ class LabelsRepository extends AbstractRepository<LabelsApiClient, MemoryCacheCl
     LabelsRepository.assertParams(query, from, to);
     invariant(Boolean(label), 'Missing label value!');
 
-    const cacheParams = [this.apiClient!.baseUrl, label, query, from, to];
+    const apiClient = this.apiClient!;
+    const baseUrl = await apiClient.getBaseUrl();
+    const cacheParams = [baseUrl, label, query, from, to];
 
     const labelValuesFromCacheP = this.cacheClient.get(cacheParams);
     if (labelValuesFromCacheP) {
@@ -98,7 +102,7 @@ class LabelsRepository extends AbstractRepository<LabelsApiClient, MemoryCacheCl
       return labelValues;
     }
 
-    const fetchP = this.apiClient!.fetchLabelValues(label, query, from, to);
+    const fetchP = apiClient.fetchLabelValues(label, query, from, to);
     this.cacheClient.set(cacheParams, fetchP);
 
     try {

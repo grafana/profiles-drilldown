@@ -15,7 +15,9 @@ class SeriesRepository extends AbstractRepository<SeriesApiClient, MemoryCacheCl
     const { matchers } = options;
 
     const matchersCacheKey = JSON.stringify(matchers ?? []);
-    const cacheParams = [this.apiClient!.baseUrl, from, to, matchersCacheKey];
+    const apiClient = this.apiClient!;
+    const baseUrl = await apiClient.getBaseUrl();
+    const cacheParams = [baseUrl, from, to, matchersCacheKey];
 
     const responseFromCacheP = this.cacheClient!.get(cacheParams);
     if (responseFromCacheP) {
@@ -28,7 +30,7 @@ class SeriesRepository extends AbstractRepository<SeriesApiClient, MemoryCacheCl
       return { services, profileMetrics };
     }
 
-    const fetchP = this.apiClient!.list({ from, to, matchers });
+    const fetchP = apiClient.list({ from, to, matchers });
     this.cacheClient!.set(cacheParams, fetchP);
 
     try {

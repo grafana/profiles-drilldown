@@ -72,7 +72,7 @@ export class SeriesDataSource extends RuntimeDataSource {
 
     // Fallback to default datasource if interpolation not ready yet
     if (!dataSourceUid) {
-      dataSourceUid = ApiClient.selectDefaultDataSource().uid as string;
+      dataSourceUid = (await ApiClient.selectDefaultDataSource()).uid as string;
     }
 
     const pyroscopeSeries = await this.fetchSeries(dataSourceUid, options.range as TimeRange, options.variable?.name, [

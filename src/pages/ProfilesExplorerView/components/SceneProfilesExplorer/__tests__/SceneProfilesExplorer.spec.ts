@@ -39,6 +39,12 @@ jest.mock('@shared/infrastructure/featureFlags/featureFlags', () => ({
   getProfilesHeatmapFromOpenFeature: () => true,
 }));
 
+jest.mock('@grafana/plugin-compat/datasources', () => ({
+  getDataSourceInstanceList: jest.fn().mockResolvedValue([]),
+  getDataSourceInstanceSettings: jest.fn().mockResolvedValue({}),
+  getDefaultDataSourceInstanceListItem: jest.fn().mockResolvedValue({}),
+}));
+
 describe('SceneProfilesExplorer', () => {
   it('syncs span heatmap URL state without rebuilding the flame graph scene', () => {
     const explorer = new SceneProfilesExplorer({});

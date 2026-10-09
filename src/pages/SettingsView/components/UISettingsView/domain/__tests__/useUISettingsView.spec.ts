@@ -3,7 +3,7 @@ import { DEFAULT_SETTINGS } from '@shared/infrastructure/settings/PluginSettings
 import { act, renderHook } from '@testing-library/react';
 
 import { useUISettingsView } from '../../domain/useUISettingsView';
-import plugin from './fixtures/plugin.json';
+import plugin from './fixtures/plugin-meta.json';
 
 // appEvents dependency
 const appEvents = {

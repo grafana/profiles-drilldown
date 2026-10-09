@@ -1,6 +1,5 @@
 import { t } from '@grafana/i18n';
 import { DataSourceVariable } from '@grafana/scenes';
-import { ApiClient } from '@shared/infrastructure/http/ApiClient';
 import { userStorage } from '@shared/infrastructure/userStorage';
 
 const DATA_SOURCE_LABEL_DEFAULT = 'Data source';
@@ -14,8 +13,7 @@ export class ProfilesDataSourceVariable extends DataSourceVariable {
       // English fallback until `onActivate` — embedded exploration constructs variables before i18n is ready.
       label: DATA_SOURCE_LABEL_DEFAULT,
       skipUrlSync: true,
-      // we ensure that we'll always have the expected default data source (when the "var-dataSource" URL search param is missing, incorrect, etc.)
-      value: initialDS ?? ApiClient.selectDefaultDataSource().uid,
+      value: initialDS ?? '',
     });
 
     this.addActivationHandler(this.onActivate.bind(this));

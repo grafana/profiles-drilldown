@@ -3,9 +3,9 @@ import { noOp } from '@shared/domain/noOp';
 import { HttpClientError } from './HttpClientError';
 
 export class HttpClient {
-  baseUrl = '';
   defaultHeaders = {};
   abortController?: AbortController | null = null;
+  private baseUrl = '';
 
   constructor(baseUrl: string, defaultHeaders: Record<string, string> = {}) {
     this.baseUrl = baseUrl;
@@ -16,7 +16,6 @@ export class HttpClient {
     this.abortController = new AbortController();
     const { signal } = this.abortController;
 
-    const fullUrl = `${this.baseUrl}${pathname}`;
     const headers = { ...this.defaultHeaders, ...options?.headers };
     const fullOptions = {
       signal, // we allow signal to be passed as an option
@@ -27,6 +26,7 @@ export class HttpClient {
     let response;
 
     try {
+      const fullUrl = `${await this.getBaseUrl()}${pathname}`;
       response = await fetch(fullUrl, fullOptions);
 
       if (!response.ok) {
@@ -53,5 +53,9 @@ export class HttpClient {
 
   isAbortError(error: unknown) {
     return error instanceof DOMException && error.name === 'AbortError';
+  }
+
+  async getBaseUrl(): Promise<string> {
+    return this.baseUrl;
   }
 }

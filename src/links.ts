@@ -3,6 +3,8 @@ import { DataQuery } from '@grafana/schema';
 import { GrafanaPyroscopeDataQuery } from '@grafana/schema/dist/esm/raw/composable/grafanapyroscope/dataquery/x/GrafanaPyroscopeDataQuery_types.gen';
 import { parseRawFilters } from '@shared/components/QueryBuilder/domain/helpers/queryToFilters';
 
+import { PYROSCOPE_URL_SEARCH_PARAM_NAME } from './constants';
+
 export type PluginExtensionExploreContext = {
   targets: DataQuery[];
   timeRange: RawTimeRange;
@@ -33,7 +35,7 @@ function extractAdditionalLabels(labelSelector: string): string[] {
  */
 function buildBaseURL(datasourceUid: string, timeRange?: RawTimeRange): string {
   const baseParams = new URLSearchParams();
-  baseParams.append('var-dataSource', datasourceUid);
+  baseParams.append(PYROSCOPE_URL_SEARCH_PARAM_NAME, datasourceUid);
   baseParams.append('explorationType', 'all');
   if (timeRange) {
     baseParams.append('from', timeRange.from.toString());
@@ -62,7 +64,7 @@ function addCoreParams(
   finalExplorationType: string,
   serviceName: string | undefined
 ): void {
-  params.push(`var-dataSource=${pyroscopeQuery.datasource?.uid}`);
+  params.push(`${PYROSCOPE_URL_SEARCH_PARAM_NAME}=${pyroscopeQuery.datasource?.uid}`);
   if (serviceName) {
     params.push(`var-serviceName=${serviceName}`);
   }
