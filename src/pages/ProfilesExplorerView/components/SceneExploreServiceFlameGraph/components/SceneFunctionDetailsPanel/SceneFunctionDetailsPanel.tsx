@@ -225,6 +225,19 @@ export class SceneFunctionDetailsPanel extends SceneObjectBase<SceneFunctionDeta
               </InlineSpinner>
             </div>
 
+            {data.functionDetails.executableName && (
+              <div className={styles.row} data-testid="row-executable">
+                <InlineLabel
+                    tooltip={t('function-details.executable-tooltip', 'The executable or shared library where this function is defined')}
+                    width={SceneFunctionDetailsPanel.LABEL_WIDTH}>
+                  <Trans i18nKey="function-details.executable">Executable</Trans>
+                </InlineLabel>
+                <Tooltip content={data.functionDetails.executableName} placement="top">
+                  <span className={styles.textValue}>&lrm;{formatFileName(data.functionDetails.executableName)}</span>
+                </Tooltip>
+              </div>
+            )}
+
             {data.shouldDisplayGitHubBanner && (
               <div className={styles.row} data-testid="row-github-banner">
                 <GitHubIntegrationBanner onDismiss={actions.dismissGitHubBanner} />

@@ -30,6 +30,7 @@ export type Line = {
 export type Mapping = {
   id: string;
   buildId: string;
+  filename?: string;
 };
 
 export type PprofProfile = {
