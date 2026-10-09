@@ -1,3 +1,4 @@
+import { sceneUtils } from '@grafana/scenes';
 import React from 'react';
 
 import { SceneQuickFilter } from './SceneQuickFilter';
@@ -21,6 +22,33 @@ describe('SceneQuickFilter', () => {
     expect(model.getUrlState().searchText).toBe('');
     jest.advanceTimersByTime(1);
     expect(model.getUrlState().searchText).toBe('ab');
+  });
+
+  it('clears the input and cancels pending typing when navigation removes searchText', () => {
+    const model = new SceneQuickFilter({ placeholder: '' });
+    const deactivate = model.activate();
+    model.updateFromUrl({ searchText: 'old' });
+    type(model, 'pending');
+
+    sceneUtils.syncStateFromSearchParams(model, new URLSearchParams());
+
+    expect(model.state.inputText).toBe('');
+    expect(model.getUrlState().searchText).toBe('');
+    jest.advanceTimersByTime(SceneQuickFilter.DEBOUNCE_DELAY);
+    expect(model.state.inputText).toBe('');
+    expect(model.getUrlState().searchText).toBe('');
+    deactivate();
+  });
+
+  it('preserves pending typing when a URL update does not include searchText', () => {
+    const model = new SceneQuickFilter({ placeholder: '' });
+    type(model, 'pending');
+
+    model.updateFromUrl({});
+
+    expect(model.state.inputText).toBe('pending');
+    jest.advanceTimersByTime(SceneQuickFilter.DEBOUNCE_DELAY);
+    expect(model.getUrlState().searchText).toBe('pending');
   });
 
   it.each(['clear', 'reset', 'navigate', 'deactivate'])('cancels pending changes on %s', (action) => {

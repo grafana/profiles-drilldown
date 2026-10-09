@@ -61,10 +61,11 @@ export class SceneQuickFilter extends SceneObjectBase<SceneQuickFilterState> {
   updateFromUrl(values: SceneObjectUrlValues) {
     const stateUpdate: Partial<SceneQuickFilterState> = {};
 
-    if (typeof values.searchText === 'string') {
+    if (typeof values.searchText === 'string' || values.searchText === null) {
       this.commitSearchText.cancel();
-      stateUpdate.searchText = values.searchText;
-      stateUpdate.inputText = values.searchText;
+      const searchText = values.searchText ?? SceneQuickFilter.DEFAULT_SEARCH_TEXT;
+      stateUpdate.searchText = searchText;
+      stateUpdate.inputText = searchText;
     }
 
     this.setState(stateUpdate);
