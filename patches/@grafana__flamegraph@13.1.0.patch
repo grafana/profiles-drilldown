@@ -1,0 +1,1055 @@
+diff --git a/dist/cjs/CallTree/ActionsCell.cjs b/dist/cjs/CallTree/ActionsCell.cjs
+index 95412f8052ccdec76d7036b64279503ab979fb72..f0bc14f6db02190c1decff4378e79448420c4645 100644
+--- a/dist/cjs/CallTree/ActionsCell.cjs
++++ b/dist/cjs/CallTree/ActionsCell.cjs
+@@ -5,6 +5,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
+ var jsxRuntime = require('react/jsx-runtime');
+ var react = require('react');
+ var ui = require('@grafana/ui');
++var dataTransform = require('../FlameGraph/dataTransform.cjs');
+ var types = require('../types.cjs');
+ 
+ "use strict";
+@@ -51,9 +52,10 @@ const ActionsCell = react.memo(function ActionsCell2({
+       viewMode: viewMode != null ? viewMode : types.ViewMode.Single,
+       paneView: paneView != null ? paneView : types.PaneView.CallTree,
+       isDiff: data.isDiffFlamegraph(),
+-      search
++      search,
++      frame: dataTransform.getItemFrame(levelItem, !inCallersMode)
+     });
+-  }, [getExtraContextMenuButtons, label, levelItem, data, viewMode, paneView, search]);
++  }, [getExtraContextMenuButtons, label, levelItem, data, viewMode, paneView, search, inCallersMode]);
+   const hasAnyAction = shouldShowFocusItem || shouldShowCallersItem || shouldShowSearchItem || extraButtons.length > 0;
+   if (!hasAnyAction) {
+     return /* @__PURE__ */ jsxRuntime.jsx("div", { className: actionsCellClass });
+diff --git a/dist/cjs/FlameGraph/FlameGraph.cjs b/dist/cjs/FlameGraph/FlameGraph.cjs
+index 75282ae17add50f07ee0003dab9b06fd4b45367a..9bca53f0a3367b10048062d1f089f267ec990177 100644
+--- a/dist/cjs/FlameGraph/FlameGraph.cjs
++++ b/dist/cjs/FlameGraph/FlameGraph.cjs
+@@ -32,6 +32,8 @@ const FlameGraph = ({
+   search,
+   collapsedMap,
+   setCollapsedMap,
++  highlightedRows,
++  getFrameTooltipContent,
+   selectedView,
+   enableNewUI,
+   viewMode,
+@@ -95,7 +97,9 @@ const FlameGraph = ({
+     search,
+     selectedView,
+     viewMode,
+-    paneView
++    paneView,
++    highlightedRows,
++    getFrameTooltipContent
+   };
+   let canvas = null;
+   const canvasStyles = isNewUI ? newStyles : legacyStyles;
+diff --git a/dist/cjs/FlameGraph/FlameGraphCanvas.cjs b/dist/cjs/FlameGraph/FlameGraphCanvas.cjs
+index dd8c03510ff680be42bb5d8f826cab60cb809cf4..153550f79459bd1e73ce62dc36be6e2787d93e18 100644
+--- a/dist/cjs/FlameGraph/FlameGraphCanvas.cjs
++++ b/dist/cjs/FlameGraph/FlameGraphCanvas.cjs
+@@ -9,6 +9,7 @@ var reactUse = require('react-use');
+ var constants = require('../constants.cjs');
+ var FlameGraphContextMenu = require('./FlameGraphContextMenu.cjs');
+ var FlameGraphTooltip = require('./FlameGraphTooltip.cjs');
++var dataTransform = require('./dataTransform.cjs');
+ var rendering = require('./rendering.cjs');
+ 
+ "use strict";
+@@ -38,9 +39,13 @@ const FlameGraphCanvas = ({
+   selectedView,
+   viewMode,
+   paneView,
+-  search
++  search,
++  highlightedRows,
++  getFrameTooltipContent
+ }) => {
++  var _a;
+   const styles = getStyles();
++  const isSourceTree = root === ((_a = data.getLevels()[0]) == null ? void 0 : _a[0]);
+   const [sizeRef, { width: wrapperWidth }] = reactUse.useMeasure();
+   const graphRef = react.useRef(null);
+   const [tooltipItem, setTooltipItem] = react.useState();
+@@ -62,7 +67,8 @@ const FlameGraphCanvas = ({
+     totalColorTicks: data.isDiffFlamegraph() ? totalProfileTicks : totalViewTicks,
+     totalTicksRight: totalProfileTicksRight,
+     wrapperWidth,
+-    collapsedMap
++    collapsedMap,
++    highlightedRows: isSourceTree ? highlightedRows : void 0
+   });
+   const onGraphClick = react.useCallback(
+     (e) => {
+@@ -147,7 +153,8 @@ const FlameGraphCanvas = ({
+         item: tooltipItem,
+         data,
+         totalTicks: totalViewTicks,
+-        collapseConfig: tooltipItem ? collapsedMap.get(tooltipItem) : void 0
++        collapseConfig: tooltipItem ? collapsedMap.get(tooltipItem) : void 0,
++        extraContent: tooltipItem && (getFrameTooltipContent == null ? void 0 : getFrameTooltipContent(dataTransform.getItemFrame(tooltipItem, isSourceTree, collapsedMap.get(tooltipItem))))
+       }
+     ),
+     !showFlameGraphOnly && clickedItemData && /* @__PURE__ */ jsxRuntime.jsx(
+@@ -186,7 +193,8 @@ const FlameGraphCanvas = ({
+         selectedView,
+         viewMode,
+         paneView,
+-        search
++        search,
++        frame: dataTransform.getItemFrame(clickedItemData.item, isSourceTree, collapsedMap.get(clickedItemData.item))
+       }
+     )
+   ] });
+diff --git a/dist/cjs/FlameGraph/FlameGraphContextMenu.cjs b/dist/cjs/FlameGraph/FlameGraphContextMenu.cjs
+index 27ef22cf3268064670f3ecead2a73deb3cbbecd9..83939472ffb86513968048dfccb2abc9b1d940df 100644
+--- a/dist/cjs/FlameGraph/FlameGraphContextMenu.cjs
++++ b/dist/cjs/FlameGraph/FlameGraphContextMenu.cjs
+@@ -22,7 +22,8 @@ const FlameGraphContextMenu = ({
+   selectedView,
+   viewMode,
+   paneView,
+-  search
++  search,
++  frame
+ }) => {
+   function renderItems() {
+     const extraButtons = (getExtraContextMenuButtons == null ? void 0 : getExtraContextMenuButtons(itemData, data.data, {
+@@ -31,7 +32,8 @@ const FlameGraphContextMenu = ({
+       paneView,
+       isDiff: data.isDiffFlamegraph(),
+       search,
+-      collapseConfig
++      collapseConfig,
++      frame
+     })) || [];
+     return /* @__PURE__ */ jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [
+       /* @__PURE__ */ jsxRuntime.jsx(
+diff --git a/dist/cjs/FlameGraph/FlameGraphTooltip.cjs b/dist/cjs/FlameGraph/FlameGraphTooltip.cjs
+index 2135b68527bfbfe9032326437a8cbf7138bd1cbe..fe892bb64c319a2210cf1bf3ef5e1b27d6447e98 100644
+--- a/dist/cjs/FlameGraph/FlameGraphTooltip.cjs
++++ b/dist/cjs/FlameGraph/FlameGraphTooltip.cjs
+@@ -8,7 +8,7 @@ var data = require('@grafana/data');
+ var ui = require('@grafana/ui');
+ 
+ "use strict";
+-const FlameGraphTooltip = ({ data, item, totalTicks, position, collapseConfig }) => {
++const FlameGraphTooltip = ({ data, item, totalTicks, position, collapseConfig, extraContent }) => {
+   const styles = ui.useStyles2(getStyles);
+   if (!(item && position)) {
+     return null;
+@@ -61,7 +61,8 @@ const FlameGraphTooltip = ({ data, item, totalTicks, position, collapseConfig })
+         " similar items"
+       ] }) : ""
+     ] }),
+-    content
++    content,
++    extraContent ? /* @__PURE__ */ jsxRuntime.jsx("div", { className: styles.extraContent, children: extraContent }) : null
+   ] }) }) });
+ };
+ const getTooltipData = (data, item, totalTicks) => {
+@@ -157,6 +158,10 @@ const getStyles = (theme) => ({
+     title: "lastParagraph",
+     marginBottom: 0
+   }),
++  extraContent: css.css({
++    title: "extraContent",
++    marginTop: theme.spacing(1)
++  }),
+   name: css.css({
+     title: "name",
+     marginBottom: "10px"
+diff --git a/dist/cjs/FlameGraph/dataTransform.cjs b/dist/cjs/FlameGraph/dataTransform.cjs
+index 65e9584651ca7e9c46b210c764c6e34f2b88563d..8efbb35cd1ca83c9ae66548abf368d40b468d3bb 100644
+--- a/dist/cjs/FlameGraph/dataTransform.cjs
++++ b/dist/cjs/FlameGraph/dataTransform.cjs
+@@ -7,6 +7,15 @@ var types = require('../types.cjs');
+ var treeTransforms = require('./treeTransforms.cjs');
+ 
+ "use strict";
++function getItemFrame(item, isSourceTree, collapseConfig) {
++  const collapsed = Boolean(collapseConfig == null ? void 0 : collapseConfig.collapsed);
++  if (isSourceTree && !collapsed && item.itemIndexes.length === 1) {
++    return { kind: "source", row: item.itemIndexes[0] };
++  }
++  const items = collapsed ? collapseConfig.items : [item];
++  const rows = [...new Set(items.flatMap((i) => i.itemIndexes))].sort((a, b) => a - b);
++  return { kind: "derived", rows };
++}
+ function nestedSetToLevels(container, options) {
+   const levels = [];
+   let offset = 0;
+@@ -279,6 +288,7 @@ exports.CollapsedMap = CollapsedMap;
+ exports.CollapsedMapBuilder = CollapsedMapBuilder;
+ exports.FlameGraphDataContainer = FlameGraphDataContainer;
+ exports.checkFields = checkFields;
++exports.getItemFrame = getItemFrame;
+ exports.getMessageCheckFieldsResult = getMessageCheckFieldsResult;
+ exports.nestedSetToLevels = nestedSetToLevels;
+ //# sourceMappingURL=dataTransform.cjs.map
+diff --git a/dist/cjs/FlameGraph/rendering.cjs b/dist/cjs/FlameGraph/rendering.cjs
+index 0b84ead0659e19bab70f3c754eafddef02e0d496..97e5d1ee2e7f413744f72ab20202c0a06d498a31 100644
+--- a/dist/cjs/FlameGraph/rendering.cjs
++++ b/dist/cjs/FlameGraph/rendering.cjs
+@@ -8,6 +8,7 @@ var ui = require('@grafana/ui');
+ var constants = require('../constants.cjs');
+ var types = require('../types.cjs');
+ var colors = require('./colors.cjs');
++var dataTransform = require('./dataTransform.cjs');
+ 
+ function _interopDefaultCompat (e) { return e && typeof e === 'object' && 'default' in e ? e : { default: e }; }
+ 
+@@ -31,7 +32,8 @@ function useFlameRender(options) {
+     totalTicksRight,
+     colorScheme,
+     focusedItemData,
+-    collapsedMap
++    collapsedMap,
++    highlightedRows
+   } = options;
+   const { ctx, devicePixelRatio } = useSetupCanvas(canvasRef, wrapperWidth, depth);
+   const theme = ui.useTheme2();
+@@ -48,7 +50,9 @@ function useFlameRender(options) {
+     rangeMin,
+     rangeMax,
+     matchedLabels,
+-    focusedItemData ? focusedItemData.item.level : 0
++    focusedItemData ? focusedItemData.item.level : 0,
++    highlightedRows,
++    collapsedMap
+   );
+   const renderFunc = useRenderFunc(ctx, data, getBarColor, textAlign, collapsedMap, devicePixelRatio);
+   react.useEffect(() => {
+@@ -197,7 +201,7 @@ function walkTree(root, direction, data, totalViewTicks, rangeMin, rangeMax, wra
+     }
+   }
+ }
+-function useColorFunction(totalTicks, totalTicksRight, colorScheme, theme, mutedColor, rangeMin, rangeMax, matchedLabels, topLevel) {
++function useColorFunction(totalTicks, totalTicksRight, colorScheme, theme, mutedColor, rangeMin, rangeMax, matchedLabels, topLevel, highlightedRows, collapsedMap) {
+   return react.useCallback(
+     function getColor(item, label, muted) {
+       if (muted && !matchedLabels) {
+@@ -207,9 +211,13 @@ function useColorFunction(totalTicks, totalTicksRight, colorScheme, theme, muted
+       if (matchedLabels) {
+         return matchedLabels.has(label) ? barColor.toHslString() : mutedColor;
+       }
++      if (highlightedRows) {
++        const frame = dataTransform.getItemFrame(item, true, collapsedMap.get(item));
++        return frame.kind === "source" && highlightedRows.has(frame.row) ? barColor.toHslString() : mutedColor;
++      }
+       return item.level > topLevel - 1 ? barColor.toHslString() : barColor.lighten(15).toHslString();
+     },
+-    [totalTicks, totalTicksRight, colorScheme, theme, rangeMin, rangeMax, matchedLabels, topLevel, mutedColor]
++    [totalTicks, totalTicksRight, colorScheme, theme, rangeMin, rangeMax, matchedLabels, topLevel, mutedColor, highlightedRows, collapsedMap]
+   );
+ }
+ function useDevicePixelRatio() {
+diff --git a/dist/cjs/FlameGraphContainer.cjs b/dist/cjs/FlameGraphContainer.cjs
+index 26e9a3d8287966a2efdc144273b259a629680e66..b4c155b8e5222486034d1d128fb51f5e93a9d013 100644
+--- a/dist/cjs/FlameGraphContainer.cjs
++++ b/dist/cjs/FlameGraphContainer.cjs
+@@ -40,7 +40,9 @@ const FlameGraphContainer = ({
+   keepFocusOnDataChange,
+   getExtraContextMenuButtons,
+   showAnalyzeWithAssistant = true,
+-  enableNewUI
++  enableNewUI,
++  highlightedRows,
++  getFrameTooltipContent
+ }) => {
+   const theme = react.useMemo(() => getTheme(), [getTheme]);
+   if (enableNewUI) {
+@@ -60,7 +62,9 @@ const FlameGraphContainer = ({
+         disableCollapsing,
+         keepFocusOnDataChange,
+         getExtraContextMenuButtons,
+-        showAnalyzeWithAssistant
++        showAnalyzeWithAssistant,
++        highlightedRows,
++        getFrameTooltipContent
+       }
+     );
+   }
+@@ -80,7 +84,9 @@ const FlameGraphContainer = ({
+       disableCollapsing,
+       keepFocusOnDataChange,
+       getExtraContextMenuButtons,
+-      showAnalyzeWithAssistant
++      showAnalyzeWithAssistant,
++      highlightedRows,
++      getFrameTooltipContent
+     }
+   );
+ };
+@@ -98,7 +104,9 @@ const LegacyContainer = ({
+   disableCollapsing,
+   keepFocusOnDataChange,
+   getExtraContextMenuButtons,
+-  showAnalyzeWithAssistant
++  showAnalyzeWithAssistant,
++  highlightedRows,
++  getFrameTooltipContent
+ }) => {
+   const [focusedItemData, setFocusedItemData] = react.useState();
+   const [rangeMin, setRangeMin] = react.useState(0);
+@@ -137,13 +145,21 @@ const LegacyContainer = ({
+   const resetSandwich = react.useCallback(() => {
+     setSandwichItem(void 0);
+   }, [setSandwichItem]);
++  const prevDataRef = react.useRef();
+   react.useEffect(() => {
+     var _a;
++    const prevData = prevDataRef.current;
++    prevDataRef.current = dataContainer == null ? void 0 : dataContainer.data;
+     if (!keepFocusOnDataChange) {
+       resetFocus();
+       resetSandwich();
+       return;
+     }
++    // A rebuild from the same DataFrame (collapsing, theme) keeps every item's position, so the focus is still exact.
++    // Resolving it by label could move it to another frame with the same name.
++    if (prevDataRef.current === prevData) {
++      return;
++    }
+     if (dataContainer && focusedItemData) {
+       const item = (_a = dataContainer.getNodesWithLabel(focusedItemData.label)) == null ? void 0 : _a[0];
+       if (item) {
+@@ -229,7 +245,9 @@ const LegacyContainer = ({
+       selectedView,
+       search,
+       collapsedMap,
+-      setCollapsedMap
++      setCollapsedMap,
++      highlightedRows,
++      getFrameTooltipContent
+     }
+   );
+   const table = /* @__PURE__ */ jsxRuntime.jsx(
+@@ -318,7 +336,9 @@ const NewUIContainer = ({
+   disableCollapsing,
+   keepFocusOnDataChange,
+   getExtraContextMenuButtons,
+-  showAnalyzeWithAssistant
++  showAnalyzeWithAssistant,
++  highlightedRows,
++  getFrameTooltipContent
+ }) => {
+   const [search, setSearch] = react.useState("");
+   const [viewMode, setViewMode] = react.useState(types.ViewMode.Split);
+@@ -388,7 +408,9 @@ const NewUIContainer = ({
+     resetKey,
+     keepFocusOnDataChange,
+     focusedItemIndexes,
+-    setFocusedItemIndexes
++    setFocusedItemIndexes,
++    highlightedRows,
++    getFrameTooltipContent
+   };
+   let body;
+   if (showFlameGraphOnly) {
+diff --git a/dist/cjs/FlameGraphPane.cjs b/dist/cjs/FlameGraphPane.cjs
+index 0b4d9825216ccb7cfc85f5e41239de0f7c17eb46..f6cc737bfa736f7623f97176ea01b7948c426821 100644
+--- a/dist/cjs/FlameGraphPane.cjs
++++ b/dist/cjs/FlameGraphPane.cjs
+@@ -31,7 +31,9 @@ const FlameGraphPane = ({
+   focusedItemIndexes,
+   setFocusedItemIndexes,
+   sharedSandwichItem,
+-  setSharedSandwichItem
++  setSharedSandwichItem,
++  highlightedRows,
++  getFrameTooltipContent
+ }) => {
+   const [focusedItemData, setFocusedItemData] = react.useState();
+   const [rangeMin, setRangeMin] = react.useState(0);
+@@ -64,8 +66,11 @@ const FlameGraphPane = ({
+       setLocalSandwichItem(void 0);
+     }
+   }, [resetKey]);
++  const prevDataRef = react.useRef();
+   react.useEffect(() => {
+     var _a;
++    const prevData = prevDataRef.current;
++    prevDataRef.current = dataContainer == null ? void 0 : dataContainer.data;
+     if (!keepFocusOnDataChange) {
+       setFocusedItemData(void 0);
+       setRangeMin(0);
+@@ -73,10 +78,23 @@ const FlameGraphPane = ({
+       setSandwichItem(void 0);
+       return;
+     }
++    // A rebuild from the same DataFrame (collapsing, theme) keeps every item's position, so the focus is still exact.
++    // Resolving it by label could move it to another frame with the same name.
++    if (prevDataRef.current === prevData) {
++      return;
++    }
+     if (dataContainer && focusedItemData) {
++      // The shared rows belong to the previous DataFrame and would refocus whatever frame now has those rows, so the
++      // pane that shows them updates them. A pane can also keep an older focus than the shared one, for example after
++      // Remove focus, sandwich view or a call tree focus on merged callers rows. It must not publish that focus.
++      const ownRows = focusedItemData.item.itemIndexes;
++      const ownsSharedFocus = !!focusedItemIndexes && focusedItemIndexes.length > 0 && focusedItemIndexes.length === ownRows.length && focusedItemIndexes.every((val, idx) => val === ownRows[idx]);
+       const item = (_a = dataContainer.getNodesWithLabel(focusedItemData.label)) == null ? void 0 : _a[0];
+       if (item) {
+         setFocusedItemData({ ...focusedItemData, item });
++        if (ownsSharedFocus) {
++          setFocusedItemIndexes == null ? void 0 : setFocusedItemIndexes(item.itemIndexes);
++        }
+         const levels = dataContainer.getLevels();
+         const totalViewTicks = levels.length ? levels[0][0].value : 0;
+         setRangeMin(item.start / totalViewTicks);
+@@ -92,6 +110,9 @@ const FlameGraphPane = ({
+             level: 0
+           }
+         });
++        if (ownsSharedFocus) {
++          setFocusedItemIndexes == null ? void 0 : setFocusedItemIndexes(void 0);
++        }
+         setRangeMin(0);
+         setRangeMax(1);
+       }
+@@ -236,7 +257,9 @@ const FlameGraphPane = ({
+           paneView: paneViewForContextMenu,
+           search,
+           collapsedMap,
+-          setCollapsedMap
++          setCollapsedMap,
++          highlightedRows,
++          getFrameTooltipContent
+         }
+       );
+       break;
+diff --git a/dist/esm/CallTree/ActionsCell.mjs b/dist/esm/CallTree/ActionsCell.mjs
+index 98067f4b13a0723557356a1f1c52820c005698eb..58b9281b6dc0203be03f734e855dbfad4c2a98f6 100644
+--- a/dist/esm/CallTree/ActionsCell.mjs
++++ b/dist/esm/CallTree/ActionsCell.mjs
+@@ -1,6 +1,7 @@
+ import { jsx, jsxs } from 'react/jsx-runtime';
+ import { memo, useMemo } from 'react';
+ import { Menu, Dropdown, IconButton } from '@grafana/ui';
++import { getItemFrame } from '../FlameGraph/dataTransform.mjs';
+ import { PaneView, ViewMode } from '../types.mjs';
+ 
+ "use strict";
+@@ -47,9 +48,10 @@ const ActionsCell = memo(function ActionsCell2({
+       viewMode: viewMode != null ? viewMode : ViewMode.Single,
+       paneView: paneView != null ? paneView : PaneView.CallTree,
+       isDiff: data.isDiffFlamegraph(),
+-      search
++      search,
++      frame: getItemFrame(levelItem, !inCallersMode)
+     });
+-  }, [getExtraContextMenuButtons, label, levelItem, data, viewMode, paneView, search]);
++  }, [getExtraContextMenuButtons, label, levelItem, data, viewMode, paneView, search, inCallersMode]);
+   const hasAnyAction = shouldShowFocusItem || shouldShowCallersItem || shouldShowSearchItem || extraButtons.length > 0;
+   if (!hasAnyAction) {
+     return /* @__PURE__ */ jsx("div", { className: actionsCellClass });
+diff --git a/dist/esm/FlameGraph/FlameGraph.mjs b/dist/esm/FlameGraph/FlameGraph.mjs
+index 4c02a8f2fe2756f61d94bc3ab0d7e88663a9d3a5..2dcf2292068ed4e6a18d8d59640c9a1eb162e3be 100644
+--- a/dist/esm/FlameGraph/FlameGraph.mjs
++++ b/dist/esm/FlameGraph/FlameGraph.mjs
+@@ -30,6 +30,8 @@ const FlameGraph = ({
+   search,
+   collapsedMap,
+   setCollapsedMap,
++  highlightedRows,
++  getFrameTooltipContent,
+   selectedView,
+   enableNewUI,
+   viewMode,
+@@ -93,7 +95,9 @@ const FlameGraph = ({
+     search,
+     selectedView,
+     viewMode,
+-    paneView
++    paneView,
++    highlightedRows,
++    getFrameTooltipContent
+   };
+   let canvas = null;
+   const canvasStyles = isNewUI ? newStyles : legacyStyles;
+diff --git a/dist/esm/FlameGraph/FlameGraphCanvas.mjs b/dist/esm/FlameGraph/FlameGraphCanvas.mjs
+index aeb186fc7d95bacc5b7af81a947240dd072fce55..111734beba752bcdd31e8669d7f28e46015c19f5 100644
+--- a/dist/esm/FlameGraph/FlameGraphCanvas.mjs
++++ b/dist/esm/FlameGraph/FlameGraphCanvas.mjs
+@@ -5,6 +5,7 @@ import { useMeasure } from 'react-use';
+ import { PIXELS_PER_LEVEL } from '../constants.mjs';
+ import FlameGraphContextMenu from './FlameGraphContextMenu.mjs';
+ import FlameGraphTooltip from './FlameGraphTooltip.mjs';
++import { getItemFrame } from './dataTransform.mjs';
+ import { useFlameRender, getBarX } from './rendering.mjs';
+ 
+ "use strict";
+@@ -34,9 +35,13 @@ const FlameGraphCanvas = ({
+   selectedView,
+   viewMode,
+   paneView,
+-  search
++  search,
++  highlightedRows,
++  getFrameTooltipContent
+ }) => {
++  var _a;
+   const styles = getStyles();
++  const isSourceTree = root === ((_a = data.getLevels()[0]) == null ? void 0 : _a[0]);
+   const [sizeRef, { width: wrapperWidth }] = useMeasure();
+   const graphRef = useRef(null);
+   const [tooltipItem, setTooltipItem] = useState();
+@@ -58,7 +63,8 @@ const FlameGraphCanvas = ({
+     totalColorTicks: data.isDiffFlamegraph() ? totalProfileTicks : totalViewTicks,
+     totalTicksRight: totalProfileTicksRight,
+     wrapperWidth,
+-    collapsedMap
++    collapsedMap,
++    highlightedRows: isSourceTree ? highlightedRows : void 0
+   });
+   const onGraphClick = useCallback(
+     (e) => {
+@@ -143,7 +149,8 @@ const FlameGraphCanvas = ({
+         item: tooltipItem,
+         data,
+         totalTicks: totalViewTicks,
+-        collapseConfig: tooltipItem ? collapsedMap.get(tooltipItem) : void 0
++        collapseConfig: tooltipItem ? collapsedMap.get(tooltipItem) : void 0,
++        extraContent: tooltipItem && (getFrameTooltipContent == null ? void 0 : getFrameTooltipContent(getItemFrame(tooltipItem, isSourceTree, collapsedMap.get(tooltipItem))))
+       }
+     ),
+     !showFlameGraphOnly && clickedItemData && /* @__PURE__ */ jsx(
+@@ -182,7 +189,8 @@ const FlameGraphCanvas = ({
+         selectedView,
+         viewMode,
+         paneView,
+-        search
++        search,
++        frame: getItemFrame(clickedItemData.item, isSourceTree, collapsedMap.get(clickedItemData.item))
+       }
+     )
+   ] });
+diff --git a/dist/esm/FlameGraph/FlameGraphContextMenu.mjs b/dist/esm/FlameGraph/FlameGraphContextMenu.mjs
+index bb97af5499291e48e36f21cf3f24f2aa53b0a4ee..eb2bf632aff47cb937a7584f0262187756e4e15f 100644
+--- a/dist/esm/FlameGraph/FlameGraphContextMenu.mjs
++++ b/dist/esm/FlameGraph/FlameGraphContextMenu.mjs
+@@ -20,7 +20,8 @@ const FlameGraphContextMenu = ({
+   selectedView,
+   viewMode,
+   paneView,
+-  search
++  search,
++  frame
+ }) => {
+   function renderItems() {
+     const extraButtons = (getExtraContextMenuButtons == null ? void 0 : getExtraContextMenuButtons(itemData, data.data, {
+@@ -29,7 +30,8 @@ const FlameGraphContextMenu = ({
+       paneView,
+       isDiff: data.isDiffFlamegraph(),
+       search,
+-      collapseConfig
++      collapseConfig,
++      frame
+     })) || [];
+     return /* @__PURE__ */ jsxs(Fragment, { children: [
+       /* @__PURE__ */ jsx(
+diff --git a/dist/esm/FlameGraph/FlameGraphTooltip.mjs b/dist/esm/FlameGraph/FlameGraphTooltip.mjs
+index 9e408475e0a1e1f65daadee8f0750f5342631548..574fa71c99ec467ed63b8005b8d165ca8bde07b6 100644
+--- a/dist/esm/FlameGraph/FlameGraphTooltip.mjs
++++ b/dist/esm/FlameGraph/FlameGraphTooltip.mjs
+@@ -4,7 +4,7 @@ import { getValueFormat } from '@grafana/data';
+ import { useStyles2, InteractiveTable, Portal, VizTooltipContainer } from '@grafana/ui';
+ 
+ "use strict";
+-const FlameGraphTooltip = ({ data, item, totalTicks, position, collapseConfig }) => {
++const FlameGraphTooltip = ({ data, item, totalTicks, position, collapseConfig, extraContent }) => {
+   const styles = useStyles2(getStyles);
+   if (!(item && position)) {
+     return null;
+@@ -57,7 +57,8 @@ const FlameGraphTooltip = ({ data, item, totalTicks, position, collapseConfig })
+         " similar items"
+       ] }) : ""
+     ] }),
+-    content
++    content,
++    extraContent ? /* @__PURE__ */ jsx("div", { className: styles.extraContent, children: extraContent }) : null
+   ] }) }) });
+ };
+ const getTooltipData = (data, item, totalTicks) => {
+@@ -153,6 +154,10 @@ const getStyles = (theme) => ({
+     title: "lastParagraph",
+     marginBottom: 0
+   }),
++  extraContent: css({
++    title: "extraContent",
++    marginTop: theme.spacing(1)
++  }),
+   name: css({
+     title: "name",
+     marginBottom: "10px"
+diff --git a/dist/esm/FlameGraph/dataTransform.mjs b/dist/esm/FlameGraph/dataTransform.mjs
+index 4df56dfbfa9886c9ee28af0366ea8ba1029c7966..030bbe47927a1018eb6e0eb74180b56073d1921a 100644
+--- a/dist/esm/FlameGraph/dataTransform.mjs
++++ b/dist/esm/FlameGraph/dataTransform.mjs
+@@ -3,6 +3,15 @@ import { SampleUnit } from '../types.mjs';
+ import { mergeParentSubtrees, mergeSubtrees } from './treeTransforms.mjs';
+ 
+ "use strict";
++function getItemFrame(item, isSourceTree, collapseConfig) {
++  const collapsed = Boolean(collapseConfig == null ? void 0 : collapseConfig.collapsed);
++  if (isSourceTree && !collapsed && item.itemIndexes.length === 1) {
++    return { kind: "source", row: item.itemIndexes[0] };
++  }
++  const items = collapsed ? collapseConfig.items : [item];
++  const rows = [...new Set(items.flatMap((i) => i.itemIndexes))].sort((a, b) => a - b);
++  return { kind: "derived", rows };
++}
+ function nestedSetToLevels(container, options) {
+   const levels = [];
+   let offset = 0;
+@@ -271,5 +280,5 @@ function fieldAccessor(field, index) {
+   }, 0);
+ }
+ 
+-export { CollapsedMap, CollapsedMapBuilder, FlameGraphDataContainer, checkFields, getMessageCheckFieldsResult, nestedSetToLevels };
++export { CollapsedMap, CollapsedMapBuilder, FlameGraphDataContainer, checkFields, getItemFrame, getMessageCheckFieldsResult, nestedSetToLevels };
+ //# sourceMappingURL=dataTransform.mjs.map
+diff --git a/dist/esm/FlameGraph/rendering.mjs b/dist/esm/FlameGraph/rendering.mjs
+index be97452402301cab5973b6f1a4727843bed02a49..9edf1149ec286976cf536c04fbb16d33c1a63536 100644
+--- a/dist/esm/FlameGraph/rendering.mjs
++++ b/dist/esm/FlameGraph/rendering.mjs
+@@ -4,6 +4,7 @@ import { useTheme2 } from '@grafana/ui';
+ import { BAR_BORDER_WIDTH, LABEL_THRESHOLD, GROUP_STRIP_MARGIN_LEFT, GROUP_TEXT_OFFSET, GROUP_STRIP_WIDTH, GROUP_STRIP_PADDING, MUTE_THRESHOLD, PIXELS_PER_LEVEL, HIDE_THRESHOLD, BAR_TEXT_PADDING_LEFT } from '../constants.mjs';
+ import { ColorSchemeDiff, ColorScheme } from '../types.mjs';
+ import { getBarColorByDiff, getBarColorByValue, getBarColorByPackage } from './colors.mjs';
++import { getItemFrame } from './dataTransform.mjs';
+ 
+ "use strict";
+ function useFlameRender(options) {
+@@ -23,7 +24,8 @@ function useFlameRender(options) {
+     totalTicksRight,
+     colorScheme,
+     focusedItemData,
+-    collapsedMap
++    collapsedMap,
++    highlightedRows
+   } = options;
+   const { ctx, devicePixelRatio } = useSetupCanvas(canvasRef, wrapperWidth, depth);
+   const theme = useTheme2();
+@@ -40,7 +42,9 @@ function useFlameRender(options) {
+     rangeMin,
+     rangeMax,
+     matchedLabels,
+-    focusedItemData ? focusedItemData.item.level : 0
++    focusedItemData ? focusedItemData.item.level : 0,
++    highlightedRows,
++    collapsedMap
+   );
+   const renderFunc = useRenderFunc(ctx, data, getBarColor, textAlign, collapsedMap, devicePixelRatio);
+   useEffect(() => {
+@@ -189,7 +193,7 @@ function walkTree(root, direction, data, totalViewTicks, rangeMin, rangeMax, wra
+     }
+   }
+ }
+-function useColorFunction(totalTicks, totalTicksRight, colorScheme, theme, mutedColor, rangeMin, rangeMax, matchedLabels, topLevel) {
++function useColorFunction(totalTicks, totalTicksRight, colorScheme, theme, mutedColor, rangeMin, rangeMax, matchedLabels, topLevel, highlightedRows, collapsedMap) {
+   return useCallback(
+     function getColor(item, label, muted) {
+       if (muted && !matchedLabels) {
+@@ -199,9 +203,13 @@ function useColorFunction(totalTicks, totalTicksRight, colorScheme, theme, muted
+       if (matchedLabels) {
+         return matchedLabels.has(label) ? barColor.toHslString() : mutedColor;
+       }
++      if (highlightedRows) {
++        const frame = getItemFrame(item, true, collapsedMap.get(item));
++        return frame.kind === "source" && highlightedRows.has(frame.row) ? barColor.toHslString() : mutedColor;
++      }
+       return item.level > topLevel - 1 ? barColor.toHslString() : barColor.lighten(15).toHslString();
+     },
+-    [totalTicks, totalTicksRight, colorScheme, theme, rangeMin, rangeMax, matchedLabels, topLevel, mutedColor]
++    [totalTicks, totalTicksRight, colorScheme, theme, rangeMin, rangeMax, matchedLabels, topLevel, mutedColor, highlightedRows, collapsedMap]
+   );
+ }
+ function useDevicePixelRatio() {
+diff --git a/dist/esm/FlameGraphContainer.mjs b/dist/esm/FlameGraphContainer.mjs
+index f8d34f468137bb145cd11b3763a2e4e6a153c5aa..04d1a3d3abde50ca93a03eb52e022e323b34f98f 100644
+--- a/dist/esm/FlameGraphContainer.mjs
++++ b/dist/esm/FlameGraphContainer.mjs
+@@ -32,7 +32,9 @@ const FlameGraphContainer = ({
+   keepFocusOnDataChange,
+   getExtraContextMenuButtons,
+   showAnalyzeWithAssistant = true,
+-  enableNewUI
++  enableNewUI,
++  highlightedRows,
++  getFrameTooltipContent
+ }) => {
+   const theme = useMemo(() => getTheme(), [getTheme]);
+   if (enableNewUI) {
+@@ -52,7 +54,9 @@ const FlameGraphContainer = ({
+         disableCollapsing,
+         keepFocusOnDataChange,
+         getExtraContextMenuButtons,
+-        showAnalyzeWithAssistant
++        showAnalyzeWithAssistant,
++        highlightedRows,
++        getFrameTooltipContent
+       }
+     );
+   }
+@@ -72,7 +76,9 @@ const FlameGraphContainer = ({
+       disableCollapsing,
+       keepFocusOnDataChange,
+       getExtraContextMenuButtons,
+-      showAnalyzeWithAssistant
++      showAnalyzeWithAssistant,
++      highlightedRows,
++      getFrameTooltipContent
+     }
+   );
+ };
+@@ -90,7 +96,9 @@ const LegacyContainer = ({
+   disableCollapsing,
+   keepFocusOnDataChange,
+   getExtraContextMenuButtons,
+-  showAnalyzeWithAssistant
++  showAnalyzeWithAssistant,
++  highlightedRows,
++  getFrameTooltipContent
+ }) => {
+   const [focusedItemData, setFocusedItemData] = useState();
+   const [rangeMin, setRangeMin] = useState(0);
+@@ -129,13 +137,21 @@ const LegacyContainer = ({
+   const resetSandwich = useCallback(() => {
+     setSandwichItem(void 0);
+   }, [setSandwichItem]);
++  const prevDataRef = useRef();
+   useEffect(() => {
+     var _a;
++    const prevData = prevDataRef.current;
++    prevDataRef.current = dataContainer == null ? void 0 : dataContainer.data;
+     if (!keepFocusOnDataChange) {
+       resetFocus();
+       resetSandwich();
+       return;
+     }
++    // A rebuild from the same DataFrame (collapsing, theme) keeps every item's position, so the focus is still exact.
++    // Resolving it by label could move it to another frame with the same name.
++    if (prevDataRef.current === prevData) {
++      return;
++    }
+     if (dataContainer && focusedItemData) {
+       const item = (_a = dataContainer.getNodesWithLabel(focusedItemData.label)) == null ? void 0 : _a[0];
+       if (item) {
+@@ -221,7 +237,9 @@ const LegacyContainer = ({
+       selectedView,
+       search,
+       collapsedMap,
+-      setCollapsedMap
++      setCollapsedMap,
++      highlightedRows,
++      getFrameTooltipContent
+     }
+   );
+   const table = /* @__PURE__ */ jsx(
+@@ -310,7 +328,9 @@ const NewUIContainer = ({
+   disableCollapsing,
+   keepFocusOnDataChange,
+   getExtraContextMenuButtons,
+-  showAnalyzeWithAssistant
++  showAnalyzeWithAssistant,
++  highlightedRows,
++  getFrameTooltipContent
+ }) => {
+   const [search, setSearch] = useState("");
+   const [viewMode, setViewMode] = useState(ViewMode.Split);
+@@ -380,7 +400,9 @@ const NewUIContainer = ({
+     resetKey,
+     keepFocusOnDataChange,
+     focusedItemIndexes,
+-    setFocusedItemIndexes
++    setFocusedItemIndexes,
++    highlightedRows,
++    getFrameTooltipContent
+   };
+   let body;
+   if (showFlameGraphOnly) {
+diff --git a/dist/esm/FlameGraphPane.mjs b/dist/esm/FlameGraphPane.mjs
+index 45514ed6b71e9cb68f99c4aeff0407258cf9eab4..0f0a0d066e23534cb573c6680277ea733d1fcf35 100644
+--- a/dist/esm/FlameGraphPane.mjs
++++ b/dist/esm/FlameGraphPane.mjs
+@@ -29,7 +29,9 @@ const FlameGraphPane = ({
+   focusedItemIndexes,
+   setFocusedItemIndexes,
+   sharedSandwichItem,
+-  setSharedSandwichItem
++  setSharedSandwichItem,
++  highlightedRows,
++  getFrameTooltipContent
+ }) => {
+   const [focusedItemData, setFocusedItemData] = useState();
+   const [rangeMin, setRangeMin] = useState(0);
+@@ -62,8 +64,11 @@ const FlameGraphPane = ({
+       setLocalSandwichItem(void 0);
+     }
+   }, [resetKey]);
++  const prevDataRef = useRef();
+   useEffect(() => {
+     var _a;
++    const prevData = prevDataRef.current;
++    prevDataRef.current = dataContainer == null ? void 0 : dataContainer.data;
+     if (!keepFocusOnDataChange) {
+       setFocusedItemData(void 0);
+       setRangeMin(0);
+@@ -71,10 +76,23 @@ const FlameGraphPane = ({
+       setSandwichItem(void 0);
+       return;
+     }
++    // A rebuild from the same DataFrame (collapsing, theme) keeps every item's position, so the focus is still exact.
++    // Resolving it by label could move it to another frame with the same name.
++    if (prevDataRef.current === prevData) {
++      return;
++    }
+     if (dataContainer && focusedItemData) {
++      // The shared rows belong to the previous DataFrame and would refocus whatever frame now has those rows, so the
++      // pane that shows them updates them. A pane can also keep an older focus than the shared one, for example after
++      // Remove focus, sandwich view or a call tree focus on merged callers rows. It must not publish that focus.
++      const ownRows = focusedItemData.item.itemIndexes;
++      const ownsSharedFocus = !!focusedItemIndexes && focusedItemIndexes.length > 0 && focusedItemIndexes.length === ownRows.length && focusedItemIndexes.every((val, idx) => val === ownRows[idx]);
+       const item = (_a = dataContainer.getNodesWithLabel(focusedItemData.label)) == null ? void 0 : _a[0];
+       if (item) {
+         setFocusedItemData({ ...focusedItemData, item });
++        if (ownsSharedFocus) {
++          setFocusedItemIndexes == null ? void 0 : setFocusedItemIndexes(item.itemIndexes);
++        }
+         const levels = dataContainer.getLevels();
+         const totalViewTicks = levels.length ? levels[0][0].value : 0;
+         setRangeMin(item.start / totalViewTicks);
+@@ -90,6 +108,9 @@ const FlameGraphPane = ({
+             level: 0
+           }
+         });
++        if (ownsSharedFocus) {
++          setFocusedItemIndexes == null ? void 0 : setFocusedItemIndexes(void 0);
++        }
+         setRangeMin(0);
+         setRangeMax(1);
+       }
+@@ -234,7 +255,9 @@ const FlameGraphPane = ({
+           paneView: paneViewForContextMenu,
+           search,
+           collapsedMap,
+-          setCollapsedMap
++          setCollapsedMap,
++          highlightedRows,
++          getFrameTooltipContent
+         }
+       );
+       break;
+diff --git a/dist/types/FlameGraph/FlameGraph.d.ts b/dist/types/FlameGraph/FlameGraph.d.ts
+index 9cccabd34bba6447abfa6f5ac17ad6bd8cc93677..574964075790a835acc752aba6caca5194280604 100644
+--- a/dist/types/FlameGraph/FlameGraph.d.ts
++++ b/dist/types/FlameGraph/FlameGraph.d.ts
+@@ -1,5 +1,6 @@
+ import { type ClickedItemData, type ColorScheme, type ColorSchemeDiff, type PaneView, type SelectedView, type ViewMode, type TextAlign } from '../types';
+ import { type GetExtraContextMenuButtonsFunction } from './FlameGraphContextMenu';
++import { type GetFrameTooltipContentFunction } from './FlameGraphTooltip';
+ import { type CollapsedMap, type FlameGraphDataContainer } from './dataTransform';
+ type Props = {
+     data: FlameGraphDataContainer;
+@@ -22,6 +23,8 @@ type Props = {
+     search: string;
+     collapsedMap: CollapsedMap;
+     setCollapsedMap: (collapsedMap: CollapsedMap) => void;
++    highlightedRows?: ReadonlySet<number>;
++    getFrameTooltipContent?: GetFrameTooltipContentFunction;
+     selectedView?: SelectedView;
+     enableNewUI?: boolean;
+     viewMode?: ViewMode;
+@@ -30,5 +33,5 @@ type Props = {
+     onColorSchemeChange?: (colorScheme: ColorScheme | ColorSchemeDiff) => void;
+     isDiffMode?: boolean;
+ };
+-declare const FlameGraph: ({ data, rangeMin, rangeMax, matchedLabels, setRangeMin, setRangeMax, onItemFocused, focusedItemData, textAlign, onSandwich, sandwichItem, onFocusPillClick, onSandwichPillClick, colorScheme, showFlameGraphOnly, getExtraContextMenuButtons, collapsing, search, collapsedMap, setCollapsedMap, selectedView, enableNewUI, viewMode, paneView, onTextAlignChange, onColorSchemeChange, isDiffMode, }: Props) => import("react/jsx-runtime").JSX.Element | null;
++declare const FlameGraph: ({ data, rangeMin, rangeMax, matchedLabels, setRangeMin, setRangeMax, onItemFocused, focusedItemData, textAlign, onSandwich, sandwichItem, onFocusPillClick, onSandwichPillClick, colorScheme, showFlameGraphOnly, getExtraContextMenuButtons, collapsing, search, collapsedMap, setCollapsedMap, highlightedRows, getFrameTooltipContent, selectedView, enableNewUI, viewMode, paneView, onTextAlignChange, onColorSchemeChange, isDiffMode, }: Props) => import("react/jsx-runtime").JSX.Element | null;
+ export default FlameGraph;
+diff --git a/dist/types/FlameGraph/FlameGraphCanvas.d.ts b/dist/types/FlameGraph/FlameGraphCanvas.d.ts
+index 927b020450a37fac6450d36198c4c1a73d521125..4db44f5fe64163d89406a0a4fc4010be6720610b 100644
+--- a/dist/types/FlameGraph/FlameGraphCanvas.d.ts
++++ b/dist/types/FlameGraph/FlameGraphCanvas.d.ts
+@@ -1,6 +1,7 @@
+ import * as React from 'react';
+ import { type ClickedItemData, type ColorScheme, type ColorSchemeDiff, type PaneView, type SelectedView, type ViewMode, type TextAlign } from '../types';
+ import { type GetExtraContextMenuButtonsFunction } from './FlameGraphContextMenu';
++import { type GetFrameTooltipContentFunction } from './FlameGraphTooltip';
+ import { type CollapsedMap, type FlameGraphDataContainer, type LevelItem } from './dataTransform';
+ type Props = {
+     data: FlameGraphDataContainer;
+@@ -30,8 +31,10 @@ type Props = {
+     viewMode?: ViewMode;
+     paneView?: PaneView;
+     search: string;
++    highlightedRows?: ReadonlySet<number>;
++    getFrameTooltipContent?: GetFrameTooltipContentFunction;
+ };
+-declare const FlameGraphCanvas: ({ data, rangeMin, rangeMax, matchedLabels, setRangeMin, setRangeMax, onItemFocused, focusedItemData, textAlign, onSandwich, colorScheme, totalProfileTicks, totalProfileTicksRight, totalViewTicks, root, direction, depth, showFlameGraphOnly, collapsedMap, setCollapsedMap, collapsing, getExtraContextMenuButtons, selectedView, viewMode, paneView, search, }: Props) => import("react/jsx-runtime").JSX.Element;
++declare const FlameGraphCanvas: ({ data, rangeMin, rangeMax, matchedLabels, setRangeMin, setRangeMax, onItemFocused, focusedItemData, textAlign, onSandwich, colorScheme, totalProfileTicks, totalProfileTicksRight, totalViewTicks, root, direction, depth, showFlameGraphOnly, collapsedMap, setCollapsedMap, collapsing, getExtraContextMenuButtons, selectedView, viewMode, paneView, search, highlightedRows, getFrameTooltipContent, }: Props) => import("react/jsx-runtime").JSX.Element;
+ export declare const convertPixelCoordinatesToBarCoordinates: (pos: {
+     x: number;
+     y: number;
+diff --git a/dist/types/FlameGraph/FlameGraphContextMenu.d.ts b/dist/types/FlameGraph/FlameGraphContextMenu.d.ts
+index ea5363882c45ce9749d25d287cd98eda7a4b4cf9..ec8b65d8d602c562af1aed178f868b4b774f402d 100644
+--- a/dist/types/FlameGraph/FlameGraphContextMenu.d.ts
++++ b/dist/types/FlameGraph/FlameGraphContextMenu.d.ts
+@@ -1,6 +1,6 @@
+ import { type DataFrame } from '@grafana/data';
+ import { type IconName } from '@grafana/ui';
+-import { type ClickedItemData, type PaneView, type SelectedView, type ViewMode } from '../types';
++import { type ClickedItemData, type FlameGraphFrame, type PaneView, type SelectedView, type ViewMode } from '../types';
+ import { type CollapseConfig, type FlameGraphDataContainer } from './dataTransform';
+ export type GetExtraContextMenuButtonsFunction = (clickedItemData: ClickedItemData, data: DataFrame, state: {
+     selectedView?: SelectedView;
+@@ -9,6 +9,7 @@ export type GetExtraContextMenuButtonsFunction = (clickedItemData: ClickedItemDa
+     isDiff: boolean;
+     search: string;
+     collapseConfig?: CollapseConfig;
++    frame?: FlameGraphFrame;
+ }) => ExtraContextMenuButton[];
+ type ExtraContextMenuButton = {
+     label: string;
+@@ -34,6 +35,7 @@ type Props = {
+     viewMode?: ViewMode;
+     paneView?: PaneView;
+     search: string;
++    frame?: FlameGraphFrame;
+ };
+-declare const FlameGraphContextMenu: ({ data, itemData, onMenuItemClick, onItemFocus, onSandwich, collapseConfig, onExpandGroup, onCollapseGroup, onExpandAllGroups, onCollapseAllGroups, getExtraContextMenuButtons, collapsing, allGroupsExpanded, allGroupsCollapsed, selectedView, viewMode, paneView, search, }: Props) => import("react/jsx-runtime").JSX.Element;
++declare const FlameGraphContextMenu: ({ data, itemData, onMenuItemClick, onItemFocus, onSandwich, collapseConfig, onExpandGroup, onCollapseGroup, onExpandAllGroups, onCollapseAllGroups, getExtraContextMenuButtons, collapsing, allGroupsExpanded, allGroupsCollapsed, selectedView, viewMode, paneView, search, frame, }: Props) => import("react/jsx-runtime").JSX.Element;
+ export default FlameGraphContextMenu;
+diff --git a/dist/types/FlameGraph/FlameGraphTooltip.d.ts b/dist/types/FlameGraph/FlameGraphTooltip.d.ts
+index 0271b4d7ef51a3f95d7ffa3ce4bdd4132838b0ec..29c945ffe57be8ec89b128051bc13cc0e1e64a10 100644
+--- a/dist/types/FlameGraph/FlameGraphTooltip.d.ts
++++ b/dist/types/FlameGraph/FlameGraphTooltip.d.ts
+@@ -1,4 +1,7 @@
++import { type ReactNode } from 'react';
++import { type FlameGraphFrame } from '../types';
+ import { type CollapseConfig, type FlameGraphDataContainer, type LevelItem } from './dataTransform';
++export type GetFrameTooltipContentFunction = (frame: FlameGraphFrame) => ReactNode;
+ type Props = {
+     data: FlameGraphDataContainer;
+     totalTicks: number;
+@@ -8,8 +11,9 @@ type Props = {
+     };
+     item?: LevelItem;
+     collapseConfig?: CollapseConfig;
++    extraContent?: ReactNode;
+ };
+-declare const FlameGraphTooltip: ({ data, item, totalTicks, position, collapseConfig }: Props) => import("react/jsx-runtime").JSX.Element | null;
++declare const FlameGraphTooltip: ({ data, item, totalTicks, position, collapseConfig, extraContent }: Props) => import("react/jsx-runtime").JSX.Element | null;
+ type TooltipData = {
+     percentValue: number;
+     percentSelf: number;
+diff --git a/dist/types/FlameGraph/dataTransform.d.ts b/dist/types/FlameGraph/dataTransform.d.ts
+index 670f0d89954cc74fab371d037a00eef7c4b3e19c..cbc252d3fafa9f09c0027e106081b855e9300cd5 100644
+--- a/dist/types/FlameGraph/dataTransform.d.ts
++++ b/dist/types/FlameGraph/dataTransform.d.ts
+@@ -1,4 +1,5 @@
+ import { type DataFrame, type DisplayProcessor, type Field, FieldType, type GrafanaTheme2 } from '@grafana/data';
++import { type FlameGraphFrame } from '../types';
+ export type LevelItem = {
+     start: number;
+     value: number;
+@@ -12,6 +13,11 @@ export type CollapseConfig = {
+     items: LevelItem[];
+     collapsed: boolean;
+ };
++/**
++ * Resolves the original DataFrame rows an item represents. Only an item of the unmodified tree (not a sandwich tree)
++ * that is not a collapsed group is exactly one source row.
++ */
++export declare function getItemFrame(item: LevelItem, isSourceTree: boolean, collapseConfig?: CollapseConfig): FlameGraphFrame;
+ /**
+  * Convert data frame with nested set format into array of level. This is mainly done for compatibility with current
+  * rendering code.
+diff --git a/dist/types/FlameGraph/rendering.d.ts b/dist/types/FlameGraph/rendering.d.ts
+index e18fd5e24dfee694c843876b335df3da5978f3a4..1ddfb56ec2f50fdc8cce5fbc4e4be6186a0a20af 100644
+--- a/dist/types/FlameGraph/rendering.d.ts
++++ b/dist/types/FlameGraph/rendering.d.ts
+@@ -18,6 +18,7 @@ type RenderOptions = {
+     colorScheme: ColorScheme | ColorSchemeDiff;
+     focusedItemData?: ClickedItemData;
+     collapsedMap: CollapsedMap;
++    highlightedRows?: ReadonlySet<number>;
+ };
+ export declare function useFlameRender(options: RenderOptions): void;
+ type RenderFuncWrap = (item: LevelItem, x: number, y: number, width: number, height: number, label: string, muted: boolean) => void;
+diff --git a/dist/types/FlameGraphContainer.d.ts b/dist/types/FlameGraphContainer.d.ts
+index ab0694376768dd29d1843646b7ec1d93a64ef032..7e4561b574eefdf3c04bef8a09803f6866c52fdb 100644
+--- a/dist/types/FlameGraphContainer.d.ts
++++ b/dist/types/FlameGraphContainer.d.ts
+@@ -1,6 +1,7 @@
+ import * as React from 'react';
+ import { type DataFrame, type GrafanaTheme2 } from '@grafana/data';
+ import { type GetExtraContextMenuButtonsFunction } from './FlameGraph/FlameGraphContextMenu';
++import { type GetFrameTooltipContentFunction } from './FlameGraph/FlameGraphTooltip';
+ import { FlameGraphDataContainer } from './FlameGraph/dataTransform';
+ export type Props = {
+     /**
+@@ -65,7 +66,11 @@ export type Props = {
+      * Enable the new pane-based UI with call tree support.
+      */
+     enableNewUI?: boolean;
++    /** Original row indices to highlight; derived frames stay muted. Text search takes precedence. */
++    highlightedRows?: ReadonlySet<number>;
++    /** Content appended to the hover tooltip. Check frame.kind before attributing data to a source row. */
++    getFrameTooltipContent?: GetFrameTooltipContentFunction;
+ };
+-declare const FlameGraphContainer: ({ data, onTableSymbolClick, onViewSelected, onTextAlignSelected, onTableSort, getTheme, stickyHeader, extraHeaderElements, vertical, showFlameGraphOnly, disableCollapsing, keepFocusOnDataChange, getExtraContextMenuButtons, showAnalyzeWithAssistant, enableNewUI, }: Props) => import("react/jsx-runtime").JSX.Element;
++declare const FlameGraphContainer: ({ data, onTableSymbolClick, onViewSelected, onTextAlignSelected, onTableSort, getTheme, stickyHeader, extraHeaderElements, vertical, showFlameGraphOnly, disableCollapsing, keepFocusOnDataChange, getExtraContextMenuButtons, showAnalyzeWithAssistant, enableNewUI, highlightedRows, getFrameTooltipContent, }: Props) => import("react/jsx-runtime").JSX.Element;
+ export declare function labelSearch(search: string, data: FlameGraphDataContainer): Set<string>;
+ export default FlameGraphContainer;
+diff --git a/dist/types/FlameGraphPane.d.ts b/dist/types/FlameGraphPane.d.ts
+index a09b4260d0930b52e46ac85de8a28582644bffa9..5ef7dc8bdf0f1115fde1edf3d9643758eda34b49 100644
+--- a/dist/types/FlameGraphPane.d.ts
++++ b/dist/types/FlameGraphPane.d.ts
+@@ -1,4 +1,5 @@
+ import { type GetExtraContextMenuButtonsFunction } from './FlameGraph/FlameGraphContextMenu';
++import { type GetFrameTooltipContentFunction } from './FlameGraph/FlameGraphTooltip';
+ import { type FlameGraphDataContainer } from './FlameGraph/dataTransform';
+ import { PaneView, type ViewMode } from './types';
+ type FlameGraphPaneProps = {
+@@ -21,6 +22,8 @@ type FlameGraphPaneProps = {
+     setFocusedItemIndexes?: (itemIndexes: number[] | undefined) => void;
+     sharedSandwichItem?: string;
+     setSharedSandwichItem?: (item: string | undefined) => void;
++    highlightedRows?: ReadonlySet<number>;
++    getFrameTooltipContent?: GetFrameTooltipContentFunction;
+ };
+-declare const FlameGraphPane: ({ paneView, dataContainer, search, matchedLabels, onTableSymbolClick, onTextAlignSelected, onTableSort, showFlameGraphOnly, disableCollapsing, getExtraContextMenuButtons, viewMode, paneViewForContextMenu, setSearch, resetKey, keepFocusOnDataChange, focusedItemIndexes, setFocusedItemIndexes, sharedSandwichItem, setSharedSandwichItem, }: FlameGraphPaneProps) => import("react/jsx-runtime").JSX.Element;
++declare const FlameGraphPane: ({ paneView, dataContainer, search, matchedLabels, onTableSymbolClick, onTextAlignSelected, onTableSort, showFlameGraphOnly, disableCollapsing, getExtraContextMenuButtons, viewMode, paneViewForContextMenu, setSearch, resetKey, keepFocusOnDataChange, focusedItemIndexes, setFocusedItemIndexes, sharedSandwichItem, setSharedSandwichItem, highlightedRows, getFrameTooltipContent, }: FlameGraphPaneProps) => import("react/jsx-runtime").JSX.Element;
+ export default FlameGraphPane;
+diff --git a/dist/types/index.d.ts b/dist/types/index.d.ts
+index ab6407c5e492b9e94ff220d099c12705d7b77b8c..8e5d22de982647413c26100af7fa161ecad2f364 100644
+--- a/dist/types/index.d.ts
++++ b/dist/types/index.d.ts
+@@ -1,3 +1,4 @@
+ export { default as FlameGraph, type Props } from './FlameGraphContainer';
+ export { checkFields, getMessageCheckFieldsResult } from './FlameGraph/dataTransform';
+ export { data } from './FlameGraph/testData/dataNestedSet';
++export { type FlameGraphFrame } from './types';
+diff --git a/dist/types/types.d.ts b/dist/types/types.d.ts
+index 898e856156b1b61be9df7ff8cb938713556503c9..f36ab5bc86800fbef644a8c793baaac769f2d080 100644
+--- a/dist/types/types.d.ts
++++ b/dist/types/types.d.ts
+@@ -1,4 +1,12 @@
+ import { type LevelItem } from './FlameGraph/dataTransform';
++/** Source frames represent exactly one unmodified row; derived frames contain unique, ascending row indices. */
++export type FlameGraphFrame = {
++    kind: 'source';
++    row: number;
++} | {
++    kind: 'derived';
++    rows: number[];
++};
+ export type ClickedItemData = {
+     posX: number;
+     posY: number;

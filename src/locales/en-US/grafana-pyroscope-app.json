@@ -639,6 +639,127 @@
       "tooltip": "Save search"
     }
   },
+  "semantic": {
+    "category": {
+      "application-code": "Application code",
+      "crypto-compression": "Crypto and compression",
+      "database-client": "Database client",
+      "io": "I/O",
+      "networking": "Networking",
+      "observability": "Observability",
+      "runtime": "Runtime",
+      "serialization": "Serialization",
+      "standard-library": "Standard library",
+      "unknown": "Unknown"
+    },
+    "category-description": {
+      "application-code": "Application workflows, orchestration and domain helpers, informed by the application identity.",
+      "crypto-compression": "Encryption, hashing, TLS record processing and compression.",
+      "database-client": "Database and cache clients: drivers, protocols, ORMs and connection pools.",
+      "io": "Generic socket, file system and operating system I/O.",
+      "networking": "HTTP, RPC and other application protocols: servers, clients, routing, middleware and messaging.",
+      "observability": "Logging, metrics, tracing and profiling instrumentation.",
+      "runtime": "Language runtime work such as garbage collection, JIT compilation, allocation and scheduling.",
+      "serialization": "Parsing and encoding data formats such as JSON and protobuf.",
+      "standard-library": "General-purpose language and standard library functions, such as date, string and array operations."
+    },
+    "classify": {
+      "application-notice": "Sends the service name and function and caller names to the configured classification provider when you click Classify.",
+      "button": "Classify",
+      "cancel": "Cancel",
+      "cancelled": "Classification cancelled. Remaining call contexts were skipped.",
+      "clear": "Clear",
+      "complete_one": "Classification complete for {{count}} call context.",
+      "complete_other": "Classification complete for {{count}} call contexts.",
+      "complete-with-invalid_one": "Classification complete. {{count}} result unavailable.",
+      "complete-with-invalid_other": "Classification complete. {{count}} results unavailable.",
+      "configuration-error": "Classification settings could not be loaded.",
+      "failed": "Classification stopped after a failed request. Remaining call contexts were skipped.",
+      "invalid-profile": "This profile cannot be classified",
+      "missing-key": "Add an OpenRouter API key in the plugin configuration to enable classification.",
+      "no-service": "Select a service to classify.",
+      "not-loaded": "Available once the profile has loaded.",
+      "progress_one": "Classifying {{settled}} of {{count}} call context…",
+      "progress_other": "Classifying {{settled}} of {{count}} call contexts…",
+      "timed-out": "Classification stopped because a request timed out. Remaining call contexts were skipped.",
+      "unsupported-profile": "Classification is not available for this profile type yet."
+    },
+    "config": {
+      "admin-only": "Classification configuration requires a Grafana organization admin.",
+      "configured": "Configured",
+      "enabled": "Enable function classification",
+      "key": "OpenRouter API key",
+      "key-help": "Use a standard OpenRouter API key with access to typesafe/jev-1.13 and available spending allowance. Usage is billed to your OpenRouter account.",
+      "load-error": "Could not load classification configuration.",
+      "privacy": "Function Classification sends the selected service name and function and caller names to OpenRouter only when you click Classify. The API key is encrypted in Grafana settings.",
+      "save": "Save",
+      "save-error": "Could not save classification configuration.",
+      "saved": "Configuration saved.",
+      "threshold": "Confidence threshold",
+      "threshold-description": "Lower values accept more suggestions, not more accurate predictions.",
+      "threshold-error": "Enter a number from 0 to 1.",
+      "transport-privacy": "Grafana's proxy can also forward the connecting client's IP address."
+    },
+    "configure": "Configure classification",
+    "context-menu": {
+      "details": "Classification details"
+    },
+    "details": {
+      "callers": "Called from",
+      "category": "Suggested category",
+      "close": "Close classification details",
+      "confidence": "Confidence",
+      "confidence-notice": "Confidence is reported by the model, not a measure of validated accuracy. Suggestions below {{threshold}} stay unclassified.",
+      "self": "Self",
+      "status": "Status",
+      "title": "Classification details"
+    },
+    "occurrence": {
+      "accepted": "applied",
+      "cancelled": "cancelled",
+      "error": "request failed",
+      "excluded": "excluded ({{reason}})",
+      "excluded-opaque": "unsymbolized frame",
+      "excluded-root": "root frame",
+      "excluded-truncated": "truncated frame",
+      "excluded-zero-self": "no self samples",
+      "pending": "pending",
+      "rejected": "below {{threshold}}, unclassified",
+      "skipped": "skipped after the run stopped",
+      "timed-out": "request timed out",
+      "unknown": "unclassified",
+      "unselected": "not selected for classification"
+    },
+    "panel": {
+      "close": "Close classification panel"
+    },
+    "progress": {
+      "label": "Call contexts classified"
+    },
+    "selection": {
+      "clear": "Clear classification selection"
+    },
+    "summary": {
+      "all-functions": "All functions",
+      "awaiting": "{{share}} awaiting classification",
+      "awaiting-value": "–",
+      "below-threshold": "Below confidence threshold",
+      "categories": "Function categories",
+      "label": "Function classification results",
+      "missing-detail": "Missing profile detail",
+      "no-match": "No matching category",
+      "no-result": "No usable result",
+      "unclassified": "{{share}} unclassified"
+    },
+    "title": "Function Classification",
+    "tooltip": {
+      "derived": "Classification is available for individual frames, not merged call contexts.",
+      "pending": "Not classified yet",
+      "prediction": "{{category}} · Confidence {{confidence}}",
+      "unclassified": "Unclassified",
+      "unclassified-category": "Unclassified · {{category}}"
+    }
+  },
   "series": {
     "data-source": {
       "test-success": "OK"

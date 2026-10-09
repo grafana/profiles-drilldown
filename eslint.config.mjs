@@ -17,6 +17,7 @@ export default [
       'e2e/test-results/**',
       'node_modules/**',
       'test-results/**',
+      'work/**',
       '**/eslint.config.*',
     ],
   },

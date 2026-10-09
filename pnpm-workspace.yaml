@@ -41,3 +41,6 @@ overrides:
   # https://github.com/grafana/grafana/issues/129933
   # Keep transitive v6 dependencies aligned with the host runtime.
   'react-router@^6': ^6.30.6
+
+patchedDependencies:
+  '@grafana/flamegraph@13.1.0': patches/@grafana__flamegraph@13.1.0.patch
