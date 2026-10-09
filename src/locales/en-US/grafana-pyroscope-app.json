@@ -54,6 +54,16 @@
     "title": "Flame graph analysis",
     "validation-error": "Validation error!"
   },
+  "all-services": {
+    "filter": {
+      "accessible-label": "Search services or add label filters",
+      "label-names-group": "Label names",
+      "or": "OR",
+      "placeholder": "Search services or add label filters",
+      "service-name": "service_name",
+      "service-name-group": "Service name filter"
+    }
+  },
   "analyze-diff": {
     "context": {
       "title": "DOT Profiles and instructions"

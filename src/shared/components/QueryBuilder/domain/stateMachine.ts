@@ -42,6 +42,12 @@ const config = (
   initial: 'idle',
   context,
   predictableActionArguments: true,
+  on: {
+    START_LABEL: {
+      target: '.loadOperators',
+      actions: ['setFilterAttribute'],
+    },
+  },
   states: {
     idle,
     loadLabels,
