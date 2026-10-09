@@ -41,7 +41,10 @@ export class SceneQuickFilter extends SceneObjectBase<SceneQuickFilterState> {
       resultsCount: '',
     });
 
-    this.addActivationHandler(() => () => this.commitSearchText.cancel());
+    this.addActivationHandler(() => () => {
+      this.commitSearchText.cancel();
+      this.setState({ inputText: this.state.searchText });
+    });
   }
 
   setPlaceholder(placeholder: string) {
