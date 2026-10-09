@@ -3,6 +3,7 @@ import { parseQuery } from '@shared/domain/url-params/parseQuery';
 import { useQuery } from '@tanstack/react-query';
 import { useMemo } from 'react';
 
+import { StackFrameFilter } from '../../../../../domain/StackFrameFilter';
 import { DataSourceProxyClientBuilder } from '../../../../../infrastructure/series/http/DataSourceProxyClientBuilder';
 import { PprofApiClient } from '../../../infrastructure/PprofApiClient';
 import { PLACEHOLDER_COMMIT_DATA } from '../components/GitHubContextProvider/infrastructure/PrivateVcsClient';
@@ -19,6 +20,7 @@ type FetchParams = {
   timeRange: TimeRange;
   stackTrace: string[];
   profileIdSelector?: string;
+  frameFilter?: StackFrameFilter;
 };
 
 type FetchResponse = {
@@ -44,6 +46,7 @@ export function useFetchFunctionsDetails({
   timeRange,
   stackTrace,
   profileIdSelector,
+  frameFilter,
 }: FetchParams): FetchResponse {
   const { profileMetricId, labelsSelector, serviceId } = parseQuery(query);
   const [start, end] = [timeRange.from.unix(), timeRange.to.unix()];
@@ -75,6 +78,7 @@ export function useFetchFunctionsDetails({
       isGitHubLogged,
       defaultFunctionVersion,
       profileIdSelector,
+      frameFilter,
     ],
     queryFn: async () => {
       const pprof = await pprofApiClient.selectMergeProfileJson({
@@ -85,6 +89,7 @@ export function useFetchFunctionsDetails({
         stackTrace,
         maxNodes: MAX_NODES,
         profileIdSelector,
+        frameFilter,
       });
 
       const functionsDetails = convertPprofToFunctionDetails(stackTrace[stackTrace.length - 1], pprof).sort(
