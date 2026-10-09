@@ -10,27 +10,27 @@
       "unfavorite": "Retirer des favoris"
     },
     "span-exemplar-toggle": {
-      "aria-label": "",
-      "span-heatmap": "",
-      "time-series": "",
-      "unavailable": ""
+      "aria-label": "Visualisation de la chronologie des profils",
+      "span-heatmap": "Heatmap de spans",
+      "time-series": "Série temporelle",
+      "unavailable": "Aucun profil de span n’est disponible pour le service, les filtres et la plage de temps actuels"
     }
   },
   "ad-hoc": {
     "diff": {
-      "cannot-compute-diff": "",
-      "no-common-profile-types": "",
-      "profile": ""
+      "cannot-compute-diff": "Impossible de calculer le diff",
+      "no-common-profile-types": "Les profils importés n’ont aucun type de profil commun. Importez des profils avec des types correspondants pour utiliser la vue diff.",
+      "profile": "Profil"
     },
     "profile-type-selector": {
       "label": "Profil"
     },
     "tabs": {
-      "diff-view": "",
+      "diff-view": "Vue diff",
       "single-view": "Vue simple"
     },
     "upload": {
-      "diff-converted-to-single": ""
+      "diff-converted-to-single": "Le profil diff a été converti en un unique flame graph pour l’importation. Les données de comparaison n’ont pas été conservées."
     },
     "view": {
       "title": "Vue ad hoc"
@@ -45,7 +45,7 @@
       "placeholder": "Poser une question complémentaire…",
       "send": "Envoyer"
     },
-    "llm-error": "",
+    "llm-error": "Une erreur est survenue lors de la génération du contenu à l’aide d’OpenAI !",
     "llm-error-message": "Nous vous prions de nous excuser pour ce désagrément. Veuillez réessayer ou, si le problème persiste, contactez l’administrateur de votre organisation.",
     "reply": {
       "search-node": "Rechercher ce nœud"
@@ -66,7 +66,7 @@
     "label": "Retour à Profiles Drilldown"
   },
   "common": {
-    "not-available": ""
+    "not-available": "–"
   },
   "create-recording-rule": {
     "cancel": "Annuler",
@@ -121,10 +121,10 @@
       "tooltip-time-picker": "Sélecteur d’heure",
       "tooltip-time-picker-description": "Zoom avant sur la plage temporelle (comportement par défaut)"
     },
-    "error-gcx-copy": "",
+    "error-gcx-copy": "Échec de la copie des commandes gcx dans le presse-papiers !",
     "error-loading-profile": "Une erreur est survenue lors du chargement des données de profil.",
     "explain-button": "Expliquer le graphique en flammes de comparaison",
-    "gcx-copied": "",
+    "gcx-copied": "Commandes gcx copiées dans le presse-papiers !",
     "missing-selections": {
       "auto-select": "Sélection automatique",
       "how-to-alt": "Comment afficher le graphique en flammes de comparaison",
@@ -153,12 +153,12 @@
     "title": "Grafana Profiles Drilldown"
   },
   "explore-service-heatmap": {
-    "description": "",
-    "title": ""
+    "description": "Nombre de spans de trace appartenant à un bucket spécifique",
+    "title": "{{title}} par span de trace"
   },
   "explorer": {
     "add-to-dashboard": {
-      "modal-title": ""
+      "modal-title": "Ajouter au tableau de bord"
     },
     "exploration-type": {
       "all-services": "Tous les services",
@@ -178,7 +178,7 @@
       "add-recording-rule": "Ajouter une règle d’enregistrement",
       "recording-rules-tooltip": "Règles d’enregistrement",
       "settings-tooltip": "Afficher/modifier les paramètres du locataire",
-      "share-error": "",
+      "share-error": "Erreur lors de la copie du lien de partage dans le presse-papiers !",
       "share-tooltip": "Copier le lien à partager dans le presse-papiers",
       "upload-tooltip": "Importer des profils ad hoc",
       "view-recording-rules": "Afficher les règles d’enregistrement"
@@ -191,20 +191,20 @@
   "export-menu": {
     "aria-label": "Exporter les données de profil",
     "error-flamegraph-com": "Échec de l’exportation vers flamegraph.com.",
-    "error-gcx-copy": "",
+    "error-gcx-copy": "Échec de la copie de la commande gcx dans le presse-papiers !",
     "error-loading-profile": "Une erreur est survenue lors du chargement des données de profil Flamebearer.",
     "error-png": "Échec de l’exportation au format PNG.",
-    "error-png-no-canvas": "",
+    "error-png-no-canvas": "Veuillez vous assurer que le flame graph est visible avant de l’exporter au format PNG.",
     "error-pprof": "Échec de l’exportation au format PProf.",
-    "gcx-command": "",
-    "gcx-command-tooltip": "",
-    "gcx-commands": "",
-    "gcx-commands-tooltip": "",
-    "gcx-copied": "",
+    "gcx-command": "commande gcx",
+    "gcx-command-tooltip": "Copiez la commande gcx pour télécharger ce profil au format pprof",
+    "gcx-commands": "commandes gcx",
+    "gcx-commands-tooltip": "Copiez les commandes gcx pour télécharger les profils de ligne de base (baseline) et de comparaison au format pprof",
+    "gcx-copied": "Commande gcx copiée dans le presse-papiers !",
     "json": "json",
     "json-label": "json",
     "png": "png",
-    "png-disabled-description": "",
+    "png-disabled-description": "Basculez vers la vue flame graph pour l’exporter au format PNG",
     "png-label": "png",
     "pprof": "pprof",
     "tooltip": "Exporter les données de profil"
@@ -229,10 +229,10 @@
       "tooltip": "Vous avez ajouté un sélecteur d’ID de profil à la requête de graphique en flamme ({{profileIdSelector}})."
     },
     "span-selector": {
-      "filter-label": "",
-      "filter-operator": "",
-      "filter-value": "",
-      "name": "",
+      "filter-label": "Étiquette de filtre",
+      "filter-operator": "Opérateur de filtre",
+      "filter-value": "Valeur du filtre",
+      "name": "Span",
       "remove": "Supprimer le sélecteur de plage de la requête",
       "tooltip": "Vous avez ajouté un sélecteur de plage à la requête du graphique en flamme ({{spanSelector}})."
     },
@@ -265,7 +265,7 @@
     "context-menu": {
       "label": "Détails de la fonction"
     },
-    "copy-error": "",
+    "copy-error": "Erreur lors de la copie du chemin du fichier dans le presse-papiers !",
     "copy-to-clipboard": "Copier dans le presse-papiers",
     "fetch-error": "Erreur lors de la récupération des détails de la fonction.",
     "file": "Fichier",
@@ -323,7 +323,7 @@
   },
   "grid": {
     "empty-state": {
-      "no-profiles": "",
+      "no-profiles": "Aucun profil trouvé. Élargissez la plage de temps ou commencez à envoyer des données de profil.",
       "no-results": "Aucun résultat"
     },
     "error": {
@@ -354,38 +354,38 @@
   },
   "heatmap": {
     "exemplar": {
-      "select": ""
+      "select": "Sélectionner l’exemplar"
     },
     "exemplar-table": {
-      "clear-selection": "",
-      "col-actions": "",
-      "col-duration": "",
-      "col-span-id": "",
-      "col-span-name": "",
-      "col-timestamp": "",
-      "col-trace-id": "",
-      "copied": "",
-      "copy-to-clipboard": "",
-      "empty": "",
-      "open-flamegraph": "",
-      "open-trace": "",
-      "select-exemplar": "",
-      "select-tempo": "",
-      "tempo-datasource": "",
-      "tempo-placeholder": "",
-      "title": "",
-      "trace-lookup-failed": ""
+      "clear-selection": "Effacer la sélection de l’exemplar",
+      "col-actions": "Actions",
+      "col-duration": "Durée",
+      "col-span-id": "ID du span",
+      "col-span-name": "Nom du span",
+      "col-timestamp": "Horodatage",
+      "col-trace-id": "ID de la trace",
+      "copied": "Copié !",
+      "copy-to-clipboard": "Copier dans le presse-papiers",
+      "empty": "Aucun exemplar de span dans la plage de temps sélectionnée.",
+      "open-flamegraph": "Ouvrir le flame graph",
+      "open-trace": "Ouvrir la trace",
+      "select-exemplar": "Sélectionner l’exemplar",
+      "select-tempo": "Sélectionner la source de données Tempo",
+      "tempo-datasource": "Source de données Tempo",
+      "tempo-placeholder": "Sélectionner la source de données Tempo…",
+      "title": "Meilleurs exemplars de spans",
+      "trace-lookup-failed": "Impossible de charger les détails de la trace depuis Tempo."
     },
     "menu": {
-      "open-in-explore": ""
+      "open-in-explore": "Ouvrir dans Explore"
     },
     "trace-drawer": {
-      "title": ""
+      "title": "Trace {{traceId}}"
     }
   },
   "labels": {
     "compare": {
-      "aria-label": "",
+      "aria-label": "Comparer",
       "clear-tooltip": "Effacer la sélection de comparaison",
       "tooltip-empty": "Sélectionnez un panneau de référence et un panneau de comparaison pour comparer leurs graphiques en flamme",
       "tooltip-ready": "Comparer « {{baseline}} » avec « {{comparison}} »",
@@ -482,10 +482,10 @@
   },
   "optimize-code": {
     "context": {
-      "title": ""
+      "title": "Code source annoté et instructions d’optimisation"
     },
-    "error": "",
-    "prompt": ""
+    "error": "Échec de la création du contexte d’optimisation",
+    "prompt": "Optimisez ce code en fonction des annotations de profilage."
   },
   "panel-box": {
     "cancel-query": "Annuler la requête",
@@ -506,7 +506,7 @@
     "commit-sha": "Commit SHA : {{shortCommitSha}}",
     "contribute": "Contribuer",
     "documentation": "Documentation",
-    "grafana-version": "",
+    "grafana-version": "Grafana {{edition}} ({{env}})",
     "last-update": "Dernière mise à jour : {{updated}}",
     "report-issue": "Signaler un problème",
     "title": "Informations sur le plugin",
@@ -514,10 +514,10 @@
   },
   "profiles": {
     "kg-annotations": {
-      "insights-label": "",
-      "severity-critical": "",
-      "severity-info": "",
-      "severity-warning": ""
+      "insights-label": "Insights",
+      "severity-critical": "Critique",
+      "severity-info": "Info",
+      "severity-warning": "Avertissement"
     }
   },
   "query-analysis": {
@@ -616,7 +616,7 @@
       "no-searches": "Aucune recherche enregistrée à afficher.",
       "no-searches-tooltip": "Aucune recherche enregistrée à charger",
       "remove-tooltip": "Supprimer",
-      "saved-query-tooltip": "",
+      "saved-query-tooltip": "Charger la requête enregistrée",
       "select": "Sélectionner",
       "select-pyroscope-query": "Veuillez sélectionner une requête Pyroscope.",
       "title": "Charger une recherche enregistrée précédemment",
@@ -630,7 +630,7 @@
       "existing-search-warning": "Une recherche a été enregistrée précédemment avec la même requête : {{title}}",
       "info-message": "Les recherches enregistrées sont stockées localement dans votre navigateur et ne seront disponibles que sur cet appareil.",
       "save": "Enregistrer",
-      "saved-queries-tooltip": "",
+      "saved-queries-tooltip": "Enregistrer dans les requêtes enregistrées",
       "success-body": "Recherche enregistrée avec succès.",
       "success-message": "Recherche enregistrée avec succès.",
       "success-title": "Succès",
@@ -664,9 +664,9 @@
         "tooltip": "La fonctionnalité Détails de fonction permet de mettre en correspondance l’utilisation des ressources et les lignes du code source. Si l’intégration GitHub est configurée, le code source sera téléchargé depuis GitHub."
       },
       "fetch-error": {
-        "cloud-hint": "",
-        "message": "",
-        "oss-hint": "",
+        "cloud-hint": "Sur Grafana Cloud, vérifiez auprès de l’administrateur de votre organisation que vous disposez de l’autorisation de lire et d’écrire les paramètres du plugin pour cette source de données.",
+        "message": "Les paramètres ci-dessous affichent les valeurs par défaut au lieu de ce qui a été enregistré précédemment. Ce que vous pouvez faire :",
+        "oss-hint": "Avec Grafana Pyroscope OSS, assurez-vous que l’URL de la source de données expose le point de terminaison tenant-settings.",
         "title": "Erreur lors de la récupération des paramètres du plugin."
       },
       "flame-graph": {
@@ -691,9 +691,9 @@
   },
   "timeseries": {
     "menu": {
-      "add-to-dashboard": "",
+      "add-to-dashboard": "Ajouter au tableau de bord",
       "exemplars": "Exemples",
-      "labels": "",
+      "labels": "Étiquettes",
       "open-in-explore": "Ouvrir dans Explorer",
       "scale-linear": "Linéaire",
       "scale-log2": "Log2",
@@ -732,7 +732,7 @@
       "aria-label": "Liste des services",
       "label": "Service",
       "loading": "Chargement des services en cours…",
-      "unmatched-tooltip": "",
+      "unmatched-tooltip": "« {{serviceName}} » n’apparaît pas dans la liste des services renvoyés pour cette source de données et cette plage de temps. Veuillez sélectionner un autre service dans la liste déroulante.",
       "placeholder_one": "Sélectionner un service ({{count}})",
       "placeholder_other": "Sélectionner un service ({{count}})"
     },

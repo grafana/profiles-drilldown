@@ -10,27 +10,27 @@
       "unfavorite": "Maak los van favorieten"
     },
     "span-exemplar-toggle": {
-      "aria-label": "",
-      "span-heatmap": "",
-      "time-series": "",
-      "unavailable": ""
+      "aria-label": "Visualisatie van profieltijdlijn",
+      "span-heatmap": "Spanheatmap",
+      "time-series": "Tijdreeks",
+      "unavailable": "Er zijn geen spanprofielen beschikbaar voor de huidige service, filters en het huidige tijdsbereik"
     }
   },
   "ad-hoc": {
     "diff": {
-      "cannot-compute-diff": "",
-      "no-common-profile-types": "",
-      "profile": ""
+      "cannot-compute-diff": "Kan diff niet berekenen",
+      "no-common-profile-types": "De geüploade profielen hebben geen gemeenschappelijke profieltypen. Upload profielen met overeenkomende typen om de diff-weergave te gebruiken.",
+      "profile": "Profiel"
     },
     "profile-type-selector": {
       "label": "Profiel"
     },
     "tabs": {
-      "diff-view": "",
+      "diff-view": "Diff-weergave",
       "single-view": "Enkele weergave"
     },
     "upload": {
-      "diff-converted-to-single": ""
+      "diff-converted-to-single": "Diff-profiel is geconverteerd naar één enkele flame graph voor uploaden. Vergelijkingsgegevens zijn niet bewaard."
     },
     "view": {
       "title": "Ad-hocweergave"
@@ -45,7 +45,7 @@
       "placeholder": "Stel een vervolgvraag...",
       "send": "Verzenden"
     },
-    "llm-error": "",
+    "llm-error": "Er is een fout opgetreden bij het genereren van inhoud met OpenAI.",
     "llm-error-message": "Onze excuses voor het ongemak. Probeer het opnieuw. Blijft het probleem zich voordoen, neem dan contact op met de beheerder van je organisatie.",
     "reply": {
       "search-node": "Deze node zoeken"
@@ -66,7 +66,7 @@
     "label": "Terug naar Profiles Drilldown"
   },
   "common": {
-    "not-available": ""
+    "not-available": "–"
   },
   "create-recording-rule": {
     "cancel": "Annuleren",
@@ -121,10 +121,10 @@
       "tooltip-time-picker": "Tijdkiezer",
       "tooltip-time-picker-description": "Tijdsbereik inzoomen (standaardgedrag)"
     },
-    "error-gcx-copy": "",
+    "error-gcx-copy": "Kan gcx-opdrachten niet naar het klembord kopiëren.",
     "error-loading-profile": "Er is een fout opgetreden bij het laden van profielgegevens!",
     "explain-button": "Leg de Diff Flame Graph uit",
-    "gcx-copied": "",
+    "gcx-copied": "gcx-opdrachten naar klembord gekopieerd.",
     "missing-selections": {
       "auto-select": "Automatisch selecteren",
       "how-to-alt": "Hoe de diff flame graph te bekijken",
@@ -153,12 +153,12 @@
     "title": "Grafana Profiles Drilldown"
   },
   "explore-service-heatmap": {
-    "description": "",
-    "title": ""
+    "description": "Aantal tracespans dat in een specifieke bucket valt",
+    "title": "{{title}} per tracespan"
   },
   "explorer": {
     "add-to-dashboard": {
-      "modal-title": ""
+      "modal-title": "Toevoegen aan dashboard"
     },
     "exploration-type": {
       "all-services": "Alle services",
@@ -178,7 +178,7 @@
       "add-recording-rule": "Opnameregel toevoegen",
       "recording-rules-tooltip": "Opnameregels",
       "settings-tooltip": "Tenantinstellingen bekijken/bewerken",
-      "share-error": "",
+      "share-error": "Fout bij het kopiëren van de deelbare link naar het klembord.",
       "share-tooltip": "Deelbare link naar het klembord kopiëren",
       "upload-tooltip": "Ad-hocprofielen uploaden",
       "view-recording-rules": "Opnameregels bekijken"
@@ -191,20 +191,20 @@
   "export-menu": {
     "aria-label": "Profielgegevens exporteren",
     "error-flamegraph-com": "Kan niet exporteren naar flamegraph.com!",
-    "error-gcx-copy": "",
+    "error-gcx-copy": "Kan gcx-opdracht niet naar het klembord kopiëren.",
     "error-loading-profile": "Er is een fout opgetreden bij het laden van flamebearer-profielgegevens!",
     "error-png": "Kan niet exporteren naar png!",
-    "error-png-no-canvas": "",
+    "error-png-no-canvas": "Zorg ervoor dat de flame graph zichtbaar is voordat je naar png exporteert.",
     "error-pprof": "Kan niet exporteren naar pprof!",
-    "gcx-command": "",
-    "gcx-command-tooltip": "",
-    "gcx-commands": "",
-    "gcx-commands-tooltip": "",
-    "gcx-copied": "",
+    "gcx-command": "gcx-opdracht",
+    "gcx-command-tooltip": "Kopieer het gcx-commando om dit profiel als pprof te downloaden",
+    "gcx-commands": "gcx-opdrachten",
+    "gcx-commands-tooltip": "Kopieer de gcx-opdrachten om de baseline- en vergelijkingsprofielen als pprof te downloaden",
+    "gcx-copied": "gcx-opdracht naar klembord gekopieerd.",
     "json": "json",
     "json-label": "json",
     "png": "png",
-    "png-disabled-description": "",
+    "png-disabled-description": "Schakel over naar de flame graph-weergave om deze als png te exporteren",
     "png-label": "png",
     "pprof": "pprof",
     "tooltip": "Profielgegevens exporteren"
@@ -229,10 +229,10 @@
       "tooltip": "Je hebt een profiel-ID-selector toegevoegd aan de Flamegraph-query ({{profileIdSelector}})."
     },
     "span-selector": {
-      "filter-label": "",
-      "filter-operator": "",
-      "filter-value": "",
-      "name": "",
+      "filter-label": "Filterlabel",
+      "filter-operator": "Filteroperator",
+      "filter-value": "Filterwaarde",
+      "name": "Span",
       "remove": "Span-selector uit query verwijderen",
       "tooltip": "Je hebt een span-selector toegevoegd aan de Flamegraph-query ({{spanSelector}})."
     },
@@ -265,7 +265,7 @@
     "context-menu": {
       "label": "Functiedetails"
     },
-    "copy-error": "",
+    "copy-error": "Fout bij het kopiëren van het bestandspad naar het klembord.",
     "copy-to-clipboard": "Kopiëren naar klembord",
     "fetch-error": "Er is een fout opgetreden bij het ophalen van functiedetails!",
     "file": "Bestand",
@@ -323,7 +323,7 @@
   },
   "grid": {
     "empty-state": {
-      "no-profiles": "",
+      "no-profiles": "Geen profielen gevonden. Vergroot het tijdsbereik of begin met het verzenden van profielgegevens.",
       "no-results": "Geen resultaten"
     },
     "error": {
@@ -354,38 +354,38 @@
   },
   "heatmap": {
     "exemplar": {
-      "select": ""
+      "select": "Voorbeeld selecteren"
     },
     "exemplar-table": {
-      "clear-selection": "",
-      "col-actions": "",
-      "col-duration": "",
-      "col-span-id": "",
-      "col-span-name": "",
-      "col-timestamp": "",
-      "col-trace-id": "",
-      "copied": "",
-      "copy-to-clipboard": "",
-      "empty": "",
-      "open-flamegraph": "",
-      "open-trace": "",
-      "select-exemplar": "",
-      "select-tempo": "",
-      "tempo-datasource": "",
-      "tempo-placeholder": "",
-      "title": "",
-      "trace-lookup-failed": ""
+      "clear-selection": "Selectie van voorbeeld wissen",
+      "col-actions": "Acties",
+      "col-duration": "Tijdsduur",
+      "col-span-id": "Span-ID",
+      "col-span-name": "Spannaam",
+      "col-timestamp": "Tijdstempel",
+      "col-trace-id": "Trace ID",
+      "copied": "Gekopieerd!",
+      "copy-to-clipboard": "Kopiëren naar klembord",
+      "empty": "Geen span-exemplaren in het geselecteerde tijdsbereik.",
+      "open-flamegraph": "Flamegraph openen",
+      "open-trace": "Trace openen",
+      "select-exemplar": "Voorbeeld selecteren",
+      "select-tempo": "Tempo-gegevensbron selecteren",
+      "tempo-datasource": "Tempo-gegevensbron",
+      "tempo-placeholder": "Tempo-gegevensbron selecteren...",
+      "title": "Voorbeelden van top-spans",
+      "trace-lookup-failed": "Kan traceringgegevens uit Tempo niet laden."
     },
     "menu": {
-      "open-in-explore": ""
+      "open-in-explore": "Openen in Verkennen"
     },
     "trace-drawer": {
-      "title": ""
+      "title": "Trace {{traceId}}"
     }
   },
   "labels": {
     "compare": {
-      "aria-label": "",
+      "aria-label": "Vergelijken",
       "clear-tooltip": "Vergelijkingsselectie wissen",
       "tooltip-empty": "Selecteer zowel een baseline- als een vergelijkingspaneel om hun flame graphs te vergelijken",
       "tooltip-ready": "'{{baseline}}' vs. '{{comparison}}' vergelijken",
@@ -482,10 +482,10 @@
   },
   "optimize-code": {
     "context": {
-      "title": ""
+      "title": "Geannoteerde broncode en optimalisatie-instructies"
     },
-    "error": "",
-    "prompt": ""
+    "error": "Kan optimalisatiecontext niet opbouwen",
+    "prompt": "Optimaliseer deze code op basis van de profileringsannotaties."
   },
   "panel-box": {
     "cancel-query": "Query annuleren",
@@ -506,7 +506,7 @@
     "commit-sha": "Commit-SHA: {{shortCommitSha}}",
     "contribute": "Bijdragen",
     "documentation": "Documentatie",
-    "grafana-version": "",
+    "grafana-version": "Grafana {{edition}} ({{env}})",
     "last-update": "Laatste update: {{updated}}",
     "report-issue": "Een probleem melden",
     "title": "Plugin-informatie",
@@ -514,10 +514,10 @@
   },
   "profiles": {
     "kg-annotations": {
-      "insights-label": "",
-      "severity-critical": "",
-      "severity-info": "",
-      "severity-warning": ""
+      "insights-label": "Inzichten",
+      "severity-critical": "Kritiek",
+      "severity-info": "Info",
+      "severity-warning": "Waarschuwing"
     }
   },
   "query-analysis": {
@@ -616,7 +616,7 @@
       "no-searches": "Geen opgeslagen zoekopdrachten om weer te geven.",
       "no-searches-tooltip": "Geen opgeslagen zoekopdrachten om te laden",
       "remove-tooltip": "Verwijderen",
-      "saved-query-tooltip": "",
+      "saved-query-tooltip": "Opgeslagen query laden",
       "select": "Selecteren",
       "select-pyroscope-query": "Selecteer een Pyroscope-query.",
       "title": "Een eerder opgeslagen zoekopdracht laden",
@@ -630,7 +630,7 @@
       "existing-search-warning": "Er is al een eerder opgeslagen zoekopdracht met dezelfde zoekterm: {{title}}",
       "info-message": "Opgeslagen zoekopdrachten worden lokaal in je browser opgeslagen en zijn alleen op dit apparaat beschikbaar.",
       "save": "Opslaan",
-      "saved-queries-tooltip": "",
+      "saved-queries-tooltip": "Opslaan in Opgeslagen query's",
       "success-body": "Zoekopdracht is opgeslagen.",
       "success-message": "Zoekopdracht is opgeslagen.",
       "success-title": "Succes",
@@ -664,9 +664,9 @@
         "tooltip": "Met de functiedetailsfunctie kan het bronnengebruik worden gekoppeld aan regels broncode. Als de GitHub-integratie is geconfigureerd, wordt de broncode van GitHub gedownload."
       },
       "fetch-error": {
-        "cloud-hint": "",
-        "message": "",
-        "oss-hint": "",
+        "cloud-hint": "Controleer op Grafana Cloud bij de beheerder van je organisatie of je toestemming hebt om plugininstellingen voor deze gegevensbron te lezen en te schrijven.",
+        "message": "De onderstaande instellingen tonen standaardwaarden in plaats van wat eerder is opgeslagen. Wat je kunt doen:",
+        "oss-hint": "Zorg er met Grafana Pyroscope OSS voor dat de URL van de gegevensbron het eindpunt voor tenantinstellingen weergeeft.",
         "title": "Er is een fout opgetreden bij het ophalen van de plug-ininstellingen!"
       },
       "flame-graph": {
@@ -691,9 +691,9 @@
   },
   "timeseries": {
     "menu": {
-      "add-to-dashboard": "",
+      "add-to-dashboard": "Toevoegen aan dashboard",
       "exemplars": "Voorbeelden",
-      "labels": "",
+      "labels": "Labels",
       "open-in-explore": "Openen in Verkennen",
       "scale-linear": "Lineair",
       "scale-log2": "Log2",
@@ -732,7 +732,7 @@
       "aria-label": "Servicelijst",
       "label": "Service",
       "loading": "Services laden...",
-      "unmatched-tooltip": "",
+      "unmatched-tooltip": "\"{{serviceName}}\" komt niet voor in de lijst met services die voor deze gegevensbron en dit tijdsbereik worden geretourneerd. Selecteer een andere service in de vervolgkeuzelijst.",
       "placeholder_one": "Een service selecteren ({{count}})",
       "placeholder_other": "Een service selecteren ({{count}})"
     },

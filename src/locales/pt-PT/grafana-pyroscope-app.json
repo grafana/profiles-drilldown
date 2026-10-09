@@ -10,27 +10,27 @@
       "unfavorite": "Remover dos favoritos"
     },
     "span-exemplar-toggle": {
-      "aria-label": "",
-      "span-heatmap": "",
-      "time-series": "",
-      "unavailable": ""
+      "aria-label": "Visualização da cronologia do perfil",
+      "span-heatmap": "Mapa de calor de intervalo",
+      "time-series": "Série temporal",
+      "unavailable": "Não há perfis de intervalo disponíveis para o serviço, os filtros e o intervalo de tempo atuais"
     }
   },
   "ad-hoc": {
     "diff": {
-      "cannot-compute-diff": "",
-      "no-common-profile-types": "",
-      "profile": ""
+      "cannot-compute-diff": "Não é possível calcular as diferenças",
+      "no-common-profile-types": "Os perfis carregados não têm tipos de perfil comuns. Carregue perfis com tipos correspondentes para usar a vista de diferenças.",
+      "profile": "Perfil"
     },
     "profile-type-selector": {
       "label": "Perfil"
     },
     "tabs": {
-      "diff-view": "",
+      "diff-view": "Vista de diferenças",
       "single-view": "Vista única"
     },
     "upload": {
-      "diff-converted-to-single": ""
+      "diff-converted-to-single": "O perfil de diferenças foi convertido num único gráfico de chamas para carregamento. Os dados de comparação não foram mantidos."
     },
     "view": {
       "title": "Vista ad hoc"
@@ -45,7 +45,7 @@
       "placeholder": "Faça uma pergunta de seguimento...",
       "send": "Enviar"
     },
-    "llm-error": "",
+    "llm-error": "Ocorreu um erro ao gerar conteúdo com OpenAI!",
     "llm-error-message": "Lamentamos qualquer incómodo. Tente novamente ou, se o problema persistir, contacte o administrador da sua organização.",
     "reply": {
       "search-node": "Pesquisar por este nó"
@@ -66,7 +66,7 @@
     "label": "Voltar a Profiles Drilldown"
   },
   "common": {
-    "not-available": ""
+    "not-available": "–"
   },
   "create-recording-rule": {
     "cancel": "Cancelar",
@@ -121,10 +121,10 @@
       "tooltip-time-picker": "Seletor de hora",
       "tooltip-time-picker-description": "Aumentar o zoom do intervalo de tempo (comportamento predefinido)"
     },
-    "error-gcx-copy": "",
+    "error-gcx-copy": "Falha ao copiar os comandos gcx para a área de transferência!",
     "error-loading-profile": "Erro ao carregar dados de perfil!",
     "explain-button": "Explicar o gráfico de chama de diferenças",
-    "gcx-copied": "",
+    "gcx-copied": "Comandos gcx copiados para a área de transferência!",
     "missing-selections": {
       "auto-select": "Seleção automática",
       "how-to-alt": "Como ver o gráfico de chamas de diferenças",
@@ -153,12 +153,12 @@
     "title": "Grafana Profiles Drilldown"
   },
   "explore-service-heatmap": {
-    "description": "",
-    "title": ""
+    "description": "Número de intervalos de rastreio que se enquadram num bucket específico",
+    "title": "{{title}} por intervalo de rastreio"
   },
   "explorer": {
     "add-to-dashboard": {
-      "modal-title": ""
+      "modal-title": "Adicionar ao painel de controlo"
     },
     "exploration-type": {
       "all-services": "Todos os serviços",
@@ -178,7 +178,7 @@
       "add-recording-rule": "Adicionar regra de gravação",
       "recording-rules-tooltip": "Regras de gravação",
       "settings-tooltip": "Ver/editar definições do inquilino",
-      "share-error": "",
+      "share-error": "Erro ao copiar o link partilhável para a área de transferência!",
       "share-tooltip": "Copiar link partilhável para a área de transferência",
       "upload-tooltip": "Carregar perfis ad hoc",
       "view-recording-rules": "Ver regras de gravação"
@@ -191,20 +191,20 @@
   "export-menu": {
     "aria-label": "Exportar dados de perfil",
     "error-flamegraph-com": "Falha ao exportar para flamegraph.com!",
-    "error-gcx-copy": "",
+    "error-gcx-copy": "Falha ao copiar o comando gcx para a área de transferência!",
     "error-loading-profile": "Erro ao carregar dados de perfil do flamebearer!",
     "error-png": "Falha ao exportar para png!",
-    "error-png-no-canvas": "",
+    "error-png-no-canvas": "Certifique-se de que o gráfico de chamas está visível antes de exportar para png.",
     "error-pprof": "Falha ao exportar para pprof!",
-    "gcx-command": "",
-    "gcx-command-tooltip": "",
-    "gcx-commands": "",
-    "gcx-commands-tooltip": "",
-    "gcx-copied": "",
+    "gcx-command": "Comando gcx",
+    "gcx-command-tooltip": "Copie o comando gcx para transferir este perfil como pprof",
+    "gcx-commands": "Comandos gcx",
+    "gcx-commands-tooltip": "Copie os comandos gcx para transferir os perfis de referência e de comparação como pprof",
+    "gcx-copied": "Comando gcx copiado para a área de transferência!",
     "json": "json",
     "json-label": "json",
     "png": "png",
-    "png-disabled-description": "",
+    "png-disabled-description": "Mude para a vista do gráfico de chamas para o exportar como png",
     "png-label": "png",
     "pprof": "pprof",
     "tooltip": "Exportar dados de perfil"
@@ -229,10 +229,10 @@
       "tooltip": "Adicionou um seletor de ID de perfil à consulta de gráfico de chamas ({{profileIdSelector}})."
     },
     "span-selector": {
-      "filter-label": "",
-      "filter-operator": "",
-      "filter-value": "",
-      "name": "",
+      "filter-label": "Etiqueta do filtro",
+      "filter-operator": "Operador de filtro",
+      "filter-value": "Valor do filtro",
+      "name": "Intervalo",
       "remove": "Remover o seletor de intervalo da consulta",
       "tooltip": "Adicionou um seletor de intervalo à consulta de gráfico de chamas ({{spanSelector}})."
     },
@@ -265,7 +265,7 @@
     "context-menu": {
       "label": "Detalhes da função"
     },
-    "copy-error": "",
+    "copy-error": "Erro ao copiar o caminho do ficheiro para a área de transferência!",
     "copy-to-clipboard": "Copiar para a área de transferência",
     "fetch-error": "Erro ao obter detalhes da função!",
     "file": "Ficheiro",
@@ -323,7 +323,7 @@
   },
   "grid": {
     "empty-state": {
-      "no-profiles": "",
+      "no-profiles": "Nenhum perfil encontrado. Alargue o intervalo de tempo ou comece a enviar dados de perfil.",
       "no-results": "Sem resultados"
     },
     "error": {
@@ -354,38 +354,38 @@
   },
   "heatmap": {
     "exemplar": {
-      "select": ""
+      "select": "Selecionar exemplar"
     },
     "exemplar-table": {
-      "clear-selection": "",
-      "col-actions": "",
-      "col-duration": "",
-      "col-span-id": "",
-      "col-span-name": "",
-      "col-timestamp": "",
-      "col-trace-id": "",
-      "copied": "",
-      "copy-to-clipboard": "",
-      "empty": "",
-      "open-flamegraph": "",
-      "open-trace": "",
-      "select-exemplar": "",
-      "select-tempo": "",
-      "tempo-datasource": "",
-      "tempo-placeholder": "",
-      "title": "",
-      "trace-lookup-failed": ""
+      "clear-selection": "Limpar a seleção de exemplar",
+      "col-actions": "Ações",
+      "col-duration": "Duração",
+      "col-span-id": "ID de intervalo",
+      "col-span-name": "Nome do intervalo",
+      "col-timestamp": "Registo de data e hora",
+      "col-trace-id": "ID de rastreio",
+      "copied": "Copiado!",
+      "copy-to-clipboard": "Copiar para a área de transferência",
+      "empty": "Não há exemplares de intervalo no intervalo de tempo selecionado.",
+      "open-flamegraph": "Abrir gráfico de chamas",
+      "open-trace": "Abrir rastreio",
+      "select-exemplar": "Selecionar exemplar",
+      "select-tempo": "Selecionar origem de dados Tempo",
+      "tempo-datasource": "Origem de dados Tempo",
+      "tempo-placeholder": "Selecionar origem de dados Tempo...",
+      "title": "Principais exemplos de intervalos",
+      "trace-lookup-failed": "Não foi possível carregar os detalhes do rastreio Tempo."
     },
     "menu": {
-      "open-in-explore": ""
+      "open-in-explore": "Abrir no Explore"
     },
     "trace-drawer": {
-      "title": ""
+      "title": "Rastreio {{traceId}}"
     }
   },
   "labels": {
     "compare": {
-      "aria-label": "",
+      "aria-label": "Comparar",
       "clear-tooltip": "Limpar a seleção de comparação",
       "tooltip-empty": "Selecione um painel de referência e um painel de comparação para comparar os respetivos gráficos de chamas",
       "tooltip-ready": "Comparar \"{{baseline}}\" vs. \"{{comparison}}\"",
@@ -482,10 +482,10 @@
   },
   "optimize-code": {
     "context": {
-      "title": ""
+      "title": "Código-fonte anotado e instruções de otimização"
     },
-    "error": "",
-    "prompt": ""
+    "error": "Falha ao criar o contexto de otimização",
+    "prompt": "Otimizar este código com base nas anotações de perfil."
   },
   "panel-box": {
     "cancel-query": "Cancelar consulta",
@@ -506,7 +506,7 @@
     "commit-sha": "Aplicar alteração SHA: {{shortCommitSha}}",
     "contribute": "Contribuir",
     "documentation": "Documentação",
-    "grafana-version": "",
+    "grafana-version": "Grafana {{edition}} ({{env}})",
     "last-update": "Última atualização: {{updated}}",
     "report-issue": "Comunicar um problema",
     "title": "Informações do plugin",
@@ -514,10 +514,10 @@
   },
   "profiles": {
     "kg-annotations": {
-      "insights-label": "",
-      "severity-critical": "",
-      "severity-info": "",
-      "severity-warning": ""
+      "insights-label": "Conhecimentos",
+      "severity-critical": "Crítico",
+      "severity-info": "Informação",
+      "severity-warning": "Aviso"
     }
   },
   "query-analysis": {
@@ -616,7 +616,7 @@
       "no-searches": "Não há pesquisas guardadas para mostrar.",
       "no-searches-tooltip": "Não há pesquisas guardadas para carregar",
       "remove-tooltip": "Remover",
-      "saved-query-tooltip": "",
+      "saved-query-tooltip": "Carregar a consulta guardada",
       "select": "Selecionar",
       "select-pyroscope-query": "Selecione uma consulta Pyroscope.",
       "title": "Carregar uma pesquisa guardada anteriormente",
@@ -630,7 +630,7 @@
       "existing-search-warning": "Existe uma pesquisa guardada anteriormente com a mesma consulta: {{title}}",
       "info-message": "As pesquisas guardadas são armazenadas localmente no seu navegador e só estarão disponíveis neste dispositivo.",
       "save": "Guardar",
-      "saved-queries-tooltip": "",
+      "saved-queries-tooltip": "Guardar em Consultas guardadas",
       "success-body": "Pesquisa guardada com sucesso.",
       "success-message": "Pesquisa guardada com sucesso.",
       "success-title": "Sucesso",
@@ -664,9 +664,9 @@
         "tooltip": "A funcionalidade de detalhes da função permite mapear a utilização de recursos para linhas de código-fonte. Se a integração com o GitHub estiver configurada, o código-fonte será transferido do GitHub."
       },
       "fetch-error": {
-        "cloud-hint": "",
-        "message": "",
-        "oss-hint": "",
+        "cloud-hint": "Na Grafana Cloud, verifique junto do administrador da sua organização se tem permissão para ler e escrever as definições do plugin para esta origem de dados.",
+        "message": "As definições abaixo mostram os valores predefinidos em vez do que foi guardado anteriormente. O que pode fazer:",
+        "oss-hint": "Com o Grafana Pyroscope OSS, certifique-se de que o URL da origem de dados expõe o endpoint das definições do tenant.",
         "title": "Erro ao recuperar as configurações do plugin!"
       },
       "flame-graph": {
@@ -691,9 +691,9 @@
   },
   "timeseries": {
     "menu": {
-      "add-to-dashboard": "",
+      "add-to-dashboard": "Adicionar ao painel de controlo",
       "exemplars": "Exemplos",
-      "labels": "",
+      "labels": "Etiquetas",
       "open-in-explore": "Abrir em Explorar",
       "scale-linear": "Linear",
       "scale-log2": "Log2",
@@ -732,7 +732,7 @@
       "aria-label": "Lista de serviços",
       "label": "Serviço",
       "loading": "A carregar serviços...",
-      "unmatched-tooltip": "",
+      "unmatched-tooltip": "\"{{serviceName}}\" não aparece na lista de serviços devolvidos para esta origem de dados e intervalo de tempo. Selecione um serviço diferente no menu suspenso.",
       "placeholder_one": "Selecionar um serviço ({{count}})",
       "placeholder_other": "Selecionar um serviço ({{count}})"
     },

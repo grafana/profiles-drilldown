@@ -10,27 +10,27 @@
       "unfavorite": "즐겨찾기 해제"
     },
     "span-exemplar-toggle": {
-      "aria-label": "",
-      "span-heatmap": "",
-      "time-series": "",
-      "unavailable": ""
+      "aria-label": "프로필 타임라인 시각화",
+      "span-heatmap": "스팬 히트맵",
+      "time-series": "시계열",
+      "unavailable": "현재 서비스, 필터 및 시간 범위에 대해 사용할 수 있는 스팬 프로파일이 없습니다."
     }
   },
   "ad-hoc": {
     "diff": {
-      "cannot-compute-diff": "",
-      "no-common-profile-types": "",
-      "profile": ""
+      "cannot-compute-diff": "차이를 계산할 수 없음",
+      "no-common-profile-types": "업로드된 프로필에 공통 프로필 유형이 없습니다. 차이 보기(Diff View)를 사용하려면 유형이 일치하는 프로필을 업로드하세요.",
+      "profile": "프로필"
     },
     "profile-type-selector": {
       "label": "프로필"
     },
     "tabs": {
-      "diff-view": "",
+      "diff-view": "차이 보기",
       "single-view": "단일 보기"
     },
     "upload": {
-      "diff-converted-to-single": ""
+      "diff-converted-to-single": "차등 프로필이 업로드를 위해 하나의 플레임 그래프로 변환되었습니다. 비교 데이터가 유지되지 않았습니다."
     },
     "view": {
       "title": "임시 보기"
@@ -45,7 +45,7 @@
       "placeholder": "후속 질문하기...",
       "send": "전송"
     },
-    "llm-error": "",
+    "llm-error": "OpenAI를 사용하여 콘텐츠를 생성하는 동안 오류가 발생했습니다!",
     "llm-error-message": "불편을 드려 죄송합니다. 다시 시도하거나 문제가 지속되면 조직 관리자에게 문의하세요.",
     "reply": {
       "search-node": "이 노드 검색하기"
@@ -66,7 +66,7 @@
     "label": "Profiles Drilldown으로 돌아가기"
   },
   "common": {
-    "not-available": ""
+    "not-available": "–"
   },
   "create-recording-rule": {
     "cancel": "취소",
@@ -121,10 +121,10 @@
       "tooltip-time-picker": "시간 선택기",
       "tooltip-time-picker-description": "시간 범위 확대(기본 동작)"
     },
-    "error-gcx-copy": "",
+    "error-gcx-copy": "클립보드에 gcx 명령을 복사하지 못했습니다!",
     "error-loading-profile": "프로필 데이터를 불러오는 동안 오류가 발생했습니다!",
     "explain-button": "차등 플레임 그래프 설명",
-    "gcx-copied": "",
+    "gcx-copied": "클립보드에 gcx 명령이 복사되었습니다!",
     "missing-selections": {
       "auto-select": "자동 선택",
       "how-to-alt": "차등 플레임 그래프를 보는 방법",
@@ -153,12 +153,12 @@
     "title": "Grafana Profiles Drilldown"
   },
   "explore-service-heatmap": {
-    "description": "",
-    "title": ""
+    "description": "특정 버킷에 속하는 트레이스 스팬의 개수",
+    "title": "트레이스 스팬당 {{title}}"
   },
   "explorer": {
     "add-to-dashboard": {
-      "modal-title": ""
+      "modal-title": "대시보드에 추가"
     },
     "exploration-type": {
       "all-services": "모든 서비스",
@@ -178,7 +178,7 @@
       "add-recording-rule": "기록 규칙 추가",
       "recording-rules-tooltip": "기록 규칙",
       "settings-tooltip": "테넌트 설정 보기/편집",
-      "share-error": "",
+      "share-error": "공유 링크를 클립보드에 복사하는 중 오류가 발생했습니다!",
       "share-tooltip": "공유 가능한 링크를 클립보드에 복사",
       "upload-tooltip": "임시 프로필 업로드",
       "view-recording-rules": "기록 규칙 보기"
@@ -191,20 +191,20 @@
   "export-menu": {
     "aria-label": "프로필 데이터 내보내기",
     "error-flamegraph-com": "flamegraph.com으로 내보내지 못했습니다!",
-    "error-gcx-copy": "",
+    "error-gcx-copy": "클립보드에 gcx 명령을 복사하지 못했습니다!",
     "error-loading-profile": "Flamebearer 프로필 데이터를 불러오는 동안 오류가 발생했습니다!",
     "error-png": "png로 내보내지 못했습니다!",
-    "error-png-no-canvas": "",
+    "error-png-no-canvas": "png로 내보내기 전에 플레임 그래프가 표시되는지 확인하세요.",
     "error-pprof": "pprof로 내보내지 못했습니다!",
-    "gcx-command": "",
-    "gcx-command-tooltip": "",
-    "gcx-commands": "",
-    "gcx-commands-tooltip": "",
-    "gcx-copied": "",
+    "gcx-command": "gcx 명령",
+    "gcx-command-tooltip": "이 프로필을 pprof로 다운로드하려면 gcx 명령을 복사하세요",
+    "gcx-commands": "gcx 명령",
+    "gcx-commands-tooltip": "기준 프로필과 비교 프로필을 pprof로 다운로드하려면 gcx 명령을 복사하세요",
+    "gcx-copied": "클립보드에 gcx 명령이 복사되었습니다!",
     "json": "json",
     "json-label": "json",
     "png": "png",
-    "png-disabled-description": "",
+    "png-disabled-description": "플레임 그래프 보기로 전환하여 png로 내보내기",
     "png-label": "png",
     "pprof": "pprof",
     "tooltip": "프로필 데이터 내보내기"
@@ -229,10 +229,10 @@
       "tooltip": "플레임그래프 쿼리({{profileIdSelector}})에 프로필 ID 선택기를 추가했습니다."
     },
     "span-selector": {
-      "filter-label": "",
-      "filter-operator": "",
-      "filter-value": "",
-      "name": "",
+      "filter-label": "필터 라벨",
+      "filter-operator": "필터 연산자",
+      "filter-value": "필터 값",
+      "name": "스팬",
       "remove": "쿼리에서 범위 선택기 제거",
       "tooltip": "플레임그래프 쿼리({{spanSelector}})에 범위 선택기를 추가했습니다."
     },
@@ -265,7 +265,7 @@
     "context-menu": {
       "label": "함수 세부 정보"
     },
-    "copy-error": "",
+    "copy-error": "파일 경로를 클립보드에 복사하는 중 오류가 발생했습니다!",
     "copy-to-clipboard": "클립보드로 복사",
     "fetch-error": "함수 세부 정보를 가져오는 동안 오류가 발생했습니다!",
     "file": "파일",
@@ -323,7 +323,7 @@
   },
   "grid": {
     "empty-state": {
-      "no-profiles": "",
+      "no-profiles": "프로필을 찾을 수 없습니다. 시간 범위를 넓히거나 프로필 데이터 전송을 시작하세요.",
       "no-results": "결과 없음"
     },
     "error": {
@@ -354,38 +354,38 @@
   },
   "heatmap": {
     "exemplar": {
-      "select": ""
+      "select": "예시 선택"
     },
     "exemplar-table": {
-      "clear-selection": "",
-      "col-actions": "",
-      "col-duration": "",
-      "col-span-id": "",
-      "col-span-name": "",
-      "col-timestamp": "",
-      "col-trace-id": "",
-      "copied": "",
-      "copy-to-clipboard": "",
-      "empty": "",
-      "open-flamegraph": "",
-      "open-trace": "",
-      "select-exemplar": "",
-      "select-tempo": "",
-      "tempo-datasource": "",
-      "tempo-placeholder": "",
-      "title": "",
-      "trace-lookup-failed": ""
+      "clear-selection": "예시 선택 항목 지우기",
+      "col-actions": "작업",
+      "col-duration": "지속 시간",
+      "col-span-id": "스팬 ID",
+      "col-span-name": "스팬 이름",
+      "col-timestamp": "시간 기록",
+      "col-trace-id": "트레이스 ID",
+      "copied": "복사 완료",
+      "copy-to-clipboard": "클립보드로 복사",
+      "empty": "선택한 시간 범위에 스팬 예시가 없습니다.",
+      "open-flamegraph": "플레임 그래프 열기",
+      "open-trace": "트레이스 열기",
+      "select-exemplar": "예시 선택",
+      "select-tempo": "Tempo 데이터 소스 선택",
+      "tempo-datasource": "Tempo 데이터 소스",
+      "tempo-placeholder": "Tempo 데이터 소스 선택...",
+      "title": "상위 스팬 예시",
+      "trace-lookup-failed": "Tempo에서 트레이스 세부 정보를 로딩할 수 없습니다."
     },
     "menu": {
-      "open-in-explore": ""
+      "open-in-explore": "Explore에서 열기"
     },
     "trace-drawer": {
-      "title": ""
+      "title": "트레이스 {{traceId}}"
     }
   },
   "labels": {
     "compare": {
-      "aria-label": "",
+      "aria-label": "비교",
       "clear-tooltip": "비교 선택 항목 지우기",
       "tooltip-empty": "플레임 그래프를 비교하려면 기준 패널과 비교 패널을 모두 선택하세요.",
       "tooltip-ready": "'{{baseline}}'과(와) '{{comparison}}' 비교",
@@ -481,10 +481,10 @@
   },
   "optimize-code": {
     "context": {
-      "title": ""
+      "title": "주석이 추가된 소스 코드 및 최적화 지침"
     },
-    "error": "",
-    "prompt": ""
+    "error": "최적화 컨텍스트 생성 실패",
+    "prompt": "프로파일링 주석을 기반으로 이 코드를 최적화하세요."
   },
   "panel-box": {
     "cancel-query": "쿼리 취소",
@@ -505,7 +505,7 @@
     "commit-sha": "SHA 커밋: {{shortCommitSha}}",
     "contribute": "기여",
     "documentation": "문서",
-    "grafana-version": "",
+    "grafana-version": "Grafana {{edition}} ({{env}})",
     "last-update": "마지막 업데이트: {{updated}}",
     "report-issue": "문제 보고",
     "title": "플러그인 정보",
@@ -513,10 +513,10 @@
   },
   "profiles": {
     "kg-annotations": {
-      "insights-label": "",
-      "severity-critical": "",
-      "severity-info": "",
-      "severity-warning": ""
+      "insights-label": "인사이트",
+      "severity-critical": "심각",
+      "severity-info": "정보",
+      "severity-warning": "경고"
     }
   },
   "query-analysis": {
@@ -615,7 +615,7 @@
       "no-searches": "표시할 저장된 검색이 없습니다.",
       "no-searches-tooltip": "불러올 저장된 검색이 없습니다.",
       "remove-tooltip": "제거",
-      "saved-query-tooltip": "",
+      "saved-query-tooltip": "저장된 쿼리 불러오기",
       "select": "선택",
       "select-pyroscope-query": "Pyroscope 쿼리를 선택하세요.",
       "title": "이전에 저장된 검색 불러오기",
@@ -629,7 +629,7 @@
       "existing-search-warning": "동일한 쿼리로 이전에 저장된 검색이 있음: {{title}}",
       "info-message": "저장된 검색은 브라우저에 로컬로 저장되며 이 기기에서만 사용할 수 있습니다.",
       "save": "저장",
-      "saved-queries-tooltip": "",
+      "saved-queries-tooltip": "저장된 쿼리에 저장",
       "success-body": "검색이 성공적으로 저장되었습니다.",
       "success-message": "검색이 성공적으로 저장되었습니다.",
       "success-title": "성공",
@@ -663,9 +663,9 @@
         "tooltip": "함수 세부 정보 기능을 사용하면 리소스 사용량을 소스 코드 라인에 매핑할 수 있습니다. GitHub 통합이 구성된 경우 GitHub에서 소스 코드가 다운로드됩니다."
       },
       "fetch-error": {
-        "cloud-hint": "",
-        "message": "",
-        "oss-hint": "",
+        "cloud-hint": "Grafana Cloud에서 조직 관리자에게 문의하여 이 데이터 소스의 플러그인 설정을 읽고 쓸 수 있는 권한이 있는지 확인하세요.",
+        "message": "아래 설정은 이전에 저장된 값이 아닌 기본값을 표시합니다. 수행할 수 있는 작업:",
+        "oss-hint": "Grafana Pyroscope OSS를 사용하여 데이터 소스 URL이 tenant-settings 엔드포인트를 노출하는지 확인하세요.",
         "title": "플러그인 설정을 가져오는 동안 오류가 발생했습니다!"
       },
       "flame-graph": {
@@ -690,9 +690,9 @@
   },
   "timeseries": {
     "menu": {
-      "add-to-dashboard": "",
+      "add-to-dashboard": "대시보드에 추가",
       "exemplars": "예제",
-      "labels": "",
+      "labels": "레이블",
       "open-in-explore": "탐색에서 열기",
       "scale-linear": "직선형",
       "scale-log2": "Log2",
@@ -730,7 +730,7 @@
       "aria-label": "서비스 목록",
       "label": "서비스",
       "loading": "서비스 로딩 중...",
-      "unmatched-tooltip": "",
+      "unmatched-tooltip": "\"{{serviceName}}\"은(는) 이 데이터 소스 및 시간 범위에 대해 반환된 서비스 목록에 없습니다. 드롭다운에서 다른 서비스를 선택하세요.",
       "placeholder_other": "서비스({{count}}) 선택"
     },
     "span-selector": {

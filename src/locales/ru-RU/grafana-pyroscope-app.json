@@ -10,27 +10,27 @@
       "unfavorite": "Удалить из избранного"
     },
     "span-exemplar-toggle": {
-      "aria-label": "",
-      "span-heatmap": "",
-      "time-series": "",
-      "unavailable": ""
+      "aria-label": "Визуализация временной шкалы профиля",
+      "span-heatmap": "Тепловая карта спанов",
+      "time-series": "Временные ряды",
+      "unavailable": "Нет профилей спанов для текущего сервиса, фильтров и временного диапазона"
     }
   },
   "ad-hoc": {
     "diff": {
-      "cannot-compute-diff": "",
-      "no-common-profile-types": "",
-      "profile": ""
+      "cannot-compute-diff": "Невозможно вычислить различия",
+      "no-common-profile-types": "Загруженные профили не имеют общих типов. Загрузите профили с совпадающими типами, чтобы использовать представление различий.",
+      "profile": "Профиль"
     },
     "profile-type-selector": {
       "label": "Профиль"
     },
     "tabs": {
-      "diff-view": "",
+      "diff-view": "Представление различий",
       "single-view": "Единое представление"
     },
     "upload": {
-      "diff-converted-to-single": ""
+      "diff-converted-to-single": "Профиль различий был преобразован в единый flame-граф для загрузки. Данные для сравнения не сохранены."
     },
     "view": {
       "title": "Специальное представление"
@@ -45,7 +45,7 @@
       "placeholder": "Задать уточняющий вопрос...",
       "send": "Отправить"
     },
-    "llm-error": "",
+    "llm-error": "Ошибка при создании контента с помощью OpenAI",
     "llm-error-message": "Приносим извинения за неудобства. Повторите попытку. Если проблема не исчезнет, обратитесь к администратору организации.",
     "reply": {
       "search-node": "Найти этот узел"
@@ -66,7 +66,7 @@
     "label": "Назад в Profiles Drilldown"
   },
   "common": {
-    "not-available": ""
+    "not-available": "–"
   },
   "create-recording-rule": {
     "cancel": "Отмена",
@@ -121,10 +121,10 @@
       "tooltip-time-picker": "Указатель времени",
       "tooltip-time-picker-description": "Увеличение временного диапазона (действие по умолчанию)"
     },
-    "error-gcx-copy": "",
+    "error-gcx-copy": "Не удалось скопировать команды gcx в буфер обмена",
     "error-loading-profile": "Ошибка при загрузке данных профиля",
     "explain-button": "Объяснить flame-график различий",
-    "gcx-copied": "",
+    "gcx-copied": "Команды gcx скопированы в буфер обмена",
     "missing-selections": {
       "auto-select": "Автоматический выбор",
       "how-to-alt": "Как посмотреть flame-график различий",
@@ -153,12 +153,12 @@
     "title": "Grafana Profiles Drilldown"
   },
   "explore-service-heatmap": {
-    "description": "",
-    "title": ""
+    "description": "Количество спанов трассировки, попадающих в определенный бакет",
+    "title": "{{title}} на спан трассировки"
   },
   "explorer": {
     "add-to-dashboard": {
-      "modal-title": ""
+      "modal-title": "Добавление на дашборд"
     },
     "exploration-type": {
       "all-services": "Все службы",
@@ -178,7 +178,7 @@
       "add-recording-rule": "Добавление правила записи",
       "recording-rules-tooltip": "Правила записи",
       "settings-tooltip": "Просмотр/редактирование параметров клиента",
-      "share-error": "",
+      "share-error": "Ошибка при копировании ссылки для совместного доступа в буфер обмена",
       "share-tooltip": "Копирование ссылки для совместного доступа в буфер обмена",
       "upload-tooltip": "Добавление специальных профилей",
       "view-recording-rules": "Просмотр правил записи"
@@ -191,20 +191,20 @@
   "export-menu": {
     "aria-label": "Экспорт данных профиля",
     "error-flamegraph-com": "Ошибка экспорта на flamegraph.com",
-    "error-gcx-copy": "",
+    "error-gcx-copy": "Не удалось скопировать команду gcx в буфер обмена",
     "error-loading-profile": "Ошибка при загрузке данных профиля Flamebearer",
     "error-png": "Ошибка экспорта в PNG",
-    "error-png-no-canvas": "",
+    "error-png-no-canvas": "Перед экспортом в PNG убедитесь, что отображается flame-граф.",
     "error-pprof": "Ошибка экспорта в pprof",
-    "gcx-command": "",
-    "gcx-command-tooltip": "",
-    "gcx-commands": "",
-    "gcx-commands-tooltip": "",
-    "gcx-copied": "",
+    "gcx-command": "Команда gcx",
+    "gcx-command-tooltip": "Скопируйте команду gcx, чтобы загрузить этот профиль в формате pprof",
+    "gcx-commands": "Команды gcx",
+    "gcx-commands-tooltip": "Скопируйте команды gcx, чтобы загрузить базовый и сравниваемый профили в формате pprof",
+    "gcx-copied": "Команда gcx скопирована в буфер обмена",
     "json": "JSON",
     "json-label": "JSON",
     "png": "PNG",
-    "png-disabled-description": "",
+    "png-disabled-description": "Переключитесь на представление flame-графа, чтобы экспортировать его в формате PNG.",
     "png-label": "PNG",
     "pprof": "pprof",
     "tooltip": "Экспорт данных профиля"
@@ -229,10 +229,10 @@
       "tooltip": "Вы добавили селектор идентификатора профиля в запрос flame-графика ({{profileIdSelector}})."
     },
     "span-selector": {
-      "filter-label": "",
-      "filter-operator": "",
-      "filter-value": "",
-      "name": "",
+      "filter-label": "Метка фильтра",
+      "filter-operator": "Оператор фильтра",
+      "filter-value": "Значение фильтра",
+      "name": "Спан",
       "remove": "Удалить селектор диапазона из запроса",
       "tooltip": "Вы добавили селектор диапазона в запрос flame-графика ({{spanSelector}})."
     },
@@ -265,7 +265,7 @@
     "context-menu": {
       "label": "Сведения о функции"
     },
-    "copy-error": "",
+    "copy-error": "Ошибка при копировании пути файла в буфер обмена",
     "copy-to-clipboard": "Копировать в буфер обмена",
     "fetch-error": "Ошибка при получении сведений о функции",
     "file": "Файл",
@@ -323,7 +323,7 @@
   },
   "grid": {
     "empty-state": {
-      "no-profiles": "",
+      "no-profiles": "Профили не найдены. Расширьте временной интервал или начните отправку данных профиля.",
       "no-results": "Нет результатов"
     },
     "error": {
@@ -354,38 +354,38 @@
   },
   "heatmap": {
     "exemplar": {
-      "select": ""
+      "select": "Выбрать образец"
     },
     "exemplar-table": {
-      "clear-selection": "",
-      "col-actions": "",
-      "col-duration": "",
-      "col-span-id": "",
-      "col-span-name": "",
-      "col-timestamp": "",
-      "col-trace-id": "",
-      "copied": "",
-      "copy-to-clipboard": "",
-      "empty": "",
-      "open-flamegraph": "",
-      "open-trace": "",
-      "select-exemplar": "",
-      "select-tempo": "",
-      "tempo-datasource": "",
-      "tempo-placeholder": "",
-      "title": "",
-      "trace-lookup-failed": ""
+      "clear-selection": "Очистить выбор образца",
+      "col-actions": "Действия",
+      "col-duration": "Длительность",
+      "col-span-id": "Идентификатор спана",
+      "col-span-name": "Имя спана",
+      "col-timestamp": "Метка времени",
+      "col-trace-id": "Идентификатор трассировки",
+      "copied": "Скопировано",
+      "copy-to-clipboard": "Копировать в буфер обмена",
+      "empty": "Нет образцов спанов в выбранном временном диапазоне.",
+      "open-flamegraph": "Открыть flame-граф",
+      "open-trace": "Открыть трассировку",
+      "select-exemplar": "Выбрать образец",
+      "select-tempo": "Выбрать источник данных Tempo",
+      "tempo-datasource": "Источник данных Tempo",
+      "tempo-placeholder": "Выберите источник данных Tempo",
+      "title": "Лучшие образцы спанов",
+      "trace-lookup-failed": "Невозможно загрузить сведения о трассировке из Tempo."
     },
     "menu": {
-      "open-in-explore": ""
+      "open-in-explore": "Открыть в Explore"
     },
     "trace-drawer": {
-      "title": ""
+      "title": "Трассировка {{traceId}}"
     }
   },
   "labels": {
     "compare": {
-      "aria-label": "",
+      "aria-label": "Сравнить",
       "clear-tooltip": "Очистить выбор для сравнения",
       "tooltip-empty": "Чтобы сравнить flame-графики, выберите базовую и сравниваемую панели",
       "tooltip-ready": "Сравнить «{{baseline}}» и «{{comparison}}»",
@@ -484,10 +484,10 @@
   },
   "optimize-code": {
     "context": {
-      "title": ""
+      "title": "Исходный код с аннотациями и инструкции по оптимизации"
     },
-    "error": "",
-    "prompt": ""
+    "error": "Не удалось создать контекст оптимизации",
+    "prompt": "Оптимизируйте код по аннотациям профилирования."
   },
   "panel-box": {
     "cancel-query": "Отмена запроса",
@@ -508,7 +508,7 @@
     "commit-sha": "Выполнить SHA-хеширование: {{shortCommitSha}}",
     "contribute": "Внести вклад",
     "documentation": "Документация",
-    "grafana-version": "",
+    "grafana-version": "Grafana {{edition}} ({{env}})",
     "last-update": "Последнее обновление: {{updated}}",
     "report-issue": "Сообщить о проблеме",
     "title": "О плагине",
@@ -516,10 +516,10 @@
   },
   "profiles": {
     "kg-annotations": {
-      "insights-label": "",
-      "severity-critical": "",
-      "severity-info": "",
-      "severity-warning": ""
+      "insights-label": "Аналитика",
+      "severity-critical": "Критическая",
+      "severity-info": "Информация",
+      "severity-warning": "Предупреждение"
     }
   },
   "query-analysis": {
@@ -618,7 +618,7 @@
       "no-searches": "Нет сохраненных поисковых запросов для отображения.",
       "no-searches-tooltip": "Нет сохраненных поисковых запросов для загрузки",
       "remove-tooltip": "Удалить",
-      "saved-query-tooltip": "",
+      "saved-query-tooltip": "Загрузить сохраненный запрос",
       "select": "Выбрать",
       "select-pyroscope-query": "Выберите запрос Pyroscope.",
       "title": "Загрузить ранее сохраненный поисковый запрос",
@@ -632,7 +632,7 @@
       "existing-search-warning": "Ранее был сохранен поисковый запрос с таким же содержанием: {{title}}",
       "info-message": "Сохраненные поисковые запросы хранятся локально в вашем браузере и будут доступны только на этом устройстве.",
       "save": "Сохранить",
-      "saved-queries-tooltip": "",
+      "saved-queries-tooltip": "Сохранить в сохраненных запросах",
       "success-body": "Поисковый запрос сохранен.",
       "success-message": "Поисковый запрос сохранен.",
       "success-title": "Выполнено",
@@ -666,9 +666,9 @@
         "tooltip": "Сведения о функции позволяют сопоставить использование ресурсов со строками исходного кода. Если настроена интеграция с GitHub, исходный код будет загружен из GitHub."
       },
       "fetch-error": {
-        "cloud-hint": "",
-        "message": "",
-        "oss-hint": "",
+        "cloud-hint": "В Grafana Cloud уточните у администратора организации, есть ли у вас права на чтение и запись настроек плагина для этого источника данных.",
+        "message": "В приведенных ниже настройках отображаются значения по умолчанию вместо ранее сохраненных. Доступные возможности:",
+        "oss-hint": "При использовании Grafana Pyroscope OSS убедитесь, что URL-адрес источника данных предоставляет доступ к конечной точке tenant-settings.",
         "title": "Ошибка при получении параметров плагина"
       },
       "flame-graph": {
@@ -693,9 +693,9 @@
   },
   "timeseries": {
     "menu": {
-      "add-to-dashboard": "",
+      "add-to-dashboard": "Добавить на дашборд",
       "exemplars": "Образцы",
-      "labels": "",
+      "labels": "Метки",
       "open-in-explore": "Открыть в Explore",
       "scale-linear": "Линейная",
       "scale-log2": "Log2",
@@ -736,7 +736,7 @@
       "aria-label": "Список служб",
       "label": "Служба",
       "loading": "Загрузка служб...",
-      "unmatched-tooltip": "",
+      "unmatched-tooltip": "«{{serviceName}}» отсутствует в списке сервисов, возвращенных для этого источника данных и временного диапазона. Выберите другой сервис из раскрывающегося списка.",
       "placeholder_one": "Выбрать службу ({{count}})",
       "placeholder_few": "Выбрать службы ({{count}})",
       "placeholder_many": "Выбрать службы ({{count}})",

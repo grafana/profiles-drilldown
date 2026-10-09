@@ -10,27 +10,27 @@
       "unfavorite": "お気に入りから削除"
     },
     "span-exemplar-toggle": {
-      "aria-label": "",
-      "span-heatmap": "",
-      "time-series": "",
-      "unavailable": ""
+      "aria-label": "プロファイルタイムラインの可視化",
+      "span-heatmap": "スパンヒートマップ",
+      "time-series": "時系列",
+      "unavailable": "現在のサービス、フィルター、時間範囲で利用できるスパンプロファイルはありません"
     }
   },
   "ad-hoc": {
     "diff": {
-      "cannot-compute-diff": "",
-      "no-common-profile-types": "",
-      "profile": ""
+      "cannot-compute-diff": "差分を計算できません",
+      "no-common-profile-types": "アップロードされたプロファイルに共通のプロファイルタイプがありません。差分ビューを使用するには、タイプが一致するプロファイルをアップロードしてください。",
+      "profile": "プロファイル"
     },
     "profile-type-selector": {
       "label": "プロファイル"
     },
     "tabs": {
-      "diff-view": "",
+      "diff-view": "差分ビュー",
       "single-view": "単一ビュー"
     },
     "upload": {
-      "diff-converted-to-single": ""
+      "diff-converted-to-single": "差分プロファイルは、アップロード用に1つのフレームグラフに変換されました。比較データは保持されていません。"
     },
     "view": {
       "title": "アドホックビュー"
@@ -45,7 +45,7 @@
       "placeholder": "フォローアップの質問をする...",
       "send": "送信"
     },
-    "llm-error": "",
+    "llm-error": "OpenAIを使用したコンテンツの生成中にエラーが発生しました。",
     "llm-error-message": "ご不便をおかけして申し訳ございません。もう一度お試しください。それでも問題が解決しない場合は、組織の管理者に連絡してください。",
     "reply": {
       "search-node": "このノードを検索"
@@ -66,7 +66,7 @@
     "label": "Profiles Drilldownに戻る"
   },
   "common": {
-    "not-available": ""
+    "not-available": "–"
   },
   "create-recording-rule": {
     "cancel": "キャンセル",
@@ -121,10 +121,10 @@
       "tooltip-time-picker": "タイムピッカー",
       "tooltip-time-picker-description": "時間範囲ズームイン（デフォルトの動作）"
     },
-    "error-gcx-copy": "",
+    "error-gcx-copy": "gcxコマンドをクリップボードにコピーできませんでした！",
     "error-loading-profile": "プロファイルデータの読み込み中にエラーが発生しました！",
     "explain-button": "差分フレームグラフを説明する",
-    "gcx-copied": "",
+    "gcx-copied": "gcxコマンドをクリップボードにコピーしました。",
     "missing-selections": {
       "auto-select": "自動選択",
       "how-to-alt": "差分フレームグラフの表示方法",
@@ -153,12 +153,12 @@
     "title": "Grafana Profiles Drilldown"
   },
   "explore-service-heatmap": {
-    "description": "",
-    "title": ""
+    "description": "特定のバケットに含まれるトレーススパンの数",
+    "title": "トレーススパンあたりの{{title}}"
   },
   "explorer": {
     "add-to-dashboard": {
-      "modal-title": ""
+      "modal-title": "ダッシュボードに追加"
     },
     "exploration-type": {
       "all-services": "すべてのサービス",
@@ -178,7 +178,7 @@
       "add-recording-rule": "記録ルールを追加",
       "recording-rules-tooltip": "記録ルール",
       "settings-tooltip": "テナント設定の表示/編集",
-      "share-error": "",
+      "share-error": "共有用リンクをクリップボードにコピーする際にエラーが発生しました。",
       "share-tooltip": "共有可能なリンクをクリップボードにコピー",
       "upload-tooltip": "アドホックプロファイルをアップロード",
       "view-recording-rules": "記録ルールを表示"
@@ -191,20 +191,20 @@
   "export-menu": {
     "aria-label": "プロファイルデータをエクスポート",
     "error-flamegraph-com": "flamegraph.comへのエクスポートに失敗しました！",
-    "error-gcx-copy": "",
+    "error-gcx-copy": "gcxコマンドをクリップボードにコピーできませんでした。",
     "error-loading-profile": "Flamebearerプロファイルデータの読み込み中にエラーが発生しました！",
     "error-png": "pngへのエクスポートに失敗しました！",
-    "error-png-no-canvas": "",
+    "error-png-no-canvas": "PNGにエクスポートする前に、フレームグラフが表示されていることを確認してください。",
     "error-pprof": "pprofへのエクスポートに失敗しました！",
-    "gcx-command": "",
-    "gcx-command-tooltip": "",
-    "gcx-commands": "",
-    "gcx-commands-tooltip": "",
-    "gcx-copied": "",
+    "gcx-command": "gcxコマンド",
+    "gcx-command-tooltip": "gcxコマンドをコピーして、このプロファイルをpprofとしてダウンロードします",
+    "gcx-commands": "gcxコマンド",
+    "gcx-commands-tooltip": "gcxコマンドをコピーして、ベースラインと比較対象のプロファイルをpprofとしてダウンロードします",
+    "gcx-copied": "gcxコマンドをクリップボードにコピーしました",
     "json": "json",
     "json-label": "json",
     "png": "png",
-    "png-disabled-description": "",
+    "png-disabled-description": "PNGとしてエクスポートするには、フレームグラフビューに切り替えてください",
     "png-label": "png",
     "pprof": "pprof",
     "tooltip": "プロファイルデータをエクスポート"
@@ -229,10 +229,10 @@
       "tooltip": "フレームグラフクエリ（{{profileIdSelector}}）にプロファイルIDセレクターを追加しました。"
     },
     "span-selector": {
-      "filter-label": "",
-      "filter-operator": "",
-      "filter-value": "",
-      "name": "",
+      "filter-label": "フィルターのラベル",
+      "filter-operator": "フィルターの演算子",
+      "filter-value": "フィルターの値",
+      "name": "スパン",
       "remove": "クエリからスパンセレクターを削除",
       "tooltip": "フレームグラフクエリ（{{spanSelector}}）にスパンセレクターを追加しました。"
     },
@@ -265,7 +265,7 @@
     "context-menu": {
       "label": "関数の詳細"
     },
-    "copy-error": "",
+    "copy-error": "ファイルパスをクリップボードにコピーする際にエラーが発生しました。",
     "copy-to-clipboard": "クリップボードにコピー",
     "fetch-error": "関数の詳細の取得中にエラーが発生しました！",
     "file": "ファイル",
@@ -323,7 +323,7 @@
   },
   "grid": {
     "empty-state": {
-      "no-profiles": "",
+      "no-profiles": "プロフィールが見つかりません。時間範囲を広げるか、プロファイルデータの送信を開始してください。",
       "no-results": "結果はありません"
     },
     "error": {
@@ -354,38 +354,38 @@
   },
   "heatmap": {
     "exemplar": {
-      "select": ""
+      "select": "エグゼンプラーを選択"
     },
     "exemplar-table": {
-      "clear-selection": "",
-      "col-actions": "",
-      "col-duration": "",
-      "col-span-id": "",
-      "col-span-name": "",
-      "col-timestamp": "",
-      "col-trace-id": "",
-      "copied": "",
-      "copy-to-clipboard": "",
-      "empty": "",
-      "open-flamegraph": "",
-      "open-trace": "",
-      "select-exemplar": "",
-      "select-tempo": "",
-      "tempo-datasource": "",
-      "tempo-placeholder": "",
-      "title": "",
-      "trace-lookup-failed": ""
+      "clear-selection": "エグゼンプラーの選択をクリア",
+      "col-actions": "アクション",
+      "col-duration": "所要時間",
+      "col-span-id": "スパンID",
+      "col-span-name": "スパン名",
+      "col-timestamp": "タイムスタンプ",
+      "col-trace-id": "トレースID",
+      "copied": "コピーしました。",
+      "copy-to-clipboard": "クリップボードにコピー",
+      "empty": "選択した時間範囲にスパンのエグゼンプラーはありません。",
+      "open-flamegraph": "フレームグラフを開く",
+      "open-trace": "トレースを開く",
+      "select-exemplar": "エグゼンプラーを選択",
+      "select-tempo": "Tempoデータソースを選択",
+      "tempo-datasource": "Tempoデータソース",
+      "tempo-placeholder": "Tempoデータソースを選択…",
+      "title": "上位のスパンエグゼンプラー",
+      "trace-lookup-failed": "Tempoからトレースの詳細を読み込めません。"
     },
     "menu": {
-      "open-in-explore": ""
+      "open-in-explore": "Exploreで開く"
     },
     "trace-drawer": {
-      "title": ""
+      "title": "トレース{{traceId}}"
     }
   },
   "labels": {
     "compare": {
-      "aria-label": "",
+      "aria-label": "比較",
       "clear-tooltip": "比較の選択をクリア",
       "tooltip-empty": "ベースラインと比較パネルの両方を選択して、それぞれのフレームグラフを比較します",
       "tooltip-ready": "「{{baseline}}」と「{{comparison}}」を比較",
@@ -481,10 +481,10 @@
   },
   "optimize-code": {
     "context": {
-      "title": ""
+      "title": "注釈付きのソースコードと最適化の手順"
     },
-    "error": "",
-    "prompt": ""
+    "error": "最適化のコンテキストを構築できませんでした",
+    "prompt": "プロファイリングの注釈に基づいて、このコードを最適化してください。"
   },
   "panel-box": {
     "cancel-query": "クエリをキャンセル",
@@ -505,7 +505,7 @@
     "commit-sha": "コミットSHA：{{shortCommitSha}}",
     "contribute": "貢献",
     "documentation": "ドキュメント",
-    "grafana-version": "",
+    "grafana-version": "Grafana {{edition}}（{{env}}）",
     "last-update": "最終更新：{{updated}}",
     "report-issue": "問題を報告する",
     "title": "プラグイン情報",
@@ -513,10 +513,10 @@
   },
   "profiles": {
     "kg-annotations": {
-      "insights-label": "",
-      "severity-critical": "",
-      "severity-info": "",
-      "severity-warning": ""
+      "insights-label": "インサイト",
+      "severity-critical": "重大",
+      "severity-info": "情報",
+      "severity-warning": "警告"
     }
   },
   "query-analysis": {
@@ -615,7 +615,7 @@
       "no-searches": "表示する保存した検索がありません。",
       "no-searches-tooltip": "読み込む保存した検索がありません",
       "remove-tooltip": "削除",
-      "saved-query-tooltip": "",
+      "saved-query-tooltip": "保存済みクエリを読み込む",
       "select": "選択",
       "select-pyroscope-query": "Pyroscope クエリを選択してください。",
       "title": "以前に保存した検索を読み込む",
@@ -629,7 +629,7 @@
       "existing-search-warning": "同じクエリを使用した、以前に保存した検索が存在します：{{title}}",
       "info-message": "保存した検索はブラウザのローカルデータに保存され、このデバイスでのみ利用できます。",
       "save": "保存",
-      "saved-queries-tooltip": "",
+      "saved-queries-tooltip": "保存済みクエリに保存",
       "success-body": "検索が正常に保存されました。",
       "success-message": "検索が正常に保存されました。",
       "success-title": "成功",
@@ -663,9 +663,9 @@
         "tooltip": "関数の詳細機能を使用すると、リソース使用状況をソースコードの行にマッピングできます。GitHub統合が設定されている場合、ソースコードはGitHubからダウンロードされます。"
       },
       "fetch-error": {
-        "cloud-hint": "",
-        "message": "",
-        "oss-hint": "",
+        "cloud-hint": "Grafana Cloudでは、このデータソースのプラグイン設定を読み書きする権限があるかどうかを、組織の管理者に確認してください。",
+        "message": "以下の設定には、以前保存した値ではなくデフォルト値が表示されています。次の対処をお試しください。",
+        "oss-hint": "Grafana Pyroscope OSSの場合は、データソースのURLでtenant-settingsエンドポイントが公開されていることを確認してください。",
         "title": "プラグイン設定の取得中にエラーが発生しました！"
       },
       "flame-graph": {
@@ -690,9 +690,9 @@
   },
   "timeseries": {
     "menu": {
-      "add-to-dashboard": "",
+      "add-to-dashboard": "ダッシュボードに追加",
       "exemplars": "エグゼンプラー",
-      "labels": "",
+      "labels": "ラベル",
       "open-in-explore": "Exploreで開く",
       "scale-linear": "線形",
       "scale-log2": "Log2",
@@ -730,7 +730,7 @@
       "aria-label": "サービスリスト",
       "label": "サービス",
       "loading": "サービスを読み込み中...",
-      "unmatched-tooltip": "",
+      "unmatched-tooltip": "「{{serviceName}}」は、このデータソースと時間範囲で返されたサービスの一覧に含まれていません。ドロップダウンから別のサービスを選択してください。",
       "placeholder_other": "サービスを選択（{{count}}件）"
     },
     "span-selector": {

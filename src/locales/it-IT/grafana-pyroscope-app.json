@@ -10,27 +10,27 @@
       "unfavorite": "Elimina dai preferiti"
     },
     "span-exemplar-toggle": {
-      "aria-label": "",
-      "span-heatmap": "",
-      "time-series": "",
-      "unavailable": ""
+      "aria-label": "Visualizzazione della sequenza temporale del profilo",
+      "span-heatmap": "Mappa di calore dell'intervallo",
+      "time-series": "Serie temporale",
+      "unavailable": "Nessun profilo di intervallo disponibile per il servizio, i filtri e l'intervallo di tempo correnti"
     }
   },
   "ad-hoc": {
     "diff": {
-      "cannot-compute-diff": "",
-      "no-common-profile-types": "",
-      "profile": ""
+      "cannot-compute-diff": "Impossibile calcolare la differenza",
+      "no-common-profile-types": "I profili caricati non hanno tipi di profilo comuni. Carica profili con tipi corrispondenti per utilizzare la visualizzazione delle differenze.",
+      "profile": "Profilo"
     },
     "profile-type-selector": {
       "label": "Profilo"
     },
     "tabs": {
-      "diff-view": "",
+      "diff-view": "Visualizzazione delle differenze",
       "single-view": "Vista singola"
     },
     "upload": {
-      "diff-converted-to-single": ""
+      "diff-converted-to-single": "Il profilo delle differenze è stato convertito in un singolo grafico di fiamma per il caricamento. I dati di confronto non sono stati conservati."
     },
     "view": {
       "title": "Vista ad hoc"
@@ -45,7 +45,7 @@
       "placeholder": "Fai una domanda di follow-up...",
       "send": "Invia"
     },
-    "llm-error": "",
+    "llm-error": "Si è verificato un errore durante la generazione del contenuto tramite OpenAI!",
     "llm-error-message": "Ci scusiamo per l'inconveniente. Riprova oppure, se il problema persiste, contatta l'amministratore della tua organizzazione.",
     "reply": {
       "search-node": "Cerca questo nodo"
@@ -66,7 +66,7 @@
     "label": "Torna a Profiles Drilldown"
   },
   "common": {
-    "not-available": ""
+    "not-available": "–"
   },
   "create-recording-rule": {
     "cancel": "Annulla",
@@ -121,10 +121,10 @@
       "tooltip-time-picker": "Strumento di selezione ora",
       "tooltip-time-picker-description": "Ingrandimento dell'intervallo temporale (comportamento predefinito)"
     },
-    "error-gcx-copy": "",
+    "error-gcx-copy": "Impossibile copiare i comandi gcx negli appunti!",
     "error-loading-profile": "Errore durante il caricamento dei dati del profilo!",
     "explain-button": "Spiega il grafico di fiamma delle differenze",
-    "gcx-copied": "",
+    "gcx-copied": "Comandi gcx copiati negli appunti!",
     "missing-selections": {
       "auto-select": "Selezione automatica",
       "how-to-alt": "Come visualizzare il grafico di fiamma delle differenze",
@@ -153,12 +153,12 @@
     "title": "Profiles Drilldown di Grafana"
   },
   "explore-service-heatmap": {
-    "description": "",
-    "title": ""
+    "description": "Conteggio degli intervalli di traccia che rientrano in un bucket specifico",
+    "title": "{{title}} per intervallo di traccia"
   },
   "explorer": {
     "add-to-dashboard": {
-      "modal-title": ""
+      "modal-title": "Aggiungi alla dashboard"
     },
     "exploration-type": {
       "all-services": "Tutti i servizi",
@@ -178,7 +178,7 @@
       "add-recording-rule": "Aggiungi regola di registrazione",
       "recording-rules-tooltip": "Regole di registrazione",
       "settings-tooltip": "Visualizza/modifica le impostazioni del tenant",
-      "share-error": "",
+      "share-error": "Errore durante la copia del collegamento condivisibile negli appunti!",
       "share-tooltip": "Copia il link condivisibile negli appunti",
       "upload-tooltip": "Carica profili ad hoc",
       "view-recording-rules": "Visualizza le regole di registrazione"
@@ -191,20 +191,20 @@
   "export-menu": {
     "aria-label": "Esporta dati di profilo",
     "error-flamegraph-com": "Impossibile esportare su flamegraph.com!",
-    "error-gcx-copy": "",
+    "error-gcx-copy": "Impossibile copiare il comando gcx negli appunti!",
     "error-loading-profile": "Errore durante il caricamento dei dati del profilo Flamebearer!",
     "error-png": "Impossibile esportare in png!",
-    "error-png-no-canvas": "",
+    "error-png-no-canvas": "Assicurati che il grafico di fiamma sia visibile prima di esportarlo in png.",
     "error-pprof": "Impossibile esportare in pprof!",
-    "gcx-command": "",
-    "gcx-command-tooltip": "",
-    "gcx-commands": "",
-    "gcx-commands-tooltip": "",
-    "gcx-copied": "",
+    "gcx-command": "Comando gcx",
+    "gcx-command-tooltip": "Copia il comando gcx per scaricare questo profilo come pprof",
+    "gcx-commands": "Comandi gcx",
+    "gcx-commands-tooltip": "Copia i comandi gcx per scaricare i profili di riferimento e di confronto come pprof",
+    "gcx-copied": "Comando gcx copiato negli appunti!",
     "json": "json",
     "json-label": "json",
     "png": "png",
-    "png-disabled-description": "",
+    "png-disabled-description": "Passa alla visualizzazione del grafico di fiamma per esportarlo come png",
     "png-label": "png",
     "pprof": "pprof",
     "tooltip": "Esporta dati di profilo"
@@ -229,10 +229,10 @@
       "tooltip": "Hai aggiunto un selettore ID profilo alla query del grafico di fiamma ({{profileIdSelector}})."
     },
     "span-selector": {
-      "filter-label": "",
-      "filter-operator": "",
-      "filter-value": "",
-      "name": "",
+      "filter-label": "Etichetta filtro",
+      "filter-operator": "Operatore filtro",
+      "filter-value": "Valore filtro",
+      "name": "Intervallo",
       "remove": "Rimuovi selettore di intervallo dalla query",
       "tooltip": "Hai aggiunto un selettore di intervallo alla query del grafico di fiamma ({{spanSelector}})."
     },
@@ -265,7 +265,7 @@
     "context-menu": {
       "label": "Dettagli della funzione"
     },
-    "copy-error": "",
+    "copy-error": "Errore durante la copia del percorso del file negli appunti!",
     "copy-to-clipboard": "Copia negli appunti",
     "fetch-error": "Errore durante il recupero dei dettagli della funzione!",
     "file": "File",
@@ -323,7 +323,7 @@
   },
   "grid": {
     "empty-state": {
-      "no-profiles": "",
+      "no-profiles": "Nessun profilo trovato. Amplia l'intervallo di tempo o inizia a inviare i dati del profilo.",
       "no-results": "Nessun risultato"
     },
     "error": {
@@ -354,38 +354,38 @@
   },
   "heatmap": {
     "exemplar": {
-      "select": ""
+      "select": "Seleziona campione"
     },
     "exemplar-table": {
-      "clear-selection": "",
-      "col-actions": "",
-      "col-duration": "",
-      "col-span-id": "",
-      "col-span-name": "",
-      "col-timestamp": "",
-      "col-trace-id": "",
-      "copied": "",
-      "copy-to-clipboard": "",
-      "empty": "",
-      "open-flamegraph": "",
-      "open-trace": "",
-      "select-exemplar": "",
-      "select-tempo": "",
-      "tempo-datasource": "",
-      "tempo-placeholder": "",
-      "title": "",
-      "trace-lookup-failed": ""
+      "clear-selection": "Cancella selezione di esempi",
+      "col-actions": "Azioni",
+      "col-duration": "Durata",
+      "col-span-id": "ID intervallo",
+      "col-span-name": "Nome intervallo",
+      "col-timestamp": "Indicazione data/ora",
+      "col-trace-id": "ID traccia",
+      "copied": "Copia effettuata!",
+      "copy-to-clipboard": "Copia negli appunti",
+      "empty": "Nessun esempio di intervallo nell'intervallo di tempo selezionato.",
+      "open-flamegraph": "Apri grafico di fiamma",
+      "open-trace": "Apri traccia",
+      "select-exemplar": "Seleziona campione",
+      "select-tempo": "Seleziona origine dati Tempo",
+      "tempo-datasource": "Origine dati Tempo",
+      "tempo-placeholder": "Seleziona origine dati Tempo...",
+      "title": "Esempi di intervalli principali",
+      "trace-lookup-failed": "Impossibile caricare i dettagli della traccia da Tempo."
     },
     "menu": {
-      "open-in-explore": ""
+      "open-in-explore": "Apri in Esplora"
     },
     "trace-drawer": {
-      "title": ""
+      "title": "Traccia {{traceId}}"
     }
   },
   "labels": {
     "compare": {
-      "aria-label": "",
+      "aria-label": "Confronta",
       "clear-tooltip": "Cancella selezione di confronto",
       "tooltip-empty": "Seleziona sia un pannello di riferimento che un pannello di confronto per confrontare i rispettivi grafici di fiamma",
       "tooltip-ready": "Confronta \"{{baseline}}\" con \"{{comparison}}\"",
@@ -482,10 +482,10 @@
   },
   "optimize-code": {
     "context": {
-      "title": ""
+      "title": "Codice sorgente annotato e istruzioni per l'ottimizzazione"
     },
-    "error": "",
-    "prompt": ""
+    "error": "Impossibile creare il contesto di ottimizzazione",
+    "prompt": "Ottimizza questo codice in base alle annotazioni di profiling."
   },
   "panel-box": {
     "cancel-query": "Annulla query",
@@ -506,7 +506,7 @@
     "commit-sha": "Commit SHA: {{shortCommitSha}}",
     "contribute": "Contribuisci",
     "documentation": "Documentazione",
-    "grafana-version": "",
+    "grafana-version": "Grafana {{edition}} ({{env}})",
     "last-update": "Ultimo aggiornamento: {{updated}}",
     "report-issue": "Segnala un problema",
     "title": "Informazioni sul plug-in",
@@ -514,10 +514,10 @@
   },
   "profiles": {
     "kg-annotations": {
-      "insights-label": "",
-      "severity-critical": "",
-      "severity-info": "",
-      "severity-warning": ""
+      "insights-label": "Approfondimenti",
+      "severity-critical": "Critica",
+      "severity-info": "Informazioni",
+      "severity-warning": "Avviso"
     }
   },
   "query-analysis": {
@@ -616,7 +616,7 @@
       "no-searches": "Nessuna ricerca salvata da visualizzare.",
       "no-searches-tooltip": "Nessuna ricerca salvata da caricare",
       "remove-tooltip": "Rimuovi",
-      "saved-query-tooltip": "",
+      "saved-query-tooltip": "Carica query salvata",
       "select": "Seleziona",
       "select-pyroscope-query": "Seleziona una query Pyroscope.",
       "title": "Carica una ricerca salvata in precedenza",
@@ -630,7 +630,7 @@
       "existing-search-warning": "È presente una ricerca salvata in precedenza con la stessa query: {{title}}",
       "info-message": "Le ricerche salvate vengono archiviate localmente nel browser e saranno disponibili solo su questo dispositivo.",
       "save": "Salva",
-      "saved-queries-tooltip": "",
+      "saved-queries-tooltip": "Salva in Query salvate",
       "success-body": "Ricerca salvata correttamente.",
       "success-message": "Ricerca salvata correttamente.",
       "success-title": "Operazione riuscita",
@@ -664,9 +664,9 @@
         "tooltip": "La funzionalità dei dettagli della funzione consente di mappare l'utilizzo delle risorse alle righe del codice sorgente. Se l'integrazione con GitHub è configurata, il codice sorgente verrà scaricato da GitHub."
       },
       "fetch-error": {
-        "cloud-hint": "",
-        "message": "",
-        "oss-hint": "",
+        "cloud-hint": "Su Grafana Cloud, verifica con l'amministratore della tua organizzazione di disporre dei permessi necessari per leggere e modificare le impostazioni del plugin relative a questa origine dati.",
+        "message": "Le impostazioni riportate di seguito mostrano i valori predefiniti invece di quelli salvati in precedenza. Cosa è possibile fare:",
+        "oss-hint": "Con Grafana Pyroscope OSS, assicurati che l'URL dell'origine dati esponga l'endpoint delle impostazioni del tenant.",
         "title": "Errore durante il recupero delle impostazioni del componente aggiuntivo!"
       },
       "flame-graph": {
@@ -691,9 +691,9 @@
   },
   "timeseries": {
     "menu": {
-      "add-to-dashboard": "",
+      "add-to-dashboard": "Aggiungi alla dashboard",
       "exemplars": "Esemplari",
-      "labels": "",
+      "labels": "Etichette",
       "open-in-explore": "Apri in Esplora",
       "scale-linear": "Lineare",
       "scale-log2": "Log2",
@@ -732,7 +732,7 @@
       "aria-label": "Elenco servizi",
       "label": "Servizio",
       "loading": "Caricamento dei servizi in corso...",
-      "unmatched-tooltip": "",
+      "unmatched-tooltip": "\"{{serviceName}}\" non compare nell'elenco dei servizi restituiti per questa origine dati e questo intervallo di tempo. Seleziona un servizio diverso dal menu a discesa.",
       "placeholder_one": "Seleziona un servizio ({{count}})",
       "placeholder_other": "Seleziona un servizio ({{count}})"
     },

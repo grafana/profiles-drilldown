@@ -10,27 +10,27 @@
       "unfavorite": "取消收藏"
     },
     "span-exemplar-toggle": {
-      "aria-label": "",
-      "span-heatmap": "",
-      "time-series": "",
-      "unavailable": ""
+      "aria-label": "配置文件时间线可视化",
+      "span-heatmap": "跨度热图",
+      "time-series": "时间序列",
+      "unavailable": "没有可用于当前服务、筛选条件和时间范围的跨度配置文件数据"
     }
   },
   "ad-hoc": {
     "diff": {
-      "cannot-compute-diff": "",
-      "no-common-profile-types": "",
-      "profile": ""
+      "cannot-compute-diff": "无法计算差异",
+      "no-common-profile-types": "上传的配置文件没有通用的配置文件类型。上传具有匹配类型的配置文件，以使用差异视图。",
+      "profile": "配置文件"
     },
     "profile-type-selector": {
       "label": "配置文件"
     },
     "tabs": {
-      "diff-view": "",
+      "diff-view": "视图",
       "single-view": "单一视图"
     },
     "upload": {
-      "diff-converted-to-single": ""
+      "diff-converted-to-single": "差异配置文件已转换为单个火焰图以供上传。未保留比较数据。"
     },
     "view": {
       "title": "临时视图"
@@ -45,7 +45,7 @@
       "placeholder": "提出后续问题……",
       "send": "发送"
     },
-    "llm-error": "",
+    "llm-error": "使用 OpenAI 生成内容时发生错误！",
     "llm-error-message": "对于给您带来的不便，我们深表歉意。请重试；如果问题仍然存在，请联系您的组织管理员。",
     "reply": {
       "search-node": "搜索此节点"
@@ -66,7 +66,7 @@
     "label": "返回配置文件深入分析"
   },
   "common": {
-    "not-available": ""
+    "not-available": "–"
   },
   "create-recording-rule": {
     "cancel": "取消",
@@ -121,10 +121,10 @@
       "tooltip-time-picker": "时间选择器",
       "tooltip-time-picker-description": "时间范围放大（默认行为）"
     },
-    "error-gcx-copy": "",
+    "error-gcx-copy": "将 gcx 命令复制到剪贴板失败！",
     "error-loading-profile": "加载配置文件数据时出错！",
     "explain-button": "解释差异火焰图",
-    "gcx-copied": "",
+    "gcx-copied": "gcx 命令已复制到剪贴板！",
     "missing-selections": {
       "auto-select": "自动选择",
       "how-to-alt": "如何查看差异火焰图",
@@ -153,12 +153,12 @@
     "title": "Grafana 配置文件深入分析"
   },
   "explore-service-heatmap": {
-    "description": "",
-    "title": ""
+    "description": "落入特定桶的跟踪跨度数量",
+    "title": "每个跟踪跨度的 {{title}}"
   },
   "explorer": {
     "add-to-dashboard": {
-      "modal-title": ""
+      "modal-title": "添加到数据面板"
     },
     "exploration-type": {
       "all-services": "所有服务",
@@ -178,7 +178,7 @@
       "add-recording-rule": "添加录制规则",
       "recording-rules-tooltip": "录制规则",
       "settings-tooltip": "查看/编辑租户设置",
-      "share-error": "",
+      "share-error": "将可共享链接复制到剪贴板时出错！",
       "share-tooltip": "将可共享链接复制到剪贴板",
       "upload-tooltip": "上传临时配置文件",
       "view-recording-rules": "查看录制规则"
@@ -191,20 +191,20 @@
   "export-menu": {
     "aria-label": "导出配置文件数据",
     "error-flamegraph-com": "导出到 flamegraph.com 失败！",
-    "error-gcx-copy": "",
+    "error-gcx-copy": "将 gcx 命令复制到剪贴板失败！",
     "error-loading-profile": "加载 Flamebearer 配置文件数据时出错！",
     "error-png": "导出到 png 失败！",
-    "error-png-no-canvas": "",
+    "error-png-no-canvas": "在导出到 png 之前，请确保火焰图可见。",
     "error-pprof": "导出到 pprof 失败！",
-    "gcx-command": "",
-    "gcx-command-tooltip": "",
-    "gcx-commands": "",
-    "gcx-commands-tooltip": "",
-    "gcx-copied": "",
+    "gcx-command": "gcx 命令",
+    "gcx-command-tooltip": "复制 gcx 命令以将此配置文件下载为 pprof",
+    "gcx-commands": "gcx 命令",
+    "gcx-commands-tooltip": "复制 gcx 命令，以便将基准和比较的配置文件下载为 pprof 格式",
+    "gcx-copied": "gcx 命令已复制到剪贴板！",
     "json": "json",
     "json-label": "json",
     "png": "png",
-    "png-disabled-description": "",
+    "png-disabled-description": "切换到火焰图视图，将其导出为 png",
     "png-label": "png",
     "pprof": "pprof",
     "tooltip": "导出配置文件数据"
@@ -229,10 +229,10 @@
       "tooltip": "您已在火焰图查询（{{profileIdSelector}}）中添加了配置文件 ID 选择器。"
     },
     "span-selector": {
-      "filter-label": "",
-      "filter-operator": "",
-      "filter-value": "",
-      "name": "",
+      "filter-label": "筛选条件标签",
+      "filter-operator": "筛选条件运算符",
+      "filter-value": "筛选条件值",
+      "name": "跨度",
       "remove": "从查询中移除跨度选择器",
       "tooltip": "您已在火焰图查询（{{spanSelector}}）中添加了跨度选择器。"
     },
@@ -265,7 +265,7 @@
     "context-menu": {
       "label": "函数详情"
     },
-    "copy-error": "",
+    "copy-error": "将文件路径复制到剪贴板时出错！",
     "copy-to-clipboard": "复制到剪贴板",
     "fetch-error": "获取函数详细信息时出错！",
     "file": "文件",
@@ -323,7 +323,7 @@
   },
   "grid": {
     "empty-state": {
-      "no-profiles": "",
+      "no-profiles": "未找到配置文件。扩大时间范围或开始发送配置文件数据。",
       "no-results": "没有结果"
     },
     "error": {
@@ -354,38 +354,38 @@
   },
   "heatmap": {
     "exemplar": {
-      "select": ""
+      "select": "选择范例"
     },
     "exemplar-table": {
-      "clear-selection": "",
-      "col-actions": "",
-      "col-duration": "",
-      "col-span-id": "",
-      "col-span-name": "",
-      "col-timestamp": "",
-      "col-trace-id": "",
-      "copied": "",
-      "copy-to-clipboard": "",
-      "empty": "",
-      "open-flamegraph": "",
-      "open-trace": "",
-      "select-exemplar": "",
-      "select-tempo": "",
-      "tempo-datasource": "",
-      "tempo-placeholder": "",
-      "title": "",
-      "trace-lookup-failed": ""
+      "clear-selection": "清除范例选择",
+      "col-actions": "操作",
+      "col-duration": "持续时间",
+      "col-span-id": "跨度 ID",
+      "col-span-name": "跨度名称",
+      "col-timestamp": "时间戳",
+      "col-trace-id": "跟踪 ID",
+      "copied": "已复制！",
+      "copy-to-clipboard": "复制到剪贴板",
+      "empty": "所选时间范围内没有跨度范例。",
+      "open-flamegraph": "打开火焰图",
+      "open-trace": "打开跟踪",
+      "select-exemplar": "选择范例",
+      "select-tempo": "选择 Tempo 数据源",
+      "tempo-datasource": "Tempo 数据源",
+      "tempo-placeholder": "选择 Tempo 数据源…",
+      "title": "排名靠前的跨度范例",
+      "trace-lookup-failed": "无法从 Tempo 加载跟踪详情。"
     },
     "menu": {
-      "open-in-explore": ""
+      "open-in-explore": "在“探索”中打开"
     },
     "trace-drawer": {
-      "title": ""
+      "title": "跟踪 {{traceId}}"
     }
   },
   "labels": {
     "compare": {
-      "aria-label": "",
+      "aria-label": "比较",
       "clear-tooltip": "清除比较选择",
       "tooltip-empty": "同时选择基准面板和对比面板，以便比较它们的火焰图",
       "tooltip-ready": "比较“{{baseline}}”与“{{comparison}}”",
@@ -481,10 +481,10 @@
   },
   "optimize-code": {
     "context": {
-      "title": ""
+      "title": "带注释的源代码和优化说明"
     },
-    "error": "",
-    "prompt": ""
+    "error": "构建优化上下文失败",
+    "prompt": "根据配置文件注释优化此代码。"
   },
   "panel-box": {
     "cancel-query": "取消查询",
@@ -505,7 +505,7 @@
     "commit-sha": "提交 SHA：{{shortCommitSha}}",
     "contribute": "贡献",
     "documentation": "文档",
-    "grafana-version": "",
+    "grafana-version": "Grafana {{edition}} ({{env}})",
     "last-update": "上次更新：{{updated}}",
     "report-issue": "报告问题",
     "title": "插件信息",
@@ -513,10 +513,10 @@
   },
   "profiles": {
     "kg-annotations": {
-      "insights-label": "",
-      "severity-critical": "",
-      "severity-info": "",
-      "severity-warning": ""
+      "insights-label": "洞察",
+      "severity-critical": "严重",
+      "severity-info": "信息",
+      "severity-warning": "警告"
     }
   },
   "query-analysis": {
@@ -615,7 +615,7 @@
       "no-searches": "没有要显示的已保存搜索。",
       "no-searches-tooltip": "没有要加载的已保存搜索",
       "remove-tooltip": "移除",
-      "saved-query-tooltip": "",
+      "saved-query-tooltip": "加载已保存的查询",
       "select": "选择",
       "select-pyroscope-query": "请选择一个 Pyroscope 查询。",
       "title": "加载之前保存的搜索",
@@ -629,7 +629,7 @@
       "existing-search-warning": "之前保存的一个搜索具有相同查询：{{title}}",
       "info-message": "已保存的搜索会存储在您的浏览器本地，并且只能在此设备上使用。",
       "save": "保存",
-      "saved-queries-tooltip": "",
+      "saved-queries-tooltip": "保存在“已保存的查询”中",
       "success-body": "已成功保存搜索。",
       "success-message": "已成功保存搜索。",
       "success-title": "成功",
@@ -663,9 +663,9 @@
         "tooltip": "函数详情功能可将资源使用情况映射到源代码行。如果已配置 GitHub 集成，则将从 GitHub 下载源代码。"
       },
       "fetch-error": {
-        "cloud-hint": "",
-        "message": "",
-        "oss-hint": "",
+        "cloud-hint": "在 Grafana Cloud 上，请向您的组织管理员确认您有权限读取和写入此数据源的插件设置。",
+        "message": "以下设置显示的是默认值，而不是之前保存的值。你能做的事：",
+        "oss-hint": "使用 Grafana Pyroscope OSS 时，请确保数据源 URL 暴露了租户设置端点。",
         "title": "检索插件设置时出错！"
       },
       "flame-graph": {
@@ -690,9 +690,9 @@
   },
   "timeseries": {
     "menu": {
-      "add-to-dashboard": "",
+      "add-to-dashboard": "添加到数据面板",
       "exemplars": "范例",
-      "labels": "",
+      "labels": "标签",
       "open-in-explore": "在 Explore 中打开",
       "scale-linear": "线性",
       "scale-log2": "Log2",
@@ -730,7 +730,7 @@
       "aria-label": "服务列表",
       "label": "服务",
       "loading": "正在加载服务…",
-      "unmatched-tooltip": "",
+      "unmatched-tooltip": "“{{serviceName}}”未出现在为此数据源和时间范围返回的服务列表中。请从下拉列表中选择其他服务。",
       "placeholder_other": "选择一个服务 ({{count}})"
     },
     "span-selector": {

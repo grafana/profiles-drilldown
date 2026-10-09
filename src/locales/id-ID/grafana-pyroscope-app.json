@@ -10,27 +10,27 @@
       "unfavorite": "Batalkan favorit"
     },
     "span-exemplar-toggle": {
-      "aria-label": "",
-      "span-heatmap": "",
-      "time-series": "",
-      "unavailable": ""
+      "aria-label": "Visualisasi lini masa profil",
+      "span-heatmap": "Span heatmap",
+      "time-series": "Deret waktu",
+      "unavailable": "Tidak ada span profile yang tersedia untuk layanan, filter, dan rentang waktu saat ini"
     }
   },
   "ad-hoc": {
     "diff": {
-      "cannot-compute-diff": "",
-      "no-common-profile-types": "",
-      "profile": ""
+      "cannot-compute-diff": "Tidak dapat menghitung diff",
+      "no-common-profile-types": "Profile yang diunggah tidak memiliki jenis profile yang sama. Unggah profile dengan jenis yang cocok untuk menggunakan tampilan diff.",
+      "profile": "Profile"
     },
     "profile-type-selector": {
       "label": "Profil"
     },
     "tabs": {
-      "diff-view": "",
+      "diff-view": "Tampilan diff",
       "single-view": "Tampilan tunggal"
     },
     "upload": {
-      "diff-converted-to-single": ""
+      "diff-converted-to-single": "Profile diff dikonversi menjadi satu flame graph untuk diunggah. Data perbandingan tidak disimpan."
     },
     "view": {
       "title": "Tampilan ad hoc"
@@ -45,7 +45,7 @@
       "placeholder": "Ajukan pertanyaan lanjutan...",
       "send": "Kirim"
     },
-    "llm-error": "",
+    "llm-error": "Terjadi kesalahan saat membuat konten menggunakan OpenAI!",
     "llm-error-message": "Mohon maaf atas ketidaknyamanan ini. Silakan coba lagi atau, jika masalah berlanjut, hubungi admin organisasi Anda.",
     "reply": {
       "search-node": "Cari node ini"
@@ -66,7 +66,7 @@
     "label": "Kembali ke Drilldown Profil"
   },
   "common": {
-    "not-available": ""
+    "not-available": "–"
   },
   "create-recording-rule": {
     "cancel": "Batalkan",
@@ -121,10 +121,10 @@
       "tooltip-time-picker": "Pemilih waktu",
       "tooltip-time-picker-description": "Perbesar rentang waktu (perilaku default)"
     },
-    "error-gcx-copy": "",
+    "error-gcx-copy": "Gagal menyalin perintah gcx ke papan klip!",
     "error-loading-profile": "Terjadi kesalahan saat memuat data profil!",
     "explain-button": "Jelaskan Diff Flame Graph",
-    "gcx-copied": "",
+    "gcx-copied": "Perintah gcx disalin ke papan klip!",
     "missing-selections": {
       "auto-select": "Pilih otomatis",
       "how-to-alt": "Cara melihat Diff Flame Graph",
@@ -153,12 +153,12 @@
     "title": "Drilldown Profil Grafana"
   },
   "explore-service-heatmap": {
-    "description": "",
-    "title": ""
+    "description": "Jumlah trace span yang berada dalam bucket tertentu",
+    "title": "{{title}} per trace span"
   },
   "explorer": {
     "add-to-dashboard": {
-      "modal-title": ""
+      "modal-title": "Tambahkan ke dasbor"
     },
     "exploration-type": {
       "all-services": "Semua service",
@@ -178,7 +178,7 @@
       "add-recording-rule": "Tambahkan aturan perekaman",
       "recording-rules-tooltip": "Aturan perekaman",
       "settings-tooltip": "Lihat/edit pengaturan tenant",
-      "share-error": "",
+      "share-error": "Terjadi kesalahan saat menyalin tautan yang dapat dibagikan ke papan klip!",
       "share-tooltip": "Salin tautan yang dapat dibagikan ke papan klip",
       "upload-tooltip": "Unggah profil ad hoc",
       "view-recording-rules": "Lihat aturan perekaman"
@@ -191,20 +191,20 @@
   "export-menu": {
     "aria-label": "Ekspor data profil",
     "error-flamegraph-com": "Gagal mengekspor ke flamegraph.com!",
-    "error-gcx-copy": "",
+    "error-gcx-copy": "Gagal menyalin perintah gcx ke papan klip!",
     "error-loading-profile": "Terjadi kesalahan saat memuat data profil Flamebearer!",
     "error-png": "Gagal mengekspor ke png!",
-    "error-png-no-canvas": "",
+    "error-png-no-canvas": "Pastikan flame graph terlihat sebelum mengekspor ke png.",
     "error-pprof": "Gagal mengekspor ke pprof!",
-    "gcx-command": "",
-    "gcx-command-tooltip": "",
-    "gcx-commands": "",
-    "gcx-commands-tooltip": "",
-    "gcx-copied": "",
+    "gcx-command": "perintah gcx",
+    "gcx-command-tooltip": "Salin perintah gcx untuk mengunduh profile ini sebagai pprof",
+    "gcx-commands": "perintah gcx",
+    "gcx-commands-tooltip": "Salin perintah gcx untuk mengunduh profile baseline dan perbandingan sebagai pprof",
+    "gcx-copied": "Perintah gcx disalin ke papan klip!",
     "json": "json",
     "json-label": "json",
     "png": "png",
-    "png-disabled-description": "",
+    "png-disabled-description": "Beralih ke tampilan flame graph untuk mengekspornya sebagai png",
     "png-label": "png",
     "pprof": "pprof",
     "tooltip": "Ekspor data profil"
@@ -229,10 +229,10 @@
       "tooltip": "Anda telah menambahkan selektor ID profil ke kueri flamegraph ({{profileIdSelector}})."
     },
     "span-selector": {
-      "filter-label": "",
-      "filter-operator": "",
-      "filter-value": "",
-      "name": "",
+      "filter-label": "Filter label",
+      "filter-operator": "Filter operator",
+      "filter-value": "Nilai filter",
+      "name": "Span",
       "remove": "Hapus selektor rentang dari kueri",
       "tooltip": "Anda telah menambahkan selektor rentang ke kueri flamegraph ({{spanSelector}})."
     },
@@ -265,7 +265,7 @@
     "context-menu": {
       "label": "Detail fungsi"
     },
-    "copy-error": "",
+    "copy-error": "Terjadi kesalahan saat menyalin jalur file ke papan klip!",
     "copy-to-clipboard": "Salin ke papan klip",
     "fetch-error": "Terjadi kesalahan saat mengambil detail fungsi!",
     "file": "File",
@@ -323,7 +323,7 @@
   },
   "grid": {
     "empty-state": {
-      "no-profiles": "",
+      "no-profiles": "Tidak ada profile yang ditemukan. Perluas rentang waktu atau mulai kirim data profile.",
       "no-results": "Tidak ada hasil"
     },
     "error": {
@@ -354,38 +354,38 @@
   },
   "heatmap": {
     "exemplar": {
-      "select": ""
+      "select": "Pilih exemplar"
     },
     "exemplar-table": {
-      "clear-selection": "",
-      "col-actions": "",
-      "col-duration": "",
-      "col-span-id": "",
-      "col-span-name": "",
-      "col-timestamp": "",
-      "col-trace-id": "",
-      "copied": "",
-      "copy-to-clipboard": "",
-      "empty": "",
-      "open-flamegraph": "",
-      "open-trace": "",
-      "select-exemplar": "",
-      "select-tempo": "",
-      "tempo-datasource": "",
-      "tempo-placeholder": "",
-      "title": "",
-      "trace-lookup-failed": ""
+      "clear-selection": "Hapus pilihan exemplar",
+      "col-actions": "Tindakan",
+      "col-duration": "Durasi",
+      "col-span-id": "ID Span",
+      "col-span-name": "Nama span",
+      "col-timestamp": "Stempel Waktu",
+      "col-trace-id": "ID Pelacakan",
+      "copied": "Disalin!",
+      "copy-to-clipboard": "Salin ke papan klip",
+      "empty": "Tidak ada span exemplar dalam rentang waktu yang dipilih.",
+      "open-flamegraph": "Buka flame graph",
+      "open-trace": "Buka trace",
+      "select-exemplar": "Pilih exemplar",
+      "select-tempo": "Pilih sumber data Tempo",
+      "tempo-datasource": "Sumber data Tempo",
+      "tempo-placeholder": "Pilih sumber data Tempo…",
+      "title": "Span exemplar teratas",
+      "trace-lookup-failed": "Tidak dapat memuat detail trace dari Tempo."
     },
     "menu": {
-      "open-in-explore": ""
+      "open-in-explore": "Buka di Explore"
     },
     "trace-drawer": {
-      "title": ""
+      "title": "Trace {{traceId}}"
     }
   },
   "labels": {
     "compare": {
-      "aria-label": "",
+      "aria-label": "Bandingkan",
       "clear-tooltip": "Hapus pilihan perbandingan",
       "tooltip-empty": "Pilih panel baseline dan panel perbandingan untuk membandingkan flame graph keduanya",
       "tooltip-ready": "Bandingkan \"{{baseline}}\" vs \"{{comparison}}\"",
@@ -481,10 +481,10 @@
   },
   "optimize-code": {
     "context": {
-      "title": ""
+      "title": "Kode sumber beranotasi dan petunjuk pengoptimalan"
     },
-    "error": "",
-    "prompt": ""
+    "error": "Gagal membuat konteks pengoptimalan",
+    "prompt": "Optimalkan kode ini berdasarkan anotasi profiling."
   },
   "panel-box": {
     "cancel-query": "Batalkan kueri",
@@ -505,7 +505,7 @@
     "commit-sha": "Commit SHA: {{shortCommitSha}}",
     "contribute": "Berkontribusi",
     "documentation": "Dokumentasi",
-    "grafana-version": "",
+    "grafana-version": "Grafana  {{edition}} ({{env}})",
     "last-update": "Terakhir diperbarui: {{updated}}",
     "report-issue": "Laporkan masalah",
     "title": "Info plugin",
@@ -513,10 +513,10 @@
   },
   "profiles": {
     "kg-annotations": {
-      "insights-label": "",
-      "severity-critical": "",
-      "severity-info": "",
-      "severity-warning": ""
+      "insights-label": "Wawasan",
+      "severity-critical": "Kritikal",
+      "severity-info": "Info",
+      "severity-warning": "Peringatan"
     }
   },
   "query-analysis": {
@@ -615,7 +615,7 @@
       "no-searches": "Tidak ada pencarian tersimpan untuk ditampilkan.",
       "no-searches-tooltip": "Tidak ada pencarian tersimpan untuk dimuat",
       "remove-tooltip": "Hapus",
-      "saved-query-tooltip": "",
+      "saved-query-tooltip": "Muat Kueri tersimpan",
       "select": "Pilih",
       "select-pyroscope-query": "Pilih kueri Pyroscope.",
       "title": "Muat pencarian yang sudah disimpan sebelumnya",
@@ -629,7 +629,7 @@
       "existing-search-warning": "Ada pencarian yang sudah disimpan sebelumnya dengan kueri yang sama: {{title}}",
       "info-message": "Pencarian tersimpan disimpan secara lokal di browser Anda dan hanya akan tersedia di perangkat ini.",
       "save": "Simpan",
-      "saved-queries-tooltip": "",
+      "saved-queries-tooltip": "Simpan di Kueri tersimpan",
       "success-body": "Pencarian berhasil disimpan.",
       "success-message": "Pencarian berhasil disimpan.",
       "success-title": "Berhasil",
@@ -663,9 +663,9 @@
         "tooltip": "Fitur detail fungsi memungkinkan pemetaan penggunaan sumber daya ke baris kode sumber. Jika integrasi GitHub dikonfigurasi, kode sumber akan diunduh dari GitHub."
       },
       "fetch-error": {
-        "cloud-hint": "",
-        "message": "",
-        "oss-hint": "",
+        "cloud-hint": "Di Grafana Cloud, pastikan ke administrator organisasi Anda bahwa Anda memiliki izin untuk membaca dan menulis pengaturan plugin untuk sumber data ini.",
+        "message": "Pengaturan di bawah ini menampilkan nilai default, bukan yang sudah disimpan sebelumnya. Yang dapat Anda lakukan:",
+        "oss-hint": "Dengan Grafana Pyroscope OSS, pastikan URL sumber data menampilkan endpoint pengaturan tenant.",
         "title": "Terjadi kesalahan saat mengambil pengaturan plugin!"
       },
       "flame-graph": {
@@ -690,9 +690,9 @@
   },
   "timeseries": {
     "menu": {
-      "add-to-dashboard": "",
+      "add-to-dashboard": "Tambahkan ke dasbor",
       "exemplars": "Contoh",
-      "labels": "",
+      "labels": "Label",
       "open-in-explore": "Buka di Telusuri",
       "scale-linear": "Linier",
       "scale-log2": "Log2",
@@ -730,7 +730,7 @@
       "aria-label": "Daftar service",
       "label": "Service",
       "loading": "Memuat service...",
-      "unmatched-tooltip": "",
+      "unmatched-tooltip": "\"{{serviceName}}\" tidak muncul dalam daftar layanan yang ditampilkan untuk sumber data dan rentang waktu ini. Pilih layanan lain dari menu dropdown.",
       "placeholder_other": "Pilih service ({{count}})"
     },
     "span-selector": {
