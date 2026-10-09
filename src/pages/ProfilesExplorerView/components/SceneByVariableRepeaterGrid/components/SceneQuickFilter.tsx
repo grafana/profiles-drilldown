@@ -10,11 +10,13 @@ import {
 } from '@grafana/scenes';
 import { Icon, IconButton, Input, Tag, useStyles2 } from '@grafana/ui';
 import { reportInteraction } from '@shared/domain/reportInteraction';
+import { debounce } from 'lodash';
 import React from 'react';
 
 export interface SceneQuickFilterState extends SceneObjectState {
   placeholder: string;
   searchText: string;
+  inputText: string;
   onChange?: (searchText: string) => void;
   resultsCount: string;
 }
@@ -26,13 +28,20 @@ export class SceneQuickFilter extends SceneObjectBase<SceneQuickFilterState> {
 
   static DEBOUNCE_DELAY = 250;
 
+  private commitSearchText = debounce((searchText: string) => {
+    this.setState({ searchText });
+  }, SceneQuickFilter.DEBOUNCE_DELAY);
+
   constructor({ placeholder }: { placeholder: string }) {
     super({
       key: 'quick-filter',
       placeholder,
       searchText: SceneQuickFilter.DEFAULT_SEARCH_TEXT,
+      inputText: SceneQuickFilter.DEFAULT_SEARCH_TEXT,
       resultsCount: '',
     });
+
+    this.addActivationHandler(() => () => this.commitSearchText.cancel());
   }
 
   setPlaceholder(placeholder: string) {
@@ -52,23 +61,29 @@ export class SceneQuickFilter extends SceneObjectBase<SceneQuickFilterState> {
   updateFromUrl(values: SceneObjectUrlValues) {
     const stateUpdate: Partial<SceneQuickFilterState> = {};
 
-    if (typeof values.searchText === 'string' && values.searchText !== this.state.searchText) {
+    if (typeof values.searchText === 'string') {
+      this.commitSearchText.cancel();
       stateUpdate.searchText = values.searchText;
+      stateUpdate.inputText = values.searchText;
     }
 
     this.setState(stateUpdate);
   }
 
   onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ searchText: e.target.value });
+    const inputText = e.target.value;
+    this.setState({ inputText });
+    this.commitSearchText(inputText);
   };
 
   reset() {
-    this.setState({ placeholder: '', searchText: '', resultsCount: '' });
+    this.commitSearchText.cancel();
+    this.setState({ placeholder: '', searchText: '', inputText: '', resultsCount: '' });
   }
 
   clearSearchText = () => {
-    this.setState({ searchText: '' });
+    this.commitSearchText.cancel();
+    this.setState({ searchText: '', inputText: '' });
   };
 
   onFocus = () => {
@@ -77,7 +92,7 @@ export class SceneQuickFilter extends SceneObjectBase<SceneQuickFilterState> {
 
   static Component = ({ model }: SceneComponentProps<SceneQuickFilter>) => {
     const styles = useStyles2(getStyles);
-    const { placeholder, searchText, resultsCount } = model.useState();
+    const { placeholder, inputText, resultsCount } = model.useState();
 
     return (
       <Input
@@ -85,7 +100,7 @@ export class SceneQuickFilter extends SceneObjectBase<SceneQuickFilterState> {
         className="quick-filter"
         aria-label={t('grid.quick-filter.aria-label', 'Quick filter')}
         placeholder={placeholder}
-        value={searchText}
+        value={inputText}
         prefix={<Icon name="search" />}
         suffix={
           <>
