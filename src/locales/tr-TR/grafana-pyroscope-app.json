@@ -10,27 +10,27 @@
       "unfavorite": "Favorilerden çıkar"
     },
     "span-exemplar-toggle": {
-      "aria-label": "",
-      "span-heatmap": "",
-      "time-series": "",
-      "unavailable": ""
+      "aria-label": "Profil zaman çizelgesi görselleştirmesi",
+      "span-heatmap": "İz parçası ısı haritası",
+      "time-series": "Zaman serisi",
+      "unavailable": "Mevcut hizmet, filtreler ve zaman aralığı için iz parçası profili bulunmuyor"
     }
   },
   "ad-hoc": {
     "diff": {
-      "cannot-compute-diff": "",
-      "no-common-profile-types": "",
-      "profile": ""
+      "cannot-compute-diff": "Fark hesaplanamıyor",
+      "no-common-profile-types": "Yüklenen profillerin ortak bir profil türü yok. Fark görünümünü kullanmak için eşleşen türlerde profiller yükleyin.",
+      "profile": "Profil"
     },
     "profile-type-selector": {
       "label": "Profil"
     },
     "tabs": {
-      "diff-view": "",
+      "diff-view": "Fark görünümü",
       "single-view": "Tekli görünüm"
     },
     "upload": {
-      "diff-converted-to-single": ""
+      "diff-converted-to-single": "Fark profili yükleme işlemi için tek bir alev grafiğine dönüştürüldü. Karşılaştırma verileri tutulmadı."
     },
     "view": {
       "title": "Geçici görünüm"
@@ -45,7 +45,7 @@
       "placeholder": "Bir takip sorusu sorun...",
       "send": "Gönder"
     },
-    "llm-error": "",
+    "llm-error": "OpenAI ile içerik oluşturulurken bir hata oluştu!",
     "llm-error-message": "Yaşanan aksaklık için özür dileriz, lütfen tekrar deneyin veya sorun devam ederse kuruluş yöneticinizle iletişime geçin.",
     "reply": {
       "search-node": "Bu düğümü ara"
@@ -66,7 +66,7 @@
     "label": "Profiles Drilldown'a dön"
   },
   "common": {
-    "not-available": ""
+    "not-available": "–"
   },
   "create-recording-rule": {
     "cancel": "İptal et",
@@ -121,10 +121,10 @@
       "tooltip-time-picker": "Zaman seçici",
       "tooltip-time-picker-description": "Zaman aralığını büyüt (varsayılan davranış)"
     },
-    "error-gcx-copy": "",
+    "error-gcx-copy": "gcx komutları panoya kopyalanamadı!",
     "error-loading-profile": "Profil verileri yüklenirken hata oluştu.",
     "explain-button": "Alev Grafiği Farklarını Açıkla",
-    "gcx-copied": "",
+    "gcx-copied": "gcx komutları panoya kopyalandı!",
     "missing-selections": {
       "auto-select": "Otomatik seçim",
       "how-to-alt": "Alev grafiği farkları nasıl görüntülenir?",
@@ -153,12 +153,12 @@
     "title": "Grafana Profiles Drilldown"
   },
   "explore-service-heatmap": {
-    "description": "",
-    "title": ""
+    "description": "Belirli bir dilime düşen iz parçalarının sayısı",
+    "title": "İz parçası başına {{title}}"
   },
   "explorer": {
     "add-to-dashboard": {
-      "modal-title": ""
+      "modal-title": "Panoya ekle"
     },
     "exploration-type": {
       "all-services": "Tüm hizmetler",
@@ -178,7 +178,7 @@
       "add-recording-rule": "Kayıt kuralı ekle",
       "recording-rules-tooltip": "Kayıt kuralları",
       "settings-tooltip": "Kiracı ayarlarını göster/düzenle",
-      "share-error": "",
+      "share-error": "Paylaşılabilir bağlantı panoya kopyalanırken bir hata oluştu!",
       "share-tooltip": "Paylaşılabilir bağlantıyı panoya kopyala",
       "upload-tooltip": "Geçici profilleri yükle",
       "view-recording-rules": "Kayıt kurallarını göster"
@@ -191,20 +191,20 @@
   "export-menu": {
     "aria-label": "Profil verilerini dışa aktar",
     "error-flamegraph-com": "flamegraph.com'a dışa aktarılamadı.",
-    "error-gcx-copy": "",
+    "error-gcx-copy": "gcx komutu panoya kopyalanamadı!",
     "error-loading-profile": "Flamebearer profil verileri yüklenirken hata oluştu.",
     "error-png": "png biçiminde dışa aktarılamadı.",
-    "error-png-no-canvas": "",
+    "error-png-no-canvas": "Lütfen PNG biçiminde dışa aktarmadan önce alev grafiğinin görünür olduğundan emin olun.",
     "error-pprof": "pprof biçiminde dışa aktarılamadı.",
-    "gcx-command": "",
-    "gcx-command-tooltip": "",
-    "gcx-commands": "",
-    "gcx-commands-tooltip": "",
-    "gcx-copied": "",
+    "gcx-command": "gcx komutu",
+    "gcx-command-tooltip": "Bu profili pprof olarak indirmek için gcx komutunu kopyalayın",
+    "gcx-commands": "gcx komutları",
+    "gcx-commands-tooltip": "Temel ve karşılaştırma profillerini pprof olarak indirmek için gcx komutlarını kopyalayın",
+    "gcx-copied": "gcx komutu panoya kopyalandı!",
     "json": "json",
     "json-label": "json",
     "png": "png",
-    "png-disabled-description": "",
+    "png-disabled-description": "PNG biçiminde dışa aktarmak için alev grafiği görünümüne geçin",
     "png-label": "png",
     "pprof": "pprof",
     "tooltip": "Profil verilerini dışa aktar"
@@ -229,10 +229,10 @@
       "tooltip": "Alev grafiği sorgusuna bir profil kimliği seçici eklediniz ({{profileIdSelector}})."
     },
     "span-selector": {
-      "filter-label": "",
-      "filter-operator": "",
-      "filter-value": "",
-      "name": "",
+      "filter-label": "Filtre etiketi",
+      "filter-operator": "Filtre işleci",
+      "filter-value": "Filtre değeri",
+      "name": "İz parçası",
       "remove": "Zaman aralığı seçiciyi sorgudan kaldır",
       "tooltip": "Alev grafiği sorgusuna bir zaman aralığı seçici eklediniz ({{spanSelector}})."
     },
@@ -265,7 +265,7 @@
     "context-menu": {
       "label": "İşlev ayrıntıları"
     },
-    "copy-error": "",
+    "copy-error": "Dosya yolu panoya kopyalanırken bir hata oluştu!",
     "copy-to-clipboard": "Panoya kopyala",
     "fetch-error": "İşlev ayrıntıları alınırken hata oluştu.",
     "file": "Dosya",
@@ -323,7 +323,7 @@
   },
   "grid": {
     "empty-state": {
-      "no-profiles": "",
+      "no-profiles": "Profil bulunamadı. Zaman aralığını genişletin veya profil verileri göndermeye başlayın.",
       "no-results": "Sonuç yok"
     },
     "error": {
@@ -354,38 +354,38 @@
   },
   "heatmap": {
     "exemplar": {
-      "select": ""
+      "select": "Exemplar seçin"
     },
     "exemplar-table": {
-      "clear-selection": "",
-      "col-actions": "",
-      "col-duration": "",
-      "col-span-id": "",
-      "col-span-name": "",
-      "col-timestamp": "",
-      "col-trace-id": "",
-      "copied": "",
-      "copy-to-clipboard": "",
-      "empty": "",
-      "open-flamegraph": "",
-      "open-trace": "",
-      "select-exemplar": "",
-      "select-tempo": "",
-      "tempo-datasource": "",
-      "tempo-placeholder": "",
-      "title": "",
-      "trace-lookup-failed": ""
+      "clear-selection": "Exemplar seçimini temizle",
+      "col-actions": "Eylemler",
+      "col-duration": "Süre",
+      "col-span-id": "İz parçası kimliği",
+      "col-span-name": "İz parçası adı",
+      "col-timestamp": "Zaman damgası",
+      "col-trace-id": "İz kimliği",
+      "copied": "Kopyalandı!",
+      "copy-to-clipboard": "Panoya kopyala",
+      "empty": "Seçilen zaman aralığında iz parçası exemplar'ı bulunmuyor.",
+      "open-flamegraph": "Alev grafiğini aç",
+      "open-trace": "İzi aç",
+      "select-exemplar": "Exemplar seçin",
+      "select-tempo": "Tempo veri kaynağını seçin",
+      "tempo-datasource": "Tempo veri kaynağı",
+      "tempo-placeholder": "Tempo veri kaynağını seçin...",
+      "title": "En iyi iz parçası exemplar'ları",
+      "trace-lookup-failed": "İz ayrıntıları Tempo'dan yüklenemedi."
     },
     "menu": {
-      "open-in-explore": ""
+      "open-in-explore": "Explore'da aç"
     },
     "trace-drawer": {
-      "title": ""
+      "title": "İz {{traceId}}"
     }
   },
   "labels": {
     "compare": {
-      "aria-label": "",
+      "aria-label": "Karşılaştır",
       "clear-tooltip": "Karşılaştırma seçimini temizle",
       "tooltip-empty": "Alev grafiklerini karşılaştırmak için hem bir referans hem de bir karşılaştırma panelini seçin",
       "tooltip-ready": "\"{{baseline}}\" ve \"{{comparison}}\" karşılaştırması",
@@ -482,10 +482,10 @@
   },
   "optimize-code": {
     "context": {
-      "title": ""
+      "title": "Ek açıklamalı kaynak kodu ve optimizasyon talimatları"
     },
-    "error": "",
-    "prompt": ""
+    "error": "Optimizasyon bağlamı oluşturulamadı",
+    "prompt": "Profil oluşturma ek açıklamalarına dayanarak bu kodu optimize edin."
   },
   "panel-box": {
     "cancel-query": "Sorguyu iptal et",
@@ -506,7 +506,7 @@
     "commit-sha": "SHA yürütme: {{shortCommitSha}}",
     "contribute": "Katkıda bulunun",
     "documentation": "Belgeler",
-    "grafana-version": "",
+    "grafana-version": "Grafana {{edition}} ({{env}})",
     "last-update": "Son güncelleme: {{updated}}",
     "report-issue": "Sorun bildir",
     "title": "Eklenti bilgileri",
@@ -514,10 +514,10 @@
   },
   "profiles": {
     "kg-annotations": {
-      "insights-label": "",
-      "severity-critical": "",
-      "severity-info": "",
-      "severity-warning": ""
+      "insights-label": "İçgörüler",
+      "severity-critical": "Kritik",
+      "severity-info": "Bilgi",
+      "severity-warning": "Uyarı"
     }
   },
   "query-analysis": {
@@ -616,7 +616,7 @@
       "no-searches": "Gösterilecek kayıtlı arama yok.",
       "no-searches-tooltip": "Yüklenecek kayıtlı arama yok",
       "remove-tooltip": "Kaldır",
-      "saved-query-tooltip": "",
+      "saved-query-tooltip": "Kayıtlı sorguyu yükle",
       "select": "Seçin",
       "select-pyroscope-query": "Lütfen bir Pyroscope sorgusu seçin.",
       "title": "Önceden kaydedilmiş bir aramayı yükleyin",
@@ -630,7 +630,7 @@
       "existing-search-warning": "Aynı sorguya sahip, daha önceden kaydedilmiş bir arama var: {{title}}",
       "info-message": "Kayıtlı aramalar tarayıcınızda yerel olarak depolanır ve yalnızca bu cihazda kullanılabilir.",
       "save": "Kaydet",
-      "saved-queries-tooltip": "",
+      "saved-queries-tooltip": "Kayıtlı sorgulara kaydet",
       "success-body": "Arama başarıyla kaydedildi.",
       "success-message": "Arama başarıyla kaydedildi.",
       "success-title": "Başarılı",
@@ -664,9 +664,9 @@
         "tooltip": "İşlev ayrıntıları özelliği, kaynak kullanımının kaynak kodu satırlarıyla eşleştirilmesini sağlar. GitHub entegrasyonu yapılandırılmışsa kaynak kodu GitHub'dan indirilecektir."
       },
       "fetch-error": {
-        "cloud-hint": "",
-        "message": "",
-        "oss-hint": "",
+        "cloud-hint": "Grafana Cloud'da, bu veri kaynağına ait eklenti ayarlarını okuma ve yazma izniniz olduğundan emin olmak için kuruluş yöneticinizle iletişime geçin.",
+        "message": "Aşağıdaki ayarlar, daha önce kaydedilenler yerine varsayılan değerleri göstermektedir. Yapabilecekleriniz:",
+        "oss-hint": "Grafana Pyroscope OSS ile veri kaynağı URL'sinin tenant-settings uç noktasını sunduğundan emin olun.",
         "title": "Eklenti ayarları alınırken hata oluştu."
       },
       "flame-graph": {
@@ -691,9 +691,9 @@
   },
   "timeseries": {
     "menu": {
-      "add-to-dashboard": "",
+      "add-to-dashboard": "Panoya ekle",
       "exemplars": "Temsilî veriler",
-      "labels": "",
+      "labels": "Etiketler",
       "open-in-explore": "Keşfet'te aç",
       "scale-linear": "Doğrusal",
       "scale-log2": "Günlük Kaydı2",
@@ -732,7 +732,7 @@
       "aria-label": "Hizmetler listesi",
       "label": "Hizmet",
       "loading": "Hizmetler yükleniyor...",
-      "unmatched-tooltip": "",
+      "unmatched-tooltip": "\"{{serviceName}}\", bu veri kaynağı ve zaman aralığı için döndürülen hizmetler listesinde görünmüyor. Lütfen açılır menüden farklı bir hizmet seçin.",
       "placeholder_one": "Bir hizmet seçin ({{count}})",
       "placeholder_other": "Bir hizmet seçin ({{count}})"
     },

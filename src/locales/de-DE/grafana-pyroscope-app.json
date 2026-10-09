@@ -10,27 +10,27 @@
       "unfavorite": "Favorisieren rückgängig"
     },
     "span-exemplar-toggle": {
-      "aria-label": "",
-      "span-heatmap": "",
-      "time-series": "",
-      "unavailable": ""
+      "aria-label": "Visualisierung der Profil-Timeline",
+      "span-heatmap": "Heatmap der Spanne",
+      "time-series": "Zeitreihen",
+      "unavailable": "Für den aktuellen Dienst, Filter und Zeitbereich sind keine Spannen-Profile verfügbar"
     }
   },
   "ad-hoc": {
     "diff": {
-      "cannot-compute-diff": "",
-      "no-common-profile-types": "",
-      "profile": ""
+      "cannot-compute-diff": "Diff kann nicht berechnet werden",
+      "no-common-profile-types": "Die hochgeladenen Profile haben keine gemeinsamen Profiltypen. Laden Sie Profile mit übereinstimmenden Typen hoch, um die Diff-Ansicht zu nutzen.",
+      "profile": "Profil"
     },
     "profile-type-selector": {
       "label": "Profil"
     },
     "tabs": {
-      "diff-view": "",
+      "diff-view": "Diff-Ansicht",
       "single-view": "Einzelansicht"
     },
     "upload": {
-      "diff-converted-to-single": ""
+      "diff-converted-to-single": "Das Diff-Profil wurde zum Hochladen in ein einzelnes Flammendiagramm konvertiert. Vergleichsdaten wurden nicht gespeichert."
     },
     "view": {
       "title": "Ad-hoc-Ansicht"
@@ -45,7 +45,7 @@
       "placeholder": "Folgefrage stellen …",
       "send": "Senden"
     },
-    "llm-error": "",
+    "llm-error": "Beim Generieren von Inhalten mit OpenAI ist ein Fehler aufgetreten!",
     "llm-error-message": "Wir entschuldigen uns für etwaige Unannehmlichkeiten. Bitte versuchen Sie es erneut oder wenden Sie sich an Ihren Organisationsadministrator, wenn das Problem weiterhin besteht.",
     "reply": {
       "search-node": "Nach diesem Knoten suchen"
@@ -66,7 +66,7 @@
     "label": "Zurück zu Profiles Drilldown"
   },
   "common": {
-    "not-available": ""
+    "not-available": "–"
   },
   "create-recording-rule": {
     "cancel": "Abbrechen",
@@ -121,10 +121,10 @@
       "tooltip-time-picker": "Zeitauswahl",
       "tooltip-time-picker-description": "Zeitbereich vergrößern (Standardverhalten)"
     },
-    "error-gcx-copy": "",
+    "error-gcx-copy": "Die GCX-Befehle konnten nicht in die Zwischenablage kopiert werden!",
     "error-loading-profile": "Beim Laden der Profildaten ist ein Fehler aufgetreten!",
     "explain-button": "Diff-Flammendiagramm erklären",
-    "gcx-copied": "",
+    "gcx-copied": "GCX-Befehle in die Zwischenablage kopiert!",
     "missing-selections": {
       "auto-select": "Automatische Auswahl",
       "how-to-alt": "So zeigen Sie das Diff-Flammendiagramm an",
@@ -153,12 +153,12 @@
     "title": "Grafana Profiles Drilldown"
   },
   "explore-service-heatmap": {
-    "description": "",
-    "title": ""
+    "description": "Anzahl der Trace-Spannen, die in einen bestimmten Bucket fallen",
+    "title": "{{title}} pro Trace-Spanne"
   },
   "explorer": {
     "add-to-dashboard": {
-      "modal-title": ""
+      "modal-title": "Zum Dashboard hinzufügen"
     },
     "exploration-type": {
       "all-services": "Alle Dienste",
@@ -178,7 +178,7 @@
       "add-recording-rule": "Aufnahmeregel hinzufügen",
       "recording-rules-tooltip": "Aufnahmeregeln",
       "settings-tooltip": "Mandanteneinstellungen anzeigen/bearbeiten",
-      "share-error": "",
+      "share-error": "Fehler beim Kopieren des teilbaren Links in die Zwischenablage!",
       "share-tooltip": "Teilbaren Link in die Zwischenablage kopieren",
       "upload-tooltip": "Ad-hoc-Profile hochladen",
       "view-recording-rules": "Aufnahmeregeln anzeigen"
@@ -191,20 +191,20 @@
   "export-menu": {
     "aria-label": "Profildaten exportieren",
     "error-flamegraph-com": "Export nach flamegraph.com fehlgeschlagen!",
-    "error-gcx-copy": "",
+    "error-gcx-copy": "Der GCX-Befehl konnte nicht in die Zwischenablage kopiert werden!",
     "error-loading-profile": "Beim Laden der Flamebearer-Profildaten ist ein Fehler aufgetreten!",
     "error-png": "Export nach PNG fehlgeschlagen!",
-    "error-png-no-canvas": "",
+    "error-png-no-canvas": "Bitte achten Sie vor dem PNG-Export darauf, dass das Flammendiagramm erkennbar ist.",
     "error-pprof": "Export nach PPROF fehlgeschlagen!",
-    "gcx-command": "",
-    "gcx-command-tooltip": "",
-    "gcx-commands": "",
-    "gcx-commands-tooltip": "",
-    "gcx-copied": "",
+    "gcx-command": "GCX-Befehl",
+    "gcx-command-tooltip": "Kopieren Sie den GCX-Befehl, um dieses Profil als pprof herunterzuladen",
+    "gcx-commands": "GCX-Befehle",
+    "gcx-commands-tooltip": "Kopieren Sie die GCX-Befehle, um die Baseline- und Vergleichsprofile als pprof herunterzuladen",
+    "gcx-copied": "GCX-Befehl in die Zwischenablage kopiert!",
     "json": "json",
     "json-label": "json",
     "png": "png",
-    "png-disabled-description": "",
+    "png-disabled-description": "Wechseln Sie zur Flammendiagramm-Ansicht, um es als PNG zu exportieren",
     "png-label": "png",
     "pprof": "pprof",
     "tooltip": "Profildaten exportieren"
@@ -229,10 +229,10 @@
       "tooltip": "Sie haben der Flammendiagramm-Abfrage ({{profileIdSelector}}) einen Profil-ID-Selektor hinzugefügt."
     },
     "span-selector": {
-      "filter-label": "",
-      "filter-operator": "",
-      "filter-value": "",
-      "name": "",
+      "filter-label": "Filterlabel",
+      "filter-operator": "Filteroperator",
+      "filter-value": "Filterwert",
+      "name": "Spanne",
       "remove": "Span-Selektor aus der Abfrage entfernen",
       "tooltip": "Sie haben der Flammendiagramm-Abfrage ({{spanSelector}}) einen Span-Selektor hinzugefügt."
     },
@@ -265,7 +265,7 @@
     "context-menu": {
       "label": "Funktionsdetails"
     },
-    "copy-error": "",
+    "copy-error": "Fehler beim Kopieren des Dateipfads in die Zwischenablage!",
     "copy-to-clipboard": "In die Zwischenablage kopieren",
     "fetch-error": "Beim Abrufen der Funktionsdetails ist ein Fehler aufgetreten!",
     "file": "Datei",
@@ -323,7 +323,7 @@
   },
   "grid": {
     "empty-state": {
-      "no-profiles": "",
+      "no-profiles": "Keine Profile gefunden. Erweitern Sie den Zeitbereich oder beginnen Sie mit dem Senden von Profildaten.",
       "no-results": "Keine Ergebnisse"
     },
     "error": {
@@ -354,38 +354,38 @@
   },
   "heatmap": {
     "exemplar": {
-      "select": ""
+      "select": "Exemplar auswählen"
     },
     "exemplar-table": {
-      "clear-selection": "",
-      "col-actions": "",
-      "col-duration": "",
-      "col-span-id": "",
-      "col-span-name": "",
-      "col-timestamp": "",
-      "col-trace-id": "",
-      "copied": "",
-      "copy-to-clipboard": "",
-      "empty": "",
-      "open-flamegraph": "",
-      "open-trace": "",
-      "select-exemplar": "",
-      "select-tempo": "",
-      "tempo-datasource": "",
-      "tempo-placeholder": "",
-      "title": "",
-      "trace-lookup-failed": ""
+      "clear-selection": "Exemplarauswahl löschen",
+      "col-actions": "Aktionen",
+      "col-duration": "Dauer",
+      "col-span-id": "Spannen-ID",
+      "col-span-name": "Spannen-Name",
+      "col-timestamp": "Zeitstempel",
+      "col-trace-id": "Trace-ID",
+      "copied": "Kopiert!",
+      "copy-to-clipboard": "In die Zwischenablage kopieren",
+      "empty": "Keine Spannen-Exemplare im ausgewählten Zeitbereich.",
+      "open-flamegraph": "Flammendiagramm öffnen",
+      "open-trace": "Trace öffnen",
+      "select-exemplar": "Exemplar auswählen",
+      "select-tempo": "Tempo-Datenquelle auswählen",
+      "tempo-datasource": "Tempo-Datenquelle",
+      "tempo-placeholder": "Tempo-Datenquelle auswählen …",
+      "title": "Exemplare der oberen Spanne",
+      "trace-lookup-failed": "Es können keine Trace-Details aus Tempo geladen werden."
     },
     "menu": {
-      "open-in-explore": ""
+      "open-in-explore": "In Explore öffnen"
     },
     "trace-drawer": {
-      "title": ""
+      "title": "Trace {{traceId}}"
     }
   },
   "labels": {
     "compare": {
-      "aria-label": "",
+      "aria-label": "Vergleichen",
       "clear-tooltip": "Vergleichsauswahl löschen",
       "tooltip-empty": "Wählen Sie sowohl ein Basis- als auch ein Vergleichspanel für den Vergleich ihrer Flammendiagramme aus",
       "tooltip-ready": "„{{baseline}}“ vs. „{{comparison}}“ vergleichen",
@@ -482,10 +482,10 @@
   },
   "optimize-code": {
     "context": {
-      "title": ""
+      "title": "Kommentierter Quellcode und Optimierungsanweisungen"
     },
-    "error": "",
-    "prompt": ""
+    "error": "Der Kontext der Optimierung konnte nicht erstellt werden",
+    "prompt": "Optimieren Sie diesen Code auf der Grundlage der Profiling-Anmerkungen."
   },
   "panel-box": {
     "cancel-query": "Abfrage abbrechen",
@@ -506,7 +506,7 @@
     "commit-sha": "Commit SHA: {{shortCommitSha}}",
     "contribute": "Beitragen",
     "documentation": "Dokumentation",
-    "grafana-version": "",
+    "grafana-version": "Grafana {{edition}} ({{env}})",
     "last-update": "Letztes Update: {{updated}}",
     "report-issue": "Problem melden",
     "title": "Plugin-Info",
@@ -514,10 +514,10 @@
   },
   "profiles": {
     "kg-annotations": {
-      "insights-label": "",
-      "severity-critical": "",
-      "severity-info": "",
-      "severity-warning": ""
+      "insights-label": "Insights",
+      "severity-critical": "Kritisch",
+      "severity-info": "Info",
+      "severity-warning": "Warnung"
     }
   },
   "query-analysis": {
@@ -616,7 +616,7 @@
       "no-searches": "Keine gespeicherten Suchen zum Anzeigen vorhanden.",
       "no-searches-tooltip": "Keine gespeicherten Suchen zum Laden vorhanden",
       "remove-tooltip": "Entfernen",
-      "saved-query-tooltip": "",
+      "saved-query-tooltip": "Gespeicherte Abfrage laden",
       "select": "Auswählen",
       "select-pyroscope-query": "Bitte wählen Sie eine Pyroscope-Abfrage aus.",
       "title": "Zuvor gespeicherte Suche laden",
@@ -630,7 +630,7 @@
       "existing-search-warning": "Es gibt eine zuvor gespeicherte Suche mit derselben Abfrage: {{title}}",
       "info-message": "Gespeicherte Suchen werden lokal in Ihrem Browser gespeichert und sind nur auf diesem Gerät verfügbar.",
       "save": "Speichern",
-      "saved-queries-tooltip": "",
+      "saved-queries-tooltip": "Unter „Gespeicherte Abfragen“ speichern",
       "success-body": "Suche erfolgreich gespeichert.",
       "success-message": "Suche erfolgreich gespeichert.",
       "success-title": "Erfolg",
@@ -664,9 +664,9 @@
         "tooltip": "Die Funktionsdetails-Funktion ermöglicht die Zuordnung der Ressourcennutzung zu Quellcodezeilen. Wenn die GitHub-Integration konfiguriert ist, wird der Quellcode von GitHub heruntergeladen."
       },
       "fetch-error": {
-        "cloud-hint": "",
-        "message": "",
-        "oss-hint": "",
+        "cloud-hint": "Erkundigen Sie sich bei Ihrem Organisationsadministrator in Grafana Cloud, ob Sie die Berechtigung zum Lesen und Schreiben von Plugin-Einstellungen für diese Datenquelle besitzen.",
+        "message": "Die folgenden Einstellungen zeigen Standardwerte statt dem, was zuvor gespeichert wurde. Was Sie tun können:",
+        "oss-hint": "Achten Sie bei Grafana Pyroscope OSS darauf, dass die URL der Datenquelle den Endpunkt der Tenant-Einstellungen zeigt.",
         "title": "Beim Abrufen der Plugin-Einstellungen ist ein Fehler aufgetreten!"
       },
       "flame-graph": {
@@ -691,9 +691,9 @@
   },
   "timeseries": {
     "menu": {
-      "add-to-dashboard": "",
+      "add-to-dashboard": "Zum Dashboard hinzufügen",
       "exemplars": "Exemplare",
-      "labels": "",
+      "labels": "Labels",
       "open-in-explore": "In Explore öffnen",
       "scale-linear": "Linear",
       "scale-log2": "Log2",
@@ -732,7 +732,7 @@
       "aria-label": "Liste der Dienste",
       "label": "Dienst",
       "loading": "Dienste werden geladen …",
-      "unmatched-tooltip": "",
+      "unmatched-tooltip": "„{{serviceName}}“ erscheint nicht in der Liste der Dienste, die für diese Datenquelle und diesen Zeitbereich zurückgegeben werden. Bitte wählen Sie einen anderen Dienst aus der Dropdown-Liste aus.",
       "placeholder_one": "({{count}}) Dienst auswählen",
       "placeholder_other": "({{count}}) Dienste auswählen"
     },

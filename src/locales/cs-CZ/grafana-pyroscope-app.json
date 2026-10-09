@@ -10,27 +10,27 @@
       "unfavorite": "Odstranit z oblíbených"
     },
     "span-exemplar-toggle": {
-      "aria-label": "",
-      "span-heatmap": "",
-      "time-series": "",
-      "unavailable": ""
+      "aria-label": "Vizualizace časové osy profilu",
+      "span-heatmap": "Teplotní mapa rozsahu",
+      "time-series": "Časové řady",
+      "unavailable": "Pro aktuální službu, filtry a časový rozsah nejsou k dispozici žádné profily rozpětí"
     }
   },
   "ad-hoc": {
     "diff": {
-      "cannot-compute-diff": "",
-      "no-common-profile-types": "",
-      "profile": ""
+      "cannot-compute-diff": "Nelze vypočítat rozdíl",
+      "no-common-profile-types": "Nahrané profily nemají žádné společné typy profilů. Nahrajte profily s odpovídajícími typy pro použití zobrazení rozdílů.",
+      "profile": "Profil"
     },
     "profile-type-selector": {
       "label": "Profil"
     },
     "tabs": {
-      "diff-view": "",
+      "diff-view": "Zobrazení rozdílů",
       "single-view": "Jednotné zobrazení"
     },
     "upload": {
-      "diff-converted-to-single": ""
+      "diff-converted-to-single": "Rozdílový profil byl pro účely nahrání převeden na jeden flame graf. Srovnávací data nebyla uchována."
     },
     "view": {
       "title": "Ad hoc zobrazení"
@@ -45,7 +45,7 @@
       "placeholder": "Položte doplňující otázku…",
       "send": "Odeslat"
     },
-    "llm-error": "",
+    "llm-error": "Při generování obsahu pomocí OpenAI došlo k chybě!",
     "llm-error-message": "Omlouváme se za případné nepříjemnosti. Zkuste to znovu nebo, pokud problém přetrvává, kontaktujte správce organizace.",
     "reply": {
       "search-node": "Hledat tento uzel"
@@ -66,7 +66,7 @@
     "label": "Zpět na Podrobný rozpis profilů"
   },
   "common": {
-    "not-available": ""
+    "not-available": "–"
   },
   "create-recording-rule": {
     "cancel": "Zrušit",
@@ -121,10 +121,10 @@
       "tooltip-time-picker": "Volič času",
       "tooltip-time-picker-description": "Přiblížení časového rozsahu (výchozí chování)"
     },
-    "error-gcx-copy": "",
+    "error-gcx-copy": "Zkopírování příkazů gcx do schránky se nezdařilo!",
     "error-loading-profile": "Při načítání dat profilu došlo k chybě!",
     "explain-button": "Vysvětlit rozdílový flame graf",
-    "gcx-copied": "",
+    "gcx-copied": "Příkazy gcx byly zkopírovány do schránky!",
     "missing-selections": {
       "auto-select": "Automatický výběr",
       "how-to-alt": "Jak zobrazit rozdílový flame graf",
@@ -153,12 +153,12 @@
     "title": "Podrobný rozpis profilů Grafana"
   },
   "explore-service-heatmap": {
-    "description": "",
-    "title": ""
+    "description": "Počet rozsahů trasování spadajících do konkrétního segmentu",
+    "title": "{{title}} na rozsah trasování"
   },
   "explorer": {
     "add-to-dashboard": {
-      "modal-title": ""
+      "modal-title": "Přidat na dashboard"
     },
     "exploration-type": {
       "all-services": "Všechny služby",
@@ -178,7 +178,7 @@
       "add-recording-rule": "Přidat pravidlo nahrávání",
       "recording-rules-tooltip": "Pravidla nahrávání",
       "settings-tooltip": "Zobrazit/upravit nastavení tenanta",
-      "share-error": "",
+      "share-error": "Při kopírování sdílitelného odkazu do schránky došlo k chybě!",
       "share-tooltip": "Kopírovat sdílitelný odkaz do schránky",
       "upload-tooltip": "Nahrát ad hoc profily",
       "view-recording-rules": "Zobrazit pravidla nahrávání"
@@ -191,20 +191,20 @@
   "export-menu": {
     "aria-label": "Exportovat data profilu",
     "error-flamegraph-com": "Export na flamegraph.com se nezdařil!",
-    "error-gcx-copy": "",
+    "error-gcx-copy": "Zkopírování příkazu gcx do schránky se nezdařilo!",
     "error-loading-profile": "Při načítání dat profilu flamebearer došlo k chybě!",
     "error-png": "Export do formátu PNG se nezdařil!",
-    "error-png-no-canvas": "",
+    "error-png-no-canvas": "Před exportem do formátu PNG se ujistěte, že je flame graf viditelný.",
     "error-pprof": "Export do formátu pprof se nezdařil!",
-    "gcx-command": "",
-    "gcx-command-tooltip": "",
-    "gcx-commands": "",
-    "gcx-commands-tooltip": "",
-    "gcx-copied": "",
+    "gcx-command": "Příkaz gcx",
+    "gcx-command-tooltip": "Zkopírujte příkaz gcx a stáhněte tento profil jako pprof",
+    "gcx-commands": "Příkazy gcx",
+    "gcx-commands-tooltip": "Zkopírujte příkazy gcx pro stažení základního a srovnávacího profilu ve formátu pprof",
+    "gcx-copied": "Příkaz gcx byl zkopírován do schránky!",
     "json": "json",
     "json-label": "json",
     "png": "png",
-    "png-disabled-description": "",
+    "png-disabled-description": "Přepněte na zobrazení flame grafu a exportujte jej do formátu PNG",
     "png-label": "png",
     "pprof": "pprof",
     "tooltip": "Exportovat data profilu"
@@ -229,10 +229,10 @@
       "tooltip": "Do dotazu s flame grafem ({{profileIdSelector}}) jste přidali výběr ID profilu."
     },
     "span-selector": {
-      "filter-label": "",
-      "filter-operator": "",
-      "filter-value": "",
-      "name": "",
+      "filter-label": "Štítek filtru",
+      "filter-operator": "Operátor filtru",
+      "filter-value": "Hodnota filtru",
+      "name": "Rozsah",
       "remove": "Odebrat volič rozpětí z dotazu",
       "tooltip": "Do dotazu s flame grafem ({{spanSelector}}) jste přidali výběr rozpětí."
     },
@@ -265,7 +265,7 @@
     "context-menu": {
       "label": "Podrobnosti o funkci"
     },
-    "copy-error": "",
+    "copy-error": "Při kopírování cesty souboru do schránky došlo k chybě!",
     "copy-to-clipboard": "Kopírovat do schránky",
     "fetch-error": "Při načítání podrobností o funkci došlo k chybě!",
     "file": "Soubor",
@@ -323,7 +323,7 @@
   },
   "grid": {
     "empty-state": {
-      "no-profiles": "",
+      "no-profiles": "Nebyly nalezeny žádné profily. Rozšiřte časový rozsah nebo začněte odesílat údaje o profilu.",
       "no-results": "Žádné výsledky"
     },
     "error": {
@@ -354,38 +354,38 @@
   },
   "heatmap": {
     "exemplar": {
-      "select": ""
+      "select": "Vybrat vzor"
     },
     "exemplar-table": {
-      "clear-selection": "",
-      "col-actions": "",
-      "col-duration": "",
-      "col-span-id": "",
-      "col-span-name": "",
-      "col-timestamp": "",
-      "col-trace-id": "",
-      "copied": "",
-      "copy-to-clipboard": "",
-      "empty": "",
-      "open-flamegraph": "",
-      "open-trace": "",
-      "select-exemplar": "",
-      "select-tempo": "",
-      "tempo-datasource": "",
-      "tempo-placeholder": "",
-      "title": "",
-      "trace-lookup-failed": ""
+      "clear-selection": "Vymazat výběr příkladu",
+      "col-actions": "Akce",
+      "col-duration": "Doba trvání",
+      "col-span-id": "ID rozsahu",
+      "col-span-name": "Název rozsahu",
+      "col-timestamp": "Časová známka",
+      "col-trace-id": "ID trasování",
+      "copied": "Zkopírováno!",
+      "copy-to-clipboard": "Kopírovat do schránky",
+      "empty": "Ve vybraném časovém rozsahu nejsou žádné vzorové příklady rozpětí.",
+      "open-flamegraph": "Otevřít flame graf",
+      "open-trace": "Otevřít trasování",
+      "select-exemplar": "Vybrat vzor",
+      "select-tempo": "Vyberte zdroj dat Tempo",
+      "tempo-datasource": "Zdroj dat Tempo",
+      "tempo-placeholder": "Vyberte zdroj dat Tempo…",
+      "title": "Příklady nejlepších rozsahů",
+      "trace-lookup-failed": "Podrobnosti trasování nelze načíst z Tempa."
     },
     "menu": {
-      "open-in-explore": ""
+      "open-in-explore": "Otevřít v Prozkoumat"
     },
     "trace-drawer": {
-      "title": ""
+      "title": "Trasování {{traceId}}"
     }
   },
   "labels": {
     "compare": {
-      "aria-label": "",
+      "aria-label": "Porovnat",
       "clear-tooltip": "Vymazat výběr pro porovnání",
       "tooltip-empty": "Pro porovnání flame grafů vyberte jak základní, tak srovnávací panel.",
       "tooltip-ready": "Porovnat „{{baseline}}“ vs. „{{comparison}}“",
@@ -484,10 +484,10 @@
   },
   "optimize-code": {
     "context": {
-      "title": ""
+      "title": "Anotovaný zdrojový kód a pokyny k optimalizaci"
     },
-    "error": "",
-    "prompt": ""
+    "error": "Kontext optimalizace se nepodařilo vytvořit",
+    "prompt": "Optimalizujte tento kód na základě vysvětlivek profilování."
   },
   "panel-box": {
     "cancel-query": "Zrušit dotaz",
@@ -508,7 +508,7 @@
     "commit-sha": "SHA závazku: {{shortCommitSha}}",
     "contribute": "Přispět",
     "documentation": "Dokumentace",
-    "grafana-version": "",
+    "grafana-version": "Grafana {{edition}} ({{env}})",
     "last-update": "Poslední aktualizace: {{updated}}",
     "report-issue": "Nahlásit problém",
     "title": "Informace o pluginu",
@@ -516,10 +516,10 @@
   },
   "profiles": {
     "kg-annotations": {
-      "insights-label": "",
-      "severity-critical": "",
-      "severity-info": "",
-      "severity-warning": ""
+      "insights-label": "Poznatky",
+      "severity-critical": "Kritická",
+      "severity-info": "Info",
+      "severity-warning": "Varování"
     }
   },
   "query-analysis": {
@@ -618,7 +618,7 @@
       "no-searches": "Žádná uložená vyhledávání k zobrazení.",
       "no-searches-tooltip": "Žádná uložená vyhledávání k načtení",
       "remove-tooltip": "Odebrat",
-      "saved-query-tooltip": "",
+      "saved-query-tooltip": "Načíst uložený dotaz",
       "select": "Vybrat",
       "select-pyroscope-query": "Vyberte dotaz Pyroscope.",
       "title": "Načíst dříve uložené vyhledávání",
@@ -632,7 +632,7 @@
       "existing-search-warning": "Existuje dříve uložené vyhledávání se stejným dotazem: {{title}}",
       "info-message": "Uložená vyhledávání se ukládají místně do vašeho prohlížeče a budou k dispozici pouze na tomto zařízení.",
       "save": "Uložit",
-      "saved-queries-tooltip": "",
+      "saved-queries-tooltip": "Uložit do uložených dotazů",
       "success-body": "Vyhledávání bylo úspěšně uloženo.",
       "success-message": "Vyhledávání bylo úspěšně uloženo.",
       "success-title": "Úspěch",
@@ -666,9 +666,9 @@
         "tooltip": "Funkce Podrobnosti o funkci umožňuje přiřadit využití zdrojů k řádkům zdrojového kódu. Pokud je nakonfigurována integrace s GitHubem, zdrojový kód se stáhne z GitHubu."
       },
       "fetch-error": {
-        "cloud-hint": "",
-        "message": "",
-        "oss-hint": "",
+        "cloud-hint": "V službě Grafana Cloud si u správce organizace ověřte, zda máte oprávnění ke čtení a zápisu nastavení pluginu pro tento zdroj dat.",
+        "message": "Níže uvedená nastavení zobrazují výchozí hodnoty místo dříve uložených hodnot. Co můžete dělat:",
+        "oss-hint": "V případě Grafana Pyroscope OSS se ujistěte, že adresa URL zdroje dat zpřístupňuje koncový bod nastavení nájemce.",
         "title": "Při načítání nastavení pluginu došlo k chybě!"
       },
       "flame-graph": {
@@ -693,9 +693,9 @@
   },
   "timeseries": {
     "menu": {
-      "add-to-dashboard": "",
+      "add-to-dashboard": "Přidat na dashboard",
       "exemplars": "Příklady",
-      "labels": "",
+      "labels": "Štítky",
       "open-in-explore": "Otevřít v Prozkoumat",
       "scale-linear": "Lineární",
       "scale-log2": "Log2",
@@ -736,7 +736,7 @@
       "aria-label": "Seznam služeb",
       "label": "Služba",
       "loading": "Načítání služeb…",
-      "unmatched-tooltip": "",
+      "unmatched-tooltip": "„{{serviceName}}“ se neobjevuje v seznamu služeb vrácených pro tento zdroj dat a časový rozsah. Vyberte jinou službu z rozevíracího seznamu.",
       "placeholder_one": "Vyberte službu ({{count}})",
       "placeholder_few": "Vyberte službu ({{count}})",
       "placeholder_many": "Vyberte službu ({{count}})",

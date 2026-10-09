@@ -10,27 +10,27 @@
       "unfavorite": "Usuń z ulubionych"
     },
     "span-exemplar-toggle": {
-      "aria-label": "",
-      "span-heatmap": "",
-      "time-series": "",
-      "unavailable": ""
+      "aria-label": "Wizualizacja osi czasu profilu",
+      "span-heatmap": "Mapa intensywności odcinków",
+      "time-series": "Szereg czasowy",
+      "unavailable": "Brak dostępnych profili odcinków dla bieżącej usługi, filtrów i zakresu czasu"
     }
   },
   "ad-hoc": {
     "diff": {
-      "cannot-compute-diff": "",
-      "no-common-profile-types": "",
-      "profile": ""
+      "cannot-compute-diff": "Nie można obliczyć różnic",
+      "no-common-profile-types": "Przesłane profile nie mają wspólnych typów profili. Prześlij profile o zgodnych typach, aby użyć widoku różnic.",
+      "profile": "Profil"
     },
     "profile-type-selector": {
       "label": "Profil"
     },
     "tabs": {
-      "diff-view": "",
+      "diff-view": "Widok różnic",
       "single-view": "Widok pojedynczy"
     },
     "upload": {
-      "diff-converted-to-single": ""
+      "diff-converted-to-single": "Profil różnic został przekonwertowany na pojedynczy wykres płomieniowy w celu przesłania. Dane porównawcze nie zostały zachowane."
     },
     "view": {
       "title": "Widok ad hoc"
@@ -45,7 +45,7 @@
       "placeholder": "Zadaj pytanie uzupełniające…",
       "send": "Wyślij"
     },
-    "llm-error": "",
+    "llm-error": "Podczas generowania treści przy użyciu OpenAI wystąpił błąd!",
     "llm-error-message": "Przepraszamy za niedogodności. Spróbuj ponownie, a jeśli problem będzie się powtarzał, skontaktuj się z administratorem organizacji.",
     "reply": {
       "search-node": "Szukaj tego węzła"
@@ -66,7 +66,7 @@
     "label": "Wróć do Profiles Drilldown"
   },
   "common": {
-    "not-available": ""
+    "not-available": "–"
   },
   "create-recording-rule": {
     "cancel": "Anuluj",
@@ -121,10 +121,10 @@
       "tooltip-time-picker": "Selektor godziny",
       "tooltip-time-picker-description": "Przybliż zakres czasu (działanie domyślne)"
     },
-    "error-gcx-copy": "",
+    "error-gcx-copy": "Nie udało się skopiować poleceń gcx do schowka!",
     "error-loading-profile": "Błąd podczas wczytywania danych profilu",
     "explain-button": "Wyjaśnij wykres płomieniowy różnic",
-    "gcx-copied": "",
+    "gcx-copied": "Polecenia gcx zostały skopiowane do schowka!",
     "missing-selections": {
       "auto-select": "Automatyczny wybór",
       "how-to-alt": "Jak wyświetlić wykres płomieniowy różnic",
@@ -153,12 +153,12 @@
     "title": "Grafana Profiles Drilldown"
   },
   "explore-service-heatmap": {
-    "description": "",
-    "title": ""
+    "description": "Liczba odcinków śladów przypadających na określony koszyk",
+    "title": "{{title}} na odcinek śladu"
   },
   "explorer": {
     "add-to-dashboard": {
-      "modal-title": ""
+      "modal-title": "Dodaj do pulpitu"
     },
     "exploration-type": {
       "all-services": "Wszystkie usługi",
@@ -178,7 +178,7 @@
       "add-recording-rule": "Dodaj regułę rejestrowania",
       "recording-rules-tooltip": "Reguły rejestrowania",
       "settings-tooltip": "Wyświetl/edytuj ustawienia dzierżawcy",
-      "share-error": "",
+      "share-error": "Błąd podczas kopiowania linku do udostępniania do schowka!",
       "share-tooltip": "Kopiuj link do udostępniania do schowka",
       "upload-tooltip": "Prześlij profile ad hoc",
       "view-recording-rules": "Wyświetl reguły rejestrowania"
@@ -191,20 +191,20 @@
   "export-menu": {
     "aria-label": "Eksportuj dane profilowe",
     "error-flamegraph-com": "Nie udało się wyeksportować do flamegraph.com",
-    "error-gcx-copy": "",
+    "error-gcx-copy": "Nie udało się skopiować polecenia gcx do schowka!",
     "error-loading-profile": "Błąd podczas wczytywania danych profilu Flamebearer",
     "error-png": "Nie udało się wyeksportować do formatu PNG",
-    "error-png-no-canvas": "",
+    "error-png-no-canvas": "Przed wyeksportowaniem do formatu png upewnij się, że wykres płomieniowy jest widoczny.",
     "error-pprof": "Nie udało się wyeksportować do formatu PPROF",
-    "gcx-command": "",
-    "gcx-command-tooltip": "",
-    "gcx-commands": "",
-    "gcx-commands-tooltip": "",
-    "gcx-copied": "",
+    "gcx-command": "Polecenie gcx",
+    "gcx-command-tooltip": "Skopiuj polecenie gcx, aby pobrać ten profil w formacie pprof",
+    "gcx-commands": "Polecenia gcx",
+    "gcx-commands-tooltip": "Skopiuj polecenia gcx, aby pobrać profile bazowy i porównawczy w formacie pprof",
+    "gcx-copied": "Skopiowano polecenie gcx do schowka!",
     "json": "json",
     "json-label": "json",
     "png": "png",
-    "png-disabled-description": "",
+    "png-disabled-description": "Przełącz na widok wykresu płomieniowego, aby wyeksportować go do formatu png",
     "png-label": "png",
     "pprof": "pprof",
     "tooltip": "Eksportuj dane profilowe"
@@ -229,10 +229,10 @@
       "tooltip": "Do zapytania dotyczącego wykresu płomieniowego ({{profileIdSelector}}) dodano selektor identyfikatora profilu."
     },
     "span-selector": {
-      "filter-label": "",
-      "filter-operator": "",
-      "filter-value": "",
-      "name": "",
+      "filter-label": "Etykieta filtra",
+      "filter-operator": "Operator filtra",
+      "filter-value": "Wartość filtra",
+      "name": "Odcinek",
       "remove": "Usuń selektor zakresu z zapytania",
       "tooltip": "Do zapytania dotyczącego wykresu płomieniowego ({{spanSelector}}) dodano selektor zakresu."
     },
@@ -265,7 +265,7 @@
     "context-menu": {
       "label": "Szczegóły funkcji"
     },
-    "copy-error": "",
+    "copy-error": "Błąd podczas kopiowania ścieżki pliku do schowka!",
     "copy-to-clipboard": "Kopiuj do schowka",
     "fetch-error": "Błąd podczas pobierania szczegółów funkcji!",
     "file": "Plik",
@@ -323,7 +323,7 @@
   },
   "grid": {
     "empty-state": {
-      "no-profiles": "",
+      "no-profiles": "Nie znaleziono profili. Rozszerz zakres czasu lub rozpocznij wysyłanie danych profilu.",
       "no-results": "Brak wyników"
     },
     "error": {
@@ -354,38 +354,38 @@
   },
   "heatmap": {
     "exemplar": {
-      "select": ""
+      "select": "Wybierz przykład"
     },
     "exemplar-table": {
-      "clear-selection": "",
-      "col-actions": "",
-      "col-duration": "",
-      "col-span-id": "",
-      "col-span-name": "",
-      "col-timestamp": "",
-      "col-trace-id": "",
-      "copied": "",
-      "copy-to-clipboard": "",
-      "empty": "",
-      "open-flamegraph": "",
-      "open-trace": "",
-      "select-exemplar": "",
-      "select-tempo": "",
-      "tempo-datasource": "",
-      "tempo-placeholder": "",
-      "title": "",
-      "trace-lookup-failed": ""
+      "clear-selection": "Wyczyść wybór przykładu",
+      "col-actions": "Działania",
+      "col-duration": "Czas trwania",
+      "col-span-id": "Identyfikator odcinka",
+      "col-span-name": "Nazwa odcinka",
+      "col-timestamp": "Znacznik czasu",
+      "col-trace-id": "Identyfikator śladu",
+      "copied": "Skopiowano",
+      "copy-to-clipboard": "Kopiuj do schowka",
+      "empty": "W wybranym przedziale czasu nie ma przykładowych odcinków.",
+      "open-flamegraph": "Otwórz wykres płomieniowy",
+      "open-trace": "Otwórz ślad",
+      "select-exemplar": "Wybierz przykład",
+      "select-tempo": "Wybierz źródło danych Tempo",
+      "tempo-datasource": "Źródło danych Tempo",
+      "tempo-placeholder": "Wybierz źródło danych Tempo…",
+      "title": "Najważniejsze przykłady odcinków",
+      "trace-lookup-failed": "Nie można wczytać szczegółów śladu z Tempo."
     },
     "menu": {
-      "open-in-explore": ""
+      "open-in-explore": "Otwórz w widoku „Eksploruj”"
     },
     "trace-drawer": {
-      "title": ""
+      "title": "Ślad {{traceId}}"
     }
   },
   "labels": {
     "compare": {
-      "aria-label": "",
+      "aria-label": "Porównaj",
       "clear-tooltip": "Wyczyść wybór porównania",
       "tooltip-empty": "Wybierz zarówno panel odniesienia, jak i panel porównawczy, aby porównać ich wykresy płomieniowe",
       "tooltip-ready": "Porównaj „{{baseline}}” z „{{comparison}}”",
@@ -484,10 +484,10 @@
   },
   "optimize-code": {
     "context": {
-      "title": ""
+      "title": "Kod źródłowy i instrukcje optymalizacji z adnotacjami"
     },
-    "error": "",
-    "prompt": ""
+    "error": "Nie udało się utworzyć kontekstu optymalizacji",
+    "prompt": "Zoptymalizuj ten kod na podstawie adnotacji profilowania."
   },
   "panel-box": {
     "cancel-query": "Anuluj zapytanie",
@@ -508,7 +508,7 @@
     "commit-sha": "SHA operacji commit: {{shortCommitSha}}",
     "contribute": "Współtworzenie",
     "documentation": "Dokumentacja",
-    "grafana-version": "",
+    "grafana-version": "Grafana {{edition}} ({{env}})",
     "last-update": "Ostatnia aktualizacja: {{updated}}",
     "report-issue": "Zgłoś problem",
     "title": "Informacje o wtyczce",
@@ -516,10 +516,10 @@
   },
   "profiles": {
     "kg-annotations": {
-      "insights-label": "",
-      "severity-critical": "",
-      "severity-info": "",
-      "severity-warning": ""
+      "insights-label": "Analizy",
+      "severity-critical": "Krytyczne",
+      "severity-info": "Informacje",
+      "severity-warning": "Ostrzeżenie"
     }
   },
   "query-analysis": {
@@ -618,7 +618,7 @@
       "no-searches": "Brak zapisanych wyszukiwań do wyświetlenia.",
       "no-searches-tooltip": "Brak zapisanych wyszukiwań do wczytania",
       "remove-tooltip": "Usuń",
-      "saved-query-tooltip": "",
+      "saved-query-tooltip": "Wczytaj zapisane zapytanie",
       "select": "Wybierz",
       "select-pyroscope-query": "Wybierz zapytanie Pyroscope.",
       "title": "Wczytaj zapisane wcześniej wyszukiwanie",
@@ -632,7 +632,7 @@
       "existing-search-warning": "Istnieje już zapisane wyszukiwanie z tym samym zapytaniem: {{title}}",
       "info-message": "Zapisane wyszukiwania są przechowywane lokalnie w przeglądarce i będą dostępne tylko na tym urządzeniu.",
       "save": "Zapisz",
-      "saved-queries-tooltip": "",
+      "saved-queries-tooltip": "Dodaj do zapisanych zapytań",
       "success-body": "Wyszukiwanie zostało zapisane.",
       "success-message": "Wyszukiwanie zostało zapisane.",
       "success-title": "Powodzenie",
@@ -666,9 +666,9 @@
         "tooltip": "Funkcja szczegółów funkcji umożliwia przypisanie wykorzystania zasobów do wierszy kodu źródłowego. Jeśli skonfigurowano integrację z GitHub, kod źródłowy zostanie pobrany z repozytorium w tej usłudze."
       },
       "fetch-error": {
-        "cloud-hint": "",
-        "message": "",
-        "oss-hint": "",
+        "cloud-hint": "W usłudze Grafana Cloud skontaktuj się z administratorem organizacji, aby sprawdzić, czy masz uprawnienia do odczytu i zapisu ustawień wtyczki dla tego źródła danych.",
+        "message": "Poniższe ustawienia pokazują wartości domyślne zamiast wartości zapisanych wcześniej. Co możesz zrobić:",
+        "oss-hint": "W przypadku Grafana Pyroscope OSS upewnij się, że adres URL źródła danych ujawnia punkt końcowy ustawień dzierżawcy.",
         "title": "Błąd podczas pobierania ustawień wtyczki"
       },
       "flame-graph": {
@@ -693,9 +693,9 @@
   },
   "timeseries": {
     "menu": {
-      "add-to-dashboard": "",
+      "add-to-dashboard": "Dodaj do pulpitu",
       "exemplars": "Przykłady",
-      "labels": "",
+      "labels": "Etykiety",
       "open-in-explore": "Otwórz w widoku Eksploruj",
       "scale-linear": "Liniowe",
       "scale-log2": "Log2",
@@ -736,7 +736,7 @@
       "aria-label": "Lista usług",
       "label": "Usługa",
       "loading": "Ładowanie usług…",
-      "unmatched-tooltip": "",
+      "unmatched-tooltip": "„{{serviceName}}” nie pojawia się na liście usług zwróconych dla tego źródła danych i zakresu czasu. Wybierz inną usługę z listy rozwijanej.",
       "placeholder_one": "Wybierz usługę ({{count}})",
       "placeholder_few": "Wybierz usługi ({{count}})",
       "placeholder_many": "Wybierz usługi ({{count}})",

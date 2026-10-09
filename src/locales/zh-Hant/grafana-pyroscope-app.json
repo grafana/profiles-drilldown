@@ -10,27 +10,27 @@
       "unfavorite": "移除最愛"
     },
     "span-exemplar-toggle": {
-      "aria-label": "",
-      "span-heatmap": "",
-      "time-series": "",
-      "unavailable": ""
+      "aria-label": "設定檔時間軸視覺化",
+      "span-heatmap": "區段熱度圖",
+      "time-series": "時間序列",
+      "unavailable": "目前的服務、篩選條件和時間範圍沒有可用的區段設定檔"
     }
   },
   "ad-hoc": {
     "diff": {
-      "cannot-compute-diff": "",
-      "no-common-profile-types": "",
-      "profile": ""
+      "cannot-compute-diff": "無法計算差異",
+      "no-common-profile-types": "上傳的設定檔沒有通用的設定檔類型。上傳具有相符類型的效能分析以使用差異檢視。",
+      "profile": "設定檔"
     },
     "profile-type-selector": {
       "label": "設定檔"
     },
     "tabs": {
-      "diff-view": "",
+      "diff-view": "差異檢視",
       "single-view": "單一檢視"
     },
     "upload": {
-      "diff-converted-to-single": ""
+      "diff-converted-to-single": "差異設定檔已轉換為單一火焰圖以上傳。未保留比較資料。"
     },
     "view": {
       "title": "隨機檢視"
@@ -45,7 +45,7 @@
       "placeholder": "提出後續問題…",
       "send": "傳送"
     },
-    "llm-error": "",
+    "llm-error": "使用 OpenAI 產生內容時發生錯誤！",
     "llm-error-message": "很抱歉造成您的不便，請重試；如果問題仍然存在，請聯絡您的組織管理員。",
     "reply": {
       "search-node": "搜尋此節點"
@@ -66,7 +66,7 @@
     "label": "返回設定檔深入分析"
   },
   "common": {
-    "not-available": ""
+    "not-available": "–"
   },
   "create-recording-rule": {
     "cancel": "取消",
@@ -121,10 +121,10 @@
       "tooltip-time-picker": "時間選擇器",
       "tooltip-time-picker-description": "時間範圍放大（預設行為）"
     },
-    "error-gcx-copy": "",
+    "error-gcx-copy": "無法將 gcx 命令複製到剪貼簿！",
     "error-loading-profile": "載入設定檔資料時發生錯誤！",
     "explain-button": "解釋差異火焰圖",
-    "gcx-copied": "",
+    "gcx-copied": "gcx 命令已複製到剪貼簿！",
     "missing-selections": {
       "auto-select": "自動選擇",
       "how-to-alt": "如何檢視差異火焰圖",
@@ -153,12 +153,12 @@
     "title": "Grafana 設定檔深入分析"
   },
   "explore-service-heatmap": {
-    "description": "",
-    "title": ""
+    "description": "落入特定區間的追蹤區段數量",
+    "title": "每個追蹤區段的{{title}}"
   },
   "explorer": {
     "add-to-dashboard": {
-      "modal-title": ""
+      "modal-title": "新增至儀表板"
     },
     "exploration-type": {
       "all-services": "所有服務",
@@ -178,7 +178,7 @@
       "add-recording-rule": "新增錄製規則",
       "recording-rules-tooltip": "錄製規則",
       "settings-tooltip": "檢視/編輯租用戶設定",
-      "share-error": "",
+      "share-error": "將可分享的連結複製到剪貼簿時發生錯誤！",
       "share-tooltip": "將可分享的連結複製到剪貼簿",
       "upload-tooltip": "上傳隨機設定檔",
       "view-recording-rules": "檢視錄製規則"
@@ -191,20 +191,20 @@
   "export-menu": {
     "aria-label": "匯出設定檔資料",
     "error-flamegraph-com": "無法匯出至 flamegraph.com！",
-    "error-gcx-copy": "",
+    "error-gcx-copy": "無法將 gcx 命令複製到剪貼簿！",
     "error-loading-profile": "載入 Flamebearer 設定檔資料時發生錯誤！",
     "error-png": "無法匯出為 PNG 檔案！",
-    "error-png-no-canvas": "",
+    "error-png-no-canvas": "在匯出為 PNG 檔案之前，請確保火焰圖為可見狀態。",
     "error-pprof": "無法匯出至 pprof！",
-    "gcx-command": "",
-    "gcx-command-tooltip": "",
-    "gcx-commands": "",
-    "gcx-commands-tooltip": "",
-    "gcx-copied": "",
+    "gcx-command": "gcx 命令",
+    "gcx-command-tooltip": "複製 gcx 命令，以將此效能分析資料下載為 pprof",
+    "gcx-commands": "gcx 命令",
+    "gcx-commands-tooltip": "複製 gcx 命令，以將基準效能分析資料和比較效能分析資料下載為 pprof",
+    "gcx-copied": "gcx 命令已複製到剪貼簿！",
     "json": "json",
     "json-label": "json",
     "png": "png",
-    "png-disabled-description": "",
+    "png-disabled-description": "切換至火焰圖檢視，以將其匯出為 PNG 檔案",
     "png-label": "png",
     "pprof": "pprof",
     "tooltip": "匯出設定檔資料"
@@ -229,10 +229,10 @@
       "tooltip": "您已將設定檔 ID 選擇器新增至火焰圖查詢（{{profileIdSelector}}）。"
     },
     "span-selector": {
-      "filter-label": "",
-      "filter-operator": "",
-      "filter-value": "",
-      "name": "",
+      "filter-label": "篩選標籤",
+      "filter-operator": "篩選運算子",
+      "filter-value": "篩選值",
+      "name": "區段",
       "remove": "從查詢中移除範圍選擇器",
       "tooltip": "您已將範圍選擇器新增至火焰圖查詢（{{spanSelector}}）。"
     },
@@ -265,7 +265,7 @@
     "context-menu": {
       "label": "函數詳細資料"
     },
-    "copy-error": "",
+    "copy-error": "將檔案路徑複製到剪貼簿時發生錯誤！",
     "copy-to-clipboard": "複製至剪貼簿",
     "fetch-error": "擷取函數詳細資訊時發生錯誤！",
     "file": "檔案",
@@ -323,7 +323,7 @@
   },
   "grid": {
     "empty-state": {
-      "no-profiles": "",
+      "no-profiles": "未找到設定檔。 請擴大時間範圍，或開始傳送設定檔資料。",
       "no-results": "無結果"
     },
     "error": {
@@ -354,38 +354,38 @@
   },
   "heatmap": {
     "exemplar": {
-      "select": ""
+      "select": "選擇範例"
     },
     "exemplar-table": {
-      "clear-selection": "",
-      "col-actions": "",
-      "col-duration": "",
-      "col-span-id": "",
-      "col-span-name": "",
-      "col-timestamp": "",
-      "col-trace-id": "",
-      "copied": "",
-      "copy-to-clipboard": "",
-      "empty": "",
-      "open-flamegraph": "",
-      "open-trace": "",
-      "select-exemplar": "",
-      "select-tempo": "",
-      "tempo-datasource": "",
-      "tempo-placeholder": "",
-      "title": "",
-      "trace-lookup-failed": ""
+      "clear-selection": "清除範例選擇",
+      "col-actions": "動作",
+      "col-duration": "持續時間",
+      "col-span-id": "區段 ID",
+      "col-span-name": "區段名稱",
+      "col-timestamp": "時間戳記",
+      "col-trace-id": "追蹤 ID",
+      "copied": "已複製！",
+      "copy-to-clipboard": "複製至剪貼簿",
+      "empty": "所選時間範圍內沒有區段範例。",
+      "open-flamegraph": "開啟火焰圖",
+      "open-trace": "開啟追蹤",
+      "select-exemplar": "選擇範例",
+      "select-tempo": "選擇 Tempo 資料來源",
+      "tempo-datasource": "Tempo 資料來源",
+      "tempo-placeholder": "選擇 Tempo 資料來源…",
+      "title": "頂端區段範例",
+      "trace-lookup-failed": "無法從 Tempo 載入追蹤詳細資訊。"
     },
     "menu": {
-      "open-in-explore": ""
+      "open-in-explore": "在「探索」中開啟"
     },
     "trace-drawer": {
-      "title": ""
+      "title": "追蹤 {{traceId}}"
     }
   },
   "labels": {
     "compare": {
-      "aria-label": "",
+      "aria-label": "比較",
       "clear-tooltip": "清除比較選項",
       "tooltip-empty": "同時選擇基準面板和比較面板，即可比較它們的火焰圖",
       "tooltip-ready": "比較「{{baseline}}」與「{{comparison}}」",
@@ -481,10 +481,10 @@
   },
   "optimize-code": {
     "context": {
-      "title": ""
+      "title": "帶有註釋的原始程式碼和最佳化說明"
     },
-    "error": "",
-    "prompt": ""
+    "error": "無法建立最佳化內容",
+    "prompt": "根據效能分析註解最佳化此代碼。"
   },
   "panel-box": {
     "cancel-query": "取消查詢",
@@ -505,7 +505,7 @@
     "commit-sha": "提交 SHA：{{shortCommitSha}}",
     "contribute": "貢獻",
     "documentation": "文件",
-    "grafana-version": "",
+    "grafana-version": "Grafana {{edition}} ({{env}})",
     "last-update": "上次更新：{{updated}}",
     "report-issue": "回報問題",
     "title": "外掛程式資訊",
@@ -513,10 +513,10 @@
   },
   "profiles": {
     "kg-annotations": {
-      "insights-label": "",
-      "severity-critical": "",
-      "severity-info": "",
-      "severity-warning": ""
+      "insights-label": "深入分析",
+      "severity-critical": "關鍵",
+      "severity-info": "資訊",
+      "severity-warning": "警告"
     }
   },
   "query-analysis": {
@@ -615,7 +615,7 @@
       "no-searches": "沒有要顯示的已儲存搜尋結果。",
       "no-searches-tooltip": "沒有要載入的已儲存搜尋結果",
       "remove-tooltip": "移除",
-      "saved-query-tooltip": "",
+      "saved-query-tooltip": "載入已儲存的查詢",
       "select": "選取",
       "select-pyroscope-query": "請選擇一個 Pyroscope 查詢。",
       "title": "載入先前已儲存的搜尋",
@@ -629,7 +629,7 @@
       "existing-search-warning": "之前已儲存了一個具有相同查詢的搜尋：{{title}}",
       "info-message": "已儲存的搜尋會儲存在瀏覽器的本機資料中，且僅能在此裝置上使用。",
       "save": "儲存",
-      "saved-queries-tooltip": "",
+      "saved-queries-tooltip": "儲存在「已儲存的查詢」中",
       "success-body": "搜尋已成功儲存。",
       "success-message": "搜尋已成功儲存。",
       "success-title": "成功",
@@ -663,9 +663,9 @@
         "tooltip": "函數詳細資訊功能可將資源使用情況對應至原始程式碼行。如果已設定 GitHub 整合，系統將從 GitHub 下載原始程式碼。"
       },
       "fetch-error": {
-        "cloud-hint": "",
-        "message": "",
-        "oss-hint": "",
+        "cloud-hint": "在 Grafana Cloud 上，請向您的組織管理員確認您是否有權限讀取和寫入此資料來源的外掛程式設定。",
+        "message": "下方的設定顯示的是預設值，而非先前已儲存的內容。 你可以做什麼：",
+        "oss-hint": "使用 Grafana Pyroscope OSS 時，請確保資料來源 URL 公開租用戶設定端點。",
         "title": "擷取外掛程式設定時發生錯誤！"
       },
       "flame-graph": {
@@ -690,9 +690,9 @@
   },
   "timeseries": {
     "menu": {
-      "add-to-dashboard": "",
+      "add-to-dashboard": "新增至儀表板",
       "exemplars": "範例",
-      "labels": "",
+      "labels": "標籤",
       "open-in-explore": "在「探索」中開啟",
       "scale-linear": "線性",
       "scale-log2": "Log2",
@@ -730,7 +730,7 @@
       "aria-label": "服務清單",
       "label": "服務",
       "loading": "正在載入服務…",
-      "unmatched-tooltip": "",
+      "unmatched-tooltip": "「{{serviceName}}」未出現在此資料來源和時間範圍所傳回的服務清單中。請從下拉式選單中選擇其他服務。",
       "placeholder_other": "選取服務（{{count}} 個）"
     },
     "span-selector": {

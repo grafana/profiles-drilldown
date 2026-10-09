@@ -10,27 +10,27 @@
       "unfavorite": "Eltávolítás a kedvencek közül"
     },
     "span-exemplar-toggle": {
-      "aria-label": "",
-      "span-heatmap": "",
-      "time-series": "",
-      "unavailable": ""
+      "aria-label": "Profil idővonalának vizualizációja",
+      "span-heatmap": "Terjedelem-hőtérkép",
+      "time-series": "Idősor",
+      "unavailable": "Nem állnak rendelkezésre terjedelemprofilok az aktuális szolgáltatáshoz, szűrőkhöz és időtartományhoz"
     }
   },
   "ad-hoc": {
     "diff": {
-      "cannot-compute-diff": "",
-      "no-common-profile-types": "",
-      "profile": ""
+      "cannot-compute-diff": "Nem lehet kiszámítani az eltérést",
+      "no-common-profile-types": "A feltöltött profiloknak nincsenek közös profiltípusaik. Töltsön fel egyező típusú profilokat az eltérési nézet használatához.",
+      "profile": "Profil"
     },
     "profile-type-selector": {
       "label": "Profil"
     },
     "tabs": {
-      "diff-view": "",
+      "diff-view": "Eltérési nézet",
       "single-view": "Egyszeres nézet"
     },
     "upload": {
-      "diff-converted-to-single": ""
+      "diff-converted-to-single": "Az eltérési profil egyetlen lángdiagrammá lett átalakítva a feltöltéshez. Az összehasonlítási adatok nem lettek megőrizve."
     },
     "view": {
       "title": "Eseti nézet"
@@ -45,7 +45,7 @@
       "placeholder": "Tegyen fel egy újabb kérdést…",
       "send": "Küldés"
     },
-    "llm-error": "",
+    "llm-error": "Hiba történt a tartalom OpenAI segítségével történő generálása során!",
     "llm-error-message": "Elnézést kérünk az esetleges kellemetlenségekért. Próbálja újra, vagy ha a probléma továbbra is fennáll, lépjen kapcsolatba a szervezete rendszergazdájával.",
     "reply": {
       "search-node": "Keresés erre a csomópontra"
@@ -66,7 +66,7 @@
     "label": "Vissza a profilrészletezéshez"
   },
   "common": {
-    "not-available": ""
+    "not-available": "–"
   },
   "create-recording-rule": {
     "cancel": "Mégse",
@@ -121,10 +121,10 @@
       "tooltip-time-picker": "Időkiválasztó",
       "tooltip-time-picker-description": "Nagyítás az időintervallumra (alapértelmezett működés)"
     },
-    "error-gcx-copy": "",
+    "error-gcx-copy": "A gcx-parancsok vágólapra másolása nem sikerült!",
     "error-loading-profile": "Hiba történt a profiladatok betöltésekor!",
     "explain-button": "Eltérési lángdiagram magyarázata",
-    "gcx-copied": "",
+    "gcx-copied": "A gcx-parancsok a vágólapra másolva!",
     "missing-selections": {
       "auto-select": "Automatikus kijelölés",
       "how-to-alt": "Az eltérési lángdiagram megtekintésének módja",
@@ -153,12 +153,12 @@
     "title": "Grafana profilrészletezés"
   },
   "explore-service-heatmap": {
-    "description": "",
-    "title": ""
+    "description": "Az egy adott gyűjtőbe eső nyomkövetési terjedelmek száma",
+    "title": "{{title}} nyomkövetési terjedelem szerint"
   },
   "explorer": {
     "add-to-dashboard": {
-      "modal-title": ""
+      "modal-title": "Hozzáadás az irányítópulthoz"
     },
     "exploration-type": {
       "all-services": "Minden szolgáltatás",
@@ -178,7 +178,7 @@
       "add-recording-rule": "Rögzítési szabály hozzáadása",
       "recording-rules-tooltip": "Rögzítési szabályok",
       "settings-tooltip": "Bérlői beállítások megtekintése/szerkesztése",
-      "share-error": "",
+      "share-error": "Hiba történt a megosztható hivatkozás vágólapra másolása közben!",
       "share-tooltip": "Megosztható hivatkozás másolása a vágólapra",
       "upload-tooltip": "Eseti profilok feltöltése",
       "view-recording-rules": "Rögzítési szabályok megtekintése"
@@ -191,20 +191,20 @@
   "export-menu": {
     "aria-label": "Profiladatok exportálása",
     "error-flamegraph-com": "A flamegraph.com webhelyre történő exportálás nem sikerült!",
-    "error-gcx-copy": "",
+    "error-gcx-copy": "A gcx-parancs vágólapra másolása nem sikerült!",
     "error-loading-profile": "Hiba történt a flamebearer-profiladatok betöltésekor!",
     "error-png": "A PNG-fájlba történő exportálás nem sikerült!",
-    "error-png-no-canvas": "",
+    "error-png-no-canvas": "A PNG-fájlba történő exportálás előtt győződjön meg róla, hogy a lángdiagram látható.",
     "error-pprof": "A pprof-fájlba történő exportálás nem sikerült!",
-    "gcx-command": "",
-    "gcx-command-tooltip": "",
-    "gcx-commands": "",
-    "gcx-commands-tooltip": "",
-    "gcx-copied": "",
+    "gcx-command": "gcx-parancs",
+    "gcx-command-tooltip": "Másolja át a gcx-parancsot a profil pprof formátumban történő letöltéséhez",
+    "gcx-commands": "gcx-parancsok",
+    "gcx-commands-tooltip": "Másolja a gcx-parancsokat a kiindulási és az összehasonlítási profilok pprof formátumban történő letöltéséhez",
+    "gcx-copied": "A gcx-parancs vágólapra másolása megtörtént!",
     "json": "json",
     "json-label": "json",
     "png": "png",
-    "png-disabled-description": "",
+    "png-disabled-description": "Váltson a lángdiagramos nézetre, hogy PNG-fájlként exportálhassa",
     "png-label": "png",
     "pprof": "pprof",
     "tooltip": "Profiladatok exportálása"
@@ -229,10 +229,10 @@
       "tooltip": "Egy profilazonosító-választót adott a lángdiagram-lekérdezéshez ({{profileIdSelector}})."
     },
     "span-selector": {
-      "filter-label": "",
-      "filter-operator": "",
-      "filter-value": "",
-      "name": "",
+      "filter-label": "Szűrőcímke",
+      "filter-operator": "Szűrőoperátor",
+      "filter-value": "Szűrőérték",
+      "name": "Terjedelem",
       "remove": "Időegység-választó eltávolítása a lekérdezésből",
       "tooltip": "Időegység-választót adott a lángdiagram-lekérdezéshez ({{spanSelector}})."
     },
@@ -265,7 +265,7 @@
     "context-menu": {
       "label": "Függvény részletei"
     },
-    "copy-error": "",
+    "copy-error": "Hiba történt a fájlútvonal vágólapra másolása közben!",
     "copy-to-clipboard": "Másolás vágólapra",
     "fetch-error": "Hiba történt a függvény részleteinek lekérésekor!",
     "file": "Fájl",
@@ -323,7 +323,7 @@
   },
   "grid": {
     "empty-state": {
-      "no-profiles": "",
+      "no-profiles": "Nem található profil. Bővítse az időtartományt, vagy kezdje el a profiladatok küldését.",
       "no-results": "Nincs találat"
     },
     "error": {
@@ -354,38 +354,38 @@
   },
   "heatmap": {
     "exemplar": {
-      "select": ""
+      "select": "Mintapéldány kiválasztása"
     },
     "exemplar-table": {
-      "clear-selection": "",
-      "col-actions": "",
-      "col-duration": "",
-      "col-span-id": "",
-      "col-span-name": "",
-      "col-timestamp": "",
-      "col-trace-id": "",
-      "copied": "",
-      "copy-to-clipboard": "",
-      "empty": "",
-      "open-flamegraph": "",
-      "open-trace": "",
-      "select-exemplar": "",
-      "select-tempo": "",
-      "tempo-datasource": "",
-      "tempo-placeholder": "",
-      "title": "",
-      "trace-lookup-failed": ""
+      "clear-selection": "Mintapéldány-kiválasztás törlése",
+      "col-actions": "Műveletek",
+      "col-duration": "Időtartam",
+      "col-span-id": "Terjedelemazonosító",
+      "col-span-name": "Terjedelemnév",
+      "col-timestamp": "Időbélyeg",
+      "col-trace-id": "Nyomkövetési azonosító",
+      "copied": "Kimásolva!",
+      "copy-to-clipboard": "Másolás vágólapra",
+      "empty": "Nincsenek tartománypéldányok a kiválasztott időtartományban.",
+      "open-flamegraph": "Lángdiagram megnyitása",
+      "open-trace": "Nyomkövetés megnyitása",
+      "select-exemplar": "Mintapéldány kiválasztása",
+      "select-tempo": "Tempo-adatforrás kiválasztása",
+      "tempo-datasource": "Tempo-adatforrás",
+      "tempo-placeholder": "Tempo-adatforrás kiválasztása…",
+      "title": "Legfontosabb terjedelem-mintapéldányok",
+      "trace-lookup-failed": "Nem lehet betölteni a nyomkövetési adatokat a Tempóból."
     },
     "menu": {
-      "open-in-explore": ""
+      "open-in-explore": "Megnyitás az Explore-ban"
     },
     "trace-drawer": {
-      "title": ""
+      "title": "{{traceId}} nyomkövetés"
     }
   },
   "labels": {
     "compare": {
-      "aria-label": "",
+      "aria-label": "Összehasonlítás",
       "clear-tooltip": "Összehasonlítási kijelölés törlése",
       "tooltip-empty": "A lángdiagramok összehasonlításához jelöljön ki egy referencia- és egy összehasonlítási panelt is",
       "tooltip-ready": "„{{baseline}}” és „{{comparison}}” összehasonlítása",
@@ -482,10 +482,10 @@
   },
   "optimize-code": {
     "context": {
-      "title": ""
+      "title": "Jegyzettel ellátott forráskód és optimalizálási utasítások"
     },
-    "error": "",
-    "prompt": ""
+    "error": "Az optimalizálási kontextus létrehozása nem sikerült",
+    "prompt": "Optimalizálja ezt a kódot a profilozási jegyzetek alapján."
   },
   "panel-box": {
     "cancel-query": "A lekérdezés megszakítása",
@@ -506,7 +506,7 @@
     "commit-sha": "Véglegesítési azonosító (SHA): {{shortCommitSha}}",
     "contribute": "Hozzájárulás",
     "documentation": "Dokumentáció",
-    "grafana-version": "",
+    "grafana-version": "Grafana {{edition}} ({{env}})",
     "last-update": "Legutóbbi frissítés: {{updated}}",
     "report-issue": "Probléma bejelentése",
     "title": "Bővítményinformáció",
@@ -514,10 +514,10 @@
   },
   "profiles": {
     "kg-annotations": {
-      "insights-label": "",
-      "severity-critical": "",
-      "severity-info": "",
-      "severity-warning": ""
+      "insights-label": "Elemzések",
+      "severity-critical": "Kritikus",
+      "severity-info": "Tájékoztatás",
+      "severity-warning": "Figyelmeztetés"
     }
   },
   "query-analysis": {
@@ -616,7 +616,7 @@
       "no-searches": "Nincsenek megjeleníthető mentett keresések.",
       "no-searches-tooltip": "Nincsenek betölthető mentett keresések",
       "remove-tooltip": "Eltávolítás",
-      "saved-query-tooltip": "",
+      "saved-query-tooltip": "Mentett lekérdezés betöltése",
       "select": "Kiválasztás",
       "select-pyroscope-query": "Válasszon egy Pyroscope-lekérdezést.",
       "title": "Korábban mentett keresés betöltése",
@@ -630,7 +630,7 @@
       "existing-search-warning": "Már létezik egy korábban mentett keresés ugyanezzel a lekérdezéssel: {{title}}",
       "info-message": "A mentett kereséseket a böngésző helyileg tárolja, így azok csak ezen az eszközön lesznek elérhetőek.",
       "save": "Mentés",
-      "saved-queries-tooltip": "",
+      "saved-queries-tooltip": "Mentés a mentett lekérdezések közé",
       "success-body": "Keresés sikeresen mentve.",
       "success-message": "Keresés sikeresen mentve.",
       "success-title": "Sikerült",
@@ -664,9 +664,9 @@
         "tooltip": "A függvényrészletek funkciója lehetővé teszi az erőforrás-használat forráskódsorokhoz való rendelését. Ha a GitHub-integráció konfigurálva van, a forráskód letöltődik a GitHubról."
       },
       "fetch-error": {
-        "cloud-hint": "",
-        "message": "",
-        "oss-hint": "",
+        "cloud-hint": "A Grafana Cloudon egyeztesse a szervezeti rendszergazdával, hogy rendelkezik-e engedéllyel az adatforrás bővítménybeállításainak olvasására és írására.",
+        "message": "Az alábbi beállítások az alapértelmezett értékeket jelenítik meg a korábban mentettek helyett. Amiket megtehet:",
+        "oss-hint": "A Grafana Pyroscope OSS használata esetén győződjön meg róla, hogy az adatforrás URL-címe elérhetővé teszi a bérlői beállítások végpontját.",
         "title": "Hiba történt a bővítmény beállításainak lekérésekor!"
       },
       "flame-graph": {
@@ -691,9 +691,9 @@
   },
   "timeseries": {
     "menu": {
-      "add-to-dashboard": "",
+      "add-to-dashboard": "Hozzáadás az irányítópulthoz",
       "exemplars": "Mintapéldányok",
-      "labels": "",
+      "labels": "Címkék",
       "open-in-explore": "Megnyitás az Explore-ban",
       "scale-linear": "Lineáris",
       "scale-log2": "Log2",
@@ -732,7 +732,7 @@
       "aria-label": "Szolgáltatások listája",
       "label": "Szolgáltatás",
       "loading": "Szolgáltatások betöltése…",
-      "unmatched-tooltip": "",
+      "unmatched-tooltip": "A(z) „{{serviceName}}” nem szerepel az ehhez az adatforráshoz és időtartományhoz visszaadott szolgáltatások listájában. Válasszon másik szolgáltatást a legördülő menüből.",
       "placeholder_one": "Válasszon egy szolgáltatást ({{count}})",
       "placeholder_other": "Válasszon egy szolgáltatást ({{count}})"
     },
