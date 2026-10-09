@@ -96,12 +96,13 @@ Determining which view to use frames the rest of your investigation.
    <td>
 <ul>
 
-<li>Analyze the flame graph of a particular service, profile type, and label selection
+<li>Analyze the flame graph of a particular service, profile type, and label selection.</li>
 
-<li>Use tools like **Analyze with Assistant** (Grafana Cloud) or **Explain Flame Graph** (Grafana open source), GitHub code view, and function details to get deeper insights into performance.
+<li>Use tools like <strong>Analyze with Assistant</strong> (Grafana Cloud) or <strong>Explain Flame Graph</strong> (Grafana open source), GitHub code view, and function details to get deeper insights into performance.</li>
 
-<li>Enable **Exemplars** to see individual profile markers on the timeseries and click one to inspect a single individual profile.
-</li>
+<li>Enable <strong>Exemplars</strong> to see individual profile markers on the timeseries and click one to inspect a single individual profile.</li>
+
+<li>Use the <a href="#span-heatmap-profiles-to-traces">Span heatmap</a> to investigate resource usage per span and open associated traces.</li>
 </ul>
    </td>
   </tr>
@@ -186,17 +187,13 @@ The options depend on the view:
 
 **png** is only available when the flame graph is showing.
 
-#### Profiles to Traces
+#### Span heatmap (Profiles to Traces)
 
-{{< docs/public-preview product="Profiles to Traces" >}}
+Use the span heatmap to spot changes in resource usage across trace spans and find spans with unusually high profile values. Inspect an individual span's flame graph to identify resource-intensive functions, or open its associated trace to understand request timing and relationships between services.
 
-In the **Flame graph** view, use the **Profile timeline visualization** toggle to switch between **Time series** and **Span heatmap**.
-The span heatmap plots span-level profile exemplars, so you can move from aggregated profiles to the individual spans and traces behind them.
+The span heatmap is a visualization within the **Flame graph** view, not a separate **Exploration** tab. It requires span profiles in Pyroscope; viewing associated traces also requires matching trace data in Tempo.
 
-Select a Tempo data source to load trace details.
-From the **Top span exemplars** table, you can **Open flame graph** to view the flame graph for a single span, or **Open trace** to view the associated trace from your Tempo data source.
-
-For the steps to use the span heatmap, refer to [Investigate trends and spikes](../investigate/#move-from-profiles-to-traces).
+For the complete walkthrough and troubleshooting guidance, refer to [Move from profiles to traces](../investigate/#move-from-profiles-to-traces).
 
 ### Diff flame graph
 
