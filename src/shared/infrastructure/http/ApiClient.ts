@@ -1,56 +1,36 @@
-import { DataSourceInstanceSettings, DataSourceJsonData } from '@grafana/data';
-import {
-  getDataSourceInstanceList,
-  getDataSourceInstanceSettings,
-  getDefaultDataSourceInstanceListItem,
-} from '@grafana/plugin-compat/datasources';
+import { type DataSourceInstanceSettings, type DataSourceJsonData } from '@grafana/data';
 import { config } from '@grafana/runtime';
 
 import {
   NO_DATASOURCE_CONFIGURED_UID,
-  PYROSCOPE_DATA_SOURCES_TYPE,
+  PYROSCOPE_DATA_SOURCE_PLUGIN_ID,
   PYROSCOPE_URL_SEARCH_PARAM_NAME,
+  TEMPO_DATA_SOURCE_PLUGIN_ID,
 } from '../../../constants';
 import { logger } from '../tracking/logger';
 import { userStorage } from '../userStorage';
+import { getSettingsAndDefault, SettingsWithDefaultUid } from './datasources';
 import { HttpClient } from './HttpClient';
 
 type CustomDataSourceJsonData = { overridesDefault: boolean };
 type CustomDataSourceInstanceSettings = DataSourceInstanceSettings<DataSourceJsonData & CustomDataSourceJsonData>;
-type GetPyroscopeDataSourcesResult = { settings: CustomDataSourceInstanceSettings[]; defaultUid?: string };
-
-let pending: Promise<GetPyroscopeDataSourcesResult> | undefined;
+interface TempoDataSourceJsonData extends DataSourceJsonData {
+  tracesToProfiles?: {
+    datasourceUid?: string;
+  };
+}
+type TempoDataSourceSettings = DataSourceInstanceSettings<DataSourceJsonData & TempoDataSourceJsonData>;
 
 /**
  * An HTTP client ready to fetch data from the plugin's backend
  */
 export class ApiClient extends HttpClient {
-  static async getPyroscopeDataSources(): Promise<GetPyroscopeDataSourcesResult> {
-    if (pending) {
-      return pending;
-    }
-
-    pending = this.getSettingsAndDefault().finally(() => {
-      pending = undefined;
-    });
-
-    return pending;
+  static async getPyroscopeDataSources() {
+    return getSettingsAndDefault<CustomDataSourceInstanceSettings[]>(PYROSCOPE_DATA_SOURCE_PLUGIN_ID);
   }
 
-  private static async getSettingsAndDefault(): Promise<GetPyroscopeDataSourcesResult> {
-    const instances = await getDataSourceInstanceList({ pluginId: PYROSCOPE_DATA_SOURCES_TYPE });
-    const defaultUid = (await getDefaultDataSourceInstanceListItem(instances))?.uid;
-    const allSettings = await Promise.all(
-      instances.map((i) =>
-        getDataSourceInstanceSettings(i.uid).catch((error) =>
-          logger.error(error as Error, { message: `Failed to get settings for the datasource ${i.uid}` })
-        )
-      )
-    );
-    const settings = allSettings.filter(Boolean) as CustomDataSourceInstanceSettings[];
-    const value = { settings, defaultUid };
-
-    return value;
+  static async getTempoDataSources() {
+    return getSettingsAndDefault<TempoDataSourceSettings[]>(TEMPO_DATA_SOURCE_PLUGIN_ID);
   }
 
   static async selectDefaultDataSource(): Promise<CustomDataSourceInstanceSettings> {
@@ -60,7 +40,7 @@ export class ApiClient extends HttpClient {
   static findDefaultDataSource({
     settings,
     defaultUid,
-  }: GetPyroscopeDataSourcesResult): CustomDataSourceInstanceSettings {
+  }: SettingsWithDefaultUid<CustomDataSourceInstanceSettings[]>): CustomDataSourceInstanceSettings {
     const uidFromUrl = new URL(window.location.href).searchParams.get(PYROSCOPE_URL_SEARCH_PARAM_NAME);
     const uidFromLocalStorage = userStorage.get(userStorage.KEYS.PROFILES_EXPLORER)?.dataSource;
 

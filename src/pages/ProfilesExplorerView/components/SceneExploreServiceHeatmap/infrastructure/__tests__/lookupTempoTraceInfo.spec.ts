@@ -1,16 +1,18 @@
-import { DataFrame, DataQuery, DataQueryRequest, DataQueryResponse, DataSourceApi } from '@grafana/data';
-import { getDataSourceSrv } from '@grafana/runtime';
+import { type DataFrame, type DataQueryRequest, type DataQueryResponse, type DataSourceApi } from '@grafana/data';
+import { getDataSourceInstance } from '@grafana/plugin-compat/datasources';
+import { type DataQuery } from '@grafana/schema';
 
 import { lookupTempoTraceInfo } from '../lookupTempoTraceInfo';
+
+jest.mock('@grafana/plugin-compat/datasources', () => ({
+  getDataSourceInstance: jest.fn(),
+}));
+
+const getDataSourceInstanceMock = jest.mocked(getDataSourceInstance);
 
 interface TempoSpanQuery extends DataQuery {
   query: string;
 }
-
-jest.mock('@grafana/runtime', () => ({
-  ...jest.requireActual('@grafana/runtime'),
-  getDataSourceSrv: jest.fn(),
-}));
 
 function buildSpanFrame(rows: Array<{ spanId: string; traceId: string; name?: string; duration?: number }>): DataFrame {
   return {
@@ -25,6 +27,11 @@ function buildSpanFrame(rows: Array<{ spanId: string; traceId: string; name?: st
 }
 
 describe('lookupTempoTraceInfo', () => {
+  beforeEach(() => {
+    jest.resetAllMocks();
+    getDataSourceInstanceMock.mockResolvedValue({} as unknown as DataSourceApi);
+  });
+
   it('issues one request per merged time window, scoped to that window, and merges the results', async () => {
     const query = jest.fn((request: DataQueryRequest<TempoSpanQuery>) => {
       const target = request.targets[0];
@@ -45,7 +52,7 @@ describe('lookupTempoTraceInfo', () => {
     });
 
     const dataSource = { query } as unknown as DataSourceApi;
-    (getDataSourceSrv as jest.Mock).mockReturnValue({ get: jest.fn().mockResolvedValue(dataSource) });
+    getDataSourceInstanceMock.mockResolvedValue(dataSource);
 
     const result = await lookupTempoTraceInfo(
       'tempo-uid',
@@ -85,7 +92,7 @@ describe('lookupTempoTraceInfo', () => {
   it('sets a span to null when no trace is found within its window', async () => {
     const query = jest.fn().mockResolvedValue({ data: [] } as DataQueryResponse);
     const dataSource = { query } as unknown as DataSourceApi;
-    (getDataSourceSrv as jest.Mock).mockReturnValue({ get: jest.fn().mockResolvedValue(dataSource) });
+    getDataSourceInstanceMock.mockResolvedValue(dataSource);
 
     const result = await lookupTempoTraceInfo(
       'tempo-uid',
@@ -107,7 +114,7 @@ describe('lookupTempoTraceInfo', () => {
       return Promise.reject(new Error('Tempo unavailable'));
     });
     const dataSource = { query } as unknown as DataSourceApi;
-    (getDataSourceSrv as jest.Mock).mockReturnValue({ get: jest.fn().mockResolvedValue(dataSource) });
+    getDataSourceInstanceMock.mockResolvedValue(dataSource);
 
     const result = await lookupTempoTraceInfo(
       'tempo-uid',

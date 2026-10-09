@@ -15,6 +15,7 @@ export enum ROUTES {
   GITHUB_CALLBACK = '/github/callback',
 }
 
-export const PYROSCOPE_DATA_SOURCES_TYPE = 'grafana-pyroscope-datasource';
+export const PYROSCOPE_DATA_SOURCE_PLUGIN_ID = 'grafana-pyroscope-datasource';
 export const PYROSCOPE_URL_SEARCH_PARAM_NAME = 'var-dataSource'; // matches with the Scenes library
 export const NO_DATASOURCE_CONFIGURED_UID = 'no-data-source-configured';
+export const TEMPO_DATA_SOURCE_PLUGIN_ID = 'tempo';

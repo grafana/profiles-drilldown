@@ -1,8 +1,7 @@
 import { css } from '@emotion/css';
-import { DataSourceJsonData, getValueFormat, GrafanaTheme2 } from '@grafana/data';
+import { getValueFormat, type GrafanaTheme2 } from '@grafana/data';
 import { t } from '@grafana/i18n';
-import { getDataSourceSrv } from '@grafana/runtime';
-import { SceneComponentProps, sceneGraph, SceneObjectBase, SceneObjectState } from '@grafana/scenes';
+import { type SceneComponentProps, sceneGraph, SceneObjectBase, type SceneObjectState } from '@grafana/scenes';
 import {
   Column,
   Field as FormField,
@@ -13,10 +12,12 @@ import {
   Spinner,
   useStyles2,
 } from '@grafana/ui';
-import { useFlagVisualDesignRefresh } from '@shared/infrastructure/featureFlags/featureFlags';
 import { reportInteraction } from '@shared/domain/reportInteraction';
+import { useFlagVisualDesignRefresh } from '@shared/infrastructure/featureFlags/featureFlags';
+import { ApiClient } from '@shared/infrastructure/http/ApiClient';
 import { getProfileMetric, ProfileMetricId } from '@shared/infrastructure/profile-metrics/getProfileMetric';
 import React, { useMemo } from 'react';
+import { type Unsubscribable } from 'rxjs';
 
 import { EventViewServiceFlameGraph } from '../../domain/events/EventViewServiceFlameGraph';
 import { FiltersVariable } from '../../domain/variables/FiltersVariable/FiltersVariable';
@@ -45,12 +46,6 @@ interface SceneExemplarTableState extends SceneObjectState {
   page: number;
 }
 
-interface TempoDataSourceJsonData extends DataSourceJsonData {
-  tracesToProfiles?: {
-    datasourceUid?: string;
-  };
-}
-
 function formatTimestamp(ms: number): string {
   return new Date(ms).toLocaleTimeString();
 }
@@ -73,18 +68,8 @@ export class SceneExemplarTable extends SceneObjectBase<SceneExemplarTableState>
   }
 
   onActivate() {
-    const allDatasources = getDataSourceSrv().getList({ pluginId: 'tempo' });
-    const tempoDatasources = allDatasources.map((ds) => {
-      const jsonData = ds.jsonData as TempoDataSourceJsonData;
-
-      return {
-        uid: ds.uid,
-        name: ds.name,
-        isDefault: ds.isDefault,
-        tracesToProfilesDataSourceUid: jsonData.tracesToProfiles?.datasourceUid,
-      };
-    });
-    this.setState({ tempoDatasources });
+    let dataSourceSub: Unsubscribable | undefined;
+    let cancelled = false;
 
     let parent: SceneExploreServiceHeatmap | undefined;
     try {
@@ -92,16 +77,6 @@ export class SceneExemplarTable extends SceneObjectBase<SceneExemplarTableState>
     } catch {
       return;
     }
-
-    this.syncTempoDataSource(parent, tempoDatasources);
-
-    const dataSourceSub = sceneGraph
-      .findByKeyAndType(this, 'dataSource', ProfilesDataSourceVariable)
-      .subscribeToState((newState, prevState) => {
-        if (newState.value !== prevState.value) {
-          this.syncTempoDataSource(parent!, tempoDatasources, true);
-        }
-      });
 
     const parentSub = parent.subscribeToState((newState, prevState) => {
       if (newState.exemplarRows !== prevState.exemplarRows) {
@@ -119,9 +94,37 @@ export class SceneExemplarTable extends SceneObjectBase<SceneExemplarTableState>
 
     this.handleNewExemplarRows(parent.state.exemplarRows);
 
+    ApiClient.getTempoDataSources().then((result) => {
+      if (cancelled) {
+        return;
+      }
+
+      const tempoDatasources = result.settings.map((ds) => {
+        return {
+          uid: ds.uid,
+          name: ds.name,
+          isDefault: Boolean(result.defaultUid) && ds.uid === result.defaultUid,
+          tracesToProfilesDataSourceUid: ds.jsonData.tracesToProfiles?.datasourceUid,
+        };
+      });
+
+      dataSourceSub = sceneGraph
+        .findByKeyAndType(this, 'dataSource', ProfilesDataSourceVariable)
+        .subscribeToState((newState, prevState) => {
+          if (newState.value !== prevState.value) {
+            this.syncTempoDataSource(parent!, tempoDatasources, true);
+          }
+        });
+
+      this.setState({ tempoDatasources });
+      this.syncTempoDataSource(parent, tempoDatasources);
+      this.handleNewExemplarRows(parent.state.exemplarRows);
+    });
+
     return () => {
+      cancelled = true;
       parentSub.unsubscribe();
-      dataSourceSub.unsubscribe();
+      dataSourceSub?.unsubscribe();
     };
   }
 
@@ -579,11 +582,8 @@ const getStyles = (theme: GrafanaTheme2, visualDesignRefresh: boolean) => ({
 
     tbody tr {
       background: ${theme.colors.action.selected};
-      outline: 1px solid ${
-        visualDesignRefresh
-          ? theme.colors.accent?.main ?? theme.colors.border.strong
-          : theme.colors.primary.border
-      };
+      outline: 1px solid
+        ${visualDesignRefresh ? theme.colors.accent?.main ?? theme.colors.border.strong : theme.colors.primary.border};
       outline-offset: -1px;
     }
   `,

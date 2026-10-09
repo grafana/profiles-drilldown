@@ -1,16 +1,16 @@
 import {
-  DataFrame,
-  DataQuery,
-  DataQueryRequest,
-  DataQueryResponse,
-  DataSourceApi,
+  type DataFrame,
+  type DataQueryRequest,
+  type DataQueryResponse,
+  type DataSourceApi,
   dateTime,
-  Field,
+  type Field,
 } from '@grafana/data';
-import { getDataSourceSrv } from '@grafana/runtime';
-import { lastValueFrom, Observable } from 'rxjs';
+import { getDataSourceInstance } from '@grafana/plugin-compat/datasources';
+import { type DataQuery } from '@grafana/schema';
+import { lastValueFrom, type Observable } from 'rxjs';
 
-import { mergeSpanTraceWindows, SpanTimestamp } from '../domain/mergeSpanTraceWindows';
+import { mergeSpanTraceWindows, type SpanTimestamp } from '../domain/mergeSpanTraceWindows';
 
 export interface TraceInfo {
   traceId: string;
@@ -43,7 +43,7 @@ export async function lookupTempoTraceInfo(
   paddingBeforeMs?: number,
   paddingAfterMs?: number
 ): Promise<TraceLookupResult> {
-  const dataSource: DataSourceApi = await getDataSourceSrv().get(tempoDataSourceUid);
+  const dataSource: DataSourceApi = await getDataSourceInstance(tempoDataSourceUid);
   const windows = mergeSpanTraceWindows(spans, paddingBeforeMs, paddingAfterMs);
 
   const results = await Promise.allSettled(
