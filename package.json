@@ -46,7 +46,7 @@
     "@grafana/data": "13.1.0",
     "@grafana/faro-core": "2.7.1",
     "@grafana/faro-web-sdk": "2.7.1",
-    "@grafana/flamegraph": "13.1.0",
+    "@grafana/flamegraph": "13.2.4",
     "@grafana/i18n": "13.1.0",
     "@grafana/llm": "1.0.9",
     "@grafana/react-data-grid": "7.0.0-beta.58",
