@@ -33,10 +33,12 @@ function buildJsonPprof(fnName: string, location: Location[]): PprofProfile {
       {
         id: '1',
         buildId: '1',
+        filename: '9',
       },
       {
         id: '2',
         buildId: '2',
+        filename: '10',
       },
     ],
     sample: [
@@ -103,7 +105,7 @@ function buildJsonPprof(fnName: string, location: Location[]): PprofProfile {
       '/little/func.go',
     ],
     defaultSampleType: '',
-  });
+  }) as PprofProfile;
 }
 
 describe('convertPprofToFunctionDetails(fnName, profile)', () => {
@@ -140,6 +142,7 @@ describe('convertPprofToFunctionDetails(fnName, profile)', () => {
             repository: 'github.com/grafana/pyroscope',
           },
           startLine: 6,
+          executableName: '/opt/homebrew/Cellar/go/1.21.1/libexec/src/net/http/server.go',
           fileName: '/opt/homebrew/Cellar/go/1.21.1/libexec/src/net/http/server.go',
           callSites: expect.any(Map),
           unit: 'nanoseconds',
@@ -173,6 +176,7 @@ describe('convertPprofToFunctionDetails(fnName, profile)', () => {
             repository: 'github.com/grafana/pyroscope',
           },
           startLine: 6,
+          executableName: '/opt/homebrew/Cellar/go/1.21.1/libexec/src/net/http/server.go',
           fileName: '/opt/homebrew/Cellar/go/1.21.1/libexec/src/net/http/server.go',
           callSites: expect.any(Map),
           unit: 'nanoseconds',
@@ -443,6 +447,7 @@ describe('convertPprofToFunctionDetails(fnName, profile)', () => {
               git_ref: '369ca83',
             },
             startLine: 107,
+            executableName: '/usr/bin/pyroscope',
             fileName: '/home/runner/work/pyroscope/pyroscope/pkg/phlaredb/symdb/dedup_slice.go',
             callSites: new Map<number, CallSiteProps>([
               [138, { cum: 27030000000, flat: 1490000000, line: 138 }],
