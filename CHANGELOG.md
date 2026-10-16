@@ -1,5 +1,20 @@
 # Changelog
 
+## [3.0.1](https://github.com/grafana/profiles-drilldown/compare/v3.0.0...v3.0.1) (2026-10-16)
+
+
+### 🐛 Bug Fixes
+
+* preserve gcx export selectors and consolidate helpers ([#1142](https://github.com/grafana/profiles-drilldown/issues/1142)) ([7ca0f98](https://github.com/grafana/profiles-drilldown/commit/7ca0f98d6713cafa979aa3f28dedec95f56b59e5))
+* preserve span selector remove button layout ([#1198](https://github.com/grafana/profiles-drilldown/issues/1198)) ([7330fc3](https://github.com/grafana/profiles-drilldown/commit/7330fc3c4b0787c7f6964a21448eb8d73272bca6))
+* use EmptyState from @grafana/ui ([#1196](https://github.com/grafana/profiles-drilldown/issues/1196)) ([2630626](https://github.com/grafana/profiles-drilldown/commit/26306266300c35d729f2d370273442884dd6cc64))
+* use stock Button APIs in profiles-drilldown ([#1195](https://github.com/grafana/profiles-drilldown/issues/1195)) ([06b37be](https://github.com/grafana/profiles-drilldown/commit/06b37be56332f326ecc8b0adc242513447ca47cb))
+
+
+### 🧹 Chore
+
+* **deps:** lock file maintenance ([#1184](https://github.com/grafana/profiles-drilldown/issues/1184)) ([8a336f3](https://github.com/grafana/profiles-drilldown/commit/8a336f3dcde299f260a1568ee8cf9484d6407c77))
+
 ## [3.0.0](https://github.com/grafana/profiles-drilldown/compare/v2.3.1...v3.0.0) (2026-10-09)
 
 
