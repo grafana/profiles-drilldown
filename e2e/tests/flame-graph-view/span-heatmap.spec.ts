@@ -12,6 +12,10 @@ const productionResponses = [
   { name: 'heatmap-duplicate-y-buckets', response: duplicateYBucketsHeatmap },
 ];
 
+// Feature-control override. Anonymous e2e does not initialize Grafana's OFREP client,
+// so the shared localStorage provider is what enables profilesHeatmap for these tests.
+const PROFILES_HEATMAP_OPEN_FEATURE_KEY = 'grafana.openfeature.profilesHeatmap';
+
 function getResponseTimeRange(response: (typeof productionResponses)[number]['response']) {
   const timestamps = response.series.flatMap((series) => series.slots.map((slot) => Number(slot.timestamp)));
   const start = Math.min(...timestamps) - 60_000;
@@ -27,6 +31,12 @@ function getResponseTimeRange(response: (typeof productionResponses)[number]['re
 }
 
 test.describe('Span profiles heatmap', () => {
+  test.beforeEach(async ({ exploreProfilesPage }) => {
+    await exploreProfilesPage.page.addInitScript((storageKey) => {
+      localStorage.setItem(storageKey, 'true');
+    }, PROFILES_HEATMAP_OPEN_FEATURE_KEY);
+  });
+
   for (const { name, response } of productionResponses) {
     test(`renders the ${name} production response`, async ({ exploreProfilesPage }) => {
       await exploreProfilesPage.route('**/querier.v1.QuerierService/SelectHeatmap', async (route) => {

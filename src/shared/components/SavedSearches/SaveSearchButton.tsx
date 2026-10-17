@@ -1,8 +1,8 @@
 import { t } from '@grafana/i18n';
 import { usePluginComponent } from '@grafana/runtime';
 import { sceneGraph, SceneObject } from '@grafana/scenes';
-import { GrafanaPyroscopeDataQuery } from '@grafana/schema/dist/esm/raw/composable/grafanapyroscope/dataquery/x/GrafanaPyroscopeDataQuery_types.gen';
 import { ToolbarButton } from '@grafana/ui';
+import { GrafanaPyroscopeDataQuery } from '@shared/domain/pyroscopeDataQuery';
 import React, { useMemo, useState } from 'react';
 
 import { ProfileMetricVariable } from '../../../pages/ProfilesExplorerView/domain/variables/ProfileMetricVariable';

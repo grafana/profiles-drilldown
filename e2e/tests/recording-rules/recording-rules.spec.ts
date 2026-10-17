@@ -1,7 +1,14 @@
 import { ExplorationType } from '../../config/constants';
 import { expect, test } from '../../fixtures';
 
+// Feature-control override. Anonymous e2e does not initialize Grafana's OFREP client,
+// so the shared localStorage provider is what enables metricsFromProfiles for these tests.
+const METRICS_FROM_PROFILES_OPEN_FEATURE_KEY = 'grafana.openfeature.metricsFromProfiles';
+
 test.beforeEach(async ({ settingsPage }) => {
+  await settingsPage.page.addInitScript((storageKey) => {
+    localStorage.setItem(storageKey, 'true');
+  }, METRICS_FROM_PROFILES_OPEN_FEATURE_KEY);
   await settingsPage.goto();
 });
 
