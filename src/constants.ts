@@ -14,3 +14,6 @@ export enum ROUTES {
   RECORDING_RULES = '/recording-rules',
   GITHUB_CALLBACK = '/github/callback',
 }
+
+export const DATA_SOURCE_VARIABLE = 'dataSource';
+export const PROFILE_METRIC_VARIABLE = 'profileMetricId';
