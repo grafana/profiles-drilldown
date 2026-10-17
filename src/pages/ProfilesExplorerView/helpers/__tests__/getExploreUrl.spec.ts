@@ -6,6 +6,13 @@ function setup(appSubUrl?: string) {
     },
   }));
 
+  const { locationUtil } = require('@grafana/data');
+  locationUtil.initialize({
+    config: { appSubUrl: appSubUrl ?? '' },
+    getTimeRangeForUrl: jest.fn(),
+    getVariablesUrlParams: jest.fn(),
+  });
+
   return require('../getExploreUrl');
 }
 

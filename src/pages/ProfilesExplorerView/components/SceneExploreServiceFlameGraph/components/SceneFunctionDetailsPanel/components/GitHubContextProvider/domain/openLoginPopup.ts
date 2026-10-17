@@ -1,14 +1,9 @@
-import { config } from '@grafana/runtime';
+import { getGrafanaAbsoluteUrl } from '@shared/infrastructure/appUrl';
 
 import { PLUGIN_BASE_URL, ROUTES } from '../../../../../../../../../constants';
 
-function stripTrailingSlash(str: string): string {
-  return str.endsWith('/') ? str.slice(0, -1) : str;
-}
-
 function buildGitHubAuthURL(clientID: string, nonce: string, callbackUrl: string): string {
-  const appSubUrl = stripTrailingSlash(config.appSubUrl || '/');
-  const redirectUri = `${window.location.origin}${appSubUrl}${PLUGIN_BASE_URL}${ROUTES.GITHUB_CALLBACK}`;
+  const redirectUri = getGrafanaAbsoluteUrl(`${PLUGIN_BASE_URL}${ROUTES.GITHUB_CALLBACK}`);
 
   const url = new URL('/login/oauth/authorize', 'https://github.com');
   url.searchParams.set('client_id', clientID);

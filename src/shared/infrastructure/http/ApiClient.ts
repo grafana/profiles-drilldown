@@ -1,6 +1,7 @@
 import { DataSourceInstanceSettings, DataSourceJsonData } from '@grafana/data';
 import { config } from '@grafana/runtime';
 
+import { getDataSourceProxyUrl } from '../appUrl';
 import { logger } from '../tracking/logger';
 import { userStorage } from '../userStorage';
 import { HttpClient } from './HttpClient';
@@ -48,13 +49,7 @@ export class ApiClient extends HttpClient {
   static getBaseUrl() {
     const pyroscopeDataSource = ApiClient.selectDefaultDataSource();
 
-    let appSubUrl = config.appSubUrl || '';
-    if (appSubUrl.at(-1) !== '/') {
-      // ensures that the API pathname is appended correctly (appUrl seems to always have it but better to be extra careful)
-      appSubUrl += '/';
-    }
-
-    return `${appSubUrl}api/datasources/proxy/uid/${pyroscopeDataSource.uid}`;
+    return getDataSourceProxyUrl(pyroscopeDataSource.uid);
   }
 
   constructor() {

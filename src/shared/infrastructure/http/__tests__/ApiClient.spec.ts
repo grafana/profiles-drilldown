@@ -24,6 +24,13 @@ function setupMocks(options?: {
       },
     },
   }));
+
+  const { locationUtil } = require('@grafana/data');
+  locationUtil.initialize({
+    config: { appSubUrl: options?.appSubUrl ?? '' },
+    getTimeRangeForUrl: jest.fn(),
+    getVariablesUrlParams: jest.fn(),
+  });
 }
 
 describe('ApiClient', () => {

@@ -5,6 +5,8 @@ import { OpenFeatureProvider } from '@openfeature/react-sdk';
 import { OpenFeature, type Provider, type ResolutionDetails } from '@openfeature/web-sdk';
 import React, { useEffect } from 'react';
 
+import { getGrafanaAbsoluteUrl } from '../appUrl';
+
 /** OpenFeature domain for this plugin’s evaluations (OFREP to Grafana’s feature API). */
 export const PLUGIN_OPEN_FEATURE_DOMAIN = 'grafana-pyroscope-app';
 
@@ -18,10 +20,9 @@ function getFeaturesOfrepBaseUrl(): string | undefined {
   if (typeof window === 'undefined') {
     return undefined;
   }
-  const sub = (config.appSubUrl ?? '').replace(/\/$/, '');
-  const path = `${sub}/apis/features.grafana.app/v0alpha1/namespaces/${encodeURIComponent(config.namespace)}`;
-  const pathname = path.startsWith('/') ? path : `/${path}`;
-  return new URL(pathname, window.location.origin).toString();
+  return getGrafanaAbsoluteUrl(
+    `/apis/features.grafana.app/v0alpha1/namespaces/${encodeURIComponent(config.namespace)}`
+  );
 }
 
 function defaultDetails<T>(value: T): ResolutionDetails<T> {
