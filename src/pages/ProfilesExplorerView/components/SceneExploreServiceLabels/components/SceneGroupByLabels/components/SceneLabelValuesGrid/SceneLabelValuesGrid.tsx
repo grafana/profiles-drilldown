@@ -14,7 +14,7 @@ import {
 } from '@grafana/scenes';
 import { Spinner } from '@grafana/ui';
 import { logger } from '@shared/infrastructure/tracking/logger';
-import { debounce, isEqual } from 'lodash';
+import { isEqual } from 'lodash';
 import React from 'react';
 
 import { EventTimeseriesDataReceived } from '../../../../../../domain/events/EventTimeseriesDataReceived';
@@ -198,7 +198,7 @@ export class SceneLabelValuesGrid extends SceneObjectBase<SceneLabelValuesGridSt
       }
     };
 
-    return quickFilter.subscribeToState(debounce(onChangeState, SceneQuickFilter.DEBOUNCE_DELAY));
+    return quickFilter.subscribeToState(onChangeState);
   }
 
   subscribeToLayoutChange() {
