@@ -1,5 +1,5 @@
 import { Faro, getWebInstrumentations, initializeFaro } from '@grafana/faro-web-sdk';
-import { config } from '@grafana/runtime';
+import { config, getAppPluginVersion } from '@grafana/runtime';
 
 import { PLUGIN_BASE_URL, PYROSCOPE_APP_ID } from '../../../../constants';
 import { GIT_COMMIT } from '../../../../version';
@@ -11,7 +11,7 @@ let faro: Faro | null = null;
 export const getFaro = () => faro;
 export const setFaro = (instance: Faro | null) => (faro = instance);
 
-export function initFaro() {
+export async function initFaro() {
   if (getFaro()) {
     return;
   }
@@ -23,9 +23,9 @@ export function initFaro() {
 
   const { environment, faroUrl, appName } = faroEnvironment;
 
-  const { apps, bootData, buildInfo } = config;
+  const { bootData, buildInfo } = config;
 
-  const appRelease = apps[PYROSCOPE_APP_ID].version;
+  const appRelease = (await getAppPluginVersion(PYROSCOPE_APP_ID)) ?? '';
   const userEmail = bootData.user.email;
   const grafanaVersion = `v${buildInfo.version} (${buildInfo.edition})`;
 
