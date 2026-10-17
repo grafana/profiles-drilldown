@@ -107,6 +107,7 @@ export type QueryBuilderSchema = {
 };
 
 type StartEvent = { type: 'START_INPUT' };
+export type StartLabelEvent = { type: 'START_LABEL'; data: Suggestion };
 export type SelectEvent = { type: 'SELECT_SUGGESTION'; data: Suggestion };
 type DiscardEvent = { type: 'DISCARD_SUGGESTIONS' };
 export type EditEvent = { type: 'EDIT_FILTER'; data: Edition };
@@ -117,6 +118,7 @@ type ExecuteQueryEvent = { type: 'EXECUTE_QUERY' };
 
 export type QueryBuilderEvent =
   | StartEvent
+  | StartLabelEvent
   | SelectEvent
   | DiscardEvent
   | EditEvent
