@@ -4,10 +4,6 @@ import { sceneGraph } from '@grafana/scenes';
 import type { SceneExploreServiceHeatmap } from '../../SceneExploreServiceHeatmap/SceneExploreServiceHeatmap';
 import { SceneExploreServiceFlameGraph } from '../SceneExploreServiceFlameGraph';
 
-jest.mock('@shared/infrastructure/featureFlags/featureFlags', () => ({
-  getProfilesHeatmapFromOpenFeature: () => true,
-}));
-
 jest.mock('../../../domain/variables/FiltersVariable/FiltersVariable', () => ({
   FiltersVariable: class FiltersVariable {},
 }));

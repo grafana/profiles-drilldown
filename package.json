@@ -14,7 +14,7 @@
     "e2e:ci:prepare": "docker build --progress=auto -t pyroscope-app-plugin-e2e:latest -f Dockerfile.plugin.e2e .",
     "e2e:ci:server:down": "docker compose down",
     "e2e:ci:server:up": "docker compose -f docker-compose.e2e.yaml up --build -d",
-    "e2e:ci:server:up:react19": "GRAFANA_VERSION=dev-preview-react19 GRAFANA_IMAGE=grafana-enterprise GF_FEATURE_TOGGLES_ENABLE=metricsFromProfiles,profilesHeatmap,react19 docker compose -f docker-compose.e2e.yaml up --build -d",
+    "e2e:ci:server:up:react19": "GRAFANA_VERSION=dev-preview-react19 GRAFANA_IMAGE=grafana-enterprise GF_FEATURE_TOGGLES_ENABLE=metricsFromProfiles,react19 docker compose -f docker-compose.e2e.yaml up --build -d",
     "e2e:local": "playwright test -c e2e/config/playwright.config.local.ts",
     "e2e:local:codegen": "playwright codegen",
     "e2e:local:prepare": "pnpm exec playwright install --with-deps chromium",

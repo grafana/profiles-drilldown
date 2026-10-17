@@ -28,7 +28,6 @@ jest.mock('../../SceneExploreServiceFlameGraph/SceneFlameGraph', () => {
 
 jest.mock('@shared/infrastructure/featureFlags/featureFlags', () => ({
   getKgAnnotationsInPyroscopeFromOpenFeature: () => false,
-  getProfilesHeatmapFromOpenFeature: () => true,
 }));
 
 describe('SceneProfilesExplorer', () => {

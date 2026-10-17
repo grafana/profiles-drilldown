@@ -16,7 +16,7 @@ services:
       GF_INSTALL_PLUGINS: grafana-llm-app
       OPENAI_API_KEY: $OPENAI_API_KEY
       OPENAI_ORGANIZATION_ID: $OPENAI_ORGANIZATION_ID
-      GF_FEATURE_TOGGLES_ENABLE: ${GF_FEATURE_TOGGLES_ENABLE:-metricsFromProfiles,localizationForPlugins,profilesHeatmap}
+      GF_FEATURE_TOGGLES_ENABLE: ${GF_FEATURE_TOGGLES_ENABLE:-metricsFromProfiles,localizationForPlugins}
 
   qdrant:
     image: qdrant/qdrant:v1.17.0@sha256:f1c7272cdac52b38c1a0e89313922d940ba50afd90d593a1605dbbc214e66ffb
