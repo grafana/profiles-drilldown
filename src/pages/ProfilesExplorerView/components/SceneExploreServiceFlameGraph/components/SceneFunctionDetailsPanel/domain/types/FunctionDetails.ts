@@ -20,6 +20,7 @@ export type FunctionDetails = {
   version?: FunctionVersion;
   startLine?: number;
   fileName: string;
+  executableName?: string;
   callSites: Map<number, CallSiteProps>;
   unit: string;
   commit: Commit;
