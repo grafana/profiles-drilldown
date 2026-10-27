@@ -35,6 +35,8 @@ import { SceneExploreServiceLabels } from '../../components/SceneExploreServiceL
 import { SceneExploreServiceProfileTypes } from '../../components/SceneExploreServiceProfileTypes/SceneExploreServiceProfileTypes';
 import { EventOpenAddToDashboard, type PanelDataRequestPayload } from '../../domain/actions/addToDashboard';
 import { AddToDashboardModal } from '../../domain/actions/AddToDashboardModal';
+import { EventOpenAddToNotebook, type NotebookCapture } from '../../domain/actions/addToNotebook';
+import { AddToNotebookModal } from '../../domain/actions/AddToNotebookModal';
 import { getDefaultTimeRange } from '../../domain/buildTimeRange';
 import { EventViewDiffFlameGraph } from '../../domain/events/EventViewDiffFlameGraph';
 import { EventViewServiceFlameGraph } from '../../domain/events/EventViewServiceFlameGraph';
@@ -78,6 +80,7 @@ export interface SceneProfilesExplorerState extends Partial<EmbeddedSceneState> 
   initialDS?: string;
   isAddToDashboardModalOpen?: boolean;
   addToDashboardPanelData?: PanelDataRequestPayload;
+  notebookCapture?: NotebookCapture;
   showSpanHeatmap: boolean;
   tempoDataSourceUid?: string;
 }
@@ -411,6 +414,9 @@ export class SceneProfilesExplorer extends SceneObjectBase<SceneProfilesExplorer
     const addToDashboardSub = this.subscribeToEvent(EventOpenAddToDashboard, (event) => {
       this.openAddToDashboardModal(event.payload.panelData);
     });
+    const addToNotebookSub = this.subscribeToEvent(EventOpenAddToNotebook, (event) => {
+      this.setState({ notebookCapture: event.payload });
+    });
 
     return {
       unsubscribe() {
@@ -421,6 +427,7 @@ export class SceneProfilesExplorer extends SceneObjectBase<SceneProfilesExplorer
         removeSpanSelectorSub.unsubscribe();
         removeProfileIdSelectorSub.unsubscribe();
         addToDashboardSub.unsubscribe();
+        addToNotebookSub.unsubscribe();
       },
     };
   }
@@ -601,6 +608,7 @@ export class SceneProfilesExplorer extends SceneObjectBase<SceneProfilesExplorer
       loadSearchScene,
       isAddToDashboardModalOpen,
       addToDashboardPanelData,
+      notebookCapture,
     } = model.useState();
 
     return (
@@ -638,6 +646,12 @@ export class SceneProfilesExplorer extends SceneObjectBase<SceneProfilesExplorer
 
           {isAddToDashboardModalOpen && addToDashboardPanelData && (
             <AddToDashboardModal panelData={addToDashboardPanelData} onClose={() => model.closeAddToDashboardModal()} />
+          )}
+          {notebookCapture && (
+            <AddToNotebookModal
+              capture={notebookCapture}
+              onClose={() => model.setState({ notebookCapture: undefined })}
+            />
           )}
         </GitHubContextProvider>
       </FunctionVersionProvider>

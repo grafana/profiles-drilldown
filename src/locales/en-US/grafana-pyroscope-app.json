@@ -416,6 +416,14 @@
       "total": "{{statsDescription}}: {{total}}"
     }
   },
+  "notebook": {
+    "context": {
+      "add": "Add query context to notebook",
+      "description": "Context only: this is a query handoff, not a chart or captured profile. Custom transformations, exemplars, and flame graphs are not exported.",
+      "open-query": "Open query in Explore",
+      "title": "Profiles Drilldown query context"
+    }
+  },
   "onboarding": {
     "empty-loading": {
       "title": "Loading..."

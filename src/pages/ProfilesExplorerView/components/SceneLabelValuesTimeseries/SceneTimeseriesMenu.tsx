@@ -21,6 +21,8 @@ import {
   EventOpenAddToDashboard,
   getPanelData,
 } from '../../domain/actions/addToDashboard';
+import { canAddToNotebook, captureNotebookContext, EventOpenAddToNotebook } from '../../domain/actions/addToNotebook';
+import { useNotebookForm } from '../../domain/actions/AddToNotebookModal';
 import { FavAction } from '../../domain/actions/FavAction';
 import { SelectAction } from '../../domain/actions/SelectAction';
 import { getExploreUrl } from '../../helpers/getExploreUrl';
@@ -57,6 +59,7 @@ interface SceneTimeseriesMenuState extends SceneObjectState {
   scaleType?: ScaleDistribution;
   showExemplars?: boolean; // undefined means that the Exemplars button is not shown in the menu. Otherwise, it's shown and the value is the current state of the Exemplars button.
   includeAddToDashboard?: boolean;
+  includeAddToNotebook?: boolean;
   selectAction?: SelectAction;
   selectActions?: SelectAction[];
   favAction?: FavAction;
@@ -118,6 +121,22 @@ export class SceneTimeseriesMenu extends SceneObjectBase<SceneTimeseriesMenuStat
         iconClassName: 'apps',
         text: t('timeseries.menu.add-to-dashboard', 'Add to dashboard'),
         onClick: () => this.onClickAddToDashboard(),
+      });
+    }
+
+    const notebookPanel = this.state.includeAddToNotebook
+      ? sceneGraph.findObject(this, (object) => object instanceof VizPanel)
+      : null;
+    if (
+      this.state.includeAddToNotebook &&
+      canAddToNotebook() &&
+      notebookPanel instanceof VizPanel &&
+      captureNotebookContext(notebookPanel)
+    ) {
+      menuItems.push({
+        iconClassName: 'book',
+        text: t('notebook.context.add', 'Add query context to notebook'),
+        onClick: () => this.onClickAddToNotebook(),
       });
     }
 
@@ -211,6 +230,20 @@ export class SceneTimeseriesMenu extends SceneObjectBase<SceneTimeseriesMenuStat
     this.publishEvent(new EventOpenAddToDashboard({ panelData: getPanelData(vizPanel) }), true);
   }
 
+  private onClickAddToNotebook() {
+    if (!canAddToNotebook()) {
+      return;
+    }
+    const vizPanel = sceneGraph.findObject(this, (object) => object instanceof VizPanel);
+    if (!(vizPanel instanceof VizPanel)) {
+      return;
+    }
+    const capture = captureNotebookContext(vizPanel);
+    if (capture) {
+      this.publishEvent(new EventOpenAddToNotebook(capture), true);
+    }
+  }
+
   onClickExplore() {
     reportInteraction('g_pyroscope_app_open_in_explore_clicked');
 
@@ -240,6 +273,7 @@ export class SceneTimeseriesMenu extends SceneObjectBase<SceneTimeseriesMenuStat
   }
 
   static Component({ model }: SceneComponentProps<SceneTimeseriesMenu>) {
+    const NotebookForm = useNotebookForm();
     const { component: addToDashboardForm, isLoading: isLoadingAddToDashboardForm } =
       usePluginComponent(ADD_TO_DASHBOARD_COMPONENT_ID);
 
@@ -256,6 +290,11 @@ export class SceneTimeseriesMenu extends SceneObjectBase<SceneTimeseriesMenuStat
         items: model.buildMenuItems(includeAdd),
       });
     }, [model, isLoadingAddToDashboardForm, addToDashboardForm]);
+
+    useEffect(() => {
+      model.setState({ includeAddToNotebook: Boolean(NotebookForm) });
+      model.setState({ items: model.buildMenuItems() });
+    }, [model, NotebookForm]);
 
     return <VizPanelMenu.Component model={model as unknown as VizPanelMenu} />;
   }
