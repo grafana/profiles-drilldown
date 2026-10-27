@@ -34,7 +34,7 @@ Before a piece of work is finished, it should:
 ## Requirements
 
 - [Git](https://git-scm.com/downloads)
-- [Node.js](https://nodejs.org/en) v20
+- [Node.js](https://nodejs.org/en) v24.22.1
 - pnpm
 - [Docker](https://www.docker.com/get-started/) or [OrbStack](https://orbstack.dev/download) (lighter alternative)
 

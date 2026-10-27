@@ -22,7 +22,6 @@ allowBuilds:
   unrs-resolver: true
 
 overrides:
-  basic-ftp: 6.2.3
   semver@6: 7.8.5
   ua-parser-js: '>=2.0.10'
   undici-types: '>=6.28.0'
