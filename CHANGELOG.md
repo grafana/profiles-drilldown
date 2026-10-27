@@ -1,5 +1,37 @@
 # Changelog
 
+## [3.1.0](https://github.com/grafana/profiles-drilldown/compare/v3.0.0...v3.1.0) (2026-10-21)
+
+
+### 🎉 Features
+
+* replace config.apps with getAppPluginVersion ([#1185](https://github.com/grafana/profiles-drilldown/issues/1185)) ([2d450c3](https://github.com/grafana/profiles-drilldown/commit/2d450c336ee333ead9bfb2584337693615c96acb))
+* replace config.appSubUrl with locationUtil.assureBaseUrl ([#1187](https://github.com/grafana/profiles-drilldown/issues/1187)) ([68102b4](https://github.com/grafana/profiles-drilldown/commit/68102b48791c0768aeee010bafa99c6efbff9988))
+
+
+### 🐛 Bug Fixes
+
+* **deps:** bump @grafana/flamegraph to 13.2.4 ([#1194](https://github.com/grafana/profiles-drilldown/issues/1194)) ([6fcc10e](https://github.com/grafana/profiles-drilldown/commit/6fcc10ebade9f6cc0ee5604c86f386b14ed8ef7f))
+* **e2e:** add explicit types for implicit any parameters ([#1201](https://github.com/grafana/profiles-drilldown/issues/1201)) ([7b18616](https://github.com/grafana/profiles-drilldown/commit/7b1861602d10384b8f54768ce7145acd72691429))
+* preserve gcx export selectors and consolidate helpers ([#1142](https://github.com/grafana/profiles-drilldown/issues/1142)) ([7ca0f98](https://github.com/grafana/profiles-drilldown/commit/7ca0f98d6713cafa979aa3f28dedec95f56b59e5))
+* preserve span selector remove button layout ([#1198](https://github.com/grafana/profiles-drilldown/issues/1198)) ([7330fc3](https://github.com/grafana/profiles-drilldown/commit/7330fc3c4b0787c7f6964a21448eb8d73272bca6))
+* use EmptyState from @grafana/ui ([#1196](https://github.com/grafana/profiles-drilldown/issues/1196)) ([2630626](https://github.com/grafana/profiles-drilldown/commit/26306266300c35d729f2d370273442884dd6cc64))
+* use stock Button APIs in profiles-drilldown ([#1195](https://github.com/grafana/profiles-drilldown/issues/1195)) ([06b37be](https://github.com/grafana/profiles-drilldown/commit/06b37be56332f326ecc8b0adc242513447ca47cb))
+
+
+### 📝 Documentation
+
+* Add Grafana Play link to the Profiles Drilldown landing page ([#1202](https://github.com/grafana/profiles-drilldown/issues/1202)) ([a9ed0d7](https://github.com/grafana/profiles-drilldown/commit/a9ed0d7a9b277777c00225ca47f14d04b9aa96d3))
+
+
+### 🧹 Chore
+
+* bump @grafana/create-plugin configuration to 7.11.0 ([#1153](https://github.com/grafana/profiles-drilldown/issues/1153)) ([1dd0706](https://github.com/grafana/profiles-drilldown/commit/1dd07067ca10f8773b4cd06fd39998e5bd4e00d5))
+* **deps:** bump basic-ftp ([#1205](https://github.com/grafana/profiles-drilldown/issues/1205)) ([b837577](https://github.com/grafana/profiles-drilldown/commit/b837577305f242d62be725b30c33d3aa1a30b25a))
+* **deps:** lock file maintenance ([#1184](https://github.com/grafana/profiles-drilldown/issues/1184)) ([8a336f3](https://github.com/grafana/profiles-drilldown/commit/8a336f3dcde299f260a1568ee8cf9484d6407c77))
+* **deps:** lock file maintenance ([#1199](https://github.com/grafana/profiles-drilldown/issues/1199)) ([765d43b](https://github.com/grafana/profiles-drilldown/commit/765d43b3b2eabd289ce1e7707e4c8739c4774b91))
+* Remove profilesHeatmap feature flag ([#1175](https://github.com/grafana/profiles-drilldown/issues/1175)) ([3030a2e](https://github.com/grafana/profiles-drilldown/commit/3030a2e30f0f57f15e5b53df37ecae6b030625fd))
+
 ## [3.0.0](https://github.com/grafana/profiles-drilldown/compare/v2.3.1...v3.0.0) (2026-10-09)
 
 
