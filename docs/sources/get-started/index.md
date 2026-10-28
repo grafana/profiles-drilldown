@@ -31,9 +31,9 @@ To use Profiles Drilldown with Grafana Cloud, you need:
 
 To use Profiles Drilldown with Grafana open source, you need:
 
-- Grafana 13.1.0 or later
+- Grafana 13.2.0 or later
 - Your own Grafana instance
-- Grafana 13.1.0 and later includes all Grafana Drilldown apps by default.
+- Grafana 13.2.0 and later includes all Grafana Drilldown apps by default.
 - A configured Pyroscope data source
 
 ## Explore your profile data
