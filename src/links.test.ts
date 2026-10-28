@@ -1,5 +1,5 @@
 import { RawTimeRange } from '@grafana/data';
-import { GrafanaPyroscopeDataQuery } from '@grafana/schema/dist/esm/raw/composable/grafanapyroscope/dataquery/x/GrafanaPyroscopeDataQuery_types.gen';
+import { GrafanaPyroscopeDataQuery } from '@shared/domain/pyroscopeDataQuery';
 
 import { buildURL } from './links';
 

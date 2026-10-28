@@ -28,7 +28,7 @@
     "zh-Hant"
   ],
   "dependencies": {
-    "grafanaDependency": ">=13.1.0-0",
+    "grafanaDependency": ">=13.2.0-0",
     "plugins": [],
     "extensions": {
       "exposedComponents": [
