@@ -11,9 +11,11 @@ import {
   CompleteFilter,
   CompleteFilters,
   Filter,
+  FilterKind,
   FilterPartKind,
   QueryBuilderContext,
   QueryBuilderEvent,
+  Suggestion,
   Suggestions,
 } from './domain/types';
 import { useStateMachine } from './domain/useStateMachine';
@@ -52,6 +54,9 @@ export type QueryBuilderProps = {
   onChangeQuery: (newQuery: string, filters: CompleteFilters) => void;
   className?: string;
   autoExecute?: boolean;
+  /** Optional combined entry point; subsequent label steps use the standard builder. */
+  renderLabelInput?: (onSelectLabel: (label: Suggestion) => void) => React.ReactNode;
+  leadingFilters?: React.ReactNode;
 };
 
 function QueryBuilderComponent(props: QueryBuilderProps) {
@@ -61,6 +66,13 @@ function QueryBuilderComponent(props: QueryBuilderProps) {
   const { filters, edition, isQueryUpToDate, suggestions } = internalProps;
 
   const { onClickChiclet, onRemoveChiclet } = useChicletHandlers(actor);
+  const onSelectLabel = useCallback(
+    (label: Suggestion) => {
+      actor.send({ type: 'START_LABEL', data: label });
+    },
+    [actor]
+  );
+  const combinedInput = renderCombinedInput(props, edition, filters, onSelectLabel);
 
   const {
     onFocus,
@@ -95,6 +107,7 @@ function QueryBuilderComponent(props: QueryBuilderProps) {
 
   return (
     <div id={props.id} className={cx(styles.queryBuilder, props.className)}>
+      {props.leadingFilters}
       {filters.length > 0 ? (
         <ChicletsList
           filters={filters}
@@ -109,7 +122,9 @@ function QueryBuilderComponent(props: QueryBuilderProps) {
       ) : null}
 
       <div className={styles.controls}>
-        {edition ? (
+        {combinedInput ? (
+          combinedInput
+        ) : edition ? (
           <DisabledSelect />
         ) : suggestions.multiple ? (
           <MultipleSelect
@@ -145,6 +160,18 @@ function QueryBuilderComponent(props: QueryBuilderProps) {
       </div>
     </div>
   );
+}
+
+function renderCombinedInput(
+  props: QueryBuilderProps,
+  edition: QueryBuilderContext['edition'],
+  filters: QueryBuilderContext['filters'],
+  onSelectLabel: (label: Suggestion) => void
+) {
+  if (edition || filters.some((filter) => filter.type === FilterKind.partial)) {
+    return undefined;
+  }
+  return props.renderLabelInput?.(onSelectLabel);
 }
 
 function useChicletHandlers(actor: Actor) {

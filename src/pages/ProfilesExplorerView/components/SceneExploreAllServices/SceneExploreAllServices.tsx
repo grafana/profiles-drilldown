@@ -15,7 +15,6 @@ import { ProfileMetricVariable } from '../../domain/variables/ProfileMetricVaria
 import { ServiceNameVariable } from '../../domain/variables/ServiceNameVariable/ServiceNameVariable';
 import { SceneLayoutSwitcher } from '../SceneByVariableRepeaterGrid/components/SceneLayoutSwitcher';
 import { PanelType } from '../SceneByVariableRepeaterGrid/components/ScenePanelTypeSwitcher';
-import { SceneQuickFilter } from '../SceneByVariableRepeaterGrid/components/SceneQuickFilter';
 
 interface SceneExploreAllServicesState extends EmbeddedSceneState {}
 
@@ -59,10 +58,6 @@ export class SceneExploreAllServices extends SceneObjectBase<SceneExploreAllServ
   }
 
   onActivate() {
-    sceneGraph
-      .findByKeyAndType(this, 'quick-filter', SceneQuickFilter)
-      .setPlaceholder('Search services (comma-separated regexes are supported)');
-
     const localServiceNameVar = sceneGraph.lookupVariable('serviceName', this) as ServiceNameVariable;
     const mainServiceNameVar = sceneGraph.lookupVariable('serviceName', this.parent!) as ServiceNameVariable;
 
@@ -88,10 +83,7 @@ export class SceneExploreAllServices extends SceneObjectBase<SceneExploreAllServ
         sceneGraph.findByKeyAndType(this, 'profileMetricId', ProfileMetricVariable),
         sceneGraph.findByKeyAndType(this, 'filtersAllServices', AllServicesFilterVariable),
       ],
-      gridControls: [
-        sceneGraph.findByKeyAndType(this, 'quick-filter', SceneQuickFilter),
-        sceneGraph.findByKeyAndType(this, 'layout-switcher', SceneLayoutSwitcher),
-      ],
+      gridControls: [sceneGraph.findByKeyAndType(this, 'layout-switcher', SceneLayoutSwitcher)],
     };
   }
 
