@@ -16,7 +16,7 @@ export type CodeLine = LineProfile & { line: string };
 type CodeContainerDomainValue = DomainHookReturnValue & { data: { snippetLines: CodeLine[]; allLines: CodeLine[] } };
 
 export function useCodeContainer(functionDetails: FunctionDetails): CodeContainerDomainValue {
-  const { uid: dataSourceUid = '' } = useDataSourceUid();
+  const dataSourceUid = useDataSourceUid();
   const { isLoggedIn } = useGitHubContext();
   const { version } = functionDetails;
 

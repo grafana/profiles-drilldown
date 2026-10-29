@@ -72,7 +72,7 @@ export class SceneDiffFlameGraph extends SceneObjectBase<SceneDiffFlameGraphStat
     const { settings } = useFetchPluginSettings();
     const [maxNodes] = useMaxNodesFromUrl();
 
-    const { uid: dataSourceUid = '' } = useDataSourceUid();
+    const dataSourceUid = useDataSourceUid();
 
     const isDiffQueryEnabled = Boolean(
       baselineQuery &&
@@ -188,7 +188,7 @@ export class SceneDiffFlameGraph extends SceneObjectBase<SceneDiffFlameGraphStat
       [data.isLoading, data.title, styles.spinner]
     );
 
-    const { uid: dataSourceUid = '' } = useDataSourceUid();
+    const dataSourceUid = useDataSourceUid();
     const profileMetricId = getSceneVariableValue(model, 'profileMetricId');
 
     const aiActionButton = hideAIButton ? (

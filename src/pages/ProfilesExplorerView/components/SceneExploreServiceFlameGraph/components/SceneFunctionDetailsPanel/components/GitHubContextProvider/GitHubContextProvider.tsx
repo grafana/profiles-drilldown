@@ -21,7 +21,7 @@ export const nonce = generateNonce();
 const LOCAL_STORAGE_GITHUB_INTEGRATION_DATASOURCE_UID = `grafana-pyroscope-app.gitHubIntegration.dataSourceUid`;
 
 export function GitHubContextProvider({ children }: GitHubContextProviderProps) {
-  const { uid: dataSourceUid = '' } = useDataSourceUid();
+  const dataSourceUid = useDataSourceUid();
   const vcsClient = DataSourceProxyClientBuilder.build(dataSourceUid, VcsClient);
   const privateVcsClient = DataSourceProxyClientBuilder.build(dataSourceUid, PrivateVcsClient);
 

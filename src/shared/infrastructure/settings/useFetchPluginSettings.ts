@@ -20,7 +20,7 @@ type FetchResponse = {
  * Fetches the plugin settings and, if none/only some have been stored previously, returns adequate default values for the rest of the application
  */
 export function useFetchPluginSettings({ enabled = true }: FetchParams = {}): FetchResponse {
-  const { uid: dataSourceUid = '' } = useDataSourceUid();
+  const dataSourceUid = useDataSourceUid();
   const settingsApiClient = DataSourceProxyClientBuilder.build(dataSourceUid, SettingsApiClient);
 
   const { isFetching, error, data } = useQuery({

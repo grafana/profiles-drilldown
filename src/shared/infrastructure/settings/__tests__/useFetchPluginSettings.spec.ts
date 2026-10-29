@@ -18,11 +18,11 @@ describe('useFetchPluginSettings()', () => {
     );
   });
 
-  it('should not fetch settings without a datasource uid', () => {
+  it('should throw without a datasource uid', () => {
     mockFetch();
 
-    const { result } = renderHook(() => useFetchPluginSettings(), { wrapper: createDataSourceUidWrapper('') });
-
-    expect(result.current.isFetching).toBe(false);
+    expect(() => renderHook(() => useFetchPluginSettings(), { wrapper: createDataSourceUidWrapper('') })).toThrow(
+      'useDataSourceUid must be used inside DataSourceUidProvider'
+    );
   });
 });

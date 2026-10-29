@@ -20,7 +20,7 @@ interface ComponentWithMeta {
 export default function SettingsView() {
   const styles = useStyles2(getStyles);
   const { data, actions } = useSettingsView();
-  const { uid: datasourceUid = '' } = useDataSourceUid();
+  const datasourceUid = useDataSourceUid();
 
   useReportPageInitialized('settings');
 

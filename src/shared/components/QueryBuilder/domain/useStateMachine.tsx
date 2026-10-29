@@ -6,7 +6,7 @@ import { buildStateMachine } from './stateMachine';
 import { CompleteFilters, QueryBuilderContext } from './types';
 
 export function useStateMachine({ query, from, to, onChangeQuery }: QueryBuilderProps) {
-  const { uid: dataSourceUid = '' } = useDataSourceUid();
+  const dataSourceUid = useDataSourceUid();
   const { actor, initialContext } = useMemo(
     () => buildStateMachine({ dataSourceUid, query, from, to }),
     // We don't want to build a new state machine when the props change, props change is handheld via the CHANGE_INPUT_PARAMS action below

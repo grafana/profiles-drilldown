@@ -40,7 +40,7 @@ export class SceneFunctionDetailsPanel extends SceneObjectBase<SceneFunctionDeta
   }
 
   useSceneFunctionDetailsPanel = (stackTrace: StackTrace, timeRange: TimeRange): DomainHookReturnValue => {
-    const { uid: dataSourceUid = '' } = useDataSourceUid();
+    const dataSourceUid = useDataSourceUid();
     const dataSourceName = sceneGraph.findByKeyAndType(this, 'dataSource', ProfilesDataSourceVariable).useState()
       .text as string;
     const serviceName = getSceneVariableValue(this, 'serviceName');

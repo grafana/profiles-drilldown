@@ -95,7 +95,7 @@ export class SceneExportMenu extends SceneObjectBase<SceneExportMenuState> {
   }
 
   useSceneExportMenu = ({ query, timeRange, profileIdSelector, spanSelector }: ExtraProps): DomainHookReturnValue => {
-    const { uid: dataSourceUid = '' } = useDataSourceUid();
+    const dataSourceUid = useDataSourceUid();
 
     const [maxNodes] = useMaxNodesFromUrl();
     const { settings } = useFetchPluginSettings();

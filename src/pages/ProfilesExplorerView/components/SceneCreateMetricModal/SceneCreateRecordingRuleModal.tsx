@@ -69,7 +69,7 @@ export class SceneCreateRecordingRuleModal extends SceneObjectBase<SceneCreateRe
     onCreated: () => void;
     functionName?: string;
   }) {
-    const { uid: dataSourceUid = '' } = useDataSourceUid();
+    const dataSourceUid = useDataSourceUid();
     const [options, setOptions] = useState<string[]>([]);
 
     const { actions } = useCreateRecordingRule();

@@ -17,7 +17,7 @@ const DEFAULT_PROFILE_DATA: AdHocProfile = {
 export function useUploadFile() {
   const [isLoading, setIsLoading] = useState(false);
   const [profileData, setProfileData] = useState(DEFAULT_PROFILE_DATA);
-  const { uid: dataSourceUid = '' } = useDataSourceUid();
+  const dataSourceUid = useDataSourceUid();
   const client = useMemo(() => new AdHocProfileClient({ dataSourceUid }), [dataSourceUid]);
 
   useEffect(() => {

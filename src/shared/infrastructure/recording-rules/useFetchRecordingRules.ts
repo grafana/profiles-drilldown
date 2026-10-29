@@ -20,7 +20,7 @@ type FetchResponse = {
 
 export function useFetchRecordingRules({ enabled = true }: FetchParams = {}): FetchResponse {
   const queryClient = useQueryClient();
-  const { uid: dataSourceUid = '' } = useDataSourceUid();
+  const dataSourceUid = useDataSourceUid();
   const recordingRulesApiClient = DataSourceProxyClientBuilder.build(dataSourceUid, RecordingRulesApiClient);
 
   const { isFetching, error, data } = useQuery<RecordingRuleViewModel[], HttpClientError>({

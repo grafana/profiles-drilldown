@@ -18,11 +18,11 @@ describe('useFetchRecordingRules()', () => {
     );
   });
 
-  it('should not fetch recording rules without a datasource uid', () => {
+  it('should throw without a datasource uid', () => {
     mockFetch();
 
-    const { result } = renderHook(() => useFetchRecordingRules(), { wrapper: createDataSourceUidWrapper('') });
-
-    expect(result.current.isFetching).toBe(false);
+    expect(() => renderHook(() => useFetchRecordingRules(), { wrapper: createDataSourceUidWrapper('') })).toThrow(
+      'useDataSourceUid must be used inside DataSourceUidProvider'
+    );
   });
 });

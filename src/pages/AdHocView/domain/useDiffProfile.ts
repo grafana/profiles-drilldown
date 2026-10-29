@@ -9,7 +9,7 @@ export function useDiffProfile() {
   const [profileTypes, setProfileTypes] = useState<string[]>([]);
   const [profile, setProfile] = useState<FlamebearerProfile | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const { uid: dataSourceUid = '' } = useDataSourceUid();
+  const dataSourceUid = useDataSourceUid();
   const client = useMemo(() => new AdHocProfileClient({ dataSourceUid }), [dataSourceUid]);
 
   useEffect(() => {

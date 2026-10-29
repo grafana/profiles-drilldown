@@ -1,14 +1,10 @@
-import { useDataSourceUid } from '@shared/infrastructure/datasource/DataSourceUidContext';
+import { useDefaultDataSourceUid } from '@shared/infrastructure/datasource/useDefaultDataSourceUid';
 import { usePyroscopeDataSources } from '@shared/infrastructure/datasource/useSelectDefaultDataSourceUid';
 import { renderHook } from '@testing-library/react';
 import { act } from 'react';
 
 import { useFetchTenantStats } from '../../infrastructure/useFetchTenantStats';
 import { useOnboarding } from '../useOnboarding';
-
-jest.mock('@shared/infrastructure/datasource/DataSourceUidContext', () => ({
-  useDataSourceUid: jest.fn(),
-}));
 
 jest.mock('@shared/infrastructure/datasource/useSelectDefaultDataSourceUid', () => ({
   usePyroscopeDataSources: jest.fn(),
@@ -18,27 +14,33 @@ jest.mock('../../infrastructure/useFetchTenantStats', () => ({
   useFetchTenantStats: jest.fn(),
 }));
 
-const useDataSourceUidMock = jest.mocked(useDataSourceUid);
+jest.mock('@shared/infrastructure/datasource/useDefaultDataSourceUid', () => ({
+  useDefaultDataSourceUid: jest.fn(),
+}));
+
 const usePyroscopeDataSourcesMock = jest.mocked(usePyroscopeDataSources);
 const useFetchTenantStatsMock = jest.mocked(useFetchTenantStats);
+const useDefaultDataSourceUidMock = jest.mocked(useDefaultDataSourceUid);
 
 describe('useOnboarding()', () => {
   beforeEach(() => {
     jest.resetAllMocks();
-    useDataSourceUidMock.mockReturnValue({ loading: true, error: undefined, uid: undefined });
     usePyroscopeDataSourcesMock.mockReturnValue({ loading: false, datasources: [], error: undefined });
     useFetchTenantStatsMock.mockReturnValue({ isFetching: false, error: null, refetch: jest.fn() });
+    useDefaultDataSourceUidMock.mockReturnValue({ loading: false, uid: undefined, error: undefined });
   });
 
   it('should show the loading page while the datasource uid resolves', () => {
+    useDefaultDataSourceUidMock.mockReturnValue({ loading: true, uid: undefined, error: undefined });
+
     const { result } = renderHook(() => useOnboarding());
 
     expect(result.current.data.shouldShowLoadingPage).toBe(true);
   });
 
   it('should fetch stats from the resolved datasource uid', () => {
-    useDataSourceUidMock.mockReturnValue({ loading: false, error: undefined, uid: 'pyroscope-abc' });
     usePyroscopeDataSourcesMock.mockReturnValue({ loading: false, datasources: [{}] as any, error: undefined });
+    useDefaultDataSourceUidMock.mockReturnValue({ loading: false, uid: 'pyroscope-abc', error: undefined });
 
     renderHook(() => useOnboarding());
 
@@ -52,8 +54,8 @@ describe('useOnboarding()', () => {
   });
 
   it('should show the loading page while the datasources load', () => {
-    useDataSourceUidMock.mockReturnValue({ loading: false, error: undefined, uid: 'pyroscope-abc' });
     usePyroscopeDataSourcesMock.mockReturnValue({ loading: true, datasources: undefined, error: undefined });
+    useDefaultDataSourceUidMock.mockReturnValue({ loading: false, uid: 'pyroscope-abc', error: undefined });
 
     const { result } = renderHook(() => useOnboarding());
 
@@ -92,6 +94,7 @@ describe('useOnboarding()', () => {
 
   it('should show the onboarding page when the tenant has no ingested data', () => {
     usePyroscopeDataSourcesMock.mockReturnValue({ loading: false, datasources: [{}] as any, error: undefined });
+    useDefaultDataSourceUidMock.mockReturnValue({ loading: false, uid: 'pyroscope-abc', error: undefined });
     useFetchTenantStatsMock.mockReturnValue({
       isFetching: false,
       error: null,
@@ -106,6 +109,7 @@ describe('useOnboarding()', () => {
 
   it('should show the onboarding page when the stats request fails', () => {
     usePyroscopeDataSourcesMock.mockReturnValue({ loading: false, datasources: [{}] as any, error: undefined });
+    useDefaultDataSourceUidMock.mockReturnValue({ loading: false, uid: 'pyroscope-abc', error: undefined });
     useFetchTenantStatsMock.mockReturnValue({
       isFetching: false,
       error: new Error('Service unavailable'),
@@ -127,6 +131,7 @@ describe('useOnboarding()', () => {
 
   it('should hide the onboarding page when the tenant has data', () => {
     usePyroscopeDataSourcesMock.mockReturnValue({ loading: false, datasources: [{}] as any, error: undefined });
+    useDefaultDataSourceUidMock.mockReturnValue({ loading: false, uid: 'pyroscope-abc', error: undefined });
     useFetchTenantStatsMock.mockReturnValue({
       isFetching: false,
       error: null,

@@ -1,7 +1,5 @@
 import React, { createContext, ReactNode, useContext } from 'react';
 
-import { useDefaultDataSourceUid } from './useDefaultDataSourceUid';
-
 export interface DataSourceUidState {
   uid: string | undefined;
   loading: boolean;
@@ -19,8 +17,12 @@ export function DataSourceUidProvider({ uid, children }: DataSourceUidProviderPr
   return <DataSourceUidContext.Provider value={uid}>{children}</DataSourceUidContext.Provider>;
 }
 
-export function useDataSourceUid(): DataSourceUidState {
-  const contextUid = useContext(DataSourceUidContext);
+export function useDataSourceUid(): string {
+  const uid = useContext(DataSourceUidContext);
 
-  return useDefaultDataSourceUid({ selectedUid: contextUid });
+  if (!uid) {
+    throw new Error('useDataSourceUid must be used inside DataSourceUidProvider');
+  }
+
+  return uid;
 }

@@ -23,7 +23,7 @@ export class SceneAiPanel extends SceneObjectBase<SceneAiPanelState> {
   }
 
   useSceneAiPanel = (isDiff: boolean, fetchParams: FetchParams): DomainHookReturnValue => {
-    const { uid: dataSourceUid = '' } = useDataSourceUid();
+    const dataSourceUid = useDataSourceUid();
     const profileMetricId = getSceneVariableValue(this, 'profileMetricId');
 
     const { profileType, profiles, validationError, fetchError, isFetching } = useFetchDotProfiles(
