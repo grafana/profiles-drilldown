@@ -21,6 +21,17 @@ allowBuilds:
   rolldown: true
   unrs-resolver: true
 
+auditConfig:
+  ignoreGhsas:
+    # React Router v6 is externalized by Grafana; revisit after the host migration:
+    # https://github.com/grafana/grafana/issues/129933
+    - GHSA-wrjc-x8rr-h8h6
+    - GHSA-337j-9hxr-rhxg
+    # Temporary exception: deepmerge is used only by Jest and fork-ts-checker-webpack-plugin.
+    # No patched release is published; remove this exception when one becomes available.
+    # https://github.com/TehShrike/deepmerge/issues/273
+    - GHSA-gcqx-w48m-w2h4
+
 overrides:
   semver@6: 7.8.5
   ua-parser-js: '>=2.0.10'
