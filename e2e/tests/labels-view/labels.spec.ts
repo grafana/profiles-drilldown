@@ -2,7 +2,12 @@ import { ExplorationType } from '../../config/constants';
 import { expect, test } from '../../fixtures';
 
 test.describe('Labels view', () => {
-  test.beforeEach(async ({ exploreProfilesPage }) => {
+  test.beforeEach(async ({ exploreProfilesPage, grafanaVersion }, testInfo) => {
+    const [major, minor] = grafanaVersion.split('.').map(Number);
+    if (major > 13 || (major === 13 && minor >= 3)) {
+      testInfo.snapshotSuffix += '-grafana-13.3-plus';
+    }
+
     await exploreProfilesPage.goto(ExplorationType.Labels);
   });
 

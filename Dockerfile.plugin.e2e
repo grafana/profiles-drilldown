@@ -3,7 +3,7 @@ FROM mcr.microsoft.com/playwright:v1.59.0-noble@sha256:11707c5282fec52f0705aad3a
 WORKDIR /app
 
 # required by the e2e test code (keep in sync with base image browser bundles)
-RUN corepack enable && pnpm add --ignore-scripts "@playwright/test@1.59.0" "dotenv@^16.3.1"
+RUN corepack enable && pnpm add --ignore-scripts "@playwright/test@1.59.0" "dotenv@^16.3.1" "@grafana/plugin-e2e@^3.15.3"
 
 ENV E2E_BASE_URL="http://localhost:3000"
 
