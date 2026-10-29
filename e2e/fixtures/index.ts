@@ -1,4 +1,5 @@
-import { test as base, expect, type Page } from '@playwright/test';
+import { test as baseTest, PluginOptions } from '@grafana/plugin-e2e';
+import { expect, type Page } from '@playwright/test';
 
 import { DEFAULT_EXPLORE_PROFILES_URL_PARAMS } from '../config/constants';
 import { AdHocViewPage } from './pages/AdHocViewPage';
@@ -42,7 +43,7 @@ const withExceptionsAssertion = async <T>(
   expect(exceptions, `${exceptions.length} uncaught exception(s) encountered!`).toEqual([]);
 };
 
-export const test = base.extend<Options & Fixtures>({
+export const test = baseTest.extend<Options & Fixtures, PluginOptions>({
   // fixture option accessible in every test case or fixture (default value = false)
   failOnUncaughtExceptions: [false, { option: true }],
   exploreProfilesPage: async ({ page, failOnUncaughtExceptions }, use) => {
