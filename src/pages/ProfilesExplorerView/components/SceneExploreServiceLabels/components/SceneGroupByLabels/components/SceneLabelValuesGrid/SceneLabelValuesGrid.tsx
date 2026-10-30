@@ -16,6 +16,7 @@ import { Spinner } from '@grafana/ui';
 import { logger } from '@shared/infrastructure/tracking/logger';
 import { debounce, isEqual } from 'lodash';
 import React from 'react';
+import { Unsubscribable } from 'rxjs';
 
 import { EventTimeseriesDataReceived } from '../../../../../../domain/events/EventTimeseriesDataReceived';
 import { FiltersVariable } from '../../../../../../domain/variables/FiltersVariable/FiltersVariable';
@@ -60,6 +61,11 @@ const GRID_TEMPLATE_ROWS = '1fr';
 export const GRID_AUTO_ROWS = '160px';
 
 export class SceneLabelValuesGrid extends SceneObjectBase<SceneLabelValuesGridState> {
+  // A filter change re-runs the grouped query on its own. Ignore the refetch that the
+  // following count reload would start.
+  private skipNextGroupByRefetch = false;
+  private dataSub?: Unsubscribable;
+
   static buildGridItemKey(item: GridItemData) {
     return `grid-item-${item.index}-${item.value}`;
   }
@@ -117,6 +123,7 @@ export class SceneLabelValuesGrid extends SceneObjectBase<SceneLabelValuesGridSt
     const filtersSub = this.subscribeToFiltersChange();
 
     return () => {
+      this.dataSub?.unsubscribe();
       filtersSub.unsubscribe();
       hideNoDataSub.unsubscribe();
       layoutChangeSub.unsubscribe();
@@ -127,12 +134,15 @@ export class SceneLabelValuesGrid extends SceneObjectBase<SceneLabelValuesGridSt
   }
 
   subscribeOnceToDataChange(forceRender = false) {
-    const dataSub = this.state.$data.subscribeToState((newState) => {
+    this.dataSub?.unsubscribe();
+
+    this.dataSub = this.state.$data.subscribeToState((newState) => {
       if (newState.data?.state === LoadingState.Loading) {
         return;
       }
 
-      dataSub.unsubscribe();
+      this.dataSub?.unsubscribe();
+      this.dataSub = undefined;
 
       this.renderGridItems(forceRender);
 
@@ -144,9 +154,18 @@ export class SceneLabelValuesGrid extends SceneObjectBase<SceneLabelValuesGridSt
     const groupByVariable = sceneGraph.findByKeyAndType(this, 'groupBy', GroupByVariable);
 
     return groupByVariable.subscribeToState((newState, prevState) => {
-      if (!newState.loading && prevState.loading) {
-        this.refetchData();
+      if (newState.loading || !prevState.loading) {
+        return;
       }
+
+      // The count reload just finished. The filter change already re-ran the grouped query,
+      // so fetching the panel list again would duplicate that request and show the grid spinner.
+      if (this.skipNextGroupByRefetch) {
+        this.skipNextGroupByRefetch = false;
+        return;
+      }
+
+      this.refetchData();
     });
   }
 
@@ -236,14 +255,14 @@ export class SceneLabelValuesGrid extends SceneObjectBase<SceneLabelValuesGridSt
 
   subscribeToFiltersChange() {
     const filtersVariable = sceneGraph.findByKeyAndType(this, 'filters', FiltersVariable);
-    const noDataSwitcher = sceneGraph.findByKeyAndType(this, 'no-data-switcher', SceneNoDataSwitcher);
 
-    // the handler will be called each time a filter is added/removed/modified
-    return filtersVariable.subscribeToState(() => {
-      if (noDataSwitcher.state.hideNoData === 'on') {
-        // to be sure the list is updated we refetch because the filters only influence the query made in each panel
-        this.refetchData();
+    return filtersVariable.subscribeToState((newState, prevState) => {
+      if (newState.filterExpression === prevState.filterExpression) {
+        return;
       }
+
+      this.skipNextGroupByRefetch = true;
+      this.subscribeOnceToDataChange();
     });
   }
 
