@@ -16,6 +16,7 @@ import { Spinner } from '@grafana/ui';
 import { logger } from '@shared/infrastructure/tracking/logger';
 import { debounce, isEqual } from 'lodash';
 import React from 'react';
+import { Unsubscribable } from 'rxjs';
 
 import { EventTimeseriesDataReceived } from '../../../../../../domain/events/EventTimeseriesDataReceived';
 import { FiltersVariable } from '../../../../../../domain/variables/FiltersVariable/FiltersVariable';
@@ -63,7 +64,7 @@ export class SceneLabelValuesGrid extends SceneObjectBase<SceneLabelValuesGridSt
   // A filter change re-runs the grouped query on its own. Ignore the refetch that the
   // following count reload would start.
   private skipNextGroupByRefetch = false;
-  private dataSub?: { unsubscribe: () => void };
+  private dataSub?: Unsubscribable;
 
   static buildGridItemKey(item: GridItemData) {
     return `grid-item-${item.index}-${item.value}`;

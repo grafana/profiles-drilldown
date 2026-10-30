@@ -58,7 +58,22 @@ export class SceneGroupByLabels extends SceneObjectBase<SceneGroupByLabelsState>
     });
 
     this.addActivationHandler(() => {
-      this.onActivate(item);
+      // Scenes keeps the handler's return value as-is and does not await promises.
+      let cleanup: (() => void) | undefined;
+
+      void this.onActivate(item).then((deactivate) => {
+        if (!this.isActive) {
+          deactivate();
+          return;
+        }
+
+        cleanup = deactivate;
+      });
+
+      return () => {
+        cleanup?.();
+        cleanup = undefined;
+      };
     });
   }
 
@@ -66,6 +81,10 @@ export class SceneGroupByLabels extends SceneObjectBase<SceneGroupByLabelsState>
     // initial load
     const groupByVariable = sceneGraph.findByKeyAndType(this, 'groupBy', GroupByVariable);
     await groupByVariable.update();
+
+    if (!this.isActive) {
+      return () => {};
+    }
 
     if (item) {
       this.initVariablesAndControls(item);
