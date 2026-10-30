@@ -1,5 +1,20 @@
 # Changelog
 
+## [3.2.0](https://github.com/grafana/profiles-drilldown/compare/v3.1.0...v3.2.0) (2026-10-30)
+
+
+### 🎉 Features
+
+* bump @grafana/sign-plugin and node version ([#1206](https://github.com/grafana/profiles-drilldown/issues/1206)) ([2baa021](https://github.com/grafana/profiles-drilldown/commit/2baa02170f55d36901f89949001eb6b7631c723a))
+* resolve dataSourceUid from context ([#1203](https://github.com/grafana/profiles-drilldown/issues/1203)) ([1769372](https://github.com/grafana/profiles-drilldown/commit/17693722cca19d5bb0ef645d13f1a76aa075b3e3))
+* use OpenFeature providers from @grafana/runtime ([#1193](https://github.com/grafana/profiles-drilldown/issues/1193)) ([3a95890](https://github.com/grafana/profiles-drilldown/commit/3a95890cdab9c83e185775b8b063006eeff547a9))
+
+
+### 🧹 Chore
+
+* **ci:** fix broken snapshot tests ([#1216](https://github.com/grafana/profiles-drilldown/issues/1216)) ([54fb9d1](https://github.com/grafana/profiles-drilldown/commit/54fb9d1a97094fe855ddae59a6cc4871139a0f3a))
+* update packages ([#1215](https://github.com/grafana/profiles-drilldown/issues/1215)) ([4a6703e](https://github.com/grafana/profiles-drilldown/commit/4a6703e12b235ab5d71dc697af8b36d8efcc4c3f))
+
 ## [3.1.0](https://github.com/grafana/profiles-drilldown/compare/v3.0.0...v3.1.0) (2026-10-21)
 
 
