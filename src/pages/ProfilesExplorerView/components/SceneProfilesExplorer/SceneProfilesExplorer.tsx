@@ -217,13 +217,13 @@ export class SceneProfilesExplorer extends SceneObjectBase<SceneProfilesExplorer
 
     if (!this.kgInitialized) {
       this.kgInitialized = true;
-      void ensureOpenFeaturePluginInitialized().then(() => {
+      void ensureOpenFeaturePluginInitialized().then(async () => {
         if (!isActive) {
           return;
         }
 
         if (getKgAnnotationsInPyroscopeFromOpenFeature()) {
-          const kg = getKgSceneProps('Service', 'serviceName');
+          const kg = await getKgSceneProps('Service', 'serviceName');
           if (kg) {
             this.setState({
               $data: this.state.$data ?? kg.$data,
