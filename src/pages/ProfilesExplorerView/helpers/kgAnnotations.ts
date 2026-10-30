@@ -10,6 +10,7 @@ import {
 } from '@grafana/scenes';
 import { DataQuery } from '@grafana/schema';
 import { isKnowledgeGraphDataSource } from '@shared/domain/datasources';
+import { logger } from '@shared/infrastructure/tracking/logger';
 import { KG_DATASOURCE_TYPE, KG_DATASOURCE_UID } from 'src/constants';
 
 import { KgAnnotationToggle } from './KgAnnotationToggle';
@@ -21,7 +22,12 @@ interface KgSceneProps {
 }
 
 export async function isKgAnnotationsAvailable(): Promise<boolean> {
-  const instances = await getDataSourceInstanceList({ all: true, filter: isKnowledgeGraphDataSource });
+  const instances = await getDataSourceInstanceList({ all: true, filter: isKnowledgeGraphDataSource }).catch(
+    (error) => {
+      logger.debug('Failed to get Knowledge Graph data sources', { error });
+      return [];
+    }
+  );
   return Boolean(instances.length);
 }
 

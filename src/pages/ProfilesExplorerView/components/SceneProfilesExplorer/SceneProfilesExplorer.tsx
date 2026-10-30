@@ -224,7 +224,7 @@ export class SceneProfilesExplorer extends SceneObjectBase<SceneProfilesExplorer
 
         if (getKgAnnotationsInPyroscopeFromOpenFeature()) {
           const kg = await getKgSceneProps('Service', 'serviceName');
-          if (kg) {
+          if (kg && isActive) {
             this.setState({
               $data: this.state.$data ?? kg.$data,
               $behaviors: [...(this.state.$behaviors ?? []), ...kg.behaviors],
