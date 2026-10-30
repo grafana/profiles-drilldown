@@ -1,9 +1,10 @@
 import { SelectableValue } from '@grafana/data';
 import { displayError } from '@shared/domain/displayStatus';
 import { reportInteraction } from '@shared/domain/reportInteraction';
+import { useDataSourceUid } from '@shared/infrastructure/datasource/DataSourceUidContext';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
-import { createAdHocProfileClient } from '../infrastructure/adHocProfileClient';
+import { AdHocProfileClient } from '../infrastructure/adHocProfileClient';
 import { AdHocProfile } from './AdHocProfile';
 
 const DEFAULT_PROFILE_DATA: AdHocProfile = {
@@ -16,7 +17,8 @@ const DEFAULT_PROFILE_DATA: AdHocProfile = {
 export function useUploadFile() {
   const [isLoading, setIsLoading] = useState(false);
   const [profileData, setProfileData] = useState(DEFAULT_PROFILE_DATA);
-  const client = useMemo(() => createAdHocProfileClient(), []);
+  const dataSourceUid = useDataSourceUid();
+  const client = useMemo(() => new AdHocProfileClient({ dataSourceUid }), [dataSourceUid]);
 
   useEffect(() => {
     return () => {

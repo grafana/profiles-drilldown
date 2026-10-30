@@ -34,8 +34,6 @@ export function usePluginHeaderToolbar({
     gridControls: SceneObject[];
   };
 
-  const dataSourceUid = dataSourceVariable.useState().value as string;
-
   const navigate = useNavigate();
 
   const explorationTypeHasServiceName =
@@ -52,7 +50,6 @@ export function usePluginHeaderToolbar({
       sceneVariables,
       gridControls,
       body,
-      dataSourceUid,
       serviceName,
       extraControls,
     },

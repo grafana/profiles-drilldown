@@ -22,6 +22,7 @@ import { LoadSearchScene } from '@shared/components/SavedSearches/LoadSearchScen
 import { displayError } from '@shared/domain/displayStatus';
 import { prepareHistoryEntry } from '@shared/domain/prepareHistoryEntry';
 import { reportInteraction } from '@shared/domain/reportInteraction';
+import { DataSourceUidProvider } from '@shared/infrastructure/datasource/DataSourceUidContext';
 import { getKgAnnotationsInPyroscopeFromOpenFeature } from '@shared/infrastructure/featureFlags/featureFlags';
 import { ensureOpenFeaturePluginInitialized } from '@shared/infrastructure/featureFlags/openFeature';
 import { DomainHookReturnValue } from '@shared/types/DomainHookReturnValue';
@@ -147,7 +148,7 @@ export class SceneProfilesExplorer extends SceneObjectBase<SceneProfilesExplorer
   private initialFilters?: AdHocVariableFilter[];
   private kgInitialized = false;
 
-  public constructor(state: Partial<SceneProfilesExplorerState>) {
+  public constructor(state: Partial<SceneProfilesExplorerState> & { initialDS: string }) {
     super({
       key: 'profiles-explorer',
       explorationType: state.initialFilters && state.initialFilters.length > 0 ? ExplorationType.LABELS : undefined,
@@ -162,7 +163,7 @@ export class SceneProfilesExplorer extends SceneObjectBase<SceneProfilesExplorer
           // (because values would be empty before loading, then populated after fetched)
           // see setExplorationType() for dynamic updates
           variables: [
-            new ProfilesDataSourceVariable({ initialDS: state?.initialDS }),
+            new ProfilesDataSourceVariable({ initialDS: state.initialDS }),
             new ServiceNameVariable({ initialFilters: state?.initialFilters }),
             new ProfileMetricVariable(),
             new FiltersVariable({
@@ -604,43 +605,48 @@ export class SceneProfilesExplorer extends SceneObjectBase<SceneProfilesExplorer
     } = model.useState();
 
     return (
-      <FunctionVersionProvider>
-        <GitHubContextProvider dataSourceUid={dataSourceUid}>
-          <PluginHeaderToolbar
-            model={model}
-            explorationType={explorationType}
-            controls={controls}
-            body={body}
-            $variables={$variables}
-            loadSearchScene={loadSearchScene}
-            onChangeExplorationType={actions.onChangeExplorationType}
-            isEmbedded={isEmbedded}
-            onCreateRecordingRule={() => {
-              setRecordingRulesModalState({ isOpen: true });
-            }}
-          />
-
-          <div className={cx(styles.body, isEmbedded && styles.embeddedBody)} data-testid="sceneBody">
-            {body && <body.Component model={body} />}
-          </div>
-
-          {recordingRulesModalState.isOpen && (
-            <SceneCreateRecordingRuleModal.Component
-              model={createRecordingRuleModal}
-              isModalOpen={recordingRulesModalState.isOpen}
-              functionName={recordingRulesModalState.functionName}
-              onDismiss={() => setRecordingRulesModalState({ isOpen: false })}
-              onCreated={() => {
-                setRecordingRulesModalState({ isOpen: false });
+      <DataSourceUidProvider uid={dataSourceUid}>
+        <FunctionVersionProvider>
+          <GitHubContextProvider>
+            <PluginHeaderToolbar
+              model={model}
+              explorationType={explorationType}
+              controls={controls}
+              body={body}
+              $variables={$variables}
+              loadSearchScene={loadSearchScene}
+              onChangeExplorationType={actions.onChangeExplorationType}
+              isEmbedded={isEmbedded}
+              onCreateRecordingRule={() => {
+                setRecordingRulesModalState({ isOpen: true });
               }}
             />
-          )}
 
-          {isAddToDashboardModalOpen && addToDashboardPanelData && (
-            <AddToDashboardModal panelData={addToDashboardPanelData} onClose={() => model.closeAddToDashboardModal()} />
-          )}
-        </GitHubContextProvider>
-      </FunctionVersionProvider>
+            <div className={cx(styles.body, isEmbedded && styles.embeddedBody)} data-testid="sceneBody">
+              {body && <body.Component model={body} />}
+            </div>
+
+            {recordingRulesModalState.isOpen && (
+              <SceneCreateRecordingRuleModal.Component
+                model={createRecordingRuleModal}
+                isModalOpen={recordingRulesModalState.isOpen}
+                functionName={recordingRulesModalState.functionName}
+                onDismiss={() => setRecordingRulesModalState({ isOpen: false })}
+                onCreated={() => {
+                  setRecordingRulesModalState({ isOpen: false });
+                }}
+              />
+            )}
+
+            {isAddToDashboardModalOpen && addToDashboardPanelData && (
+              <AddToDashboardModal
+                panelData={addToDashboardPanelData}
+                onClose={() => model.closeAddToDashboardModal()}
+              />
+            )}
+          </GitHubContextProvider>
+        </FunctionVersionProvider>
+      </DataSourceUidProvider>
     );
   }
 }

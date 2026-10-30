@@ -1,5 +1,4 @@
 import { create } from '@bufbuild/protobuf';
-import { ApiClient } from '@shared/infrastructure/http/ApiClient';
 import {
   ListRecordingRulesResponse,
   MetricType,
@@ -9,6 +8,7 @@ import {
   UpsertRecordingRuleRequest,
 } from '@shared/pyroscope-api/settings/v1/recording_rules_pb';
 import { RecordingRuleViewModel } from '@shared/types/RecordingRuleViewModel';
+import { DataSourceProxyClient } from 'src/pages/ProfilesExplorerView/infrastructure/series/http/DataSourceProxyClient';
 
 function mapRuleToRecordingRuleViewModel(rule: RecordingRule): RecordingRuleViewModel {
   let serviceName = '';
@@ -33,7 +33,7 @@ function mapRuleToRecordingRuleViewModel(rule: RecordingRule): RecordingRuleView
   };
 }
 
-class RecordingRulesApiClient extends ApiClient {
+export class RecordingRulesApiClient extends DataSourceProxyClient {
   async get(): Promise<RecordingRuleViewModel[]> {
     return super
       .fetch('/settings.v1.RecordingRulesService/ListRecordingRules', {
@@ -89,5 +89,3 @@ class RecordingRulesApiClient extends ApiClient {
       .then((response) => response.json());
   }
 }
-
-export const recordingRulesApiClient = new RecordingRulesApiClient();

@@ -1,18 +1,8 @@
 import { css, cx } from '@emotion/css';
 import { GrafanaTheme2 } from '@grafana/data';
 import { t } from '@grafana/i18n';
-import { useChromeHeaderHeight, usePluginComponent } from '@grafana/runtime';
-import {
-  ButtonGroup,
-  ClipboardButton,
-  Dropdown,
-  ErrorBoundary,
-  Field,
-  Icon,
-  Menu,
-  ToolbarButton,
-  useStyles2,
-} from '@grafana/ui';
+import { useChromeHeaderHeight } from '@grafana/runtime';
+import { ButtonGroup, ClipboardButton, Dropdown, Field, Icon, Menu, ToolbarButton, useStyles2 } from '@grafana/ui';
 import { SaveSearchButton } from '@shared/components/SavedSearches/SaveSearchButton';
 import { displayError } from '@shared/domain/displayStatus';
 import { reportInteraction } from '@shared/domain/reportInteraction';
@@ -61,17 +51,8 @@ export function PluginHeaderToolbar(props: PluginHeaderToolbarProps) {
     refreshPickerControl,
     sceneVariables,
     gridControls,
-    serviceName,
     extraControls,
   } = data;
-
-  type InsightsLauncherProps = {
-    dataSourceUid: string;
-    serviceName?: string;
-  };
-  const { component: InsightsLauncher } = usePluginComponent<InsightsLauncherProps>(
-    'grafana-o11yinsights-app/insights-launcher/v1'
-  );
 
   const metricsFromProfilesMenu = (
     <Menu>
@@ -100,16 +81,6 @@ export function PluginHeaderToolbar(props: PluginHeaderToolbarProps) {
         </div>
 
         <div className={styles.appControlsRight}>
-          {InsightsLauncher && (
-            <ErrorBoundary>
-              {({ error }) =>
-                error ? undefined : (
-                  <InsightsLauncher dataSourceUid={dataSourceVariable.getValueText()} serviceName={serviceName} />
-                )
-              }
-            </ErrorBoundary>
-          )}
-
           {!props.isEmbedded && <SaveSearchButton sceneRef={props.model} />}
           {!props.isEmbedded && props.loadSearchScene && (
             <props.loadSearchScene.Component model={props.loadSearchScene} />
@@ -228,117 +199,117 @@ const getStyles = (
 
   return {
     header: css`
-    background-color: ${headerBackground};
-    position: sticky;
-    top: ${isEmbedded ? 0 : chromeHeaderHeight}px;
-    z-index: 1;
-    padding-bottom: ${theme.spacing(2)};
-    padding-left: ${isEmbedded ? theme.spacing(2) : 0};
-    padding-right: ${isEmbedded ? theme.spacing(2) : 0};
-  `,
-  appControls: css`
-    display: flex;
-    padding: ${theme.spacing(1)} 0;
-    justify-content: space-between;
-    gap: ${theme.spacing(2)};
-    flex-flow: wrap;
-  `,
-  appControlsLeft: css`
-    display: flex;
-    gap: ${theme.spacing(1)};
-  `,
-  appControlsRight: css`
-    display: flex;
-    align-items: center;
-    gap: ${theme.spacing(1)};
-
-    /* TimeRangePicker defaults to right:0; open into the page so the docked nav does not clip it */
-    [data-testid='data-testid TimePicker Overlay Content'] > section {
-      right: auto;
-      left: 0;
-    }
-  `,
-  toolbarClipboardButton: css`
-    && {
-      display: inline-flex;
+      background-color: ${headerBackground};
+      position: sticky;
+      top: ${isEmbedded ? 0 : chromeHeaderHeight}px;
+      z-index: 1;
+      padding-bottom: ${theme.spacing(2)};
+      padding-left: ${isEmbedded ? theme.spacing(2) : 0};
+      padding-right: ${isEmbedded ? theme.spacing(2) : 0};
+    `,
+    appControls: css`
+      display: flex;
+      padding: ${theme.spacing(1)} 0;
+      justify-content: space-between;
+      gap: ${theme.spacing(2)};
+      flex-flow: wrap;
+    `,
+    appControlsLeft: css`
+      display: flex;
+      gap: ${theme.spacing(1)};
+    `,
+    appControlsRight: css`
+      display: flex;
       align-items: center;
-      justify-content: center;
-      gap: 0;
-      padding: 0 ${theme.spacing(1)} !important;
-      height: auto !important;
-      min-height: unset;
-      min-width: unset;
-      border: none !important;
-      border-radius: 0 !important;
-      box-shadow: none !important;
-      line-height: ${theme.components.height.md * theme.spacing.gridSize - 2}px;
-      font-weight: ${theme.typography.fontWeightMedium};
-      color: ${theme.colors.text.primary};
-      background: ${theme.colors.secondary.main};
+      gap: ${theme.spacing(1)};
 
-      &:hover:not(:disabled),
-      &:focus:not(:disabled),
-      &:focus-visible:not(:disabled) {
-        color: ${theme.colors.text.primary};
-        background: ${theme.colors.secondary.shade};
+      /* TimeRangePicker defaults to right:0; open into the page so the docked nav does not clip it */
+      [data-testid='data-testid TimePicker Overlay Content'] > section {
+        right: auto;
+        left: 0;
+      }
+    `,
+    toolbarClipboardButton: css`
+      && {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0;
+        padding: 0 ${theme.spacing(1)} !important;
+        height: auto !important;
+        min-height: unset;
+        min-width: unset;
         border: none !important;
+        border-radius: 0 !important;
         box-shadow: none !important;
+        line-height: ${theme.components.height.md * theme.spacing.gridSize - 2}px;
+        font-weight: ${theme.typography.fontWeightMedium};
+        color: ${theme.colors.text.primary};
+        background: ${theme.colors.secondary.main};
+
+        &:hover:not(:disabled),
+        &:focus:not(:disabled),
+        &:focus-visible:not(:disabled) {
+          color: ${theme.colors.text.primary};
+          background: ${theme.colors.secondary.shade};
+          border: none !important;
+          box-shadow: none !important;
+        }
+
+        [class*='icon'] {
+          margin: 0 !important;
+        }
+      }
+    `,
+    sceneControls: css`
+      display: flex;
+      flex-wrap: wrap;
+      gap: ${theme.spacing(1)};
+      padding: 0;
+      margin-top: 20px;
+    `,
+    sceneVariable: css`
+      display: flex;
+      margin-bottom: 0;
+
+      & #dataSource {
+        width: ${theme.spacing(32)};
       }
 
-      [class*='icon'] {
-        margin: 0 !important;
+      &.filters {
+        flex: 1 1 0;
       }
-    }
-  `,
-  sceneControls: css`
-    display: flex;
-    flex-wrap: wrap;
-    gap: ${theme.spacing(1)};
-    padding: 0;
-    margin-top: 20px;
-  `,
-  sceneVariable: css`
-    display: flex;
-    margin-bottom: 0;
 
-    & #dataSource {
-      width: ${theme.spacing(32)};
-    }
+      &.filtersAllServices {
+        // Set to 2 to add priority over quick-filter.
+        flex: 2 1 0;
+      }
 
-    &.filters {
-      flex: 1 1 0;
-    }
+      &.compare-presets {
+        margin-left: auto;
+        text-align: right;
+      }
+    `,
+    sceneVariableLabel: css`
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 15px;
+      height: 15px;
+      margin-bottom: 4px;
+      color: ${theme.colors.text.primary};
+      max-width: 480px;
+    `,
+    icon: css`
+      display: inline-block;
+      margin-right: 4px;
+    `,
+    gridControl: css`
+      margin-bottom: 0;
 
-    &.filtersAllServices {
-      // Set to 2 to add priority over quick-filter.
-      flex: 2 1 0;
-    }
-
-    &.compare-presets {
-      margin-left: auto;
-      text-align: right;
-    }
-  `,
-  sceneVariableLabel: css`
-    font-size: 12px;
-    font-weight: 500;
-    line-height: 15px;
-    height: 15px;
-    margin-bottom: 4px;
-    color: ${theme.colors.text.primary};
-    max-width: 480px;
-  `,
-  icon: css`
-    display: inline-block;
-    margin-right: 4px;
-  `,
-  gridControl: css`
-    margin-bottom: 0;
-
-    &#quick-filter {
-      flex: 1 1 0;
-      min-width: 112px;
-    }
-  `,
+      &#quick-filter {
+        flex: 1 1 0;
+        min-width: 112px;
+      }
+    `,
   };
 };

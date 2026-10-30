@@ -4,6 +4,7 @@ import { t, Trans } from '@grafana/i18n';
 import { SceneComponentProps, sceneGraph, SceneObjectBase, SceneObjectState } from '@grafana/scenes';
 import { ClipboardButton, IconButton, InlineLabel, TextLink, Tooltip, useStyles2 } from '@grafana/ui';
 import { displayError } from '@shared/domain/displayStatus';
+import { useDataSourceUid } from '@shared/infrastructure/datasource/DataSourceUidContext';
 import { userStorage } from '@shared/infrastructure/userStorage';
 import { DomainHookReturnValue } from '@shared/types/DomainHookReturnValue';
 import { InlineBanner } from '@shared/ui/InlineBanner';
@@ -39,8 +40,7 @@ export class SceneFunctionDetailsPanel extends SceneObjectBase<SceneFunctionDeta
   }
 
   useSceneFunctionDetailsPanel = (stackTrace: StackTrace, timeRange: TimeRange): DomainHookReturnValue => {
-    const dataSourceUid = sceneGraph.findByKeyAndType(this, 'dataSource', ProfilesDataSourceVariable).useState()
-      .value as string;
+    const dataSourceUid = useDataSourceUid();
     const dataSourceName = sceneGraph.findByKeyAndType(this, 'dataSource', ProfilesDataSourceVariable).useState()
       .text as string;
     const serviceName = getSceneVariableValue(this, 'serviceName');
@@ -285,7 +285,7 @@ export class SceneFunctionDetailsPanel extends SceneObjectBase<SceneFunctionDeta
             </div>
           </div>
 
-          <CodeContainer dataSourceUid={data.dataSourceUid} functionDetails={data.functionDetails} />
+          <CodeContainer functionDetails={data.functionDetails} />
         </div>
       </Panel>
     );

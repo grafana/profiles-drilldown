@@ -1,4 +1,5 @@
 import { displayError } from '@shared/domain/displayStatus';
+import { useDataSourceUid } from '@shared/infrastructure/datasource/DataSourceUidContext';
 import React, { useCallback, useEffect, useState } from 'react';
 import { DataSourceProxyClientBuilder } from 'src/pages/ProfilesExplorerView/infrastructure/series/http/DataSourceProxyClientBuilder';
 
@@ -11,7 +12,6 @@ import { DEFAULT_GITHUB_CONTEXT, GitHubContext } from './GitHubContext';
 import { PrivateVcsClient } from './infrastructure/PrivateVcsClient';
 
 type GitHubContextProviderProps = {
-  dataSourceUid: string;
   children: React.ReactNode;
 };
 
@@ -20,7 +20,8 @@ export const nonce = generateNonce();
 // Keep the data source UID in session storage to reuse it if the page is refreshed
 const LOCAL_STORAGE_GITHUB_INTEGRATION_DATASOURCE_UID = `grafana-pyroscope-app.gitHubIntegration.dataSourceUid`;
 
-export function GitHubContextProvider({ dataSourceUid, children }: GitHubContextProviderProps) {
+export function GitHubContextProvider({ children }: GitHubContextProviderProps) {
+  const dataSourceUid = useDataSourceUid();
   const vcsClient = DataSourceProxyClientBuilder.build(dataSourceUid, VcsClient);
   const privateVcsClient = DataSourceProxyClientBuilder.build(dataSourceUid, PrivateVcsClient);
 

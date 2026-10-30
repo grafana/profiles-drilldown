@@ -9,6 +9,7 @@
     "noUnusedParameters": false,
     "jsx": "react-jsx",
     "esModuleInterop": true,
+    "moduleResolution": "bundler",
     "paths": {
       "@shared/*": ["./src/shared/*"]
     }

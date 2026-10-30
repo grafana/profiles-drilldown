@@ -18,7 +18,6 @@ import { GroupByVariable } from '../../domain/variables/GroupByVariable/GroupByV
 import { computeRoundedTimeRange } from '../../helpers/computeRoundedTimeRange';
 import { PYROSCOPE_LABELS_DATA_SOURCE } from '../pyroscope-data-sources';
 import { safeInterpolate } from '../series/helpers/safeInterpolate';
-import { LabelsApiClient } from './http/LabelsApiClient';
 
 const MAX_CONCURRENT_LABEL_VALUES_REQUESTS = 20;
 const limit = pLimit(MAX_CONCURRENT_LABEL_VALUES_REQUESTS);
@@ -76,10 +75,8 @@ export class LabelsDataSource extends RuntimeDataSource {
   }
 
   async fetchLabels(dataSourceUid: string, query: string, from: number, to: number, variableName?: string) {
-    labelsRepository.setApiClient(new LabelsApiClient({ dataSourceUid }));
-
     try {
-      return await labelsRepository.listLabels({ query, from, to });
+      return await labelsRepository.listLabels({ dataSourceUid, query, from, to });
     } catch (error) {
       logger.error(error as Error, {
         info: 'Error while loading Pyroscope label names!',
@@ -91,7 +88,7 @@ export class LabelsDataSource extends RuntimeDataSource {
   }
 
   async fetchLabelValues(
-    index: number,
+    dataSourceUid: string,
     query: string,
     from: number,
     to: number,
@@ -101,7 +98,7 @@ export class LabelsDataSource extends RuntimeDataSource {
     let values;
 
     try {
-      values = await labelsRepository.listLabelValues({ query, from, to, label: labelName });
+      values = await labelsRepository.listLabelValues({ dataSourceUid, query, from, to, label: labelName });
     } catch (error) {
       logger.error(error as Error, {
         info: 'Error while loading Pyroscope label values!',
@@ -150,8 +147,8 @@ export class LabelsDataSource extends RuntimeDataSource {
     const labelsWithValuesAndCount = await Promise.all(
       labels
         .filter(({ value }) => !isPrivateLabel(value))
-        .map(({ value }, index) =>
-          limit(() => this.fetchLabelValues(index, query, from, to, value, options.variable?.name))
+        .map(({ value }) =>
+          limit(() => this.fetchLabelValues(dataSourceUid, query, from, to, value, options.variable?.name))
         )
     );
 

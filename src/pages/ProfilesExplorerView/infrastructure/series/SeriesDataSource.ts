@@ -9,7 +9,7 @@ import {
 } from '@grafana/data';
 import { t } from '@grafana/i18n';
 import { RuntimeDataSource } from '@grafana/scenes';
-import { ApiClient } from '@shared/infrastructure/http/ApiClient';
+import { getSelectedDefaultDataSource } from '@shared/infrastructure/datasource/useSelectDefaultDataSourceUid';
 import { logger } from '@shared/infrastructure/tracking/logger';
 
 import { ProfileMetricVariable } from '../../domain/variables/ProfileMetricVariable';
@@ -18,8 +18,6 @@ import { PYROSCOPE_SERIES_DATA_SOURCE } from '../pyroscope-data-sources';
 import { formatSeriesToProfileMetrics } from './formatSeriesToProfileMetrics';
 import { formatSeriesToServices } from './formatSeriesToServices';
 import { safeInterpolate } from './helpers/safeInterpolate';
-import { DataSourceProxyClientBuilder } from './http/DataSourceProxyClientBuilder';
-import { SeriesApiClient } from './http/SeriesApiClient';
 import { seriesRepository } from './http/seriesRepository';
 
 export class SeriesDataSource extends RuntimeDataSource {
@@ -28,10 +26,8 @@ export class SeriesDataSource extends RuntimeDataSource {
   }
 
   async fetchSeries(dataSourceUid: string, timeRange: TimeRange, variableName?: string, matchers?: string[]) {
-    seriesRepository.setApiClient(DataSourceProxyClientBuilder.build(dataSourceUid, SeriesApiClient));
-
     try {
-      return await seriesRepository.list({ timeRange, matchers });
+      return await seriesRepository.list({ dataSourceUid, timeRange, matchers });
     } catch (error) {
       logger.error(error as Error, {
         info: 'Error while loading Pyroscope series!',
@@ -72,7 +68,7 @@ export class SeriesDataSource extends RuntimeDataSource {
 
     // Fallback to default datasource if interpolation not ready yet
     if (!dataSourceUid) {
-      dataSourceUid = ApiClient.selectDefaultDataSource().uid as string;
+      dataSourceUid = (await getSelectedDefaultDataSource())?.uid ?? '';
     }
 
     const pyroscopeSeries = await this.fetchSeries(dataSourceUid, options.range as TimeRange, options.variable?.name, [

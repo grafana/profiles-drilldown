@@ -2,8 +2,7 @@ import { t } from '@grafana/i18n';
 import { generateUUID } from '@shared/domain/generateUUID';
 import { assign } from 'xstate';
 
-import { LabelsApiClient } from '../../../../pages/ProfilesExplorerView/infrastructure/labels/http/LabelsApiClient';
-import { labelsRepository } from '../../../infrastructure/labels/labelsRepository';
+import type { QueryBuilderLabelsRepository } from '../infrastructure/QueryBuilderLabelsRepository';
 import { areFiltersEqual } from './helpers/areFiltersEqual';
 import { buildIsEmptyFilter } from './helpers/buildIsEmptyFilter';
 import { filtersToQuery } from './helpers/filtersToQuery';
@@ -35,9 +34,12 @@ function updateFiltersAndQuery(newFilters: Filters, context: QueryBuilderContext
   };
 }
 
-export const actions: any = {
-  cancelAllLoad: () => {
-    labelsRepository.cancel('Discarded by user');
+export const createActions = ({ labelsRepository }: { labelsRepository: QueryBuilderLabelsRepository }): any => ({
+  cancelAllLoad: (context: QueryBuilderContext) => {
+    labelsRepository.cancel({
+      dataSourceUid: context.inputParams.dataSourceUid,
+      reason: 'Discarded by user',
+    });
   },
   // FILTER ATTRIBUTES
   setFilterAttribute: assign((context: QueryBuilderContext, event: SelectEvent) => {
@@ -236,12 +238,6 @@ export const actions: any = {
   // MISC
   setEdition: assign({ edition: (context, event: EditEvent) => event.data }),
   changeInputParams: assign((context: QueryBuilderContext, event: ChangeInputParamsEvent) => {
-    // TODO: remove this condition after migrating the legacy comparison pages to Scenes
-    // because dataSourceUid will always be provided
-    if (event.data.dataSourceUid) {
-      labelsRepository.setApiClient(new LabelsApiClient({ dataSourceUid: event.data.dataSourceUid }));
-    }
-
     return {
       inputParams: event.data,
       query: event.data.query,
@@ -254,4 +250,4 @@ export const actions: any = {
     ...context,
     ...updateFiltersAndQuery(context.filters, context),
   })),
-};
+});

@@ -1,6 +1,7 @@
 import { sceneGraph } from '@grafana/scenes';
+import { DataSourceUidProvider } from '@shared/infrastructure/datasource/DataSourceUidContext';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 import { SceneCreateRecordingRuleModal } from './SceneCreateRecordingRuleModal';
 
@@ -18,9 +19,14 @@ jest.mock('@shared/domain/reportInteraction', () => ({
   reportInteraction: jest.fn(),
 }));
 
+const mockListLabels = jest.fn();
 jest.mock('@shared/infrastructure/labels/labelsRepository', () => ({
-  labelsRepository: { listLabels: () => Promise.resolve([{ value: 'service_repository' }]) },
+  labelsRepository: { listLabels: (options: unknown) => mockListLabels(options) },
 }));
+
+const wrapper = ({ children }: { children: ReactNode }) => (
+  <DataSourceUidProvider uid="pyroscope-abc">{children}</DataSourceUidProvider>
+);
 
 jest.mock('@grafana/i18n', () => ({
   ...jest.requireActual('@grafana/i18n'),
@@ -59,6 +65,7 @@ function findByKeyAndTypeMock(_obj: unknown, key: string) {
 describe('SceneCreateRecordingRuleModal', () => {
   beforeEach(() => {
     mockSave.mockReset();
+    mockListLabels.mockResolvedValue([{ value: 'service_repository' }]);
     jest.spyOn(sceneGraph, 'findByKeyAndType').mockImplementation(findByKeyAndTypeMock as any);
     jest.spyOn(sceneGraph, 'getTimeRange').mockReturnValue({
       state: { value: { from: { unix: () => 0 }, to: { unix: () => 1 } } },
@@ -75,7 +82,8 @@ describe('SceneCreateRecordingRuleModal', () => {
         onDismiss={() => {}}
         onCreated={() => {}}
         functionName="runtime.netpoll"
-      />
+      />,
+      { wrapper }
     );
 
     fireEvent.input(screen.getByLabelText('Metric name'), { target: { value: 'test' } });
@@ -91,6 +99,22 @@ describe('SceneCreateRecordingRuleModal', () => {
         functionName: 'runtime.netpoll',
         matchers: ['{service_repository="https://github.com/grafana/pyroscope"}'],
       })
+    );
+  });
+
+  test('should load labels from the context datasource', async () => {
+    render(
+      <SceneCreateRecordingRuleModal.Component
+        model={new SceneCreateRecordingRuleModal()}
+        isModalOpen={true}
+        onDismiss={() => {}}
+        onCreated={() => {}}
+      />,
+      { wrapper }
+    );
+
+    await waitFor(() =>
+      expect(mockListLabels).toHaveBeenCalledWith(expect.objectContaining({ dataSourceUid: 'pyroscope-abc' }))
     );
   });
 });
