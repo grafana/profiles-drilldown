@@ -1,11 +1,12 @@
-import { ApiClient } from '../http/ApiClient';
+import { DataSourceProxyClient } from 'src/pages/ProfilesExplorerView/infrastructure/series/http/DataSourceProxyClient';
+
 import { PluginSettings } from './PluginSettings';
 
 type ApiResponse = {
   settings: Array<{ name: string; value: string }>;
 };
 
-class SettingsApiClient extends ApiClient {
+export class SettingsApiClient extends DataSourceProxyClient {
   static PLUGIN_SETTING_NAME = 'pluginSettings';
 
   async get(): Promise<PluginSettings> {
@@ -37,7 +38,3 @@ class SettingsApiClient extends ApiClient {
       .then((response) => response.json());
   }
 }
-
-export const useSettingsApiClient = () => {
-  return new SettingsApiClient();
-};

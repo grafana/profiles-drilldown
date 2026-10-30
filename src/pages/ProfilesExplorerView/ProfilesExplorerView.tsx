@@ -1,11 +1,13 @@
 import { UrlSyncContextProvider } from '@grafana/scenes';
+import { useDataSourceUid } from '@shared/infrastructure/datasource/DataSourceUidContext';
 import { useReportPageInitialized } from '@shared/infrastructure/tracking/useReportPageInitialized';
-import React, { useMemo } from 'react';
+import React, { useState } from 'react';
 
 import { SceneProfilesExplorer } from './components/SceneProfilesExplorer/SceneProfilesExplorer';
 
 export default function ProfilesExplorerView() {
-  const sceneProfilesExplorer = useMemo(() => new SceneProfilesExplorer({}), []);
+  const initialDS = useDataSourceUid();
+  const [sceneProfilesExplorer] = useState(() => new SceneProfilesExplorer({ initialDS }));
   useReportPageInitialized('explore');
 
   return (

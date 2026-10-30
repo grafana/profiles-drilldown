@@ -1,8 +1,4 @@
-import {
-  createOpenFeatureLocalStorageProvider,
-  createOpenFeatureOFREPWebProvider,
-  logWarning,
-} from '@grafana/runtime';
+import { createOpenFeatureLocalStorageProvider, createOpenFeatureOFREPWebProvider, logWarning } from '@grafana/runtime';
 import { OpenFeatureProvider } from '@openfeature/react-sdk';
 import { MultiProvider, OpenFeature } from '@openfeature/web-sdk';
 import React, { useEffect } from 'react';

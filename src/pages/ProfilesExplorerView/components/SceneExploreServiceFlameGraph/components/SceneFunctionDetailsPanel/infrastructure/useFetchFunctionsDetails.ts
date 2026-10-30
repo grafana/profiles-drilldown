@@ -67,6 +67,7 @@ export function useFetchFunctionsDetails({
     // eslint-disable-next-line @tanstack/query/exhaustive-deps
     queryKey: [
       'function-details',
+      dataSourceUid,
       profileMetricId,
       labelsSelector,
       start,

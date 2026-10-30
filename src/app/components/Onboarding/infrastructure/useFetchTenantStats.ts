@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
+import { DataSourceProxyClientBuilder } from 'src/pages/ProfilesExplorerView/infrastructure/series/http/DataSourceProxyClientBuilder';
 
-import { Stats, statsApiClient } from './statsApiClient';
+import { Stats, StatsApiClient } from './statsApiClient';
 
 type FetchResponse = {
   isFetching: boolean;
@@ -9,11 +10,18 @@ type FetchResponse = {
   refetch: () => void;
 };
 
-export function useFetchTenantStats({ enabled }: { enabled: boolean }): FetchResponse {
+interface FetchParams {
+  enabled: boolean;
+  dataSourceUid: string;
+}
+
+export function useFetchTenantStats({ enabled, dataSourceUid }: FetchParams): FetchResponse {
+  const statsApiClient = DataSourceProxyClientBuilder.build(dataSourceUid, StatsApiClient);
+
   const { isFetching, error, data, refetch } = useQuery({
-    enabled,
+    enabled: enabled && Boolean(dataSourceUid),
     placeholderData: () => ({ hasIngestedData: true, oldestProfileTime: 0, newestProfileTime: 0 }),
-    queryKey: ['tenant-stats'],
+    queryKey: ['tenant-stats', dataSourceUid],
     queryFn: () => {
       statsApiClient.abort();
 

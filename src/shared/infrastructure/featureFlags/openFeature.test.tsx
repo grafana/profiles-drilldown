@@ -1,6 +1,6 @@
 import { createOpenFeatureLocalStorageProvider, createOpenFeatureOFREPWebProvider, logWarning } from '@grafana/runtime';
 import { OpenFeatureTestProvider } from '@openfeature/react-sdk';
-import { OpenFeature, TypedInMemoryProvider, type Provider } from '@openfeature/web-sdk';
+import { OpenFeature, type Provider, TypedInMemoryProvider } from '@openfeature/web-sdk';
 import { render, renderHook, screen, waitFor } from '@testing-library/react';
 import React from 'react';
 

@@ -7,6 +7,7 @@ import { FlameGraph } from '@shared/components/FlameGraph/FlameGraph';
 import { reportInteraction } from '@shared/domain/reportInteraction';
 import { useMaxNodesFromUrl } from '@shared/domain/url-params/useMaxNodesFromUrl';
 import { useToggleSidePanel } from '@shared/domain/useToggleSidePanel';
+import { useDataSourceUid } from '@shared/infrastructure/datasource/DataSourceUidContext';
 import { getProfileMetric, ProfileMetricId } from '@shared/infrastructure/profile-metrics/getProfileMetric';
 import { DEFAULT_SETTINGS } from '@shared/infrastructure/settings/PluginSettings';
 import { useFetchPluginSettings } from '@shared/infrastructure/settings/useFetchPluginSettings';
@@ -22,7 +23,6 @@ import { copyGcxCommandToClipboard } from '../../../../domain/copyGcxCommandToCl
 import { getExportFilename } from '../../../../domain/getExportFilename';
 import { useBuildPyroscopeQuery } from '../../../../domain/useBuildPyroscopeQuery';
 import { useGrafanaAssistant } from '../../../../domain/useGrafanaAssistant';
-import { ProfilesDataSourceVariable } from '../../../../domain/variables/ProfilesDataSourceVariable';
 import { getSceneVariableValue } from '../../../../helpers/getSceneVariableValue';
 import { AnalyzeDiffFlameGraph } from '../../../AnalyzeDiffFlameGraph';
 import { AIButton } from '../../../SceneAiPanel/components/AiButton/AIButton';
@@ -72,8 +72,7 @@ export class SceneDiffFlameGraph extends SceneObjectBase<SceneDiffFlameGraphStat
     const { settings } = useFetchPluginSettings();
     const [maxNodes] = useMaxNodesFromUrl();
 
-    const dataSourceUid = sceneGraph.findByKeyAndType(this, 'dataSource', ProfilesDataSourceVariable).useState()
-      .value as string;
+    const dataSourceUid = useDataSourceUid();
 
     const isDiffQueryEnabled = Boolean(
       baselineQuery &&
@@ -189,8 +188,7 @@ export class SceneDiffFlameGraph extends SceneObjectBase<SceneDiffFlameGraphStat
       [data.isLoading, data.title, styles.spinner]
     );
 
-    const dataSourceUid = sceneGraph.findByKeyAndType(model, 'dataSource', ProfilesDataSourceVariable).useState()
-      .value as string;
+    const dataSourceUid = useDataSourceUid();
     const profileMetricId = getSceneVariableValue(model, 'profileMetricId');
 
     const aiActionButton = hideAIButton ? (

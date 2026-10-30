@@ -1,12 +1,13 @@
 import { TimeRange } from '@grafana/data';
 import { t } from '@grafana/i18n';
-import { SceneComponentProps, sceneGraph, SceneObjectBase, SceneObjectState } from '@grafana/scenes';
+import { SceneComponentProps, SceneObjectBase, SceneObjectState } from '@grafana/scenes';
 import { Button, Dropdown, Menu, Tooltip } from '@grafana/ui';
 import { displayError } from '@shared/domain/displayStatus';
 import { reportInteraction } from '@shared/domain/reportInteraction';
 import { saveProfileJsonToFile } from '@shared/domain/saveProfileJsonToFile';
 import { useMaxNodesFromUrl } from '@shared/domain/url-params/useMaxNodesFromUrl';
 import { useIsFlameGraphCanvasPresent } from '@shared/domain/useIsFlameGraphCanvasPresent';
+import { useDataSourceUid } from '@shared/infrastructure/datasource/DataSourceUidContext';
 import { DEFAULT_SETTINGS } from '@shared/infrastructure/settings/PluginSettings';
 import { useFetchPluginSettings } from '@shared/infrastructure/settings/useFetchPluginSettings';
 import { DomainHookReturnValue } from '@shared/types/DomainHookReturnValue';
@@ -18,7 +19,6 @@ import React from 'react';
 import { buildGcxPprofCommand } from '../../../../domain/buildGcxPprofCommand';
 import { copyGcxCommandToClipboard } from '../../../../domain/copyGcxCommandToClipboard';
 import { getExportFilename } from '../../../../domain/getExportFilename';
-import { ProfilesDataSourceVariable } from '../../../../domain/variables/ProfilesDataSourceVariable';
 import { ProfileApiClient } from '../../../../infrastructure/profiles/ProfileApiClient';
 import { DataSourceProxyClientBuilder } from '../../../../infrastructure/series/http/DataSourceProxyClientBuilder';
 import { PprofApiClient } from '../../infrastructure/PprofApiClient';
@@ -95,8 +95,7 @@ export class SceneExportMenu extends SceneObjectBase<SceneExportMenuState> {
   }
 
   useSceneExportMenu = ({ query, timeRange, profileIdSelector, spanSelector }: ExtraProps): DomainHookReturnValue => {
-    const dataSourceUid = sceneGraph.findByKeyAndType(this, 'dataSource', ProfilesDataSourceVariable).useState()
-      .value as string;
+    const dataSourceUid = useDataSourceUid();
 
     const [maxNodes] = useMaxNodesFromUrl();
     const { settings } = useFetchPluginSettings();
