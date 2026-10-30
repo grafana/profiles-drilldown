@@ -32,7 +32,7 @@ jest.mock('@shared/infrastructure/featureFlags/featureFlags', () => ({
 
 describe('SceneProfilesExplorer', () => {
   it('syncs span heatmap URL state without rebuilding the flame graph scene', () => {
-    const explorer = new SceneProfilesExplorer({});
+    const explorer = new SceneProfilesExplorer({ initialDS: 'test-ds-uid' });
     const buildBodyScene = explorer.buildBodyScene(ExplorationType.FLAME_GRAPH);
     explorer.setState({ explorationType: ExplorationType.FLAME_GRAPH, body: buildBodyScene });
 

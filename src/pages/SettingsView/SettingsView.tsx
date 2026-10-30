@@ -3,7 +3,7 @@ import { GrafanaTheme2 } from '@grafana/data';
 import { t, Trans } from '@grafana/i18n';
 import { Button, Space, Tab, TabsBar, useStyles2 } from '@grafana/ui';
 import { BackButton } from '@shared/components/Common/BackButton';
-import { ApiClient } from '@shared/infrastructure/http/ApiClient';
+import { useDataSourceUid } from '@shared/infrastructure/datasource/DataSourceUidContext';
 import { useReportPageInitialized } from '@shared/infrastructure/tracking/useReportPageInitialized';
 import { PageTitle } from '@shared/ui/PageTitle';
 import React from 'react';
@@ -20,6 +20,7 @@ interface ComponentWithMeta {
 export default function SettingsView() {
   const styles = useStyles2(getStyles);
   const { data, actions } = useSettingsView();
+  const datasourceUid = useDataSourceUid();
 
   useReportPageInitialized('settings');
 
@@ -49,9 +50,8 @@ export default function SettingsView() {
     },
   ];
 
-  const pyroscopeDataSource = ApiClient.selectDefaultDataSource();
   const pluginProps = {
-    datasourceUid: pyroscopeDataSource.uid,
+    datasourceUid,
     backButton: (
       <div className={styles.buttons}>
         <BackButton onClick={actions.goBack} />

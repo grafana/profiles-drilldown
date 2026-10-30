@@ -49,6 +49,7 @@
     "@grafana/flamegraph": "13.2.4",
     "@grafana/i18n": "13.2.3",
     "@grafana/llm": "1.0.9",
+    "@grafana/plugin-compat": "0.5.0",
     "@grafana/react-data-grid": "7.0.0-beta.58",
     "@grafana/runtime": "13.2.3",
     "@grafana/scenes": "7.4.0",

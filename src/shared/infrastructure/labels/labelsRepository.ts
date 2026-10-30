@@ -1,11 +1,13 @@
 import { MemoryCacheClient } from '@shared/infrastructure/MemoryCacheClient';
+import { CancelOptions, DataSourceRepository, RepositoryOptions } from '@shared/infrastructure/types';
+import { LabelsApiClient } from 'src/pages/ProfilesExplorerView/infrastructure/labels/http/LabelsApiClient';
+import { DataSourceProxyClientBuilder } from 'src/pages/ProfilesExplorerView/infrastructure/series/http/DataSourceProxyClientBuilder';
 
 import { Suggestions } from '../../components/QueryBuilder/domain/types';
 import { invariant } from '../../types/helpers/invariant';
-import { AbstractRepository } from '../AbstractRepository';
-import { LabelsApiClient } from './LabelsApiClient';
 
 type ListLabelsOptions = {
+  dataSourceUid: string;
   query: string;
   from: number;
   to: number;
@@ -15,8 +17,8 @@ type ListLabelValuesOptions = ListLabelsOptions & {
   label: string;
 };
 
-class LabelsRepository extends AbstractRepository<LabelsApiClient, MemoryCacheClient> {
-  cacheClient: MemoryCacheClient;
+export class LabelsRepository implements DataSourceRepository<LabelsApiClient> {
+  private readonly cacheClient: MemoryCacheClient;
 
   static isNotMetaLabelOrServiceName = (label: string) => !/^(__.+__|service_name)$/.test(label);
 
@@ -40,10 +42,20 @@ class LabelsRepository extends AbstractRepository<LabelsApiClient, MemoryCacheCl
     return labelValues.map((label) => ({ value: label, label }));
   }
 
-  constructor(options: { apiClient: LabelsApiClient; cacheClient: MemoryCacheClient }) {
-    super({ apiClient: options.apiClient });
-
+  constructor(options: RepositoryOptions) {
     this.cacheClient = options.cacheClient;
+  }
+
+  getCacheClient() {
+    return this.cacheClient;
+  }
+
+  getApiClient(dataSourceUid: string) {
+    return DataSourceProxyClientBuilder.build(dataSourceUid, LabelsApiClient);
+  }
+
+  cancel({ dataSourceUid, reason }: CancelOptions) {
+    this.getApiClient(dataSourceUid).abort(reason);
   }
 
   static assertParams(query: string, from: number, to: number) {
@@ -51,67 +63,66 @@ class LabelsRepository extends AbstractRepository<LabelsApiClient, MemoryCacheCl
     invariant(from > 0 && to > 0 && to > from, 'Invalid timerange!');
   }
 
-  async listLabels({ query, from, to }: ListLabelsOptions): Promise<Suggestions> {
+  async listLabels({ dataSourceUid, query, from, to }: ListLabelsOptions): Promise<Suggestions> {
     LabelsRepository.assertParams(query, from, to);
 
-    const cacheParams = [this.apiClient!.baseUrl, query, from, to];
+    const apiClient = this.getApiClient(dataSourceUid);
+    const cacheParams = [apiClient.baseUrl, query, from, to];
 
-    const labelsFromCacheP = this.cacheClient.get(cacheParams);
+    const labelsFromCacheP = this.getCacheClient().get(cacheParams);
     if (labelsFromCacheP) {
       const json = await labelsFromCacheP;
       const labels = LabelsRepository.parseLabelsResponse(json);
 
       if (!labels.length) {
-        this.cacheClient.delete(cacheParams);
+        this.getCacheClient().delete(cacheParams);
       }
 
       return labels;
     }
 
-    const fetchP = this.apiClient!.fetchLabels(query, from, to);
-    this.cacheClient.set(cacheParams, fetchP);
+    const fetchP = apiClient.fetchLabels(query, from, to);
+    this.getCacheClient().set(cacheParams, fetchP);
 
     try {
       const json = await fetchP;
       return LabelsRepository.parseLabelsResponse(json);
     } catch (error) {
-      this.cacheClient.delete(cacheParams);
+      this.getCacheClient().delete(cacheParams);
       throw error;
     }
   }
 
-  async listLabelValues({ label, query, from, to }: ListLabelValuesOptions): Promise<Suggestions> {
+  async listLabelValues({ dataSourceUid, label, query, from, to }: ListLabelValuesOptions): Promise<Suggestions> {
     LabelsRepository.assertParams(query, from, to);
     invariant(Boolean(label), 'Missing label value!');
 
-    const cacheParams = [this.apiClient!.baseUrl, label, query, from, to];
+    const apiClient = this.getApiClient(dataSourceUid);
+    const cacheParams = [apiClient.baseUrl, label, query, from, to];
 
-    const labelValuesFromCacheP = this.cacheClient.get(cacheParams);
+    const labelValuesFromCacheP = this.getCacheClient().get(cacheParams);
     if (labelValuesFromCacheP) {
       const json = await labelValuesFromCacheP;
       const labelValues = LabelsRepository.parseLabelsResponse(json);
 
       if (!labelValues.length) {
-        this.cacheClient.delete(cacheParams);
+        this.getCacheClient().delete(cacheParams);
       }
 
       return labelValues;
     }
 
-    const fetchP = this.apiClient!.fetchLabelValues(label, query, from, to);
-    this.cacheClient.set(cacheParams, fetchP);
+    const fetchP = apiClient.fetchLabelValues(label, query, from, to);
+    this.getCacheClient().set(cacheParams, fetchP);
 
     try {
       const json = await fetchP;
       return LabelsRepository.parseLabelValuesResponse(json);
     } catch (error) {
-      this.cacheClient.delete(cacheParams);
+      this.getCacheClient().delete(cacheParams);
       throw error;
     }
   }
 }
 
-export const labelsRepository = new LabelsRepository({
-  apiClient: new LabelsApiClient(),
-  cacheClient: new MemoryCacheClient(),
-});
+export const labelsRepository = new LabelsRepository({ cacheClient: new MemoryCacheClient() });
