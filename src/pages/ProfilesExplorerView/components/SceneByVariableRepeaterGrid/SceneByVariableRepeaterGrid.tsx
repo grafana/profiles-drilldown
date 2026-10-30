@@ -14,7 +14,7 @@ import {
 } from '@grafana/scenes';
 import { Spinner } from '@grafana/ui';
 import { noOp } from '@shared/domain/noOp';
-import { debounce, isEqual } from 'lodash';
+import { isEqual } from 'lodash';
 import React from 'react';
 
 import { EventTimeseriesDataReceived } from '../../domain/events/EventTimeseriesDataReceived';
@@ -150,7 +150,7 @@ export class SceneByVariableRepeaterGrid extends SceneObjectBase<SceneByVariable
       }
     };
 
-    return quickFilter.subscribeToState(debounce(onChangeState, SceneQuickFilter.DEBOUNCE_DELAY));
+    return quickFilter.subscribeToState(onChangeState);
   }
 
   subscribeToLayoutChange() {
