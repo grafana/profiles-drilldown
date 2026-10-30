@@ -216,7 +216,6 @@ export class SceneProfilesExplorer extends SceneObjectBase<SceneProfilesExplorer
     const clearKeyBindings = setupKeyboardShortcuts(this);
 
     if (!this.kgInitialized) {
-      this.kgInitialized = true;
       void ensureOpenFeaturePluginInitialized().then(async () => {
         if (!isActive) {
           return;
@@ -224,7 +223,11 @@ export class SceneProfilesExplorer extends SceneObjectBase<SceneProfilesExplorer
 
         if (getKgAnnotationsInPyroscopeFromOpenFeature()) {
           const kg = await getKgSceneProps('Service', 'serviceName');
-          if (kg && isActive) {
+          if (!isActive) {
+            return;
+          }
+
+          if (kg) {
             this.setState({
               $data: this.state.$data ?? kg.$data,
               $behaviors: [...(this.state.$behaviors ?? []), ...kg.behaviors],
@@ -232,6 +235,8 @@ export class SceneProfilesExplorer extends SceneObjectBase<SceneProfilesExplorer
             });
           }
         }
+
+        this.kgInitialized = true;
       });
     }
 
