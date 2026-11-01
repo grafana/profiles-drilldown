@@ -187,8 +187,8 @@ importers:
         specifier: 30.0.0
         version: 30.0.0
       '@types/lodash':
-        specifier: 4.17.25
-        version: 4.17.25
+        specifier: 4.17.27
+        version: 4.17.27
       '@types/node':
         specifier: 22.19.15
         version: 22.19.15
@@ -1532,6 +1532,7 @@ packages:
   '@opentelemetry/sdk-trace-base@2.7.1':
     resolution: {integrity: sha512-NAYIlsF8MPUsKqJMiDQJTMPOmlbawC1Iz/omMLygZ1C9am8fTKYjTaI+OZM+WTY3t3Glo0wnOg/6/pac6RGPPw==}
     engines: {node: ^18.19.0 || >=20.6.0}
+    deprecated: Use @opentelemetry/sdk-trace package
     peerDependencies:
       '@opentelemetry/api': '>=1.3.0 <1.10.0'
 
@@ -2258,8 +2259,8 @@ packages:
   '@types/json-schema@7.0.15':
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
 
-  '@types/lodash@4.17.25':
-    resolution: {integrity: sha512-+K1NIO8I+F9/wNulfVvu23QYd0Pe9/OCqRrim4NoYIf1VoEDL90Ve4ClzpyqBLc7NpGGWRvYNCKZ1BE/Jpf8dQ==}
+  '@types/lodash@4.17.27':
+    resolution: {integrity: sha512-VenMRv/eKNrspX9v3H4dbmjsrnCOYdYBG3kxXKk3dG6X+urBGcj2Prww3xw1U5K4FV/mE4h5GbWd0szEKf+9ew==}
 
   '@types/node@22.19.15':
     resolution: {integrity: sha512-F0R/h2+dsy5wJAUe3tAU6oqa2qbWY5TpNfL/RGmo1y38hiyO1w3x2jPtt76wmuaJI4DQnOBu21cNXQ2STIUUWg==}
@@ -7497,7 +7498,7 @@ snapshots:
       '@react-aria/overlays': 3.32.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@tanstack/react-virtual': 3.14.20(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@types/jquery': 3.5.33
-      '@types/lodash': 4.17.25
+      '@types/lodash': 4.17.27
       '@types/react-table': 7.7.20
       '@uiw/react-codemirror': 4.25.9(@babel/runtime@8.0.7)(@codemirror/autocomplete@6.20.3)(@codemirror/language@6.13.1)(@codemirror/lint@6.9.7)(@codemirror/search@6.7.2)(@codemirror/state@6.7.6)(@codemirror/theme-one-dark@6.1.3)(@codemirror/view@6.43.14)(codemirror@6.0.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       calculate-size: 1.1.1
@@ -7588,7 +7589,7 @@ snapshots:
       '@react-aria/overlays': 3.32.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@tanstack/react-virtual': 3.14.20(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@types/jquery': 3.5.33
-      '@types/lodash': 4.17.25
+      '@types/lodash': 4.17.27
       '@types/react-table': 7.7.20
       '@uiw/react-codemirror': 4.25.9(@babel/runtime@8.0.7)(@codemirror/autocomplete@6.20.3)(@codemirror/language@6.13.1)(@codemirror/lint@6.9.7)(@codemirror/search@6.7.2)(@codemirror/state@6.7.6)(@codemirror/theme-one-dark@6.1.3)(@codemirror/view@6.43.14)(codemirror@6.0.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       calculate-size: 1.1.1
@@ -8912,7 +8913,7 @@ snapshots:
 
   '@types/json-schema@7.0.15': {}
 
-  '@types/lodash@4.17.25': {}
+  '@types/lodash@4.17.27': {}
 
   '@types/node@22.19.15':
     dependencies:
