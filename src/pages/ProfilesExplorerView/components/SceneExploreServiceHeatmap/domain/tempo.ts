@@ -54,9 +54,11 @@ async function getAllTempoDataSourceOptions(): Promise<TempoDataSourceOption[]> 
     (s) => s !== undefined
   );
 
-  const defaultDs = await getDefaultDataSourceInstanceListItem(instances).catch((error) =>
-    logger.debug('Failed to get default data source instance', { error })
-  );
+  const defaultDs = await getDefaultDataSourceInstanceListItem(instances).catch((error) => {
+    logger.debug('Failed to get default data source instance', { error });
+    return undefined;
+  });
+
   const tempoDataSourceOptions = settings.map((s) => ({
     uid: s.uid,
     name: s.name,

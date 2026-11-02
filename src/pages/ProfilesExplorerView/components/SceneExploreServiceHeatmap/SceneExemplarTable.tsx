@@ -76,31 +76,35 @@ export class SceneExemplarTable extends SceneObjectBase<SceneExemplarTableState>
       return;
     }
 
-    const parentSub = parent.subscribeToState((newState, prevState) => {
-      if (newState.exemplarRows !== prevState.exemplarRows) {
-        this.handleNewExemplarRows(newState.exemplarRows);
-        return;
-      }
-
-      if (
-        newState.selectedSpanId !== prevState.selectedSpanId ||
-        newState.selectedTimestamp !== prevState.selectedTimestamp
-      ) {
-        this.setPage(0, true);
-      }
-    });
-
-    const dataSourceSub = sceneGraph
-      .findByKeyAndType(this, 'dataSource', ProfilesDataSourceVariable)
-      .subscribeToState((newState, prevState) => {
-        if (newState.value === prevState.value) {
+    this._subs.add(
+      parent.subscribeToState((newState, prevState) => {
+        if (newState.exemplarRows !== prevState.exemplarRows) {
+          this.handleNewExemplarRows(newState.exemplarRows);
           return;
         }
 
-        if (this.state.tempoDatasources.length) {
-          this.syncTempoDataSource(parent, this.state.tempoDatasources, true);
+        if (
+          newState.selectedSpanId !== prevState.selectedSpanId ||
+          newState.selectedTimestamp !== prevState.selectedTimestamp
+        ) {
+          this.setPage(0, true);
         }
-      });
+      })
+    );
+
+    this._subs.add(
+      sceneGraph
+        .findByKeyAndType(this, 'dataSource', ProfilesDataSourceVariable)
+        .subscribeToState((newState, prevState) => {
+          if (newState.value === prevState.value) {
+            return;
+          }
+
+          if (this.state.tempoDatasources.length) {
+            this.syncTempoDataSource(parent, this.state.tempoDatasources, true);
+          }
+        })
+    );
 
     this.handleNewExemplarRows(parent.state.exemplarRows);
 
@@ -116,8 +120,6 @@ export class SceneExemplarTable extends SceneObjectBase<SceneExemplarTableState>
 
     return () => {
       cancelled = true;
-      parentSub.unsubscribe();
-      dataSourceSub.unsubscribe();
     };
   }
 
