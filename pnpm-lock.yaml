@@ -34,7 +34,7 @@ importers:
         version: 11.10.6
       '@grafana/assistant':
         specifier: 0.1.34
-        version: 0.1.34(@emotion/css@11.10.6)(@grafana/data@13.2.3(eslint@9.39.5(jiti@2.7.0))(js-cookie@3.0.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2))(@grafana/runtime@13.2.3(@babel/core@7.29.7)(@babel/runtime@8.0.7)(@codemirror/lint@6.9.7)(@codemirror/search@6.7.2)(@codemirror/theme-one-dark@6.1.3)(@types/react@18.3.31)(codemirror@6.0.2)(eslint@9.39.5(jiti@2.7.0))(js-cookie@3.0.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2))(@grafana/schema@13.2.3)(@grafana/ui@13.2.3(@babel/core@7.29.7)(@babel/runtime@8.0.7)(@codemirror/lint@6.9.7)(@codemirror/search@6.7.2)(@codemirror/theme-one-dark@6.1.3)(@types/react@18.3.31)(codemirror@6.0.2)(eslint@9.39.5(jiti@2.7.0))(js-cookie@3.0.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2))(react@18.3.1)(rxjs@7.8.2)
+        version: 0.1.34(@emotion/css@11.10.6)(@grafana/data@13.2.3(eslint@9.39.5(jiti@2.7.0))(js-cookie@3.0.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2))(@grafana/runtime@13.2.3(@babel/runtime@8.0.7)(@codemirror/lint@6.9.7)(@codemirror/search@6.7.2)(@codemirror/theme-one-dark@6.1.3)(@types/react@18.3.31)(codemirror@6.0.2)(eslint@9.39.5(jiti@2.7.0))(js-cookie@3.0.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2))(@grafana/schema@13.2.3)(@grafana/ui@13.2.3(@babel/runtime@8.0.7)(@codemirror/lint@6.9.7)(@codemirror/search@6.7.2)(@codemirror/theme-one-dark@6.1.3)(@types/react@18.3.31)(codemirror@6.0.2)(eslint@9.39.5(jiti@2.7.0))(js-cookie@3.0.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2))(react@18.3.1)(rxjs@7.8.2)
       '@grafana/data':
         specifier: 13.2.3
         version: 13.2.3(eslint@9.39.5(jiti@2.7.0))(js-cookie@3.0.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2)
@@ -46,31 +46,31 @@ importers:
         version: 2.7.1
       '@grafana/flamegraph':
         specifier: 13.2.4
-        version: 13.2.4(1c527908ade6bc6747e9f8518f97839f)
+        version: 13.2.4(9831b16ae94c06de023fff579188eead)
       '@grafana/i18n':
         specifier: 13.2.3
         version: 13.2.3(eslint@9.39.5(jiti@2.7.0))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2)
       '@grafana/llm':
         specifier: 1.0.9
-        version: 1.0.9(@grafana/data@13.2.3(eslint@9.39.5(jiti@2.7.0))(js-cookie@3.0.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2))(@grafana/runtime@13.2.3(@babel/core@7.29.7)(@babel/runtime@8.0.7)(@codemirror/lint@6.9.7)(@codemirror/search@6.7.2)(@codemirror/theme-one-dark@6.1.3)(@types/react@18.3.31)(codemirror@6.0.2)(eslint@9.39.5(jiti@2.7.0))(js-cookie@3.0.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rxjs@7.8.2)(zod@4.6.7)
+        version: 1.0.9(@grafana/data@13.2.3(eslint@9.39.5(jiti@2.7.0))(js-cookie@3.0.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2))(@grafana/runtime@13.2.3(@babel/runtime@8.0.7)(@codemirror/lint@6.9.7)(@codemirror/search@6.7.2)(@codemirror/theme-one-dark@6.1.3)(@types/react@18.3.31)(codemirror@6.0.2)(eslint@9.39.5(jiti@2.7.0))(js-cookie@3.0.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rxjs@7.8.2)(zod@4.6.7)
       '@grafana/plugin-compat':
         specifier: 0.5.0
-        version: 0.5.0(@grafana/data@13.2.3(eslint@9.39.5(jiti@2.7.0))(js-cookie@3.0.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2))(@grafana/runtime@13.2.3(@babel/core@7.29.7)(@babel/runtime@8.0.7)(@codemirror/lint@6.9.7)(@codemirror/search@6.7.2)(@codemirror/theme-one-dark@6.1.3)(@types/react@18.3.31)(codemirror@6.0.2)(eslint@9.39.5(jiti@2.7.0))(js-cookie@3.0.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2))(@grafana/schema@13.2.3)(react@18.3.1)
+        version: 0.5.0(@grafana/data@13.2.3(eslint@9.39.5(jiti@2.7.0))(js-cookie@3.0.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2))(@grafana/runtime@13.2.3(@babel/runtime@8.0.7)(@codemirror/lint@6.9.7)(@codemirror/search@6.7.2)(@codemirror/theme-one-dark@6.1.3)(@types/react@18.3.31)(codemirror@6.0.2)(eslint@9.39.5(jiti@2.7.0))(js-cookie@3.0.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2))(@grafana/schema@13.2.3)(react@18.3.1)
       '@grafana/react-data-grid':
         specifier: 7.0.0-beta.58
         version: 7.0.0-beta.58(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@grafana/runtime':
         specifier: 13.2.3
-        version: 13.2.3(@babel/core@7.29.7)(@babel/runtime@8.0.7)(@codemirror/lint@6.9.7)(@codemirror/search@6.7.2)(@codemirror/theme-one-dark@6.1.3)(@types/react@18.3.31)(codemirror@6.0.2)(eslint@9.39.5(jiti@2.7.0))(js-cookie@3.0.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2)
+        version: 13.2.3(@babel/runtime@8.0.7)(@codemirror/lint@6.9.7)(@codemirror/search@6.7.2)(@codemirror/theme-one-dark@6.1.3)(@types/react@18.3.31)(codemirror@6.0.2)(eslint@9.39.5(jiti@2.7.0))(js-cookie@3.0.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2)
       '@grafana/scenes':
         specifier: 7.4.0
-        version: 7.4.0(b3a61d4b10b0a3e37abfcb6db26deeb0)
+        version: 7.4.0(b32bc43d50faf9eb3a2295d85a2ee8b7)
       '@grafana/schema':
         specifier: 13.2.3
         version: 13.2.3
       '@grafana/ui':
         specifier: 13.2.3
-        version: 13.2.3(@babel/core@7.29.7)(@babel/runtime@8.0.7)(@codemirror/lint@6.9.7)(@codemirror/search@6.7.2)(@codemirror/theme-one-dark@6.1.3)(@types/react@18.3.31)(codemirror@6.0.2)(eslint@9.39.5(jiti@2.7.0))(js-cookie@3.0.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2)
+        version: 13.2.3(@babel/runtime@8.0.7)(@codemirror/lint@6.9.7)(@codemirror/search@6.7.2)(@codemirror/theme-one-dark@6.1.3)(@types/react@18.3.31)(codemirror@6.0.2)(eslint@9.39.5(jiti@2.7.0))(js-cookie@3.0.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2)
       '@openfeature/react-sdk':
         specifier: ^1.4.1
         version: 1.4.1(@openfeature/web-sdk@1.10.0(@openfeature/core@1.12.0))(react@18.3.1)
@@ -1511,7 +1511,6 @@ packages:
   '@opentelemetry/sdk-trace-base@2.7.1':
     resolution: {integrity: sha512-NAYIlsF8MPUsKqJMiDQJTMPOmlbawC1Iz/omMLygZ1C9am8fTKYjTaI+OZM+WTY3t3Glo0wnOg/6/pac6RGPPw==}
     engines: {node: ^18.19.0 || >=20.6.0}
-    deprecated: Use @opentelemetry/sdk-trace package
     peerDependencies:
       '@opentelemetry/api': '>=1.3.0 <1.10.0'
 
@@ -3417,7 +3416,6 @@ packages:
   eslint@9.39.5:
     resolution: {integrity: sha512-DgZS62aPLXKlnxILS/AYCoRvHaZeXceIzlXPkkGGzJWSow1aEk0lbTlxUSlyjC8jcaKxAdOnTDz+o1JFSBsyjw==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
-    deprecated: This version is no longer supported. Please see https://eslint.org/version-support for other options.
     hasBin: true
     peerDependencies:
       jiti: '*'
@@ -6362,7 +6360,7 @@ snapshots:
 
   '@babel/generator@7.17.7':
     dependencies:
-      '@babel/types': 7.17.0
+      '@babel/types': 7.29.8
       jsesc: 2.5.2
       source-map: 0.5.7
 
@@ -7064,13 +7062,13 @@ snapshots:
     dependencies:
       tslib: 2.8.1
 
-  '@grafana/assistant@0.1.34(@emotion/css@11.10.6)(@grafana/data@13.2.3(eslint@9.39.5(jiti@2.7.0))(js-cookie@3.0.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2))(@grafana/runtime@13.2.3(@babel/core@7.29.7)(@babel/runtime@8.0.7)(@codemirror/lint@6.9.7)(@codemirror/search@6.7.2)(@codemirror/theme-one-dark@6.1.3)(@types/react@18.3.31)(codemirror@6.0.2)(eslint@9.39.5(jiti@2.7.0))(js-cookie@3.0.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2))(@grafana/schema@13.2.3)(@grafana/ui@13.2.3(@babel/core@7.29.7)(@babel/runtime@8.0.7)(@codemirror/lint@6.9.7)(@codemirror/search@6.7.2)(@codemirror/theme-one-dark@6.1.3)(@types/react@18.3.31)(codemirror@6.0.2)(eslint@9.39.5(jiti@2.7.0))(js-cookie@3.0.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2))(react@18.3.1)(rxjs@7.8.2)':
+  '@grafana/assistant@0.1.34(@emotion/css@11.10.6)(@grafana/data@13.2.3(eslint@9.39.5(jiti@2.7.0))(js-cookie@3.0.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2))(@grafana/runtime@13.2.3(@babel/runtime@8.0.7)(@codemirror/lint@6.9.7)(@codemirror/search@6.7.2)(@codemirror/theme-one-dark@6.1.3)(@types/react@18.3.31)(codemirror@6.0.2)(eslint@9.39.5(jiti@2.7.0))(js-cookie@3.0.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2))(@grafana/schema@13.2.3)(@grafana/ui@13.2.3(@babel/runtime@8.0.7)(@codemirror/lint@6.9.7)(@codemirror/search@6.7.2)(@codemirror/theme-one-dark@6.1.3)(@types/react@18.3.31)(codemirror@6.0.2)(eslint@9.39.5(jiti@2.7.0))(js-cookie@3.0.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2))(react@18.3.1)(rxjs@7.8.2)':
     dependencies:
       '@emotion/css': 11.10.6
       '@grafana/data': 13.2.3(eslint@9.39.5(jiti@2.7.0))(js-cookie@3.0.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2)
-      '@grafana/runtime': 13.2.3(@babel/core@7.29.7)(@babel/runtime@8.0.7)(@codemirror/lint@6.9.7)(@codemirror/search@6.7.2)(@codemirror/theme-one-dark@6.1.3)(@types/react@18.3.31)(codemirror@6.0.2)(eslint@9.39.5(jiti@2.7.0))(js-cookie@3.0.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2)
+      '@grafana/runtime': 13.2.3(@babel/runtime@8.0.7)(@codemirror/lint@6.9.7)(@codemirror/search@6.7.2)(@codemirror/theme-one-dark@6.1.3)(@types/react@18.3.31)(codemirror@6.0.2)(eslint@9.39.5(jiti@2.7.0))(js-cookie@3.0.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2)
       '@grafana/schema': 13.2.3
-      '@grafana/ui': 13.2.3(@babel/core@7.29.7)(@babel/runtime@8.0.7)(@codemirror/lint@6.9.7)(@codemirror/search@6.7.2)(@codemirror/theme-one-dark@6.1.3)(@types/react@18.3.31)(codemirror@6.0.2)(eslint@9.39.5(jiti@2.7.0))(js-cookie@3.0.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2)
+      '@grafana/ui': 13.2.3(@babel/runtime@8.0.7)(@codemirror/lint@6.9.7)(@codemirror/search@6.7.2)(@codemirror/theme-one-dark@6.1.3)(@types/react@18.3.31)(codemirror@6.0.2)(eslint@9.39.5(jiti@2.7.0))(js-cookie@3.0.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2)
       json-schema-to-ts: 3.1.1
       react: 18.3.1
       rxjs: 7.8.2
@@ -7195,12 +7193,12 @@ snapshots:
       ua-parser-js: 2.0.10
       web-vitals: 5.3.0
 
-  '@grafana/flamegraph@13.2.4(1c527908ade6bc6747e9f8518f97839f)':
+  '@grafana/flamegraph@13.2.4(9831b16ae94c06de023fff579188eead)':
     dependencies:
       '@emotion/css': 11.13.5
-      '@grafana/assistant': 0.1.34(@emotion/css@11.10.6)(@grafana/data@13.2.3(eslint@9.39.5(jiti@2.7.0))(js-cookie@3.0.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2))(@grafana/runtime@13.2.3(@babel/core@7.29.7)(@babel/runtime@8.0.7)(@codemirror/lint@6.9.7)(@codemirror/search@6.7.2)(@codemirror/theme-one-dark@6.1.3)(@types/react@18.3.31)(codemirror@6.0.2)(eslint@9.39.5(jiti@2.7.0))(js-cookie@3.0.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2))(@grafana/schema@13.2.3)(@grafana/ui@13.2.3(@babel/core@7.29.7)(@babel/runtime@8.0.7)(@codemirror/lint@6.9.7)(@codemirror/search@6.7.2)(@codemirror/theme-one-dark@6.1.3)(@types/react@18.3.31)(codemirror@6.0.2)(eslint@9.39.5(jiti@2.7.0))(js-cookie@3.0.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2))(react@18.3.1)(rxjs@7.8.2)
+      '@grafana/assistant': 0.1.34(@emotion/css@11.10.6)(@grafana/data@13.2.3(eslint@9.39.5(jiti@2.7.0))(js-cookie@3.0.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2))(@grafana/runtime@13.2.3(@babel/runtime@8.0.7)(@codemirror/lint@6.9.7)(@codemirror/search@6.7.2)(@codemirror/theme-one-dark@6.1.3)(@types/react@18.3.31)(codemirror@6.0.2)(eslint@9.39.5(jiti@2.7.0))(js-cookie@3.0.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2))(@grafana/schema@13.2.3)(@grafana/ui@13.2.3(@babel/runtime@8.0.7)(@codemirror/lint@6.9.7)(@codemirror/search@6.7.2)(@codemirror/theme-one-dark@6.1.3)(@types/react@18.3.31)(codemirror@6.0.2)(eslint@9.39.5(jiti@2.7.0))(js-cookie@3.0.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2))(react@18.3.1)(rxjs@7.8.2)
       '@grafana/data': 13.2.4(eslint@9.39.5(jiti@2.7.0))(js-cookie@3.0.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2)
-      '@grafana/ui': 13.2.4(@babel/core@7.29.7)(@babel/runtime@8.0.7)(@codemirror/lint@6.9.7)(@codemirror/search@6.7.2)(@codemirror/theme-one-dark@6.1.3)(@types/react@18.3.31)(codemirror@6.0.2)(eslint@9.39.5(jiti@2.7.0))(js-cookie@3.0.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2)
+      '@grafana/ui': 13.2.4(@babel/runtime@8.0.7)(@codemirror/lint@6.9.7)(@codemirror/search@6.7.2)(@codemirror/theme-one-dark@6.1.3)(@types/react@18.3.31)(codemirror@6.0.2)(eslint@9.39.5(jiti@2.7.0))(js-cookie@3.0.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2)
       '@leeoniya/ufuzzy': 1.0.19
       d3-scale: 4.0.2
       lodash: 4.18.1
@@ -7211,7 +7209,6 @@ snapshots:
       react-virtualized-auto-sizer: 1.0.26(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       tinycolor2: 1.6.0
     transitivePeerDependencies:
-      - '@babel/core'
       - '@babel/runtime'
       - '@codemirror/lint'
       - '@codemirror/search'
@@ -7260,10 +7257,10 @@ snapshots:
       - supports-color
       - typescript
 
-  '@grafana/llm@1.0.9(@grafana/data@13.2.3(eslint@9.39.5(jiti@2.7.0))(js-cookie@3.0.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2))(@grafana/runtime@13.2.3(@babel/core@7.29.7)(@babel/runtime@8.0.7)(@codemirror/lint@6.9.7)(@codemirror/search@6.7.2)(@codemirror/theme-one-dark@6.1.3)(@types/react@18.3.31)(codemirror@6.0.2)(eslint@9.39.5(jiti@2.7.0))(js-cookie@3.0.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rxjs@7.8.2)(zod@4.6.7)':
+  '@grafana/llm@1.0.9(@grafana/data@13.2.3(eslint@9.39.5(jiti@2.7.0))(js-cookie@3.0.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2))(@grafana/runtime@13.2.3(@babel/runtime@8.0.7)(@codemirror/lint@6.9.7)(@codemirror/search@6.7.2)(@codemirror/theme-one-dark@6.1.3)(@types/react@18.3.31)(codemirror@6.0.2)(eslint@9.39.5(jiti@2.7.0))(js-cookie@3.0.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rxjs@7.8.2)(zod@4.6.7)':
     dependencies:
       '@grafana/data': 13.2.3(eslint@9.39.5(jiti@2.7.0))(js-cookie@3.0.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2)
-      '@grafana/runtime': 13.2.3(@babel/core@7.29.7)(@babel/runtime@8.0.7)(@codemirror/lint@6.9.7)(@codemirror/search@6.7.2)(@codemirror/theme-one-dark@6.1.3)(@types/react@18.3.31)(codemirror@6.0.2)(eslint@9.39.5(jiti@2.7.0))(js-cookie@3.0.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2)
+      '@grafana/runtime': 13.2.3(@babel/runtime@8.0.7)(@codemirror/lint@6.9.7)(@codemirror/search@6.7.2)(@codemirror/theme-one-dark@6.1.3)(@types/react@18.3.31)(codemirror@6.0.2)(eslint@9.39.5(jiti@2.7.0))(js-cookie@3.0.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2)
       '@modelcontextprotocol/sdk': 1.32.1(zod@4.6.7)
       publint: 0.3.25
       react: 18.3.1
@@ -7277,10 +7274,10 @@ snapshots:
       - supports-color
       - zod
 
-  '@grafana/plugin-compat@0.5.0(@grafana/data@13.2.3(eslint@9.39.5(jiti@2.7.0))(js-cookie@3.0.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2))(@grafana/runtime@13.2.3(@babel/core@7.29.7)(@babel/runtime@8.0.7)(@codemirror/lint@6.9.7)(@codemirror/search@6.7.2)(@codemirror/theme-one-dark@6.1.3)(@types/react@18.3.31)(codemirror@6.0.2)(eslint@9.39.5(jiti@2.7.0))(js-cookie@3.0.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2))(@grafana/schema@13.2.3)(react@18.3.1)':
+  '@grafana/plugin-compat@0.5.0(@grafana/data@13.2.3(eslint@9.39.5(jiti@2.7.0))(js-cookie@3.0.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2))(@grafana/runtime@13.2.3(@babel/runtime@8.0.7)(@codemirror/lint@6.9.7)(@codemirror/search@6.7.2)(@codemirror/theme-one-dark@6.1.3)(@types/react@18.3.31)(codemirror@6.0.2)(eslint@9.39.5(jiti@2.7.0))(js-cookie@3.0.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2))(@grafana/schema@13.2.3)(react@18.3.1)':
     dependencies:
       '@grafana/data': 13.2.3(eslint@9.39.5(jiti@2.7.0))(js-cookie@3.0.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2)
-      '@grafana/runtime': 13.2.3(@babel/core@7.29.7)(@babel/runtime@8.0.7)(@codemirror/lint@6.9.7)(@codemirror/search@6.7.2)(@codemirror/theme-one-dark@6.1.3)(@types/react@18.3.31)(codemirror@6.0.2)(eslint@9.39.5(jiti@2.7.0))(js-cookie@3.0.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2)
+      '@grafana/runtime': 13.2.3(@babel/runtime@8.0.7)(@codemirror/lint@6.9.7)(@codemirror/search@6.7.2)(@codemirror/theme-one-dark@6.1.3)(@types/react@18.3.31)(codemirror@6.0.2)(eslint@9.39.5(jiti@2.7.0))(js-cookie@3.0.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2)
       '@grafana/schema': 13.2.3
       react: 18.3.1
 
@@ -7301,13 +7298,13 @@ snapshots:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
-  '@grafana/runtime@13.2.3(@babel/core@7.29.7)(@babel/runtime@8.0.7)(@codemirror/lint@6.9.7)(@codemirror/search@6.7.2)(@codemirror/theme-one-dark@6.1.3)(@types/react@18.3.31)(codemirror@6.0.2)(eslint@9.39.5(jiti@2.7.0))(js-cookie@3.0.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2)':
+  '@grafana/runtime@13.2.3(@babel/runtime@8.0.7)(@codemirror/lint@6.9.7)(@codemirror/search@6.7.2)(@codemirror/theme-one-dark@6.1.3)(@types/react@18.3.31)(codemirror@6.0.2)(eslint@9.39.5(jiti@2.7.0))(js-cookie@3.0.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2)':
     dependencies:
       '@grafana/data': 13.2.3(eslint@9.39.5(jiti@2.7.0))(js-cookie@3.0.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2)
       '@grafana/e2e-selectors': 13.2.3
       '@grafana/faro-web-sdk': 2.11.0
       '@grafana/schema': 13.2.3
-      '@grafana/ui': 13.2.3(@babel/core@7.29.7)(@babel/runtime@8.0.7)(@codemirror/lint@6.9.7)(@codemirror/search@6.7.2)(@codemirror/theme-one-dark@6.1.3)(@types/react@18.3.31)(codemirror@6.0.2)(eslint@9.39.5(jiti@2.7.0))(js-cookie@3.0.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2)
+      '@grafana/ui': 13.2.3(@babel/runtime@8.0.7)(@codemirror/lint@6.9.7)(@codemirror/search@6.7.2)(@codemirror/theme-one-dark@6.1.3)(@types/react@18.3.31)(codemirror@6.0.2)(eslint@9.39.5(jiti@2.7.0))(js-cookie@3.0.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2)
       '@openfeature/core': 1.12.0
       '@openfeature/localstorage-provider': 0.1.2(@openfeature/web-sdk@1.10.0(@openfeature/core@1.12.0))
       '@openfeature/ofrep-web-provider': 0.4.3(@openfeature/core@1.12.0)(@openfeature/web-sdk@1.10.0(@openfeature/core@1.12.0))
@@ -7325,7 +7322,6 @@ snapshots:
       react-use: 17.6.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       rxjs: 7.8.2
     transitivePeerDependencies:
-      - '@babel/core'
       - '@babel/runtime'
       - '@codemirror/lint'
       - '@codemirror/search'
@@ -7338,7 +7334,7 @@ snapshots:
       - supports-color
       - typescript
 
-  '@grafana/scenes@7.4.0(b3a61d4b10b0a3e37abfcb6db26deeb0)':
+  '@grafana/scenes@7.4.0(b32bc43d50faf9eb3a2295d85a2ee8b7)':
     dependencies:
       '@emotion/css': 11.10.5(@babel/core@7.29.7)
       '@emotion/react': 11.10.5(@babel/core@7.29.7)(@types/react@18.3.31)(react@18.3.1)
@@ -7346,9 +7342,9 @@ snapshots:
       '@grafana/data': 13.2.3(eslint@9.39.5(jiti@2.7.0))(js-cookie@3.0.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2)
       '@grafana/e2e-selectors': 13.2.3
       '@grafana/i18n': 13.2.3(eslint@9.39.5(jiti@2.7.0))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2)
-      '@grafana/runtime': 13.2.3(@babel/core@7.29.7)(@babel/runtime@8.0.7)(@codemirror/lint@6.9.7)(@codemirror/search@6.7.2)(@codemirror/theme-one-dark@6.1.3)(@types/react@18.3.31)(codemirror@6.0.2)(eslint@9.39.5(jiti@2.7.0))(js-cookie@3.0.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2)
+      '@grafana/runtime': 13.2.3(@babel/runtime@8.0.7)(@codemirror/lint@6.9.7)(@codemirror/search@6.7.2)(@codemirror/theme-one-dark@6.1.3)(@types/react@18.3.31)(codemirror@6.0.2)(eslint@9.39.5(jiti@2.7.0))(js-cookie@3.0.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2)
       '@grafana/schema': 13.2.3
-      '@grafana/ui': 13.2.3(@babel/core@7.29.7)(@babel/runtime@8.0.7)(@codemirror/lint@6.9.7)(@codemirror/search@6.7.2)(@codemirror/theme-one-dark@6.1.3)(@types/react@18.3.31)(codemirror@6.0.2)(eslint@9.39.5(jiti@2.7.0))(js-cookie@3.0.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2)
+      '@grafana/ui': 13.2.3(@babel/runtime@8.0.7)(@codemirror/lint@6.9.7)(@codemirror/search@6.7.2)(@codemirror/theme-one-dark@6.1.3)(@types/react@18.3.31)(codemirror@6.0.2)(eslint@9.39.5(jiti@2.7.0))(js-cookie@3.0.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2)
       '@leeoniya/ufuzzy': 1.0.19
       '@tanstack/react-virtual': 3.14.20(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       history: 4.10.1
@@ -7357,7 +7353,7 @@ snapshots:
       react-dom: 18.3.1(react@18.3.1)
       react-grid-layout: 1.5.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react-router-dom: 6.30.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      react-select: 5.10.2(@babel/core@7.29.7)(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react-select: 5.10.2(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react-use: 17.6.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react-virtualized-auto-sizer: 1.0.26(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       rxjs: 7.8.2
@@ -7377,7 +7373,7 @@ snapshots:
 
   '@grafana/tsconfig@2.0.1': {}
 
-  '@grafana/ui@13.2.3(@babel/core@7.29.7)(@babel/runtime@8.0.7)(@codemirror/lint@6.9.7)(@codemirror/search@6.7.2)(@codemirror/theme-one-dark@6.1.3)(@types/react@18.3.31)(codemirror@6.0.2)(eslint@9.39.5(jiti@2.7.0))(js-cookie@3.0.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2)':
+  '@grafana/ui@13.2.3(@babel/runtime@8.0.7)(@codemirror/lint@6.9.7)(@codemirror/search@6.7.2)(@codemirror/theme-one-dark@6.1.3)(@types/react@18.3.31)(codemirror@6.0.2)(eslint@9.39.5(jiti@2.7.0))(js-cookie@3.0.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2)':
     dependencies:
       '@codemirror/autocomplete': 6.20.3
       '@codemirror/lang-go': 6.0.1
@@ -7442,7 +7438,7 @@ snapshots:
       react-loading-skeleton: 3.5.0(react@18.3.1)
       react-router-dom: 5.3.4(react@18.3.1)
       react-router-dom-v5-compat: 6.30.6(react-dom@18.3.1(react@18.3.1))(react-router-dom@5.3.4(react@18.3.1))(react@18.3.1)
-      react-select: 5.10.2(@babel/core@7.29.7)(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react-select: 5.10.2(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react-table: 7.8.0(react@18.3.1)
       react-transition-group: 4.4.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react-use: 17.6.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -7455,7 +7451,6 @@ snapshots:
       uplot: 1.6.32
       uwrap: 0.1.2
     transitivePeerDependencies:
-      - '@babel/core'
       - '@babel/runtime'
       - '@codemirror/lint'
       - '@codemirror/search'
@@ -7468,7 +7463,7 @@ snapshots:
       - supports-color
       - typescript
 
-  '@grafana/ui@13.2.4(@babel/core@7.29.7)(@babel/runtime@8.0.7)(@codemirror/lint@6.9.7)(@codemirror/search@6.7.2)(@codemirror/theme-one-dark@6.1.3)(@types/react@18.3.31)(codemirror@6.0.2)(eslint@9.39.5(jiti@2.7.0))(js-cookie@3.0.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2)':
+  '@grafana/ui@13.2.4(@babel/runtime@8.0.7)(@codemirror/lint@6.9.7)(@codemirror/search@6.7.2)(@codemirror/theme-one-dark@6.1.3)(@types/react@18.3.31)(codemirror@6.0.2)(eslint@9.39.5(jiti@2.7.0))(js-cookie@3.0.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2)':
     dependencies:
       '@codemirror/autocomplete': 6.20.3
       '@codemirror/lang-go': 6.0.1
@@ -7533,7 +7528,7 @@ snapshots:
       react-loading-skeleton: 3.5.0(react@18.3.1)
       react-router-dom: 5.3.4(react@18.3.1)
       react-router-dom-v5-compat: 6.30.6(react-dom@18.3.1(react@18.3.1))(react-router-dom@5.3.4(react@18.3.1))(react@18.3.1)
-      react-select: 5.10.2(@babel/core@7.29.7)(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react-select: 5.10.2(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react-table: 7.8.0(react@18.3.1)
       react-transition-group: 4.4.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react-use: 17.6.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -7546,7 +7541,6 @@ snapshots:
       uplot: 1.6.32
       uwrap: 0.1.2
     transitivePeerDependencies:
-      - '@babel/core'
       - '@babel/runtime'
       - '@codemirror/lint'
       - '@codemirror/search'
@@ -8868,7 +8862,7 @@ snapshots:
 
   '@typescript-eslint/project-service@8.67.0(typescript@5.6.2)':
     dependencies:
-      '@typescript-eslint/tsconfig-utils': 8.67.0(typescript@5.6.2)
+      '@typescript-eslint/tsconfig-utils': 8.71.2(typescript@5.6.2)
       '@typescript-eslint/types': 8.71.2
       debug: 4.4.3
       typescript: 5.6.2
@@ -12232,11 +12226,11 @@ snapshots:
       '@remix-run/router': 1.23.4
       react: 18.3.1
 
-  react-select@5.10.2(@babel/core@7.29.7)(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  react-select@5.10.2(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       '@babel/runtime': 7.29.10
       '@emotion/cache': 11.14.0
-      '@emotion/react': 11.10.5(@babel/core@7.29.7)(@types/react@18.3.31)(react@18.3.1)
+      '@emotion/react': 11.14.0(@types/react@18.3.31)(react@18.3.1)
       '@floating-ui/dom': 1.8.0
       '@types/react-transition-group': 4.4.12(@types/react@18.3.31)
       memoize-one: 6.0.0
@@ -12246,7 +12240,6 @@ snapshots:
       react-transition-group: 4.4.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       use-isomorphic-layout-effect: 1.2.1(@types/react@18.3.31)(react@18.3.1)
     transitivePeerDependencies:
-      - '@babel/core'
       - '@types/react'
       - supports-color
 
