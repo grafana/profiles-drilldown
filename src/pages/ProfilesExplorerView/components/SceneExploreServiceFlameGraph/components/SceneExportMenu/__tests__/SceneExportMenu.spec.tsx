@@ -1,4 +1,5 @@
 import { dateTimeParse } from '@grafana/data';
+import { displayWarning } from '@shared/domain/displayStatus';
 import { DataSourceUidProvider } from '@shared/infrastructure/datasource/DataSourceUidContext';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
@@ -12,6 +13,10 @@ jest.mock('../../../../../domain/copyGcxCommandToClipboard');
 jest.mock('@shared/domain/url-params/useMaxNodesFromUrl', () => ({ useMaxNodesFromUrl: () => [5000] }));
 jest.mock('@shared/infrastructure/settings/useFetchPluginSettings', () => ({
   useFetchPluginSettings: () => ({ settings: {} }),
+}));
+jest.mock('@shared/domain/displayStatus', () => ({
+  displayError: jest.fn(),
+  displayWarning: jest.fn(),
 }));
 jest.mock('@shared/domain/useIsFlameGraphCanvasPresent', () => ({ useIsFlameGraphCanvasPresent: () => false }));
 
@@ -38,6 +43,9 @@ async function copyGcxCommand() {
 }
 
 describe('SceneExportMenu', () => {
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
   it.each([
     { profileIdSelector: 'profile-123', spanSelector: 'span-456' },
     { profileIdSelector: undefined, spanSelector: undefined },
@@ -51,6 +59,31 @@ describe('SceneExportMenu', () => {
     );
     expect(jest.mocked(copyGcxCommandToClipboard).mock.calls[0][0].includes("--span-id 'span-456'")).toBe(
       Boolean(selectors.spanSelector)
+    );
+  });
+
+  it('warns and downloads the profile id when a span is also active', async () => {
+    const fetchJson = jest.spyOn(SceneExportMenu.prototype, 'fetchFlamebearerProfile').mockResolvedValue(null);
+    const fetchPprof = jest.spyOn(SceneExportMenu.prototype, 'fetchPprofProfile').mockResolvedValue(null);
+    renderExportMenu({ profileIdSelector: 'profile-123', spanSelector: 'span-456' });
+
+    fireEvent.click(screen.getByRole('button', { name: 'Export profile data' }));
+    fireEvent.click(await screen.findByText('json'));
+
+    await waitFor(() =>
+      expect(fetchJson).toHaveBeenCalledWith(
+        expect.objectContaining({ profileIdSelector: 'profile-123', spanSelector: undefined })
+      )
+    );
+    expect(displayWarning).toHaveBeenCalled();
+
+    fireEvent.click(screen.getByRole('button', { name: 'Export profile data' }));
+    fireEvent.click(await screen.findByText('pprof'));
+
+    await waitFor(() =>
+      expect(fetchPprof).toHaveBeenCalledWith(
+        expect.objectContaining({ profileIdSelector: 'profile-123', spanSelector: undefined })
+      )
     );
   });
 

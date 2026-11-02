@@ -1,33 +1,44 @@
-import { Field, Message } from 'protobufjs/light';
+import { Writer } from 'protobufjs/light';
 
-export class PprofRequest extends Message<PprofRequest> {
-    constructor(
-        profile_typeID: string,
-        label_selector: string,
-        start: number,
-        end: number,
-        max_nodes: number
-    ) {
-        super();
-        this.profile_typeID = profile_typeID;
-        this.label_selector = label_selector;
-        this.start = start;
-        this.end = end;
-        this.max_nodes = max_nodes;
+function writeString(writer: Writer, fieldNumber: number, value: string) {
+  writer.uint32((fieldNumber << 3) | 2).string(value);
+}
+
+function writeVarint(writer: Writer, fieldNumber: number, value: number) {
+  writer.uint32((fieldNumber << 3) | 0).int64(value);
+}
+
+export function encodePprofRequest(
+  profileTypeId: string,
+  labelSelector: string,
+  start: number,
+  end: number,
+  maxNodes: number,
+  profileIdSelector: string[] = []
+): Uint8Array {
+  const writer = Writer.create();
+
+  if (profileTypeId) {
+    writeString(writer, 1, profileTypeId);
+  }
+  if (labelSelector) {
+    writeString(writer, 2, labelSelector);
+  }
+  if (start) {
+    writeVarint(writer, 3, start);
+  }
+  if (end) {
+    writeVarint(writer, 4, end);
+  }
+  if (maxNodes) {
+    writeVarint(writer, 5, maxNodes);
+  }
+
+  for (const profileId of profileIdSelector) {
+    if (profileId) {
+      writeString(writer, 7, profileId);
     }
+  }
 
-    @Field.d(1, 'string')
-    profile_typeID: string;
-
-    @Field.d(2, 'string')
-    label_selector: string;
-
-    @Field.d(3, 'int64')
-    start: number;
-
-    @Field.d(4, 'int64')
-    end: number;
-
-    @Field.d(5, 'int64')
-    max_nodes: number;
+  return writer.finish();
 }
