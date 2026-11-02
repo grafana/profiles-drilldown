@@ -244,9 +244,6 @@ importers:
       fork-ts-checker-webpack-plugin:
         specifier: 9.1.0
         version: 9.1.0(typescript@5.6.2)(webpack@5.109.2)
-      glob:
-        specifier: 14.0.3
-        version: 14.0.3
       i18next-cli:
         specifier: 1.74.4
         version: 1.74.4(@swc/helpers@0.5.23)(@types/node@22.19.15)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2)
