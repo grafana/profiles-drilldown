@@ -311,17 +311,14 @@ test.describe('Labels view', () => {
     });
   });
 
-  test('Hide no data switcher', async ({ exploreProfilesPage }) => {
+  test('Filter that matches no series clears the label panels', async ({ exploreProfilesPage }) => {
     await exploreProfilesPage.enterQuickFilterText('region,vehicle');
+    await expect(exploreProfilesPage.getGroupByPanels()).toHaveCount(2);
+
+    // The label list is reloaded with the filter. Nothing in the sample data matches, so the panels are removed.
     await exploreProfilesPage.addFilter(['pyroscope_spy', '!=', 'gospy']);
 
-    await expect(exploreProfilesPage.getGroupByPanels()).toHaveCount(2);
-    await exploreProfilesPage.assertPanelHasNoData('region (3)');
-    await exploreProfilesPage.assertPanelHasNoData('vehicle (4)');
-
-    await exploreProfilesPage.selectHidePanelsWithoutNoData();
-
+    await expect(exploreProfilesPage.getGroupByContainer().getByText('No results')).toBeVisible({ timeout: 15000 });
     await expect(exploreProfilesPage.getGroupByPanels()).toHaveCount(0);
-    await expect(exploreProfilesPage.getGroupByContainer().getByText(/No profiles found/)).toBeVisible();
   });
 });

@@ -106,6 +106,11 @@
     },
     "title": "Vytvořit pravidlo nahrávání"
   },
+  "datasource-context": {
+    "error-title": "",
+    "loading": "",
+    "missing-uid": ""
+  },
   "diff-flame-graph": {
     "compare-panel": {
       "annotation-title": "Rozsah flame grafu {{title}}",

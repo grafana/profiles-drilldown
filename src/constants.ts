@@ -17,3 +17,6 @@ export enum ROUTES {
 
 export const PYROSCOPE_DATA_SOURCES_TYPE = 'grafana-pyroscope-datasource';
 export const PYROSCOPE_URL_SEARCH_PARAM_NAME = 'var-dataSource'; // matches with the Scenes library
+
+export const KG_DATASOURCE_TYPE = 'grafana-knowledgegraph-datasource';
+export const KG_DATASOURCE_UID = 'grafanacloud-knowledgegraph';

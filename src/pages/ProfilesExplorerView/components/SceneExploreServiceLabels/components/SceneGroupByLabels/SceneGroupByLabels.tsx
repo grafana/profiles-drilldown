@@ -58,7 +58,22 @@ export class SceneGroupByLabels extends SceneObjectBase<SceneGroupByLabelsState>
     });
 
     this.addActivationHandler(() => {
-      this.onActivate(item);
+      // Scenes keeps the handler's return value as-is and does not await promises.
+      let cleanup: (() => void) | undefined;
+
+      void this.onActivate(item).then((deactivate) => {
+        if (!this.isActive) {
+          deactivate();
+          return;
+        }
+
+        cleanup = deactivate;
+      });
+
+      return () => {
+        cleanup?.();
+        cleanup = undefined;
+      };
     });
   }
 
@@ -67,6 +82,10 @@ export class SceneGroupByLabels extends SceneObjectBase<SceneGroupByLabelsState>
     const groupByVariable = sceneGraph.findByKeyAndType(this, 'groupBy', GroupByVariable);
     await groupByVariable.update();
 
+    if (!this.isActive) {
+      return () => {};
+    }
+
     if (item) {
       this.initVariablesAndControls(item);
     }
@@ -74,10 +93,12 @@ export class SceneGroupByLabels extends SceneObjectBase<SceneGroupByLabelsState>
     this.renderBody(groupByVariable);
 
     const groupBySub = this.subscribeToGroupByChange();
+    const filtersSub = this.subscribeToFiltersChange();
     const panelEventsSub = this.subscribeToPanelEvents();
 
     return () => {
       panelEventsSub.unsubscribe();
+      filtersSub.unsubscribe();
       groupBySub.unsubscribe();
 
       this.state.panelTypeChangeSub?.unsubscribe();
@@ -97,6 +118,19 @@ export class SceneGroupByLabels extends SceneObjectBase<SceneGroupByLabelsState>
       const panelTypeSwitcher = sceneGraph.findByKeyAndType(this, 'panel-type-switcher', ScenePanelTypeSwitcher);
       panelTypeSwitcher.setState({ panelType });
     }
+  }
+
+  subscribeToFiltersChange() {
+    const filtersVariable = sceneGraph.findByKeyAndType(this, 'filters', FiltersVariable);
+    const groupByVariable = sceneGraph.findByKeyAndType(this, 'groupBy', GroupByVariable);
+
+    return filtersVariable.subscribeToState((newState, prevState) => {
+      if (newState.filterExpression === prevState.filterExpression) {
+        return;
+      }
+
+      void groupByVariable.update();
+    });
   }
 
   subscribeToGroupByChange() {

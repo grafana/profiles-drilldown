@@ -33,9 +33,8 @@ export class GroupByVariable extends QueryVariable {
       name: 'groupBy',
       label: GROUP_BY_LABEL_DEFAULT,
       datasource: PYROSCOPE_LABELS_DATA_SOURCE,
-      // "hack": we want to subscribe to changes of dataSource, serviceName and profileMetricId
-      // we could also add filters, but the Service labels exploration type would reload all labels each time they are modified
-      // which wouldn't be great UX
+      // Filters stay out of this query so a filter change does not reset the selected label.
+      // LabelsDataSource applies them when update() reloads the counts.
       query: '$dataSource and $profileMetricId{service_name="$serviceName"}',
       loading: true,
     });
@@ -57,10 +56,10 @@ export class GroupByVariable extends QueryVariable {
       return;
     }
 
-    let options: VariableValueOption[] = [];
+    let options: VariableValueOption[] = this.state.options;
     let error = null;
 
-    this.setState({ loading: true, options: [], error: null });
+    this.setState({ loading: true, error: null });
 
     try {
       options = await lastValueFrom(this.getValueOptions({}));
@@ -122,7 +121,7 @@ export class GroupByVariable extends QueryVariable {
       [options]
     );
 
-    if (loading) {
+    if (loading && options.length === 0) {
       return (
         <Field label={t('variables.group-by.label', 'Group by labels')}>
           <Spinner className={styles.spinner} />
