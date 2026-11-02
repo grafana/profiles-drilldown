@@ -212,6 +212,7 @@
     "png-disabled-description": "Switch to the flame graph view to export it as a png",
     "png-label": "png",
     "pprof": "pprof",
+    "span-omitted": "The span filter cannot be included with a profile ID. This download uses the profile ID only.",
     "tooltip": "Export profile data"
   },
   "exposed-components": {
