@@ -216,11 +216,22 @@ describe('getTempoDataSourceOptions', () => {
     expect(result).toEqual([{ uid: 'dev', name: 'dev-traces', isDefault: false }]);
   });
 
-  it('should return undefined when another settings lookup fails', async () => {
+  it('should return settings even when other settings lookup fails', async () => {
     getDataSourceInstanceListMock.mockResolvedValue([prod, dev]);
     getDataSourceInstanceSettingsMock
       .mockRejectedValueOnce(new Error('Settings lookup failed'))
       .mockResolvedValueOnce(devSettings);
+
+    const result = await getTempoDataSourceOptions();
+
+    expect(result).toEqual([
+      { isDefault: false, name: 'dev-traces', tracesToProfilesDataSourceUid: undefined, uid: 'dev' },
+    ]);
+  });
+
+  it('should return undefined when all settings lookups fail', async () => {
+    getDataSourceInstanceListMock.mockResolvedValue([prod, dev]);
+    getDataSourceInstanceSettingsMock.mockRejectedValue(new Error('Settings lookup failed'));
 
     const result = await getTempoDataSourceOptions();
 

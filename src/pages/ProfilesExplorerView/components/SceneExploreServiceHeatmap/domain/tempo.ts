@@ -48,10 +48,15 @@ let pending: Promise<TempoDataSourceOption[] | undefined> | undefined;
 
 async function getAllTempoDataSourceOptions(): Promise<TempoDataSourceOption[]> {
   const instances = await getDataSourceInstanceList({ pluginId: 'tempo' });
-  const allSettings = await Promise.all(instances.map((i) => getDataSourceInstanceSettings(i.uid)));
+  const allSettings = await Promise.allSettled(instances.map((i) => getDataSourceInstanceSettings(i.uid)));
+  const fullfilled = allSettings.filter((s) => s.status === 'fulfilled').map((s) => s.value);
 
-  const settings: Array<DataSourceInstanceSettings<TempoDataSourceJsonData>> = allSettings.filter(
-    (s) => s !== undefined
+  if (instances.length > 0 && fullfilled.length === 0) {
+    throw new Error('Failed to load settings for any Tempo data source');
+  }
+
+  const settings: Array<DataSourceInstanceSettings<TempoDataSourceJsonData>> = fullfilled.filter(
+    (f) => f !== undefined
   );
 
   const defaultDs = await getDefaultDataSourceInstanceListItem(instances).catch((error) => {
