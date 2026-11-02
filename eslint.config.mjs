@@ -63,6 +63,9 @@ export default [
       'sonarjs/no-misleading-array-reverse': 'off',
       'sonarjs/no-alphabetical-sort': 'off',
       'sonarjs/function-return-type': 'off',
+      'react-hooks/set-state-in-effect': 'warn',
+      'react-hooks/refs': 'warn',
+      'react-hooks/preserve-manual-memoization': 'warn',
     },
   },
 ];
