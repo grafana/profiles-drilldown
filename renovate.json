@@ -60,7 +60,7 @@
         "eslint-plugin-react",
         "eslint-plugin-react-hooks",
         "eslint-plugin-sonarjs",
-        "@stylistic/eslint-plugin-ts"
+        "@stylistic/eslint-plugin"
       ]
     },
     {
