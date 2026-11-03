@@ -144,6 +144,9 @@ importers:
       '@grafana/plugin-e2e':
         specifier: 3.15.3
         version: 3.15.3(@playwright/test@1.63.0)
+      '@grafana/plugin-types':
+        specifier: 0.0.39
+        version: 0.0.39
       '@grafana/sign-plugin':
         specifier: 4.0.0
         version: 4.0.0
@@ -975,6 +978,9 @@ packages:
     peerDependenciesMeta:
       '@axe-core/playwright':
         optional: true
+
+  '@grafana/plugin-types@0.0.39':
+    resolution: {integrity: sha512-OeSTqFFPQtdGdeRWbTMlvGz2J6VWEhOdv+WiqMTaa7AjHWahmEE3aB6AJL6zlDd8MqFW7M8qNGkui/s1tnlUFQ==}
 
   '@grafana/react-data-grid@7.0.0-beta.57':
     resolution: {integrity: sha512-v3DuW+TF16Jq5/dNJc0ifReBuknZb4+deB7M+liLMUU8sr2RavguNHpxCk4L/AdqLeXJFGhhqEDUYpeeQm2DzA==}
@@ -3416,6 +3422,7 @@ packages:
   eslint@9.39.5:
     resolution: {integrity: sha512-DgZS62aPLXKlnxILS/AYCoRvHaZeXceIzlXPkkGGzJWSow1aEk0lbTlxUSlyjC8jcaKxAdOnTDz+o1JFSBsyjw==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+    deprecated: This version is no longer supported. Please see https://eslint.org/version-support for other options.
     hasBin: true
     peerDependencies:
       jiti: '*'
@@ -7285,6 +7292,8 @@ snapshots:
     dependencies:
       '@playwright/test': 1.63.0
       yaml: 2.9.1
+
+  '@grafana/plugin-types@0.0.39': {}
 
   '@grafana/react-data-grid@7.0.0-beta.57(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
