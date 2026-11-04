@@ -55,27 +55,29 @@ interface SceneLabelValuesTimeseriesState extends SceneObjectState {
 
 // TODO(bryanhuhta) replace this patch when the fix lands in upstream grafana/grafana.
 //
-// The exemplar tooltip is rendered by Grafana core (ExemplarMarker.tsx) inside
-// a React portal attached to document.body, so it can't be reached by styles
-// scoped to this panel. Grafana keeps emotion labels in its class names (e.g.
-// `css-xxx-exemplarsTable`), so we can target the tooltip table globally to cap
-// its width and prevent very long label values (e.g. `container_image`) from
-// blowing the popup up to an enormous size. Long values are truncated with an
-// ellipsis and revealed in full (wrapped) on hover.
+// The following is a hack to reduce the width of tooltips when hovering over an
+// examplar. If a label value is really long (for example: a docker  image name),
+// the tool tip will expand to become extraordinarily wide to fit the entire
+// image name on a single line. It ends up covering most of the screen.
+//
+// This hack is heavily dependant on the layout of viz tooltips as defined in
+// grafana/grafana, so 
+const VIZ_TOOLTIP_WRAPPER = '[data-testid="data-testid viz-tooltip-wrapper"]';
+const VIZ_TOOLTIP_CELL = `${VIZ_TOOLTIP_WRAPPER} > div > div > div`;
 injectGlobal({
-  '[class*="exemplarsTable"]': {
-    maxWidth: 520,
+  [VIZ_TOOLTIP_WRAPPER]: {
+    maxWidth: 460,
   },
-  '[class*="exemplarsTable"] tr td:nth-child(2n)': {
-    maxWidth: 360,
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
+  [`${VIZ_TOOLTIP_WRAPPER} div`]: {
+    minWidth: 0,
+  },
+  [`${VIZ_TOOLTIP_CELL}:first-child`]: {
+    flexShrink: 0,
+    overflow: 'visible',
     whiteSpace: 'nowrap',
   },
-  '[class*="exemplarsTable"] tr td:nth-child(2n):hover': {
-    overflow: 'visible',
-    whiteSpace: 'normal',
-    wordBreak: 'break-all',
+  [`${VIZ_TOOLTIP_CELL}:last-child`]: {
+    flexShrink: 1,
   },
 });
 
