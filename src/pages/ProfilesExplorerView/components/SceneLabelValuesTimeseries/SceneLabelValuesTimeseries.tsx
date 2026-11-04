@@ -1,4 +1,4 @@
-import { css, cx } from '@emotion/css';
+import { css, cx, injectGlobal } from '@emotion/css';
 import { DataFrame, FieldMatcherID, LoadingState, PanelData } from '@grafana/data';
 import { config } from '@grafana/runtime';
 import {
@@ -52,6 +52,32 @@ interface SceneLabelValuesTimeseriesState extends SceneObjectState {
   legendPlacement: VizLegendOptions['placement'];
   overrides?: (series: DataFrame[]) => VizPanelState['fieldConfig']['overrides'];
 }
+
+// TODO(bryanhuhta) replace this patch when the fix lands in upstream grafana/grafana.
+//
+// The exemplar tooltip is rendered by Grafana core (ExemplarMarker.tsx) inside
+// a React portal attached to document.body, so it can't be reached by styles
+// scoped to this panel. Grafana keeps emotion labels in its class names (e.g.
+// `css-xxx-exemplarsTable`), so we can target the tooltip table globally to cap
+// its width and prevent very long label values (e.g. `container_image`) from
+// blowing the popup up to an enormous size. Long values are truncated with an
+// ellipsis and revealed in full (wrapped) on hover.
+injectGlobal({
+  '[class*="exemplarsTable"]': {
+    maxWidth: 520,
+  },
+  '[class*="exemplarsTable"] tr td:nth-child(2n)': {
+    maxWidth: 360,
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+  },
+  '[class*="exemplarsTable"] tr td:nth-child(2n):hover': {
+    overflow: 'visible',
+    whiteSpace: 'normal',
+    wordBreak: 'break-all',
+  },
+});
 
 const styles = {
   wrapper: css({
