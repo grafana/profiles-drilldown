@@ -32,7 +32,6 @@ type WidgetProps = {
 
 describe('EntityAssertionsWidget', () => {
   const model = {} as SceneObject;
-  const unsubscribe = jest.fn();
 
   function mockScene() {
     const timeRange = {
@@ -42,7 +41,9 @@ describe('EntityAssertionsWidget', () => {
           to: { valueOf: () => 2_000 },
         },
       },
-      subscribeToState: jest.fn(() => ({ unsubscribe })),
+      useState() {
+        return this.state;
+      },
     };
 
     jest.spyOn(sceneGraph, 'getTimeRange').mockReturnValue(timeRange as never);

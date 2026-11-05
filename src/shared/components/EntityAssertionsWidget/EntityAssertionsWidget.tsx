@@ -64,17 +64,7 @@ export function EntityAssertionsWidget({ serviceName, model }: Props) {
 }
 
 function useSceneTimeRange(model: SceneObject): TimeRange {
-  const subscribe = useCallback(
-    (onStoreChange: () => void) => {
-      const timeRange = sceneGraph.getTimeRange(model);
-      const sub = timeRange.subscribeToState(() => onStoreChange());
-      return () => sub.unsubscribe();
-    },
-    [model]
-  );
-  const getSnapshot = useCallback(() => sceneGraph.getTimeRange(model).state.value, [model]);
-
-  return useSyncExternalStore(subscribe, getSnapshot);
+  return sceneGraph.getTimeRange(model).useState().value;
 }
 
 /**
