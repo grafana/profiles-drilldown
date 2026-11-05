@@ -31,7 +31,9 @@ export function useGitHubIntegration(sidePanel: any): DomainHookReturnValue {
           onClick: () => {
             reportInteraction('g_pyroscope_app_function_details_clicked');
 
-            setStacktrace(buildStackTrace(item, data));
+            const st = buildStackTrace(item, data);
+            console.log({ st });
+            setStacktrace(st);
 
             sidePanel.open('function-details');
 
