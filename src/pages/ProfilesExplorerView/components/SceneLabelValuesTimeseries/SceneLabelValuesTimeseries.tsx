@@ -61,7 +61,7 @@ interface SceneLabelValuesTimeseriesState extends SceneObjectState {
 // image name on a single line. It ends up covering most of the screen.
 //
 // This hack is heavily dependant on the layout of viz tooltips as defined in
-// grafana/grafana, so 
+// grafana/grafana, so this fix is pretty brittle.
 const VIZ_TOOLTIP_WRAPPER = '[data-testid="data-testid viz-tooltip-wrapper"]';
 const VIZ_TOOLTIP_CELL = `${VIZ_TOOLTIP_WRAPPER} > div > div > div`;
 injectGlobal({
