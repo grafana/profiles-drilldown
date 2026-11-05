@@ -3,6 +3,10 @@ import { GrafanaTheme2 } from '@grafana/data';
 import { t } from '@grafana/i18n';
 import { useChromeHeaderHeight } from '@grafana/runtime';
 import { ButtonGroup, ClipboardButton, Dropdown, Field, Icon, Menu, ToolbarButton, useStyles2 } from '@grafana/ui';
+import {
+  EntityAssertionsWidget,
+  useServiceName,
+} from '@shared/components/EntityAssertionsWidget/EntityAssertionsWidget';
 import { SaveSearchButton } from '@shared/components/SavedSearches/SaveSearchButton';
 import { displayError } from '@shared/domain/displayStatus';
 import { reportInteraction } from '@shared/domain/reportInteraction';
@@ -16,6 +20,7 @@ import { getShareableUrlText } from 'src/pages/ProfilesExplorerView/components/S
 import { usePluginHeaderToolbar } from 'src/pages/ProfilesExplorerView/components/SceneProfilesExplorer/components/domain/usePluginHeaderToolbar';
 import { ExplorationTypeSelector } from 'src/pages/ProfilesExplorerView/components/SceneProfilesExplorer/components/ui/ExplorationTypeSelector';
 import {
+  ExplorationType,
   SceneProfilesExplorer,
   SceneProfilesExplorerState,
 } from 'src/pages/ProfilesExplorerView/components/SceneProfilesExplorer/SceneProfilesExplorer';
@@ -40,6 +45,7 @@ export function PluginHeaderToolbar(props: PluginHeaderToolbarProps) {
   const styles = useStyles2(getStyles, chromeHeaderHeight ?? 0, props.isEmbedded ?? false, visualDesignRefresh);
 
   const { data, actions } = usePluginHeaderToolbar(props);
+  const serviceName = useServiceName(props.model);
 
   const { settings } = useFetchPluginSettings();
   const metricsFromProfiles = useFlagMetricsFromProfiles();
@@ -81,6 +87,12 @@ export function PluginHeaderToolbar(props: PluginHeaderToolbarProps) {
         </div>
 
         <div className={styles.appControlsRight}>
+          {!props.isEmbedded &&
+            serviceName &&
+            explorationType !== ExplorationType.ALL_SERVICES &&
+            explorationType !== ExplorationType.FAVORITES && (
+              <EntityAssertionsWidget serviceName={serviceName} model={props.model} />
+            )}
           {!props.isEmbedded && <SaveSearchButton sceneRef={props.model} />}
           {!props.isEmbedded && props.loadSearchScene && (
             <props.loadSearchScene.Component model={props.loadSearchScene} />

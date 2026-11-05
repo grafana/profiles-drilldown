@@ -1,5 +1,5 @@
 import { t } from '@grafana/i18n';
-import { config } from '@grafana/runtime';
+import { getDataSourceInstanceList } from '@grafana/plugin-compat/datasources';
 import {
   dataLayers,
   SceneDataLayerSet,
@@ -9,11 +9,11 @@ import {
   SceneObjectState,
 } from '@grafana/scenes';
 import { DataQuery } from '@grafana/schema';
+import { isKnowledgeGraphDataSource } from '@shared/domain/datasources';
+import { logger } from '@shared/infrastructure/tracking/logger';
+import { KG_DATASOURCE_TYPE, KG_DATASOURCE_UID } from 'src/constants';
 
 import { KgAnnotationToggle } from './KgAnnotationToggle';
-
-const KG_DATASOURCE_TYPE = 'grafana-knowledgegraph-datasource';
-const KG_DATASOURCE_UID = 'grafanacloud-knowledgegraph';
 
 interface KgSceneProps {
   $data: SceneDataLayerSet;
@@ -21,8 +21,14 @@ interface KgSceneProps {
   controls: KgAnnotationToggle;
 }
 
-export function isKgAnnotationsAvailable(): boolean {
-  return Object.values(config.datasources).some((d) => d.uid === KG_DATASOURCE_UID && d.type === KG_DATASOURCE_TYPE);
+export async function isKgAnnotationsAvailable(): Promise<boolean> {
+  const instances = await getDataSourceInstanceList({ all: true, filter: isKnowledgeGraphDataSource }).catch(
+    (error) => {
+      logger.debug('Failed to get Knowledge Graph data sources', { error });
+      return [];
+    }
+  );
+  return Boolean(instances.length);
 }
 
 function getSeverities() {
@@ -183,8 +189,11 @@ class KgAnnotationBehavior extends SceneObjectBase<KgAnnotationBehaviorState> {
   }
 }
 
-export function getKgSceneProps(entityType: string, serviceNameVarKey: string): KgSceneProps | undefined {
-  if (!isKgAnnotationsAvailable()) {
+export async function getKgSceneProps(
+  entityType: string,
+  serviceNameVarKey: string
+): Promise<KgSceneProps | undefined> {
+  if (!(await isKgAnnotationsAvailable())) {
     return undefined;
   }
 

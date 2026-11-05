@@ -1,8 +1,7 @@
 import { css } from '@emotion/css';
-import { DataSourceJsonData, getValueFormat, GrafanaTheme2 } from '@grafana/data';
+import { getValueFormat, GrafanaTheme2 } from '@grafana/data';
 import { t } from '@grafana/i18n';
-import { getDataSourceSrv } from '@grafana/runtime';
-import { SceneComponentProps, sceneGraph, SceneObjectBase, SceneObjectState } from '@grafana/scenes';
+import { type SceneComponentProps, sceneGraph, SceneObjectBase, type SceneObjectState } from '@grafana/scenes';
 import {
   Column,
   Field as FormField,
@@ -13,8 +12,8 @@ import {
   Spinner,
   useStyles2,
 } from '@grafana/ui';
-import { useFlagVisualDesignRefresh } from '@shared/infrastructure/featureFlags/featureFlags';
 import { reportInteraction } from '@shared/domain/reportInteraction';
+import { useFlagVisualDesignRefresh } from '@shared/infrastructure/featureFlags/featureFlags';
 import { getProfileMetric, ProfileMetricId } from '@shared/infrastructure/profile-metrics/getProfileMetric';
 import React, { useMemo } from 'react';
 
@@ -29,7 +28,7 @@ import { CopyableId } from './components/CopyableId';
 import { getDisplayedExemplarRows } from './domain/getDisplayedExemplarRows';
 import { getVisiblePageRows, uniqueSpanTimestamps } from './domain/getVisiblePageSpans';
 import { SpanTimestamp } from './domain/mergeSpanTraceWindows';
-import { selectTempoDataSourceUid, TempoDataSourceOption } from './domain/selectTempoDataSourceUid';
+import { getTempoDataSourceOptions, selectTempoDataSourceUid, type TempoDataSourceOption } from './domain/tempo';
 import { ExemplarRow } from './infrastructure/buildHeatmapDataFrames';
 import { lookupTempoTraceInfo, TraceInfo } from './infrastructure/lookupTempoTraceInfo';
 import { SceneExploreServiceHeatmap } from './SceneExploreServiceHeatmap';
@@ -43,12 +42,6 @@ interface SceneExemplarTableState extends SceneObjectState {
   tempoDatasources: TempoDataSourceOption[];
   traceLookupFailed: boolean;
   page: number;
-}
-
-interface TempoDataSourceJsonData extends DataSourceJsonData {
-  tracesToProfiles?: {
-    datasourceUid?: string;
-  };
 }
 
 function formatTimestamp(ms: number): string {
@@ -73,55 +66,60 @@ export class SceneExemplarTable extends SceneObjectBase<SceneExemplarTableState>
   }
 
   onActivate() {
-    const allDatasources = getDataSourceSrv().getList({ pluginId: 'tempo' });
-    const tempoDatasources = allDatasources.map((ds) => {
-      const jsonData = ds.jsonData as TempoDataSourceJsonData;
-
-      return {
-        uid: ds.uid,
-        name: ds.name,
-        isDefault: ds.isDefault,
-        tracesToProfilesDataSourceUid: jsonData.tracesToProfiles?.datasourceUid,
-      };
-    });
-    this.setState({ tempoDatasources });
+    let cancelled = false;
 
     let parent: SceneExploreServiceHeatmap | undefined;
+
     try {
       parent = sceneGraph.getAncestor(this, SceneExploreServiceHeatmap);
     } catch {
       return;
     }
 
-    this.syncTempoDataSource(parent, tempoDatasources);
-
-    const dataSourceSub = sceneGraph
-      .findByKeyAndType(this, 'dataSource', ProfilesDataSourceVariable)
-      .subscribeToState((newState, prevState) => {
-        if (newState.value !== prevState.value) {
-          this.syncTempoDataSource(parent!, tempoDatasources, true);
+    this._subs.add(
+      parent.subscribeToState((newState, prevState) => {
+        if (newState.exemplarRows !== prevState.exemplarRows) {
+          this.handleNewExemplarRows(newState.exemplarRows);
+          return;
         }
-      });
 
-    const parentSub = parent.subscribeToState((newState, prevState) => {
-      if (newState.exemplarRows !== prevState.exemplarRows) {
-        this.handleNewExemplarRows(newState.exemplarRows);
-        return;
-      }
+        if (
+          newState.selectedSpanId !== prevState.selectedSpanId ||
+          newState.selectedTimestamp !== prevState.selectedTimestamp
+        ) {
+          this.setPage(0, true);
+        }
+      })
+    );
 
-      if (
-        newState.selectedSpanId !== prevState.selectedSpanId ||
-        newState.selectedTimestamp !== prevState.selectedTimestamp
-      ) {
-        this.setPage(0, true);
-      }
-    });
+    this._subs.add(
+      sceneGraph
+        .findByKeyAndType(this, 'dataSource', ProfilesDataSourceVariable)
+        .subscribeToState((newState, prevState) => {
+          if (newState.value === prevState.value) {
+            return;
+          }
+
+          if (this.state.tempoDatasources.length) {
+            this.syncTempoDataSource(parent, this.state.tempoDatasources, true);
+          }
+        })
+    );
 
     this.handleNewExemplarRows(parent.state.exemplarRows);
 
+    getTempoDataSourceOptions().then((tempoDatasources) => {
+      if (cancelled || !tempoDatasources) {
+        return;
+      }
+
+      this.setState({ tempoDatasources });
+      this.syncTempoDataSource(parent, tempoDatasources);
+      this.lookupVisibleSpans(this.state.rows, this.state.page);
+    });
+
     return () => {
-      parentSub.unsubscribe();
-      dataSourceSub.unsubscribe();
+      cancelled = true;
     };
   }
 
@@ -137,7 +135,7 @@ export class SceneExemplarTable extends SceneObjectBase<SceneExemplarTableState>
       profilesDataSourceUid
     );
     if (tempoDataSourceUid !== parent.state.tempoDataSourceUid) {
-      parent.setTempoDataSourceUid(tempoDataSourceUid);
+      this.setTempoDataSourceUid(tempoDataSourceUid);
     }
   }
 
@@ -579,11 +577,8 @@ const getStyles = (theme: GrafanaTheme2, visualDesignRefresh: boolean) => ({
 
     tbody tr {
       background: ${theme.colors.action.selected};
-      outline: 1px solid ${
-        visualDesignRefresh
-          ? theme.colors.accent?.main ?? theme.colors.border.strong
-          : theme.colors.primary.border
-      };
+      outline: 1px solid
+        ${visualDesignRefresh ? theme.colors.accent?.main ?? theme.colors.border.strong : theme.colors.primary.border};
       outline-offset: -1px;
     }
   `,

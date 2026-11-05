@@ -9,9 +9,6 @@ if (typeof window !== 'undefined') {
   Object.defineProperty(window, 'crypto', { value: webcrypto, configurable: true });
 }
 
-// IntersectionObserver is not available in jsdom (used by @grafana/scenes LazyLoader)
-global.IntersectionObserver = class IntersectionObserver {};
-
 // Emotion + :has() can produce selectors nwsapi cannot parse; Floating UI's Modal focus trap
 // calls getComputedStyle and throws. Fall back so tab order / visibility checks still run.
 const origGetComputedStyle = window.getComputedStyle.bind(window);

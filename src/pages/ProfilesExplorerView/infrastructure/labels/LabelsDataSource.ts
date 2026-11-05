@@ -56,11 +56,9 @@ export class LabelsDataSource extends RuntimeDataSource {
     const dataSourceUid = safeInterpolate(sceneObject, '$dataSource');
     const serviceName = safeInterpolate(sceneObject, '$serviceName');
     const profileMetricId = safeInterpolate(sceneObject, '$profileMetricId');
-
-    // we could interpolate ad hoc filters, but the Labels exploration type would reload all labels each time they are modified
-    // const filters = sceneGraph.interpolate(sceneObject, '$filters');
-    // const pyroscopeQuery = `${profileMetricId}{service_name="${serviceName}",${filters}}`;
-    const query = `${profileMetricId}{service_name="${serviceName}"}`;
+    // Leading comma is empty when no filters are set, so the selector stays valid.
+    const filters = safeInterpolate(sceneObject, '${filters.filterExpressionWithLeadingComma}');
+    const query = `${profileMetricId}{service_name="${serviceName}"${filters}}`;
 
     const { from, to } = computeRoundedTimeRange(range as TimeRange);
 
