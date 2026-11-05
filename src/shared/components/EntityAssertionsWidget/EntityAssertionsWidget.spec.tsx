@@ -34,7 +34,7 @@ describe('EntityAssertionsWidget', () => {
   const model = {} as SceneObject;
   const unsubscribe = jest.fn();
 
-  function mockScene({ filters = [] as Array<{ key: string; operator: string; value: string }> } = {}) {
+  function mockScene() {
     const timeRange = {
       state: {
         value: {
@@ -44,18 +44,8 @@ describe('EntityAssertionsWidget', () => {
       },
       subscribeToState: jest.fn(() => ({ unsubscribe })),
     };
-    const filtersVariable = {
-      state: { filters },
-      subscribeToState: jest.fn(() => ({ unsubscribe })),
-    };
 
     jest.spyOn(sceneGraph, 'getTimeRange').mockReturnValue(timeRange as never);
-    jest.spyOn(sceneGraph, 'lookupVariable').mockImplementation((name: string) => {
-      if (name === 'filters') {
-        return filtersVariable as never;
-      }
-      return null;
-    });
   }
 
   beforeEach(() => {
@@ -94,15 +84,7 @@ describe('EntityAssertionsWidget', () => {
   });
 
   it('passes the selected service and time range without profile label filters', async () => {
-    mockScene({
-      filters: [
-        { key: 'service_name', operator: '=', value: 'checkout' },
-        { key: 'namespace', operator: '=', value: 'prod' },
-        { key: 'pod', operator: '!=', value: 'canary' },
-        { key: 'version', operator: '=~', value: 'v1' },
-        { key: 'cluster', operator: '!~', value: 'dev' },
-      ],
-    });
+    mockScene();
 
     render(<EntityAssertionsWidget serviceName="prod/checkout" model={model} />);
 

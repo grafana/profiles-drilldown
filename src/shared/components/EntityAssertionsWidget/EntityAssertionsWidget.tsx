@@ -2,11 +2,9 @@ import { TimeRange } from '@grafana/data';
 import type { EntityAssertionsWidgetProps } from '@grafana/plugin-types/grafana-asserts-app';
 import { usePluginComponent } from '@grafana/runtime';
 import { sceneGraph, SceneObject } from '@grafana/scenes';
-import React, { ReactElement, useCallback, useSyncExternalStore } from 'react';
+import React, { useCallback, useSyncExternalStore } from 'react';
 
 export const ENTITY_ASSERTIONS_WIDGET_ID = 'grafana-asserts-app/entity-assertions-widget/v1';
-
-export type EntityAssertionsWidgetExternal = (props: EntityAssertionsWidgetProps) => ReactElement | null;
 
 interface Props {
   serviceName: string;
