@@ -33,8 +33,8 @@ export function useFlagVisualDesignRefresh(): boolean {
   return useBooleanFlagDetails(visualDesignRefreshKey, false).value;
 }
 
-export function getQueryLibraryFromOpenFeature(): boolean {
-  return getPluginOpenFeatureBoolean(queryLibraryKey, false);
+export function useFlagQueryLibrary(): boolean {
+  return useBooleanFlagDetails(queryLibraryKey, false).value;
 }
 
 export function getKgAnnotationsInPyroscopeFromOpenFeature(): boolean {

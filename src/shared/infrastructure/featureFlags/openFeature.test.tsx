@@ -4,7 +4,7 @@ import { OpenFeature, type Provider, TypedInMemoryProvider } from '@openfeature/
 import { render, renderHook, screen, waitFor } from '@testing-library/react';
 import React from 'react';
 
-import { getQueryLibraryFromOpenFeature, QUERY_LIBRARY_FEATURE_FLAG_KEY } from './featureFlags';
+import { QUERY_LIBRARY_FEATURE_FLAG_KEY, useFlagQueryLibrary } from './featureFlags';
 import { ensureOpenFeaturePluginInitialized, OpenFeaturePluginScope, PLUGIN_OPEN_FEATURE_DOMAIN } from './openFeature';
 
 jest.mock('@grafana/runtime', () => {
@@ -59,9 +59,9 @@ describe('openFeature', () => {
     });
   });
 
-  describe('getQueryLibraryFromOpenFeature', () => {
-    it('returns the default when the flag is unset in the test provider', () => {
-      const { result } = renderHook(() => getQueryLibraryFromOpenFeature(), {
+  describe('useFlagQueryLibrary', () => {
+    it('should return false when the flag is unset', () => {
+      const { result } = renderHook(useFlagQueryLibrary, {
         wrapper: ({ children }) => (
           <OpenFeatureTestProvider domain={PLUGIN_OPEN_FEATURE_DOMAIN}>{children}</OpenFeatureTestProvider>
         ),
@@ -69,8 +69,8 @@ describe('openFeature', () => {
       expect(result.current).toBe(false);
     });
 
-    it('returns true when the test provider maps the Grafana registry flag on', () => {
-      const { result } = renderHook(() => getQueryLibraryFromOpenFeature(), {
+    it('should return true when the flag is enabled', () => {
+      const { result } = renderHook(useFlagQueryLibrary, {
         wrapper: ({ children }) => (
           <OpenFeatureTestProvider
             domain={PLUGIN_OPEN_FEATURE_DOMAIN}
