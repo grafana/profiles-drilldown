@@ -4,7 +4,6 @@ import type { PluginHeaderToolbarProps } from '@shared/ui/PluginHeaderToolbar';
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { PLUGIN_BASE_URL, ROUTES } from 'src/constants';
-import { getSceneVariableValue } from 'src/pages/ProfilesExplorerView/helpers/getSceneVariableValue';
 
 import { ProfilesDataSourceVariable } from '../../../../domain/variables/ProfilesDataSourceVariable';
 import { ExplorationType } from '../../SceneProfilesExplorer';
@@ -36,11 +35,6 @@ export function usePluginHeaderToolbar({
 
   const navigate = useNavigate();
 
-  const explorationTypeHasServiceName =
-    explorationType !== ExplorationType.ALL_SERVICES && explorationType !== ExplorationType.FAVORITES;
-
-  const serviceName = explorationTypeHasServiceName ? getSceneVariableValue($variables, 'serviceName') : undefined;
-
   return {
     data: {
       explorationType,
@@ -50,7 +44,6 @@ export function usePluginHeaderToolbar({
       sceneVariables,
       gridControls,
       body,
-      serviceName,
       extraControls,
     },
     actions: {
