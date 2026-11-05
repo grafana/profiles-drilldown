@@ -66,6 +66,11 @@ export default [
       'react-hooks/set-state-in-effect': 'warn',
       'react-hooks/refs': 'warn',
       'react-hooks/preserve-manual-memoization': 'warn',
+      'sonarjs/super-linear-regex': 'warn',
+      'sonarjs/prefer-specific-assertions': 'warn',
+      'sonarjs/no-redundant-optional': 'warn',
+      'sonarjs/prefer-native-lodash-alternative': 'warn',
+      'sonarjs/testing-library-query-assertion': 'warn',
     },
   },
 ];
