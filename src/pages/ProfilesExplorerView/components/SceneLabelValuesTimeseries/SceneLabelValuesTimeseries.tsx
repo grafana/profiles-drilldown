@@ -54,6 +54,7 @@ interface SceneLabelValuesTimeseriesState extends SceneObjectState {
 }
 
 // TODO(bryanhuhta) replace this patch when the fix lands in upstream grafana/grafana.
+// See https://github.com/grafana/grafana/pull/137061.
 //
 // The following is a hack to reduce the width of tooltips when hovering over an
 // examplar. If a label value is really long (for example: a docker  image name),
