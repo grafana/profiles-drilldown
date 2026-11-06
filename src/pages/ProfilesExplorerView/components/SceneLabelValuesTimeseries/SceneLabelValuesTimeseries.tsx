@@ -1,4 +1,4 @@
-import { css, cx } from '@emotion/css';
+import { css, cx, injectGlobal } from '@emotion/css';
 import { DataFrame, FieldMatcherID, LoadingState, PanelData } from '@grafana/data';
 import { config } from '@grafana/runtime';
 import {
@@ -52,6 +52,35 @@ interface SceneLabelValuesTimeseriesState extends SceneObjectState {
   legendPlacement: VizLegendOptions['placement'];
   overrides?: (series: DataFrame[]) => VizPanelState['fieldConfig']['overrides'];
 }
+
+// TODO(bryanhuhta) replace this patch when the fix lands in upstream grafana/grafana.
+// See https://github.com/grafana/grafana/pull/137061.
+//
+// The following is a hack to reduce the width of tooltips when hovering over an
+// examplar. If a label value is really long (for example: a docker  image name),
+// the tool tip will expand to become extraordinarily wide to fit the entire
+// image name on a single line. It ends up covering most of the screen.
+//
+// This hack is heavily dependant on the layout of viz tooltips as defined in
+// grafana/grafana, so this fix is pretty brittle.
+const VIZ_TOOLTIP_WRAPPER = '[data-testid="data-testid viz-tooltip-wrapper"]';
+const VIZ_TOOLTIP_CELL = `${VIZ_TOOLTIP_WRAPPER} > div > div > div`;
+injectGlobal({
+  [VIZ_TOOLTIP_WRAPPER]: {
+    maxWidth: 460,
+  },
+  [`${VIZ_TOOLTIP_WRAPPER} div`]: {
+    minWidth: 0,
+  },
+  [`${VIZ_TOOLTIP_CELL}:first-child`]: {
+    flexShrink: 0,
+    overflow: 'visible',
+    whiteSpace: 'nowrap',
+  },
+  [`${VIZ_TOOLTIP_CELL}:last-child`]: {
+    flexShrink: 1,
+  },
+});
 
 const styles = {
   wrapper: css({
