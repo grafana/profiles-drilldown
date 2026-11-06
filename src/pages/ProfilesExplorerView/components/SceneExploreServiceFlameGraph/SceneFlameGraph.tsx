@@ -238,8 +238,8 @@ export class SceneFlameGraph extends SceneObjectBase<SceneFlameGraphState> {
       [data.isLoading, data.title, styles.spinner]
     );
 
-    const extraContextMenuButtons: FlameGraphProps['getExtraContextMenuButtons'] = (clickedItemData, data) => {
-      const ghButtons = gitHubIntegration.actions.getExtraFlameGraphMenuItems(clickedItemData, data);
+    const extraContextMenuButtons: FlameGraphProps['getExtraContextMenuButtons'] = (clickedItemData, data, state) => {
+      const ghButtons = !state?.isSandwich ? gitHubIntegration.actions.getExtraFlameGraphMenuItems(clickedItemData, data) : [];
       const recordingRulesButtons =
         settings?.enableMetricsFromProfiles && metricsFromProfiles
           ? recordingRulesMenu.actions.getExtraFlameGraphMenuItems(clickedItemData, data)
