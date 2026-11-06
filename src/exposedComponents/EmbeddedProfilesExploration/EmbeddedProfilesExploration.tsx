@@ -16,6 +16,7 @@ function buildProfilesExplorationFromState({
   initialTimeRange,
   onTimeRangeChange,
   initialFilters,
+  initialAllServicesFilter,
   initialDS,
 }: EmbeddedSceneProps) {
   const $timeRange = new SceneTimeRange({
@@ -34,6 +35,7 @@ function buildProfilesExplorationFromState({
     $timeRange,
     isEmbedded: true,
     initialFilters: initialFilters ? initialFilters.map((filter) => ({ ...filter })) : undefined,
+    initialAllServicesFilter: initialAllServicesFilter?.map((filter) => ({ ...filter })),
     initialDS,
   });
 

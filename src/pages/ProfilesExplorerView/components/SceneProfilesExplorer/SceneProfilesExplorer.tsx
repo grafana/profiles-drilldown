@@ -76,6 +76,7 @@ export interface SceneProfilesExplorerState extends Partial<EmbeddedSceneState> 
   loadSearchScene: LoadSearchScene;
   isEmbedded?: boolean;
   initialFilters?: AdHocVariableFilter[];
+  initialAllServicesFilter?: AdHocVariableFilter[];
   initialDS?: string;
   isAddToDashboardModalOpen?: boolean;
   addToDashboardPanelData?: PanelDataRequestPayload;
@@ -178,7 +179,10 @@ export class SceneProfilesExplorer extends SceneObjectBase<SceneProfilesExplorer
                 return filtered.length > 0 ? filtered : undefined;
               })(),
             }),
-            new AllServicesFilterVariable({ key: 'filtersAllServices' }),
+            new AllServicesFilterVariable({
+              key: 'filtersAllServices',
+              initialFilters: state.initialAllServicesFilter,
+            }),
             new FiltersVariable({ key: 'filtersBaseline' }),
             new FiltersVariable({ key: 'filtersComparison' }),
             new GroupByVariable(),
