@@ -1,5 +1,37 @@
 # Changelog
 
+## [3.2.0](https://github.com/grafana/profiles-drilldown/compare/v3.1.0...v3.2.0) (2026-11-06)
+
+
+### 🎉 Features
+
+* bump @grafana/sign-plugin and node version ([#1206](https://github.com/grafana/profiles-drilldown/issues/1206)) ([2baa021](https://github.com/grafana/profiles-drilldown/commit/2baa02170f55d36901f89949001eb6b7631c723a))
+* replace config.datasources in kgAnnotations ([#1224](https://github.com/grafana/profiles-drilldown/issues/1224)) ([43cc1dc](https://github.com/grafana/profiles-drilldown/commit/43cc1dccfb77f93215df8c8f1e09628dfa15073c))
+* replace config.datasources in SceneExemplarTable ([#1226](https://github.com/grafana/profiles-drilldown/issues/1226)) ([0fcebc9](https://github.com/grafana/profiles-drilldown/commit/0fcebc97302407f9130cd4293dbaab909274e35f))
+* replace hardcoded api calls with supported functions ([#1240](https://github.com/grafana/profiles-drilldown/issues/1240)) ([1b44bf0](https://github.com/grafana/profiles-drilldown/commit/1b44bf0aa5c114af609b601e9c94eb06dcb1139e))
+* resolve dataSourceUid from context ([#1203](https://github.com/grafana/profiles-drilldown/issues/1203)) ([1769372](https://github.com/grafana/profiles-drilldown/commit/17693722cca19d5bb0ef645d13f1a76aa075b3e3))
+* show Asserts insights for the selected service ([#1238](https://github.com/grafana/profiles-drilldown/issues/1238)) ([175d797](https://github.com/grafana/profiles-drilldown/commit/175d7976c0b018ba00ad7301eaf3d54ed634799e))
+* use OpenFeature providers from @grafana/runtime ([#1193](https://github.com/grafana/profiles-drilldown/issues/1193)) ([3a95890](https://github.com/grafana/profiles-drilldown/commit/3a95890cdab9c83e185775b8b063006eeff547a9))
+
+
+### 🐛 Bug Fixes
+
+* apply ad-hoc filters to Labels group-by panels and counts ([#1225](https://github.com/grafana/profiles-drilldown/issues/1225)) ([ea780d7](https://github.com/grafana/profiles-drilldown/commit/ea780d7feae85d38f0dfd32393a0f9f94fbbbee0))
+* **deps:** bump pnpm overrides for CVE remediation ([#1243](https://github.com/grafana/profiles-drilldown/issues/1243)) ([3f7cefd](https://github.com/grafana/profiles-drilldown/commit/3f7cefdc1488b021ffe9bff8f5147695f74205f0))
+* **security/medium/:** update dependency glob to v14 [security] ([#1227](https://github.com/grafana/profiles-drilldown/issues/1227)) ([237b8d9](https://github.com/grafana/profiles-drilldown/commit/237b8d9b90f70d4025577afa82bf78182998c7ae))
+* **security/unknown/samples/rideshare:** update module github.com/klauspost/compress to v1.20.2 [security] ([#1245](https://github.com/grafana/profiles-drilldown/issues/1245)) ([68d3327](https://github.com/grafana/profiles-drilldown/commit/68d3327b484dbb267bdd3c8ecba37edbfc6a39d2))
+
+
+### 🧹 Chore
+
+* bump @grafana/create-plugin configuration to 7.17.0 ([#1232](https://github.com/grafana/profiles-drilldown/issues/1232)) ([d24a0d5](https://github.com/grafana/profiles-drilldown/commit/d24a0d5a7e47f513bca25063453f34498786d3f0))
+* **ci:** fix broken snapshot tests ([#1216](https://github.com/grafana/profiles-drilldown/issues/1216)) ([54fb9d1](https://github.com/grafana/profiles-drilldown/commit/54fb9d1a97094fe855ddae59a6cc4871139a0f3a))
+* **deps:** update ca trust base images [security] ([#1229](https://github.com/grafana/profiles-drilldown/issues/1229)) ([233930e](https://github.com/grafana/profiles-drilldown/commit/233930e0027712473f37af68fc7ee591034253f7))
+* **deps:** update dependency @swc/core to v1.16.20 ([#1230](https://github.com/grafana/profiles-drilldown/issues/1230)) ([bfb86b8](https://github.com/grafana/profiles-drilldown/commit/bfb86b8419ae5ed18866a0e96c744bb785e3e5ee))
+* **deps:** update eslint ([#1235](https://github.com/grafana/profiles-drilldown/issues/1235)) ([87a0133](https://github.com/grafana/profiles-drilldown/commit/87a0133f22d0fae143c594dca2fa265e4180a03d))
+* glob fix ([#1231](https://github.com/grafana/profiles-drilldown/issues/1231)) ([7fffea5](https://github.com/grafana/profiles-drilldown/commit/7fffea51ea25347e675360db1f3d25a09fea0b93))
+* update packages ([#1215](https://github.com/grafana/profiles-drilldown/issues/1215)) ([4a6703e](https://github.com/grafana/profiles-drilldown/commit/4a6703e12b235ab5d71dc697af8b36d8efcc4c3f))
+
 ## [3.1.0](https://github.com/grafana/profiles-drilldown/compare/v3.0.0...v3.1.0) (2026-10-21)
 
 
