@@ -78,7 +78,8 @@ export class ServiceNameVariable extends QueryVariable {
 
   /**
    * Precedence: `service_name` with `=` from embed/initialFilters wins over userStorage.
-   * If there is no such filter and the variable is still empty, restore the last service from userStorage.
+   * Any initial service_name constraint suppresses the storage fallback so the filtered catalog can select a service.
+   * Otherwise, if the variable is still empty, restore the last service from userStorage.
    */
   setInitialValue() {
     const { serviceName: serviceNameFromStorage } = userStorage.get(userStorage.KEYS.PROFILES_EXPLORER) || {};
@@ -87,7 +88,9 @@ export class ServiceNameVariable extends QueryVariable {
       (filter: AdHocVariableFilter) => filter.key === 'service_name' && filter.operator === '='
     )?.value;
 
-    if (serviceNameFromStorage && !this.state.value && !initialServiceName) {
+    const hasInitialServiceConstraint = this.initialFilters?.some((filter) => filter.key === 'service_name');
+
+    if (serviceNameFromStorage && !this.state.value && !hasInitialServiceConstraint) {
       this.setState({ value: serviceNameFromStorage });
     } else if (initialServiceName) {
       this.setState({ value: initialServiceName });
