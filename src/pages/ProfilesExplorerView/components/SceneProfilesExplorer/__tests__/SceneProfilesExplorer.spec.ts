@@ -31,6 +31,24 @@ jest.mock('@shared/infrastructure/featureFlags/featureFlags', () => ({
 }));
 
 describe('SceneProfilesExplorer', () => {
+  it('applies embedded defaults once while preserving heatmap state and subsequent navigation', () => {
+    const explorer = new SceneProfilesExplorer({
+      initialDS: 'test-ds-uid',
+      initialExplorationType: 'flame-graph',
+      initialFilters: [{ key: 'service_name', operator: '=', value: 'api' }],
+    });
+    explorer.updateFromUrl({ explorationType: 'labels', showSpanHeatmap: 'true' });
+    expect(explorer.state.explorationType).toBe(ExplorationType.FLAME_GRAPH);
+    expect(explorer.state.showSpanHeatmap).toBe(true);
+
+    const body = explorer.state.body;
+    explorer.updateFromUrl({ explorationType: 'flame-graph', showSpanHeatmap: 'true' });
+    expect(explorer.state.body).toBe(body);
+
+    explorer.updateFromUrl({ explorationType: 'labels' });
+    expect(explorer.state.explorationType).toBe(ExplorationType.LABELS);
+  });
+
   it('syncs span heatmap URL state without rebuilding the flame graph scene', () => {
     const explorer = new SceneProfilesExplorer({ initialDS: 'test-ds-uid' });
     const buildBodyScene = explorer.buildBodyScene(ExplorationType.FLAME_GRAPH);
