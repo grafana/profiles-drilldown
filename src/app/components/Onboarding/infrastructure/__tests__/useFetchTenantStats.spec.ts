@@ -1,12 +1,12 @@
 import { createDataSourceUidWrapper } from '@shared/infrastructure/datasource/testing/createDataSourceUidWrapper';
-import { mockFetch } from '@shared/infrastructure/http/testing/mockFetch';
+import { mockGrafanaFetch } from '@shared/infrastructure/http/testing/mockGrafanaFetch';
 import { renderHook, waitFor } from '@testing-library/react';
 
 import { useFetchTenantStats } from '../useFetchTenantStats';
 
 describe('useFetchTenantStats()', () => {
   it('should fetch stats from the given datasource', async () => {
-    const fetch = mockFetch();
+    const fetch = mockGrafanaFetch();
 
     renderHook(() => useFetchTenantStats({ enabled: true, dataSourceUid: 'pyroscope-abc' }), {
       wrapper: createDataSourceUidWrapper(''),
@@ -21,7 +21,7 @@ describe('useFetchTenantStats()', () => {
   });
 
   it('should not fetch stats without a datasource uid', () => {
-    mockFetch();
+    mockGrafanaFetch();
 
     const { result } = renderHook(() => useFetchTenantStats({ enabled: true, dataSourceUid: '' }), {
       wrapper: createDataSourceUidWrapper(''),

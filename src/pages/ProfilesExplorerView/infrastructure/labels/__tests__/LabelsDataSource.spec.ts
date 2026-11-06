@@ -1,6 +1,12 @@
 import { AdHocVariableFilter, dateTime, TimeRange } from '@grafana/data';
-import { AdHocFiltersVariable, ConstantVariable, EmbeddedScene, SceneCanvasText, SceneVariableSet } from '@grafana/scenes';
-import { mockFetch } from '@shared/infrastructure/http/testing/mockFetch';
+import {
+  AdHocFiltersVariable,
+  ConstantVariable,
+  EmbeddedScene,
+  SceneCanvasText,
+  SceneVariableSet,
+} from '@grafana/scenes';
+import { mockGrafanaFetch } from '@shared/infrastructure/http/testing/mockGrafanaFetch';
 
 import {
   FILTER_EXPRESSION_WITH_LEADING_COMMA,
@@ -68,7 +74,7 @@ describe('LabelsDataSource.getParams', () => {
 
 describe('LabelsDataSource', () => {
   it('should fetch labels from the given datasource', async () => {
-    const fetch = mockFetch(() => ({ names: ['env'] }));
+    const fetch = mockGrafanaFetch(() => ({ names: ['env'] }));
 
     const labels = await new LabelsDataSource().fetchLabels('pyroscope-abc', 'q', 1, 2);
 
@@ -80,7 +86,7 @@ describe('LabelsDataSource', () => {
   });
 
   it('should fetch label values from the given datasource', async () => {
-    const fetch = mockFetch(() => ({ names: [] }));
+    const fetch = mockGrafanaFetch(() => ({ names: [] }));
 
     await new LabelsDataSource().fetchLabelValues('pyroscope-abc', 'q', 1, 2, 'env');
 

@@ -1,6 +1,6 @@
 import { dateTime, TimeRange } from '@grafana/data';
 import { getSelectedDefaultDataSource } from '@shared/infrastructure/datasource/useSelectDefaultDataSourceUid';
-import { mockFetch } from '@shared/infrastructure/http/testing/mockFetch';
+import { mockGrafanaFetch } from '@shared/infrastructure/http/testing/mockGrafanaFetch';
 
 import { SeriesDataSource } from '../SeriesDataSource';
 
@@ -19,7 +19,7 @@ describe('SeriesDataSource', () => {
   });
 
   it('should fetch series from the given datasource', async () => {
-    const fetch = mockFetch(() => ({ labelsSet: [] }));
+    const fetch = mockGrafanaFetch(() => ({ labelsSet: [] }));
 
     await new SeriesDataSource().fetchSeries('pyroscope-abc', range);
 
@@ -30,7 +30,7 @@ describe('SeriesDataSource', () => {
   });
 
   it('should fall back to the selected default datasource', async () => {
-    const fetch = mockFetch(() => ({ labelsSet: [] }));
+    const fetch = mockGrafanaFetch(() => ({ labelsSet: [] }));
 
     await new SeriesDataSource().metricFindQuery('$dataSource $filtersAllServices and all services', { range });
 

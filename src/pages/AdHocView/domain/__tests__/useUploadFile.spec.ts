@@ -1,5 +1,5 @@
 import { createDataSourceUidWrapper } from '@shared/infrastructure/datasource/testing/createDataSourceUidWrapper';
-import { mockFetch, mockPendingFetch } from '@shared/infrastructure/http/testing/mockFetch';
+import { mockGrafanaFetch, mockPendingGrafanaFetch } from '@shared/infrastructure/http/testing/mockGrafanaFetch';
 import { renderHook, waitFor } from '@testing-library/react';
 import { act } from 'react';
 
@@ -15,7 +15,7 @@ describe('useUploadFile()', () => {
   });
 
   it('should expose the uploaded profile', async () => {
-    mockFetch(() => ({ id: 'profile-123', profileTypes: ['cpu'], flamebearerProfile: '{"version":1}' }));
+    mockGrafanaFetch(() => ({ id: 'profile-123', profileTypes: ['cpu'], flamebearerProfile: '{"version":1}' }));
     const { result } = renderHook(() => useUploadFile(), { wrapper: createDataSourceUidWrapper('pyroscope-abc') });
 
     await act(async () => {
@@ -31,7 +31,11 @@ describe('useUploadFile()', () => {
   });
 
   it('should upload the file to the context datasource', async () => {
-    const fetch = mockFetch(() => ({ id: 'profile-123', profileTypes: ['cpu'], flamebearerProfile: '{"version":1}' }));
+    const fetch = mockGrafanaFetch(() => ({
+      id: 'profile-123',
+      profileTypes: ['cpu'],
+      flamebearerProfile: '{"version":1}',
+    }));
     const { result } = renderHook(() => useUploadFile(), { wrapper: createDataSourceUidWrapper('pyroscope-abc') });
 
     await act(async () => {
@@ -45,7 +49,7 @@ describe('useUploadFile()', () => {
   });
 
   it('should not abort another upload when a file is removed', async () => {
-    const fetch = mockPendingFetch();
+    const fetch = mockPendingGrafanaFetch();
     const { result } = renderHook(() => [useUploadFile(), useUploadFile()], {
       wrapper: createDataSourceUidWrapper('pyroscope-abc'),
     });
