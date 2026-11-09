@@ -141,7 +141,7 @@ export class SelectAction extends SceneObjectBase<SelectActionState> {
 
   public static Component = ({ model }: SceneComponentProps<SelectAction>) => {
     const styles = useStyles2(getStyles);
-    const { ariaLabel, label, icon, tooltip, item } = model.useState();
+    const { type, ariaLabel, label, icon, tooltip, item } = model.useState();
     const accessibleName = ariaLabel || label || '';
     const tooltipText = tooltip?.(item, model) ?? accessibleName;
 
@@ -151,6 +151,7 @@ export class SelectAction extends SceneObjectBase<SelectActionState> {
       <Button
         className={label ? styles.selectButton : styles.iconButton}
         aria-label={accessibleName}
+        data-testid={`profiles-${type}-${encodeURIComponent(String(item.value))}`}
         variant="secondary"
         size="sm"
         fill="text"
