@@ -4,15 +4,11 @@ import { getAppEvents, reportInteraction, usePluginComponent } from '@grafana/ru
 import { SceneComponentProps, SceneObjectBase, SceneObjectState } from '@grafana/scenes';
 import { DataQuery } from '@grafana/schema';
 import { ToolbarButton } from '@grafana/ui';
+import { useFlagQueryLibrary } from '@shared/infrastructure/featureFlags/featureFlags';
 import React, { useCallback, useMemo } from 'react';
 
 import { LoadSearchModal } from './LoadSearchModal';
-import {
-  applySavedSearchToScene,
-  isQueryLibrarySupported,
-  OpenQueryLibraryComponentProps,
-  useHasSavedSearches,
-} from './saveSearch';
+import { applySavedSearchToScene, OpenQueryLibraryComponentProps, useHasSavedSearches } from './saveSearch';
 import { getDatasourceVariable } from './utils';
 
 export interface LoadSearchSceneState extends SceneObjectState {
@@ -62,6 +58,7 @@ export class LoadSearchScene extends SceneObjectBase<LoadSearchSceneState> {
 
   static Component = ({ model }: SceneComponentProps<LoadSearchScene>) => {
     const { dsName, dsUid, isOpen } = model.useState();
+    const queryLibraryEnabled = useFlagQueryLibrary();
     const hasSavedSearches = useHasSavedSearches(dsUid);
 
     const { component: OpenQueryLibraryComponent, isLoading: isLoadingExposedComponent } =
@@ -108,9 +105,11 @@ export class LoadSearchScene extends SceneObjectBase<LoadSearchSceneState> {
       [model]
     );
 
-    if (!isQueryLibrarySupported()) {
+    if (!queryLibraryEnabled) {
       return fallbackComponent;
-    } else if (isLoadingExposedComponent || !OpenQueryLibraryComponent) {
+    }
+
+    if (isLoadingExposedComponent || !OpenQueryLibraryComponent) {
       return null;
     }
 
