@@ -82,6 +82,7 @@ export class SceneQuickFilter extends SceneObjectBase<SceneQuickFilterState> {
     return (
       <Input
         type="text"
+        data-testid="profiles-quick-filter"
         className="quick-filter"
         aria-label={t('grid.quick-filter.aria-label', 'Quick filter')}
         placeholder={placeholder}
@@ -99,6 +100,7 @@ export class SceneQuickFilter extends SceneObjectBase<SceneQuickFilterState> {
             )}
             <IconButton
               name="times"
+              data-testid="profiles-quick-filter-clear"
               aria-label={t('grid.quick-filter.clear', 'Clear search')}
               onClick={model.clearSearchText}
             />

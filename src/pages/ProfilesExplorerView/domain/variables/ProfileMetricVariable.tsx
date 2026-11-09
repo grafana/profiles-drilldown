@@ -154,6 +154,7 @@ export class ProfileMetricVariable extends QueryVariable {
 
     return (
       <Cascader
+        data-testid="profiles-profile-type-picker"
         // we add a key to ensure that the Cascader selects the initial value or available options properly when landing on the page
         // and when switching exploration types, because the value might also be changed after the component has been rendered by SceneProfilesExplorer
         key={generateUUID()}

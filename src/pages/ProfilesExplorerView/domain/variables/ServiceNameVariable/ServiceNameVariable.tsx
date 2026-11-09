@@ -187,6 +187,7 @@ export class ServiceNameVariable extends QueryVariable {
         )}
         <div className={styles.cascader}>
           <Cascader
+            data-testid="profiles-service-picker"
             // we add a key to ensure that the Cascader selects the initial value properly when landing on the page
             // and when switching exploration types, because the value might also be changed after the component has been rendered by SceneProfilesExplorer
             // (e.g. in SceneExploreServiceProfileTypes)
