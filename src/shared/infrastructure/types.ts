@@ -2,6 +2,11 @@ import { DataSourceProxyClient } from 'src/pages/ProfilesExplorerView/infrastruc
 
 import { MemoryCacheClient } from './MemoryCacheClient';
 
+export interface HttpRequestInput {
+  url: string;
+  options: RequestInit;
+}
+
 export interface RepositoryOptions {
   cacheClient: MemoryCacheClient;
 }

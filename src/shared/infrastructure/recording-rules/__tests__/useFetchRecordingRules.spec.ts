@@ -1,12 +1,12 @@
 import { renderHook, waitFor } from '@testing-library/react';
 
 import { createDataSourceUidWrapper } from '../../datasource/testing/createDataSourceUidWrapper';
-import { mockFetch } from '../../http/testing/mockFetch';
+import { mockGrafanaFetch } from '../../http/testing/mockGrafanaFetch';
 import { useFetchRecordingRules } from '../useFetchRecordingRules';
 
 describe('useFetchRecordingRules()', () => {
   it('should fetch recording rules from the context datasource', async () => {
-    const fetch = mockFetch();
+    const fetch = mockGrafanaFetch();
 
     renderHook(() => useFetchRecordingRules(), { wrapper: createDataSourceUidWrapper('pyroscope-abc') });
 
@@ -19,7 +19,7 @@ describe('useFetchRecordingRules()', () => {
   });
 
   it('should throw without a datasource uid', () => {
-    mockFetch();
+    mockGrafanaFetch();
 
     expect(() => renderHook(() => useFetchRecordingRules(), { wrapper: createDataSourceUidWrapper('') })).toThrow(
       'useDataSourceUid must be used inside DataSourceUidProvider'

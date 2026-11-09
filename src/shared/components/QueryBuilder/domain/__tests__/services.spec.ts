@@ -1,4 +1,4 @@
-import { mockFetch, mockPendingFetch } from '@shared/infrastructure/http/testing/mockFetch';
+import { mockGrafanaFetch, mockPendingGrafanaFetch } from '@shared/infrastructure/http/testing/mockGrafanaFetch';
 import { labelsRepository } from '@shared/infrastructure/labels/labelsRepository';
 import { MemoryCacheClient } from '@shared/infrastructure/MemoryCacheClient';
 
@@ -26,7 +26,7 @@ describe('QueryBuilder labels', () => {
   });
 
   it('should fetch labels from the input datasource', async () => {
-    const fetch = mockFetch(() => ({ names: [] }));
+    const fetch = mockGrafanaFetch(() => ({ names: [] }));
 
     await services.fetchLabels(context, event);
 
@@ -37,7 +37,7 @@ describe('QueryBuilder labels', () => {
   });
 
   it('should not abort shared labels when query-builder inputs change', () => {
-    const fetch = mockPendingFetch();
+    const fetch = mockPendingGrafanaFetch();
     const { actor } = buildStateMachine({
       dataSourceUid: 'pyroscope-abc',
       query: '{test="idle-update"}',
@@ -73,7 +73,7 @@ describe('QueryBuilder labels', () => {
   });
 
   it('should cancel query-builder labels without aborting shared labels', () => {
-    const fetch = mockPendingFetch();
+    const fetch = mockPendingGrafanaFetch();
 
     void labelsRepository.listLabels({
       dataSourceUid: 'pyroscope-abc',
@@ -91,7 +91,7 @@ describe('QueryBuilder labels', () => {
   });
 
   it('should cancel query-builder label values without aborting shared label values', () => {
-    const fetch = mockPendingFetch();
+    const fetch = mockPendingGrafanaFetch();
 
     void labelsRepository.listLabelValues({
       dataSourceUid: 'pyroscope-abc',
@@ -124,7 +124,7 @@ describe('QueryBuilder labels', () => {
   });
 
   it('should reuse pending and completed query-builder label requests', async () => {
-    const fetch = mockFetch(() => ({ names: ['env'] }));
+    const fetch = mockGrafanaFetch(() => ({ names: ['env'] }));
     const cacheContext = { ...context, query: '{test="cache-reuse"}' };
 
     await Promise.all([services.fetchLabels(cacheContext, event), services.fetchLabels(cacheContext, event)]);
@@ -134,7 +134,7 @@ describe('QueryBuilder labels', () => {
   });
 
   it('should not abort query-builder requests for another datasource', () => {
-    const fetch = mockPendingFetch();
+    const fetch = mockPendingGrafanaFetch();
 
     void services.fetchLabels({ ...context, query: '{test="datasource-isolation"}' }, event);
     void services.fetchLabels(
@@ -154,7 +154,7 @@ describe('QueryBuilder labels', () => {
   });
 
   it('should cancel pending requests to the input datasource', () => {
-    const fetch = mockPendingFetch();
+    const fetch = mockPendingGrafanaFetch();
 
     void services.fetchLabels({ ...context, query: '{pending}' }, event);
     actions.cancelAllLoad(context);
