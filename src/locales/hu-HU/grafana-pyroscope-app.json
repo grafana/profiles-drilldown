@@ -107,9 +107,9 @@
     "title": "Rögzítési szabály létrehozása"
   },
   "datasource-context": {
-    "error-title": "",
-    "loading": "",
-    "missing-uid": ""
+    "error-title": "Nem lehet kiválasztani az adatforrást",
+    "loading": "Adatforrás kiválasztása…",
+    "missing-uid": "Nincs kiválasztva adatforrás-UID."
   },
   "diff-flame-graph": {
     "compare-panel": {
@@ -144,9 +144,9 @@
       "1h-ago-vs-now": "1 órával ezelőtt és most",
       "1h-ago-vs-now-description": "30 perces intervallum",
       "24h-ago-vs-now": "24 órája és most",
-      "24h-ago-vs-now-description": "",
+      "24h-ago-vs-now-description": "1 órás intervallum",
       "6h-ago-vs-now": "6 órája és most",
-      "6h-ago-vs-now-description": "",
+      "6h-ago-vs-now-description": "1 órás intervallum",
       "label": "Összehasonlítási sablonok",
       "placeholder": "Válasszon egy sablont"
     },

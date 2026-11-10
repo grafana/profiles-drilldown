@@ -107,9 +107,9 @@
     "title": "Skapa inspelningsregel"
   },
   "datasource-context": {
-    "error-title": "",
-    "loading": "",
-    "missing-uid": ""
+    "error-title": "Det gick inte att välja datakälla",
+    "loading": "Väljer datakälla …",
+    "missing-uid": "Inget UID för datakälla har valts."
   },
   "diff-flame-graph": {
     "compare-panel": {
@@ -144,9 +144,9 @@
       "1h-ago-vs-now": "1 timme sedan jämfört med nu",
       "1h-ago-vs-now-description": "30-minutersfönster",
       "24h-ago-vs-now": "24 timmar sedan jämfört med nu",
-      "24h-ago-vs-now-description": "",
+      "24h-ago-vs-now-description": "1-timmarsfönster",
       "6h-ago-vs-now": "6 timmar sedan jämfört med nu",
-      "6h-ago-vs-now-description": "",
+      "6h-ago-vs-now-description": "1-timmarsfönster",
       "label": "Förinställningar för jämförelse",
       "placeholder": "Välj en förinställning"
     },

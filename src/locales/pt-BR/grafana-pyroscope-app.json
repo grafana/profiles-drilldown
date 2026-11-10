@@ -107,9 +107,9 @@
     "title": "Criar regra de registro"
   },
   "datasource-context": {
-    "error-title": "",
-    "loading": "",
-    "missing-uid": ""
+    "error-title": "Não foi possível selecionar a fonte de dados",
+    "loading": "Selecionando fonte de dados…",
+    "missing-uid": "Nenhum UID de fonte de dados foi selecionado."
   },
   "diff-flame-graph": {
     "compare-panel": {
@@ -144,9 +144,9 @@
       "1h-ago-vs-now": "1 hora atrás em comparação com agora",
       "1h-ago-vs-now-description": "Período de 30 min",
       "24h-ago-vs-now": "24 horas atrás em comparação com agora",
-      "24h-ago-vs-now-description": "",
+      "24h-ago-vs-now-description": "Período de 1h",
       "6h-ago-vs-now": "6 horas atrás em comparação com agora",
-      "6h-ago-vs-now-description": "",
+      "6h-ago-vs-now-description": "Período de 1h",
       "label": "Predefinições de comparação",
       "placeholder": "Escolha uma predefinição"
     },
