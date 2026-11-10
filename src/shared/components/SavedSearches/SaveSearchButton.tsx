@@ -3,10 +3,11 @@ import { usePluginComponent } from '@grafana/runtime';
 import { sceneGraph, SceneObject } from '@grafana/scenes';
 import { ToolbarButton } from '@grafana/ui';
 import { GrafanaPyroscopeDataQuery } from '@shared/domain/pyroscopeDataQuery';
+import { useFlagQueryLibrary } from '@shared/infrastructure/featureFlags/featureFlags';
 import React, { useMemo, useState } from 'react';
 
 import { ProfileMetricVariable } from '../../../pages/ProfilesExplorerView/domain/variables/ProfileMetricVariable';
-import { isQueryLibrarySupported, OpenQueryLibraryComponentProps } from './saveSearch';
+import { OpenQueryLibraryComponentProps } from './saveSearch';
 import { SaveSearchModal } from './SaveSearchModal';
 import {
   filtersToLabelSelectorExpression,
@@ -21,6 +22,7 @@ interface Props {
 
 export function SaveSearchButton({ sceneRef }: Props) {
   const [saving, setSaving] = useState(false);
+  const queryLibraryEnabled = useFlagQueryLibrary();
   const { component: OpenQueryLibraryComponent, isLoading: isLoadingExposedComponent } =
     usePluginComponent<OpenQueryLibraryComponentProps>('grafana/query-library-context/v1');
 
@@ -80,9 +82,11 @@ export function SaveSearchButton({ sceneRef }: Props) {
     return null;
   }
 
-  if (!isQueryLibrarySupported()) {
+  if (!queryLibraryEnabled) {
     return fallbackComponent;
-  } else if (isLoadingExposedComponent || !OpenQueryLibraryComponent) {
+  }
+
+  if (isLoadingExposedComponent || !OpenQueryLibraryComponent) {
     return null;
   }
 

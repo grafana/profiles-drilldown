@@ -1,6 +1,10 @@
 import { usePluginComponent } from '@grafana/runtime';
 import { sceneGraph } from '@grafana/scenes';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { OpenFeatureTestProvider } from '@openfeature/react-sdk';
+import { OpenFeature } from '@openfeature/web-sdk';
+import { useFlagQueryLibrary } from '@shared/infrastructure/featureFlags/featureFlags';
+import { PLUGIN_OPEN_FEATURE_DOMAIN } from '@shared/infrastructure/featureFlags/openFeature';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
 
 import { SaveSearchButton } from './SaveSearchButton';
@@ -16,7 +20,9 @@ jest.mock('react-inlinesvg', () => {
 jest.mock('./saveSearch', () => ({
   useSavedSearches: jest.fn(),
   useCheckForExistingSearch: jest.fn(),
-  isQueryLibrarySupported: jest.fn(),
+}));
+jest.mock('@shared/infrastructure/featureFlags/featureFlags', () => ({
+  useFlagQueryLibrary: jest.fn(),
 }));
 jest.mock('./utils', () => ({
   getDatasourceVariable: jest.fn(),
@@ -29,10 +35,28 @@ jest.mock('@grafana/runtime');
 
 const saveSearch = getSaveSearchMock();
 const utils = getUtilsMock();
+const useFlagQueryLibraryMock = jest.mocked(useFlagQueryLibrary);
+const usePluginComponentMock = jest.mocked(usePluginComponent);
+const actualFeatureFlags = jest.requireActual<typeof import('@shared/infrastructure/featureFlags/featureFlags')>(
+  '@shared/infrastructure/featureFlags/featureFlags'
+);
+
+const ExposedComponent = () => <div>Exposed component</div>;
+
+const mockSceneRef = asSceneObject({});
+
+const renderSaveSearch = () =>
+  render(
+    <OpenFeatureTestProvider
+      domain={PLUGIN_OPEN_FEATURE_DOMAIN}
+      delayMs={1}
+      flagValueMap={{ [actualFeatureFlags.QUERY_LIBRARY_FEATURE_FLAG_KEY]: true }}
+    >
+      <SaveSearchButton sceneRef={mockSceneRef} />
+    </OpenFeatureTestProvider>
+  );
 
 describe('SaveSearchButton', () => {
-  const mockSceneRef = asSceneObject({});
-
   beforeEach(() => {
     jest.clearAllMocks();
     utils.getDatasourceVariable.mockReturnValue({
@@ -61,7 +85,30 @@ describe('SaveSearchButton', () => {
       deleteSearch: jest.fn(),
     });
     jest.mocked(usePluginComponent).mockReturnValue({ component: undefined, isLoading: false });
-    saveSearch.isQueryLibrarySupported.mockReturnValue(false);
+    jest.mocked(useFlagQueryLibrary).mockReturnValue(false);
+  });
+
+  afterEach(async () => {
+    await OpenFeature.clearProviders();
+  });
+
+  describe('when the query library flag resolves after mount', () => {
+    beforeEach(() => {
+      useFlagQueryLibraryMock.mockImplementation(actualFeatureFlags.useFlagQueryLibrary);
+      usePluginComponentMock.mockReturnValue({ component: ExposedComponent, isLoading: false });
+    });
+
+    it('should switch save controls to Saved queries', async () => {
+      renderSaveSearch();
+
+      expect(screen.getByRole('button', { name: 'Save search' })).toBeInTheDocument();
+      expect(screen.queryByText('Exposed component')).not.toBeInTheDocument();
+
+      await waitFor(() => {
+        expect(screen.getByText('Exposed component')).toBeVisible();
+      });
+      expect(screen.queryByRole('button', { name: 'Save search' })).not.toBeInTheDocument();
+    });
   });
 
   test('Opens the modal when the button is clicked', () => {
@@ -80,7 +127,7 @@ describe('SaveSearchButton', () => {
 
   test('Returns null when the scene is embedded', () => {
     // SaveSearchButton returns null when query library is supported but no exposed component is available
-    saveSearch.isQueryLibrarySupported.mockReturnValue(true);
+    jest.mocked(useFlagQueryLibrary).mockReturnValue(true);
     jest.mocked(usePluginComponent).mockReturnValue({ component: undefined, isLoading: false });
 
     const { container } = render(<SaveSearchButton sceneRef={mockSceneRef} />);
@@ -99,7 +146,7 @@ describe('SaveSearchButton', () => {
 
   test('Uses the exposed component if available', () => {
     const component = () => <div>Exposed component</div>;
-    saveSearch.isQueryLibrarySupported.mockReturnValue(true);
+    jest.mocked(useFlagQueryLibrary).mockReturnValue(true);
     jest.mocked(usePluginComponent).mockReturnValue({ component, isLoading: false });
 
     render(<SaveSearchButton sceneRef={mockSceneRef} />);

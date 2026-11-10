@@ -1,4 +1,4 @@
-import { mockFetch, mockPendingFetch } from '../../http/testing/mockFetch';
+import { mockGrafanaFetch, mockPendingGrafanaFetch } from '../../http/testing/mockGrafanaFetch';
 import { labelsRepository } from '../labelsRepository';
 
 const respondWithUrl = (url: string) => ({ names: [url] });
@@ -6,7 +6,7 @@ const respondWithUrl = (url: string) => ({ names: [url] });
 describe('labelsRepository', () => {
   describe('listLabels()', () => {
     it('should fetch labels from the given datasource', async () => {
-      mockFetch(respondWithUrl);
+      mockGrafanaFetch(respondWithUrl);
 
       const labels = await labelsRepository.listLabels({ dataSourceUid: 'pyroscope-abc', query: 'q1', from: 1, to: 2 });
 
@@ -19,7 +19,7 @@ describe('labelsRepository', () => {
     });
 
     it('should not reuse the cached labels of another datasource', async () => {
-      const fetch = mockFetch(respondWithUrl);
+      const fetch = mockGrafanaFetch(respondWithUrl);
 
       await labelsRepository.listLabels({ dataSourceUid: 'pyroscope-abc', query: 'q2', from: 1, to: 2 });
       await labelsRepository.listLabels({ dataSourceUid: 'pyroscope-def', query: 'q2', from: 1, to: 2 });
@@ -36,7 +36,7 @@ describe('labelsRepository', () => {
 
   describe('listLabelValues()', () => {
     it('should fetch label values from the given datasource', async () => {
-      mockFetch(respondWithUrl);
+      mockGrafanaFetch(respondWithUrl);
 
       const values = await labelsRepository.listLabelValues({
         dataSourceUid: 'pyroscope-abc',
@@ -55,7 +55,7 @@ describe('labelsRepository', () => {
     });
 
     it('should not reuse the cached label values of another datasource', async () => {
-      const fetch = mockFetch(respondWithUrl);
+      const fetch = mockGrafanaFetch(respondWithUrl);
 
       await labelsRepository.listLabelValues({
         dataSourceUid: 'pyroscope-abc',
@@ -84,7 +84,7 @@ describe('labelsRepository', () => {
 
   describe('cancel()', () => {
     it("should abort the given datasource's pending request", () => {
-      const fetch = mockPendingFetch();
+      const fetch = mockPendingGrafanaFetch();
 
       labelsRepository.listLabels({ dataSourceUid: 'pyroscope-abc', query: 'q3', from: 1, to: 2 });
       labelsRepository.cancel({ dataSourceUid: 'pyroscope-abc', reason: 'Discarded by user' });
@@ -93,7 +93,7 @@ describe('labelsRepository', () => {
     });
 
     it("should not abort another datasource's pending request", () => {
-      const fetch = mockPendingFetch();
+      const fetch = mockPendingGrafanaFetch();
 
       labelsRepository.listLabels({ dataSourceUid: 'pyroscope-def', query: 'q4', from: 1, to: 2 });
       labelsRepository.cancel({ dataSourceUid: 'pyroscope-abc', reason: 'Discarded by user' });

@@ -1,6 +1,11 @@
 import { noOp } from '@shared/domain/noOp';
+import type { HttpRequestInput } from '@shared/infrastructure/types';
 
 import { HttpClientError } from './HttpClientError';
+
+export function isAbortError(error: unknown): error is DOMException {
+  return error instanceof DOMException && error.name === 'AbortError';
+}
 
 export class HttpClient {
   baseUrl = '';
@@ -12,11 +17,10 @@ export class HttpClient {
     this.defaultHeaders = Object.freeze(defaultHeaders);
   }
 
-  async fetch(pathname: string, options?: RequestInit) {
+  async fetch(url: string, options?: RequestInit) {
     this.abortController = new AbortController();
     const { signal } = this.abortController;
 
-    const fullUrl = `${this.baseUrl}${pathname}`;
     const headers = { ...this.defaultHeaders, ...options?.headers };
     const fullOptions = {
       signal, // we allow signal to be passed as an option
@@ -27,7 +31,7 @@ export class HttpClient {
     let response;
 
     try {
-      response = await fetch(fullUrl, fullOptions);
+      response = await this.request({ url, options: fullOptions });
 
       if (!response.ok) {
         throw new HttpClientError(response, await response.json().catch(noOp));
@@ -45,6 +49,10 @@ export class HttpClient {
     return response;
   }
 
+  protected request({ url, options }: HttpRequestInput): Promise<Response> {
+    return fetch(`${this.baseUrl}${url}`, options);
+  }
+
   abort(reason?: any) {
     if (this.abortController) {
       this.abortController.abort(reason);
@@ -52,6 +60,6 @@ export class HttpClient {
   }
 
   isAbortError(error: unknown) {
-    return error instanceof DOMException && error.name === 'AbortError';
+    return isAbortError(error);
   }
 }

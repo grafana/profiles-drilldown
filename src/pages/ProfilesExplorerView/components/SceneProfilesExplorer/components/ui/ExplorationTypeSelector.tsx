@@ -21,6 +21,7 @@ export function ExplorationTypeSelector({ options, value, onChange }: Exploratio
           return (
             <Tab
               key={option.value}
+              id={`profiles-exploration-${option.value}`}
               className={option.icon ? styles.tabWithIcon : undefined}
               label={option.label ?? ''}
               active={isActive}

@@ -1,5 +1,5 @@
 import { dateTime } from '@grafana/data';
-import { mockFetch } from '@shared/infrastructure/http/testing/mockFetch';
+import { mockGrafanaFetch } from '@shared/infrastructure/http/testing/mockGrafanaFetch';
 
 import { seriesRepository } from '../seriesRepository';
 
@@ -7,7 +7,7 @@ const timeRange = { from: dateTime(1000), to: dateTime(2000), raw: { from: '1000
 
 describe('seriesRepository', () => {
   it('should not reuse the cached series of another datasource', async () => {
-    const fetch = mockFetch(() => ({ labelsSet: [] }));
+    const fetch = mockGrafanaFetch(() => ({ labelsSet: [] }));
 
     await seriesRepository.list({ dataSourceUid: 'pyroscope-abc', timeRange });
     await seriesRepository.list({ dataSourceUid: 'pyroscope-def', timeRange });

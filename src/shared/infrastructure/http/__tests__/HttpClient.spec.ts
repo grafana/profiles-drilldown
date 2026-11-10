@@ -1,4 +1,4 @@
-import { HttpClient } from '../HttpClient';
+import { HttpClient, isAbortError } from '../HttpClient';
 
 const originalFetch = global.fetch;
 
@@ -19,6 +19,23 @@ function buildClient(fetchImplementation: FetchImplementation = async () => ({ o
     fetch,
   };
 }
+
+describe('isAbortError', () => {
+  it('should recognize an AbortError DOMException', () => {
+    expect(isAbortError(new DOMException('Cancelled', 'AbortError'))).toBe(true);
+  });
+
+  it('should reject other DOMExceptions', () => {
+    expect(isAbortError(new DOMException('Missing', 'NotFoundError'))).toBe(false);
+  });
+
+  it('should reject a regular error named AbortError', () => {
+    const error = new Error('Cancelled');
+    error.name = 'AbortError';
+
+    expect(isAbortError(error)).toBe(false);
+  });
+});
 
 describe('HttpClient', () => {
   afterEach(() => {
