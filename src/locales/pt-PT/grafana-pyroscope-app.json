@@ -107,9 +107,9 @@
     "title": "Criar regra de gravação"
   },
   "datasource-context": {
-    "error-title": "",
-    "loading": "",
-    "missing-uid": ""
+    "error-title": "Não é possível selecionar a origem de dados",
+    "loading": "A selecionar origem de dados...",
+    "missing-uid": "Nenhuma UID de origem de dados foi selecionada."
   },
   "diff-flame-graph": {
     "compare-panel": {
@@ -144,9 +144,9 @@
       "1h-ago-vs-now": "Há 1 h vs. agora",
       "1h-ago-vs-now-description": "Janela de 30 min.",
       "24h-ago-vs-now": "Há 24 horas vs. agora",
-      "24h-ago-vs-now-description": "",
+      "24h-ago-vs-now-description": "Janela de 1 h",
       "6h-ago-vs-now": "Há 6 horas vs. agora",
-      "6h-ago-vs-now-description": "",
+      "6h-ago-vs-now-description": "Janela de 1 h",
       "label": "Predefinições de comparação",
       "placeholder": "Escolher uma predefinição"
     },

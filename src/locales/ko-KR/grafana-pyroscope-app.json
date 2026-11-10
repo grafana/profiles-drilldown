@@ -107,9 +107,9 @@
     "title": "기록 규칙 생성"
   },
   "datasource-context": {
-    "error-title": "",
-    "loading": "",
-    "missing-uid": ""
+    "error-title": "데이터 소스를 선택할 수 없습니다",
+    "loading": "데이터 소스 선택 중...",
+    "missing-uid": "선택된 데이터 소스 UID가 없습니다."
   },
   "diff-flame-graph": {
     "compare-panel": {
@@ -144,9 +144,9 @@
       "1h-ago-vs-now": "1시간 전 대비 현재",
       "1h-ago-vs-now-description": "30분 구간",
       "24h-ago-vs-now": "24시간 전 대비 현재",
-      "24h-ago-vs-now-description": "",
+      "24h-ago-vs-now-description": "1시간 구간",
       "6h-ago-vs-now": "6시간 전 대비 현재",
-      "6h-ago-vs-now-description": "",
+      "6h-ago-vs-now-description": "1시간 구간",
       "label": "비교 사전 설정",
       "placeholder": "사전 설정 선택"
     },

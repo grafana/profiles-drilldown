@@ -107,9 +107,9 @@
     "title": "Aufnahmeregel erstellen"
   },
   "datasource-context": {
-    "error-title": "",
-    "loading": "",
-    "missing-uid": ""
+    "error-title": "Datenquelle kann nicht ausgewählt werden",
+    "loading": "Datenquelle wird ausgewählt …",
+    "missing-uid": "Es wurde keine Datenquellen-UID ausgewählt."
   },
   "diff-flame-graph": {
     "compare-panel": {
@@ -144,9 +144,9 @@
       "1h-ago-vs-now": "Vor 1 Stunde vs. jetzt",
       "1h-ago-vs-now-description": "30-Minuten-Fenster",
       "24h-ago-vs-now": "Vor 24 Stunden vs. jetzt",
-      "24h-ago-vs-now-description": "",
+      "24h-ago-vs-now-description": "1-Stunden-Fenster",
       "6h-ago-vs-now": "Vor 6 Stunden vs. jetzt",
-      "6h-ago-vs-now-description": "",
+      "6h-ago-vs-now-description": "1-Stunden-Fenster",
       "label": "Voreinstellungen für Vergleich",
       "placeholder": "Voreinstellung auswählen"
     },

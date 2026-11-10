@@ -107,9 +107,9 @@
     "title": "Opnameregel aanmaken"
   },
   "datasource-context": {
-    "error-title": "",
-    "loading": "",
-    "missing-uid": ""
+    "error-title": "Kan gegevensbron niet selecteren",
+    "loading": "Gegevensbron selecteren...",
+    "missing-uid": "Er is geen gegevensbron-UID geselecteerd."
   },
   "diff-flame-graph": {
     "compare-panel": {
@@ -144,9 +144,9 @@
       "1h-ago-vs-now": "1u geleden vs. nu",
       "1h-ago-vs-now-description": "Venster van 30min",
       "24h-ago-vs-now": "24u geleden vs. nu",
-      "24h-ago-vs-now-description": "",
+      "24h-ago-vs-now-description": "Venster van 1u",
       "6h-ago-vs-now": "6u geleden vs. nu",
-      "6h-ago-vs-now-description": "",
+      "6h-ago-vs-now-description": "Venster van 1u",
       "label": "Vergelijkingsvoorinstellingen",
       "placeholder": "Kies een voorinstelling"
     },

@@ -107,9 +107,9 @@
     "title": "Crea regola di registrazione"
   },
   "datasource-context": {
-    "error-title": "",
-    "loading": "",
-    "missing-uid": ""
+    "error-title": "Impossibile selezionare l'origine dati",
+    "loading": "Selezione dell'origine dati in corso...",
+    "missing-uid": "Non è stato selezionato alcun UID dell'origine dati."
   },
   "diff-flame-graph": {
     "compare-panel": {
@@ -144,9 +144,9 @@
       "1h-ago-vs-now": "1 ora fa rispetto ad ora",
       "1h-ago-vs-now-description": "Finestra di 30 minuti",
       "24h-ago-vs-now": "24 ore fa rispetto ad ora",
-      "24h-ago-vs-now-description": "",
+      "24h-ago-vs-now-description": "Finestra di 1 ora",
       "6h-ago-vs-now": "6 ore fa rispetto ad ora",
-      "6h-ago-vs-now-description": "",
+      "6h-ago-vs-now-description": "Finestra di 1 ora",
       "label": "Preimpostazioni di confronto",
       "placeholder": "Scegli una preimpostazione"
     },
