@@ -157,6 +157,34 @@ test.describe('Labels view', () => {
         await expect(exploreProfilesPage.getClearComparisonButton()).toBeDisabled();
       });
 
+      test('Clear comparison keeps its accessible name in every selection state', async ({ exploreProfilesPage }) => {
+        const clearButton = exploreProfilesPage.getClearComparisonButton();
+        const compareButton = exploreProfilesPage.getCompareButton();
+
+        await expect(clearButton).toHaveAccessibleName('Clear comparison selection');
+        await expect(clearButton).toBeDisabled();
+
+        for (const target of ['Baseline', 'Comparison']) {
+          await exploreProfilesPage.selectForComparison('us-east', target);
+          await expect(clearButton).toBeEnabled();
+          await expect(clearButton).toHaveAccessibleName('Clear comparison selection');
+          await expect(compareButton).toHaveText('Compare (1/2)');
+          await clearButton.click();
+          await expect(clearButton).toBeDisabled();
+          await expect(compareButton).toHaveText('Compare (0/2)');
+        }
+
+        await exploreProfilesPage.selectForComparison('us-east', 'Baseline');
+        await exploreProfilesPage.selectForComparison('eu-north', 'Comparison');
+        await expect(clearButton).toBeEnabled();
+        await expect(clearButton).toHaveAccessibleName('Clear comparison selection');
+        await expect(compareButton).toBeEnabled();
+        await clearButton.click();
+        await expect(clearButton).toBeDisabled();
+        await expect(clearButton).toHaveAccessibleName('Clear comparison selection');
+        await expect(compareButton).toHaveText('Compare (0/2)');
+      });
+
       test('Quick filter', async ({ exploreProfilesPage }) => {
         await exploreProfilesPage.assertQuickFilterResultsCount(3);
 

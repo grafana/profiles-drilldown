@@ -557,8 +557,7 @@ export class ExploreProfilesPage extends PyroscopePage {
   }
 
   getClearComparisonButton() {
-    // getByRole('button', { name:... }) does not work :man_shrug:
-    return this.getGroupByContainer().getByTestId('clearComparison');
+    return this.getGroupByContainer().getByRole('button', { name: 'Clear comparison selection', exact: true });
   }
 
   getStatsPanel(labelValue: string) {
