@@ -31,10 +31,7 @@ export function useGitHubIntegration(sidePanel: any): DomainHookReturnValue {
           onClick: () => {
             reportInteraction('g_pyroscope_app_function_details_clicked');
 
-            const st = buildStackTrace(item, data);
-            console.log({ st });
-            setStacktrace(st);
-
+            setStacktrace(buildStackTrace(item, data));
             sidePanel.open('function-details');
 
             // login can only happen as a consequence of a user action
