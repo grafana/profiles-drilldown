@@ -22,10 +22,8 @@ import { LoadSearchScene } from '@shared/components/SavedSearches/LoadSearchScen
 import { displayError } from '@shared/domain/displayStatus';
 import { prepareHistoryEntry } from '@shared/domain/prepareHistoryEntry';
 import { reportInteraction } from '@shared/domain/reportInteraction';
-import {
-  getKgAnnotationsInPyroscopeFromOpenFeature,
-  getProfilesHeatmapFromOpenFeature,
-} from '@shared/infrastructure/featureFlags/featureFlags';
+import { DataSourceUidProvider } from '@shared/infrastructure/datasource/DataSourceUidContext';
+import { getKgAnnotationsInPyroscopeFromOpenFeature } from '@shared/infrastructure/featureFlags/featureFlags';
 import { ensureOpenFeaturePluginInitialized } from '@shared/infrastructure/featureFlags/openFeature';
 import { DomainHookReturnValue } from '@shared/types/DomainHookReturnValue';
 import { PluginHeaderToolbar } from '@shared/ui/PluginHeaderToolbar';
@@ -150,7 +148,7 @@ export class SceneProfilesExplorer extends SceneObjectBase<SceneProfilesExplorer
   private initialFilters?: AdHocVariableFilter[];
   private kgInitialized = false;
 
-  public constructor(state: Partial<SceneProfilesExplorerState>) {
+  public constructor(state: Partial<SceneProfilesExplorerState> & { initialDS: string }) {
     super({
       key: 'profiles-explorer',
       explorationType: state.initialFilters && state.initialFilters.length > 0 ? ExplorationType.LABELS : undefined,
@@ -165,7 +163,7 @@ export class SceneProfilesExplorer extends SceneObjectBase<SceneProfilesExplorer
           // (because values would be empty before loading, then populated after fetched)
           // see setExplorationType() for dynamic updates
           variables: [
-            new ProfilesDataSourceVariable({ initialDS: state?.initialDS }),
+            new ProfilesDataSourceVariable({ initialDS: state.initialDS }),
             new ServiceNameVariable({ initialFilters: state?.initialFilters }),
             new ProfileMetricVariable(),
             new FiltersVariable({
@@ -218,14 +216,17 @@ export class SceneProfilesExplorer extends SceneObjectBase<SceneProfilesExplorer
     const clearKeyBindings = setupKeyboardShortcuts(this);
 
     if (!this.kgInitialized) {
-      this.kgInitialized = true;
-      void ensureOpenFeaturePluginInitialized().then(() => {
+      void ensureOpenFeaturePluginInitialized().then(async () => {
         if (!isActive) {
           return;
         }
 
         if (getKgAnnotationsInPyroscopeFromOpenFeature()) {
-          const kg = getKgSceneProps('Service', 'serviceName');
+          const kg = await getKgSceneProps('Service', 'serviceName');
+          if (!isActive) {
+            return;
+          }
+
           if (kg) {
             this.setState({
               $data: this.state.$data ?? kg.$data,
@@ -235,11 +236,7 @@ export class SceneProfilesExplorer extends SceneObjectBase<SceneProfilesExplorer
           }
         }
 
-        // Scene constructors synchronously read feature flags. Rebuild an already-open
-        // flame graph after OpenFeature resolves so it can pick up an enabled heatmap.
-        if (getProfilesHeatmapFromOpenFeature() && this.state.explorationType === ExplorationType.FLAME_GRAPH) {
-          this.setState({ body: this.buildBodyScene(ExplorationType.FLAME_GRAPH) });
-        }
+        this.kgInitialized = true;
       });
     }
 
@@ -613,43 +610,48 @@ export class SceneProfilesExplorer extends SceneObjectBase<SceneProfilesExplorer
     } = model.useState();
 
     return (
-      <FunctionVersionProvider>
-        <GitHubContextProvider dataSourceUid={dataSourceUid}>
-          <PluginHeaderToolbar
-            model={model}
-            explorationType={explorationType}
-            controls={controls}
-            body={body}
-            $variables={$variables}
-            loadSearchScene={loadSearchScene}
-            onChangeExplorationType={actions.onChangeExplorationType}
-            isEmbedded={isEmbedded}
-            onCreateRecordingRule={() => {
-              setRecordingRulesModalState({ isOpen: true });
-            }}
-          />
-
-          <div className={cx(styles.body, isEmbedded && styles.embeddedBody)} data-testid="sceneBody">
-            {body && <body.Component model={body} />}
-          </div>
-
-          {recordingRulesModalState.isOpen && (
-            <SceneCreateRecordingRuleModal.Component
-              model={createRecordingRuleModal}
-              isModalOpen={recordingRulesModalState.isOpen}
-              functionName={recordingRulesModalState.functionName}
-              onDismiss={() => setRecordingRulesModalState({ isOpen: false })}
-              onCreated={() => {
-                setRecordingRulesModalState({ isOpen: false });
+      <DataSourceUidProvider uid={dataSourceUid}>
+        <FunctionVersionProvider>
+          <GitHubContextProvider>
+            <PluginHeaderToolbar
+              model={model}
+              explorationType={explorationType}
+              controls={controls}
+              body={body}
+              $variables={$variables}
+              loadSearchScene={loadSearchScene}
+              onChangeExplorationType={actions.onChangeExplorationType}
+              isEmbedded={isEmbedded}
+              onCreateRecordingRule={() => {
+                setRecordingRulesModalState({ isOpen: true });
               }}
             />
-          )}
 
-          {isAddToDashboardModalOpen && addToDashboardPanelData && (
-            <AddToDashboardModal panelData={addToDashboardPanelData} onClose={() => model.closeAddToDashboardModal()} />
-          )}
-        </GitHubContextProvider>
-      </FunctionVersionProvider>
+            <div className={cx(styles.body, isEmbedded && styles.embeddedBody)} data-testid="sceneBody">
+              {body && <body.Component model={body} />}
+            </div>
+
+            {recordingRulesModalState.isOpen && (
+              <SceneCreateRecordingRuleModal.Component
+                model={createRecordingRuleModal}
+                isModalOpen={recordingRulesModalState.isOpen}
+                functionName={recordingRulesModalState.functionName}
+                onDismiss={() => setRecordingRulesModalState({ isOpen: false })}
+                onCreated={() => {
+                  setRecordingRulesModalState({ isOpen: false });
+                }}
+              />
+            )}
+
+            {isAddToDashboardModalOpen && addToDashboardPanelData && (
+              <AddToDashboardModal
+                panelData={addToDashboardPanelData}
+                onClose={() => model.closeAddToDashboardModal()}
+              />
+            )}
+          </GitHubContextProvider>
+        </FunctionVersionProvider>
+      </DataSourceUidProvider>
     );
   }
 }

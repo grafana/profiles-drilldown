@@ -34,11 +34,11 @@ export class PyroscopePage {
     return this.page.getByLabel(label, options);
   }
 
-  getByText(text, options?: Record<string, unknown>) {
+  getByText(text: Parameters<Page['getByText']>[0], options?: Parameters<Page['getByText']>[1]) {
     return this.page.getByText(text, options);
   }
 
-  getByRole(role, options?: Record<string, unknown>) {
+  getByRole(role: Parameters<Page['getByRole']>[0], options?: Parameters<Page['getByRole']>[1]) {
     return this.page.getByRole(role, options);
   }
 
@@ -78,11 +78,17 @@ export class PyroscopePage {
     await this.page.locator(`a:has-text("${itemText}")`).first().click();
   }
 
-  waitForRequest(urlOrPredicate, options?) {
+  waitForRequest(
+    urlOrPredicate: Parameters<Page['waitForRequest']>[0],
+    options?: Parameters<Page['waitForRequest']>[1]
+  ) {
     return this.page.waitForRequest(urlOrPredicate, options);
   }
 
-  waitForResponse(urlOrPredicate, options?) {
+  waitForResponse(
+    urlOrPredicate: Parameters<Page['waitForResponse']>[0],
+    options?: Parameters<Page['waitForResponse']>[1]
+  ) {
     return this.page.waitForResponse(urlOrPredicate, options);
   }
 

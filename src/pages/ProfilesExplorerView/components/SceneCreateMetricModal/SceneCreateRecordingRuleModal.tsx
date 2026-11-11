@@ -4,6 +4,7 @@ import { t, Trans } from '@grafana/i18n';
 import { SceneComponentProps, sceneGraph, SceneObjectBase, SceneObjectState } from '@grafana/scenes';
 import { Button, Divider, Field, Input, Modal, MultiSelect, Text, useStyles2 } from '@grafana/ui';
 import { reportInteraction } from '@shared/domain/reportInteraction';
+import { useDataSourceUid } from '@shared/infrastructure/datasource/DataSourceUidContext';
 import { labelsRepository } from '@shared/infrastructure/labels/labelsRepository';
 import { getProfileMetric, ProfileMetricId } from '@shared/infrastructure/profile-metrics/getProfileMetric';
 import { RecordingRuleViewModel } from '@shared/types/RecordingRuleViewModel';
@@ -68,6 +69,7 @@ export class SceneCreateRecordingRuleModal extends SceneObjectBase<SceneCreateRe
     onCreated: () => void;
     functionName?: string;
   }) {
+    const dataSourceUid = useDataSourceUid();
     const [options, setOptions] = useState<string[]>([]);
 
     const { actions } = useCreateRecordingRule();
@@ -122,6 +124,7 @@ export class SceneCreateRecordingRuleModal extends SceneObjectBase<SceneCreateRe
       const timeRange = sceneGraph.getTimeRange(model).state.value;
       labelsRepository
         .listLabels({
+          dataSourceUid,
           query: `{${filterQuery}}`,
           from: timeRange.from.unix() * 1000,
           to: timeRange.to.unix() * 1000,

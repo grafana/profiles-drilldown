@@ -1,14 +1,14 @@
 import { css } from '@emotion/css';
 import { GrafanaTheme2 } from '@grafana/data';
 import { t, Trans } from '@grafana/i18n';
-import { SceneComponentProps, sceneGraph, SceneObjectBase, SceneObjectState } from '@grafana/scenes';
+import { SceneComponentProps, SceneObjectBase, SceneObjectState } from '@grafana/scenes';
 import { Alert, Button, IconButton, Spinner, useStyles2 } from '@grafana/ui';
+import { useDataSourceUid } from '@shared/infrastructure/datasource/DataSourceUidContext';
 import { DomainHookReturnValue } from '@shared/types/DomainHookReturnValue';
 import { InlineBanner } from '@shared/ui/InlineBanner';
 import { Panel } from '@shared/ui/Panel/Panel';
 import React from 'react';
 
-import { ProfilesDataSourceVariable } from '../../domain/variables/ProfilesDataSourceVariable';
 import { getSceneVariableValue } from '../../helpers/getSceneVariableValue';
 import { AiReply } from './components/AiReply';
 import { FollowUpForm } from './components/FollowUpForm';
@@ -23,8 +23,7 @@ export class SceneAiPanel extends SceneObjectBase<SceneAiPanelState> {
   }
 
   useSceneAiPanel = (isDiff: boolean, fetchParams: FetchParams): DomainHookReturnValue => {
-    const dataSourceUid = sceneGraph.findByKeyAndType(this, 'dataSource', ProfilesDataSourceVariable).useState()
-      .value as string;
+    const dataSourceUid = useDataSourceUid();
     const profileMetricId = getSceneVariableValue(this, 'profileMetricId');
 
     const { profileType, profiles, validationError, fetchError, isFetching } = useFetchDotProfiles(

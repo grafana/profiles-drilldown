@@ -1,12 +1,12 @@
 import { t } from '@grafana/i18n';
 import { displayWarning } from '@shared/domain/displayStatus';
-import { ApiClient } from '@shared/infrastructure/http/ApiClient';
+import { DataSourceProxyClient } from 'src/pages/ProfilesExplorerView/infrastructure/series/http/DataSourceProxyClient';
 
 import { AdHocProfile } from '../domain/AdHocProfile';
 import { stripBase64Prefix } from './helpers/stripBase64Prefix';
 import { prepareAdHocProfileUploadPayload } from './prepareAdHocProfileUploadPayload';
 
-class AdHocProfileClient extends ApiClient {
+export class AdHocProfileClient extends DataSourceProxyClient {
   async get(profileId: string, profileType: string): Promise<AdHocProfile> {
     const response = await this.fetch('/adhocprofiles.v1.AdHocProfileService/Get', {
       method: 'POST',
@@ -97,8 +97,4 @@ class AdHocProfileClient extends ApiClient {
       fileReader.readAsDataURL(file);
     });
   }
-}
-
-export function createAdHocProfileClient() {
-  return new AdHocProfileClient();
 }

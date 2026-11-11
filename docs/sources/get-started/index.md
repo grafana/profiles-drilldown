@@ -19,7 +19,7 @@ Your investigation begins with the big picture and then drills down using profil
 <!-- Needs to be updated - {{< youtube id="_8SbNN5DRmQ" >}} -->
 
 {{< admonition type="note" >}}
-Expand your observability journey and learn about [Explore Traces](https://grafana.com/docs/grafana-cloud/visualizations/simplified-exploration/traces/).
+Expand your observability journey and learn about [Traces Drilldown](https://grafana.com/docs/grafana-cloud/visualizations/simplified-exploration/traces/).
 {{< /admonition >}}
 
 ## Before you begin
@@ -31,9 +31,9 @@ To use Profiles Drilldown with Grafana Cloud, you need:
 
 To use Profiles Drilldown with Grafana open source, you need:
 
-- Grafana 13.1.0 or later
+- Grafana 13.2.0 or later
 - Your own Grafana instance
-- Grafana 13.1.0 and later includes all Grafana Drilldown apps by default.
+- Grafana 13.2.0 and later includes all Grafana Drilldown apps by default.
 - A configured Pyroscope data source
 
 ## Explore your profile data

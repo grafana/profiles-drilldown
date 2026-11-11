@@ -50,7 +50,7 @@
       "matchPackageNames": ["prettier", "@trivago/prettier-plugin-sort-imports"]
     },
     {
-      "description": "Group ESLint core and plugins (not eslint-webpack-plugin; see Webpack group)",
+      "description": "Group ESLint core and plugins",
       "groupName": "ESLint",
       "matchPackageNames": [
         "eslint",
@@ -60,7 +60,7 @@
         "eslint-plugin-react",
         "eslint-plugin-react-hooks",
         "eslint-plugin-sonarjs",
-        "@stylistic/eslint-plugin-ts"
+        "@stylistic/eslint-plugin"
       ]
     },
     {
@@ -75,7 +75,6 @@
         "sass-loader",
         "imports-loader",
         "terser-webpack-plugin",
-        "eslint-webpack-plugin",
         "fork-ts-checker-webpack-plugin",
         "replace-in-file-webpack-plugin",
         "webpack-livereload-plugin",

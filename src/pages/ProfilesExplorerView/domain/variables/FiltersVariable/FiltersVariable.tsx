@@ -113,10 +113,6 @@ export class FiltersVariable extends AdHocFiltersVariable {
 
     const query = useBuildPyroscopeQuery(model, key as string);
 
-    const { value: dataSourceUid } = sceneGraph
-      .findByKeyAndType(model, 'dataSource', ProfilesDataSourceVariable)
-      .useState();
-
     // subscribing keeps the available label values in sync with the time range, instead of waiting for an unrelated re-render
     const {
       value: { from, to },
@@ -126,7 +122,6 @@ export class FiltersVariable extends AdHocFiltersVariable {
       <QueryBuilder
         id={`query-builder-${key}`}
         autoExecute
-        dataSourceUid={dataSourceUid as string}
         query={query}
         from={from.unix() * 1000}
         to={to.unix() * 1000}

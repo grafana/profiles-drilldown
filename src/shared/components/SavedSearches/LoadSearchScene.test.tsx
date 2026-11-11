@@ -1,7 +1,11 @@
 import { usePluginComponent } from '@grafana/runtime';
 import { sceneGraph, SceneTimeRange } from '@grafana/scenes';
 import { DataQuery } from '@grafana/schema';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { OpenFeatureTestProvider } from '@openfeature/react-sdk';
+import { OpenFeature } from '@openfeature/web-sdk';
+import { useFlagQueryLibrary } from '@shared/infrastructure/featureFlags/featureFlags';
+import { PLUGIN_OPEN_FEATURE_DOMAIN } from '@shared/infrastructure/featureFlags/openFeature';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
 
 import { LoadSearchScene } from './LoadSearchScene';
@@ -22,7 +26,9 @@ jest.mock('./saveSearch', () => ({
   useSavedSearches: jest.fn(),
   applySavedSearchToScene: jest.fn(),
   useHasSavedSearches: jest.fn(),
-  isQueryLibrarySupported: jest.fn(),
+}));
+jest.mock('@shared/infrastructure/featureFlags/featureFlags', () => ({
+  useFlagQueryLibrary: jest.fn(),
 }));
 jest.mock('./utils', () => ({
   getDatasourceVariable: jest.fn(),
@@ -32,6 +38,27 @@ jest.mock('./utils', () => ({
 
 const saveSearch = getSaveSearchMock();
 const utils = getUtilsMock();
+const useFlagQueryLibraryMock = jest.mocked(useFlagQueryLibrary);
+const usePluginComponentMock = jest.mocked(usePluginComponent);
+const actualFeatureFlags = jest.requireActual<typeof import('@shared/infrastructure/featureFlags/featureFlags')>(
+  '@shared/infrastructure/featureFlags/featureFlags'
+);
+
+const ExposedComponent = () => <div>Exposed component</div>;
+
+const renderLoadSearch = () => {
+  const scene = new LoadSearchScene({ dsUid: 'test-datasource-uid', dsName: 'test-datasource-uid' });
+
+  return render(
+    <OpenFeatureTestProvider
+      domain={PLUGIN_OPEN_FEATURE_DOMAIN}
+      delayMs={1}
+      flagValueMap={{ [actualFeatureFlags.QUERY_LIBRARY_FEATURE_FLAG_KEY]: true }}
+    >
+      <scene.Component model={scene} />
+    </OpenFeatureTestProvider>
+  );
+};
 
 function FakeExposedComponent({ onSelectQuery }: { onSelectQuery(query: DataQuery): void }) {
   return (
@@ -76,7 +103,31 @@ describe('LoadSearchScene', () => {
       state: { value: { from: 'now-1h', to: 'now', raw: { from: 'now-1h', to: 'now' } } },
     } as unknown as SceneTimeRange);
     jest.mocked(usePluginComponent).mockReturnValue({ component: undefined, isLoading: false });
-    saveSearch.isQueryLibrarySupported.mockReturnValue(false);
+    jest.mocked(useFlagQueryLibrary).mockReturnValue(false);
+  });
+
+  afterEach(async () => {
+    await OpenFeature.clearProviders();
+  });
+
+  describe('when the query library flag resolves after mount', () => {
+    beforeEach(() => {
+      useFlagQueryLibraryMock.mockImplementation(actualFeatureFlags.useFlagQueryLibrary);
+      usePluginComponentMock.mockReturnValue({ component: ExposedComponent, isLoading: false });
+      saveSearch.useHasSavedSearches.mockReturnValue(true);
+    });
+
+    it('should switch load controls to Saved queries', async () => {
+      renderLoadSearch();
+
+      expect(screen.getByRole('button', { name: 'Load saved search' })).toBeInTheDocument();
+      expect(screen.queryByText('Exposed component')).not.toBeInTheDocument();
+
+      await waitFor(() => {
+        expect(screen.getByText('Exposed component')).toBeVisible();
+      });
+      expect(screen.queryByRole('button', { name: 'Load saved search' })).not.toBeInTheDocument();
+    });
   });
 
   test('Disables button when there are no saved searches', () => {
@@ -118,7 +169,7 @@ describe('LoadSearchScene', () => {
 
   test('Returns null when the scene is embedded', () => {
     // LoadSearchScene returns null when query library is supported but no exposed component is available
-    saveSearch.isQueryLibrarySupported.mockReturnValue(true);
+    jest.mocked(useFlagQueryLibrary).mockReturnValue(true);
     jest.mocked(usePluginComponent).mockReturnValue({ component: undefined, isLoading: false });
 
     const scene = new LoadSearchScene({ dsUid: 'test-datasource-uid', dsName: 'test-datasource-uid' });
@@ -129,7 +180,7 @@ describe('LoadSearchScene', () => {
 
   test('Uses the exposed component if available', () => {
     const component = () => <div>Exposed component</div>;
-    saveSearch.isQueryLibrarySupported.mockReturnValue(true);
+    jest.mocked(useFlagQueryLibrary).mockReturnValue(true);
     jest.mocked(usePluginComponent).mockReturnValue({ component, isLoading: false });
 
     const scene = new LoadSearchScene({ dsUid: 'test-datasource-uid', dsName: 'test-datasource-uid' });
@@ -140,7 +191,7 @@ describe('LoadSearchScene', () => {
 
   describe('Loading a search', () => {
     beforeEach(() => {
-      saveSearch.isQueryLibrarySupported.mockReturnValue(true);
+      jest.mocked(useFlagQueryLibrary).mockReturnValue(true);
       // @ts-expect-error
       jest.mocked(usePluginComponent).mockReturnValue({ component: FakeExposedComponent, isLoading: false });
       saveSearch.useHasSavedSearches.mockReturnValue(true);

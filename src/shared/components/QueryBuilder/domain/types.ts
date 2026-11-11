@@ -64,8 +64,7 @@ export type InputParams = {
   query: string;
   from: number;
   to: number;
-  // TODO: after migrate the legacy comparison pages to Scenes, dataSourceUid will be mandatory
-  dataSourceUid?: string;
+  dataSourceUid: string;
 };
 
 export type Edition = {

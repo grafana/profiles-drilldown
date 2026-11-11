@@ -1,9 +1,13 @@
 import { ExplorationType, EXPLORE_PROFILES_DIFF_RANGES_URL_PARAMS } from '../../config/constants';
 import { expect, test } from '../../fixtures';
-import { ExploreProfilesPage } from '../../fixtures/pages/ExploreProfilesPage';
 
 test.describe('Diff flame graph view', () => {
-  test.beforeEach(async ({ exploreProfilesPage }) => {
+  test.beforeEach(async ({ exploreProfilesPage, grafanaVersion }, testInfo) => {
+    const [major, minor] = grafanaVersion.split('.').map(Number);
+    if (major > 13 || (major === 13 && minor >= 3)) {
+      testInfo.snapshotSuffix += '-grafana-13.3-plus';
+    }
+
     await exploreProfilesPage.goto(ExplorationType.DiffFlameGraph, EXPLORE_PROFILES_DIFF_RANGES_URL_PARAMS);
   });
 

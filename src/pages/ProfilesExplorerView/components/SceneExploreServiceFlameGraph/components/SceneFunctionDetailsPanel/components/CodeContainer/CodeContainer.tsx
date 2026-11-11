@@ -12,12 +12,11 @@ import { useCodeContainer } from './domain/useCodeContainer';
 import { Code } from './ui/Code';
 
 type CodeContainerProps = {
-  dataSourceUid: string;
   functionDetails: FunctionDetails;
 };
 
-export function CodeContainer({ dataSourceUid, functionDetails }: CodeContainerProps) {
-  const { data, actions } = useCodeContainer(dataSourceUid, functionDetails);
+export function CodeContainer({ functionDetails }: CodeContainerProps) {
+  const { data, actions } = useCodeContainer(functionDetails);
   const { hideAIButton } = useGrafanaAssistant();
 
   if (data.fetchError && (data.fetchError as HttpClientError)?.response?.status !== 404) {

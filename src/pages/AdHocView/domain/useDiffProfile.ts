@@ -1,14 +1,16 @@
 import { displayError } from '@shared/domain/displayStatus';
+import { useDataSourceUid } from '@shared/infrastructure/datasource/DataSourceUidContext';
 import { FlamebearerProfile } from '@shared/types/FlamebearerProfile';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
-import { createAdHocProfileClient } from '../infrastructure/adHocProfileClient';
+import { AdHocProfileClient } from '../infrastructure/adHocProfileClient';
 
 export function useDiffProfile() {
   const [profileTypes, setProfileTypes] = useState<string[]>([]);
   const [profile, setProfile] = useState<FlamebearerProfile | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const client = useMemo(() => createAdHocProfileClient(), []);
+  const dataSourceUid = useDataSourceUid();
+  const client = useMemo(() => new AdHocProfileClient({ dataSourceUid }), [dataSourceUid]);
 
   useEffect(() => {
     return () => {

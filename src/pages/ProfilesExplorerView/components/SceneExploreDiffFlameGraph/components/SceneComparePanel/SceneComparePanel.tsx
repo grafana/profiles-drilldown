@@ -1,4 +1,4 @@
-import { css, cx } from '@emotion/css';
+import { css } from '@emotion/css';
 import { AdHocVariableFilter, DataFrame, dateTime, FieldMatcherID, getValueFormat, GrafanaTheme2 } from '@grafana/data';
 import { t } from '@grafana/i18n';
 import {
@@ -18,7 +18,7 @@ import {
   SceneVariableValueChangedEvent,
   VariableDependencyConfig,
 } from '@grafana/scenes';
-import { IconButton, useStyles2 } from '@grafana/ui';
+import { Button, useStyles2 } from '@grafana/ui';
 import { SceneTimePickerWithoutSync } from '@shared/components/SceneTimePickerWithoutSync/SceneTimePickerWithoutSync';
 import { getProfileMetric, ProfileMetricId } from '@shared/infrastructure/profile-metrics/getProfileMetric';
 import React from 'react';
@@ -532,12 +532,11 @@ export class SceneComparePanel extends SceneObjectBase<SceneComparePanelState> {
               <refreshPicker.Component model={refreshPicker} />
             </div>
 
-            <IconButton
-              className={cx(styles.syncButton)}
-              name="link"
-              aria-label={t('diff-flame-graph.compare-panel.sync-time-ranges', 'Sync time ranges')}
-              tooltip={t('diff-flame-graph.compare-panel.sync-time-ranges', 'Sync time ranges')}
+            <Button
+              variant="secondary"
+              icon="link"
               onClick={model.onClickTimeRangeSync}
+              tooltip={t('diff-flame-graph.compare-panel.sync-time-ranges', 'Sync time ranges')}
             />
           </div>
         </div>
@@ -586,18 +585,6 @@ const getStyles = (theme: GrafanaTheme2, color: string) => ({
     display: flex;
     justify-content: flex-end;
     gap: 4px;
-  `,
-  syncButton: css`
-    z-index: unset;
-    padding: ${theme.spacing(0, 1)};
-    margin: 0;
-    background: ${theme.colors.secondary.main};
-    border: 1px solid ${theme.colors.secondary.border};
-    border-radius: ${theme.shape.radius.md || theme.shape.radius.default};
-
-    &:hover {
-      background: ${theme.colors.secondary.shade};
-    }
   `,
   filter: css`
     display: flex;

@@ -3,14 +3,6 @@ import { sceneGraph } from '@grafana/scenes';
 import { SceneExploreServiceFlameGraph } from '../../SceneExploreServiceFlameGraph/SceneExploreServiceFlameGraph';
 import { ExplorationType, SceneProfilesExplorer } from '../SceneProfilesExplorer';
 
-jest.mock(
-  '../../SceneByVariableRepeaterGrid/components/SceneEmptyState/ui/img/grot-404-dark.svg',
-  () => 'grot-404-dark.svg'
-);
-jest.mock(
-  '../../SceneByVariableRepeaterGrid/components/SceneEmptyState/ui/img/grot-404-light.svg',
-  () => 'grot-404-light.svg'
-);
 jest.mock('../../SceneExploreDiffFlameGraph/SceneExploreDiffFlameGraph', () => {
   const { SceneObjectBase } = jest.requireActual('@grafana/scenes');
 
@@ -36,12 +28,11 @@ jest.mock('../../SceneExploreServiceFlameGraph/SceneFlameGraph', () => {
 
 jest.mock('@shared/infrastructure/featureFlags/featureFlags', () => ({
   getKgAnnotationsInPyroscopeFromOpenFeature: () => false,
-  getProfilesHeatmapFromOpenFeature: () => true,
 }));
 
 describe('SceneProfilesExplorer', () => {
   it('syncs span heatmap URL state without rebuilding the flame graph scene', () => {
-    const explorer = new SceneProfilesExplorer({});
+    const explorer = new SceneProfilesExplorer({ initialDS: 'test-ds-uid' });
     const buildBodyScene = explorer.buildBodyScene(ExplorationType.FLAME_GRAPH);
     explorer.setState({ explorationType: ExplorationType.FLAME_GRAPH, body: buildBodyScene });
 

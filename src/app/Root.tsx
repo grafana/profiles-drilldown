@@ -1,8 +1,8 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 
 import pluginJson from '../plugin.json';
 
-const LazyApp = React.lazy(async () => {
+export const Root = React.lazy(async () => {
   const { initPluginTranslations } = await import('@grafana/i18n');
 
   const { loadResources: scenesLoadResources } = await import('@grafana/scenes');
@@ -13,11 +13,3 @@ const LazyApp = React.lazy(async () => {
 
   return import('./App').then((module) => ({ default: module.App }));
 });
-
-export function Root() {
-  return (
-    <Suspense>
-      <LazyApp />
-    </Suspense>
-  );
-}

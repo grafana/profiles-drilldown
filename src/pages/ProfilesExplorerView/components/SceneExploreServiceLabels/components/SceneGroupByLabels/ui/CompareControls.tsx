@@ -57,6 +57,7 @@ export function CompareControls({ compare, onClickCompare, onClickClear }: Compa
       </Button>
 
       <Button
+        aria-label={t('labels.compare.clear-tooltip', 'Clear comparison selection')}
         data-testid="clearComparison"
         className={cx(styles.clearButton, !compareIsDisabled ? styles.clearButtonActive : undefined)}
         icon="times"

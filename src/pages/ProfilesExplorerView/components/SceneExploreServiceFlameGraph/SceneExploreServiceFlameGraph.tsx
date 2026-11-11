@@ -2,7 +2,6 @@ import { css } from '@emotion/css';
 import { GrafanaTheme2 } from '@grafana/data';
 import { SceneComponentProps, sceneGraph, SceneObjectBase, SceneObjectState, SceneReactObject } from '@grafana/scenes';
 import { useStyles2 } from '@grafana/ui';
-import { getProfilesHeatmapFromOpenFeature } from '@shared/infrastructure/featureFlags/featureFlags';
 import { uniqBy } from 'lodash';
 import React from 'react';
 import { Unsubscribable } from 'rxjs';
@@ -52,7 +51,6 @@ const HEATMAP_ITEM: GridItemData = {
 
 export class SceneExploreServiceFlameGraph extends SceneObjectBase<SceneExploreServiceFlameGraphState> {
   private heatmapSelectedSpanSub?: Unsubscribable;
-  private profilesHeatmapEnabled: boolean;
   private spanAvailabilityProbeId = 0;
   private primedSpanHeatmapResponse?: PrimedSpanHeatmapResponse;
   private syncingHeatmapSelection = false;
@@ -74,7 +72,6 @@ export class SceneExploreServiceFlameGraph extends SceneObjectBase<SceneExploreS
     onShowSpanHeatmapChange?: (showSpanHeatmap: boolean) => void;
     onTempoDataSourceUidChange?: (tempoDataSourceUid?: string) => void;
   }) {
-    const profilesHeatmapEnabled = getProfilesHeatmapFromOpenFeature();
     const spanToggleAction = new SpanExemplarToggleAction(initialShowSpanHeatmap);
 
     super({
@@ -87,7 +84,7 @@ export class SceneExploreServiceFlameGraph extends SceneObjectBase<SceneExploreS
       mainTimeseries: new SceneMainServiceTimeseries({
         item,
         includeExemplars: true,
-        includeSpanExemplars: profilesHeatmapEnabled,
+        includeSpanExemplars: true,
         spanExemplarToggleAction: spanToggleAction,
         headerActions: () => [
           new SceneReactObject({ component: ResolutionBoostExtensionPoint, props: { scene: this } }),
@@ -99,7 +96,6 @@ export class SceneExploreServiceFlameGraph extends SceneObjectBase<SceneExploreS
       body: new SceneFlameGraph(),
     });
 
-    this.profilesHeatmapEnabled = profilesHeatmapEnabled;
     this.initialShowSpanHeatmap = initialShowSpanHeatmap;
     this.initialTempoDataSourceUid = initialTempoDataSourceUid;
     this.onShowSpanHeatmapChange = onShowSpanHeatmapChange;
@@ -126,13 +122,6 @@ export class SceneExploreServiceFlameGraph extends SceneObjectBase<SceneExploreS
     const profileMetricVariable = sceneGraph.findByKeyAndType(this, 'profileMetricId', ProfileMetricVariable);
     profileMetricVariable.setState({ query: ProfileMetricVariable.QUERY_SERVICE_NAME_DEPENDENT });
     profileMetricVariable.update(true);
-
-    if (!this.profilesHeatmapEnabled) {
-      return () => {
-        profileMetricVariable.setState({ query: ProfileMetricVariable.QUERY_DEFAULT });
-        profileMetricVariable.update(true);
-      };
-    }
 
     const spanToggleSub = this.subscribeToEvent(SpanProfilesToggled, (event) => {
       if (event.payload.enabled) {
@@ -224,7 +213,7 @@ export class SceneExploreServiceFlameGraph extends SceneObjectBase<SceneExploreS
   }
 
   async probeSpanAvailability(openHeatmapWhenAvailable = false) {
-    if (!this.profilesHeatmapEnabled || this.state.showSpanHeatmap) {
+    if (this.state.showSpanHeatmap) {
       return;
     }
 
@@ -271,10 +260,6 @@ export class SceneExploreServiceFlameGraph extends SceneObjectBase<SceneExploreS
   }
 
   openSpanHeatmapMode() {
-    if (!this.profilesHeatmapEnabled) {
-      return;
-    }
-
     let { spanHeatmap } = this.state;
     const primedResponse = this.getPrimedSpanHeatmapResponse();
 
@@ -464,7 +449,7 @@ export class SceneExploreServiceFlameGraph extends SceneObjectBase<SceneExploreS
   static Component({ model }: SceneComponentProps<SceneExploreServiceFlameGraph>) {
     const styles = useStyles2(getStyles);
     const { mainTimeseries, body, spanHeatmap, showSpanHeatmap, heatmapMenu, spanToggleAction } = model.useState();
-    const showHeatmapPanel = model.profilesHeatmapEnabled && showSpanHeatmap && spanHeatmap;
+    const showHeatmapPanel = showSpanHeatmap && spanHeatmap;
 
     return (
       <div className={styles.flex}>

@@ -1,16 +1,11 @@
-import { getBackendSrv, isAppPluginInstalled } from '@grafana/runtime';
+import { getAppPluginHealth } from '@grafana/plugin-compat/apps';
+import { isAppPluginEnabled, isAppPluginInstalled } from '@grafana/runtime';
 import { logger } from '@shared/infrastructure/tracking/logger';
 import { useQuery } from '@tanstack/react-query';
 import { GRAFANA_LLM_APP_ID } from 'src/constants';
 
-const LLM_PLUGIN_ROUTE = `/api/plugins/${GRAFANA_LLM_APP_ID}`;
-
-// Request options shared across the calls below to prevent `getBackendSrv()` from surfacing a
-// non-actionable toast notification, e.g. "Access Denied" when the user lacks permission to read
-// the plugin settings (a 403 from `/settings`), similar in spirit to issue #757.
-const SILENT_REQUEST_OPTIONS = { showSuccessAlert: false, showErrorAlert: false };
-
 type LlmProviderHealth = { configured: boolean; ok: boolean };
+type HealthDetails = { llmProvider?: LlmProviderHealth; openAI?: LlmProviderHealth };
 
 /**
  * Mirrors `openai.enabled()` from `@grafana/llm`, but suppresses error toasts so that a 403
@@ -18,27 +13,24 @@ type LlmProviderHealth = { configured: boolean; ok: boolean };
  * as the LLM plugin being disabled, instead of flashing a non-actionable pop-up.
  */
 async function isLlmPluginEnabled(): Promise<boolean> {
-  const isLlmAppInstalled = await isAppPluginInstalled(GRAFANA_LLM_APP_ID);
-
-  if (!isLlmAppInstalled) {
-    return false;
-  }
-
   try {
-    const settings = await getBackendSrv().get(`${LLM_PLUGIN_ROUTE}/settings`, undefined, undefined, {
-      ...SILENT_REQUEST_OPTIONS,
-    });
-
-    if (!settings?.enabled) {
+    const installed = await isAppPluginInstalled(GRAFANA_LLM_APP_ID);
+    if (!installed) {
       return false;
     }
 
-    const health = await getBackendSrv().get(`${LLM_PLUGIN_ROUTE}/health`, undefined, undefined, {
-      ...SILENT_REQUEST_OPTIONS,
-    });
+    const enabled = await isAppPluginEnabled(GRAFANA_LLM_APP_ID);
+    if (!enabled) {
+      return false;
+    }
 
-    const details = health?.details;
-    const provider: LlmProviderHealth | undefined = details?.llmProvider ?? details?.openAI;
+    const health = await getAppPluginHealth(GRAFANA_LLM_APP_ID);
+    if (!health?.details) {
+      return false;
+    }
+
+    const details: HealthDetails = health.details;
+    const provider = details.llmProvider ?? details.openAI;
 
     return Boolean(provider?.configured && provider?.ok);
   } catch {

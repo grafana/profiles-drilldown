@@ -1,3 +1,4 @@
+import { useDataSourceUid } from '@shared/infrastructure/datasource/DataSourceUidContext';
 import { DomainHookReturnValue } from '@shared/types/DomainHookReturnValue';
 import { useMemo, useState } from 'react';
 
@@ -14,7 +15,8 @@ export type CodeLine = LineProfile & { line: string };
 
 type CodeContainerDomainValue = DomainHookReturnValue & { data: { snippetLines: CodeLine[]; allLines: CodeLine[] } };
 
-export function useCodeContainer(dataSourceUid: string, functionDetails: FunctionDetails): CodeContainerDomainValue {
+export function useCodeContainer(functionDetails: FunctionDetails): CodeContainerDomainValue {
+  const dataSourceUid = useDataSourceUid();
   const { isLoggedIn } = useGitHubContext();
   const { version } = functionDetails;
 

@@ -2,7 +2,12 @@ import { ExplorationType } from '../../config/constants';
 import { expect, test } from '../../fixtures';
 
 test.describe('Labels view', () => {
-  test.beforeEach(async ({ exploreProfilesPage }) => {
+  test.beforeEach(async ({ exploreProfilesPage, grafanaVersion }, testInfo) => {
+    const [major, minor] = grafanaVersion.split('.').map(Number);
+    if (major > 13 || (major === 13 && minor >= 3)) {
+      testInfo.snapshotSuffix += '-grafana-13.3-plus';
+    }
+
     await exploreProfilesPage.goto(ExplorationType.Labels);
   });
 
@@ -150,6 +155,40 @@ test.describe('Labels view', () => {
 
         await expect(exploreProfilesPage.getClearComparisonButton()).toBeVisible();
         await expect(exploreProfilesPage.getClearComparisonButton()).toBeDisabled();
+      });
+
+      [
+        { name: 'no selection', selections: [] },
+        { name: 'baseline only', selections: [{ panel: 'us-east', target: 'Baseline' }] },
+        { name: 'comparison only', selections: [{ panel: 'us-east', target: 'Comparison' }] },
+        {
+          name: 'both selections',
+          selections: [
+            { panel: 'us-east', target: 'Baseline' },
+            { panel: 'eu-north', target: 'Comparison' },
+          ],
+        },
+      ].forEach(({ name, selections }) => {
+        test(`Clear comparison keeps its accessible name with ${name}`, async ({ exploreProfilesPage }) => {
+          const clearButton = exploreProfilesPage.getClearComparisonButton();
+          const compareButton = exploreProfilesPage.getCompareButton();
+
+          for (const { panel, target } of selections) {
+            await exploreProfilesPage.selectForComparison(panel, target);
+          }
+
+          await expect(clearButton).toHaveAccessibleName('Clear comparison selection');
+          await expect(clearButton).toBeEnabled({ enabled: selections.length > 0 });
+          await expect(compareButton).toHaveText(`Compare (${selections.length}/2)`);
+          await expect(compareButton).toBeEnabled({ enabled: selections.length === 2 });
+
+          if (selections.length > 0) {
+            await clearButton.click();
+            await expect(clearButton).toBeDisabled();
+            await expect(clearButton).toHaveAccessibleName('Clear comparison selection');
+            await expect(compareButton).toHaveText('Compare (0/2)');
+          }
+        });
       });
 
       test('Quick filter', async ({ exploreProfilesPage }) => {
@@ -306,17 +345,14 @@ test.describe('Labels view', () => {
     });
   });
 
-  test('Hide no data switcher', async ({ exploreProfilesPage }) => {
+  test('Filter that matches no series clears the label panels', async ({ exploreProfilesPage }) => {
     await exploreProfilesPage.enterQuickFilterText('region,vehicle');
+    await expect(exploreProfilesPage.getGroupByPanels()).toHaveCount(2);
+
+    // The label list is reloaded with the filter. Nothing in the sample data matches, so the panels are removed.
     await exploreProfilesPage.addFilter(['pyroscope_spy', '!=', 'gospy']);
 
-    await expect(exploreProfilesPage.getGroupByPanels()).toHaveCount(2);
-    await exploreProfilesPage.assertPanelHasNoData('region (3)');
-    await exploreProfilesPage.assertPanelHasNoData('vehicle (4)');
-
-    await exploreProfilesPage.selectHidePanelsWithoutNoData();
-
+    await expect(exploreProfilesPage.getGroupByContainer().getByText('No results')).toBeVisible({ timeout: 15000 });
     await expect(exploreProfilesPage.getGroupByPanels()).toHaveCount(0);
-    await expect(exploreProfilesPage.getGroupByContainer().getByText(/No profiles found/)).toBeVisible();
   });
 });

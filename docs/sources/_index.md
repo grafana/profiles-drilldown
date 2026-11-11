@@ -41,7 +41,7 @@ cards:
       description: Use your profiling data to identify issues and determine the root cause.
       height: 24
     - title: Changelog
-      href: https://github.com/grafana/explore-profiles/blob/main/CHANGELOG.md
+      href: https://github.com/grafana/profiles-drilldown/blob/main/CHANGELOG.md
       description: Learn about the updates, new features, and bugfixes in this version.
       height: 24
 ---
@@ -64,6 +64,8 @@ Using Profiles Drilldown, you can:
 - Diagnose issues: Determine the root cause of an issue
 
 {{< youtube id="x9aPw_CbIQc" >}}
+
+{{< docs/play title="Profiles Drilldown" url="https://play.grafana.org/a/grafana-pyroscope-app/explore" >}}
 
 ## Explore
 

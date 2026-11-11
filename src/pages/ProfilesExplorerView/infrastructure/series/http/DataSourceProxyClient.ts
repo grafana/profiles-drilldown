@@ -1,23 +1,20 @@
-import { config } from '@grafana/runtime';
+import { locationUtil } from '@grafana/data';
+import { getDataSourceProxyUrl } from '@shared/infrastructure/appUrl';
+import { grafanaFetch } from '@shared/infrastructure/http/grafanaFetch';
 import { HttpClient } from '@shared/infrastructure/http/HttpClient';
+import type { HttpRequestInput } from '@shared/infrastructure/types';
 
 export class DataSourceProxyClient extends HttpClient {
   dataSourceUid: string;
 
   constructor(options: { dataSourceUid: string }) {
     const { dataSourceUid } = options;
-
-    let { appSubUrl = '', bootData } = config;
-    if (appSubUrl?.at(-1) !== '/') {
-      // ensures that the API pathname is appended correctly (appUrl seems to always have it but better to be extra careful)
-      appSubUrl += '/';
-    }
-
-    super(`${appSubUrl}api/datasources/proxy/uid/${dataSourceUid}`, {
-      'content-type': 'application/json',
-      'X-Grafana-Org-Id': String(bootData?.user?.orgId || ''),
-    });
-
+    super(getDataSourceProxyUrl(dataSourceUid), { 'content-type': 'application/json' });
     this.dataSourceUid = options.dataSourceUid;
+  }
+
+  protected request({ url, options }: HttpRequestInput): Promise<Response> {
+    // BackendSrv makes URLs relative to Grafana's base href; strip appSubUrl to avoid a doubled prefix.
+    return grafanaFetch({ url: locationUtil.stripBaseFromUrl(`${this.baseUrl}${url}`), options });
   }
 }

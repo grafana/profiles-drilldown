@@ -1,5 +1,5 @@
 import { RawTimeRange, toURLRange, urlUtil } from '@grafana/data';
-import { config } from '@grafana/runtime';
+import { getGrafanaUrl } from '@shared/infrastructure/appUrl';
 
 import { TimeSeriesQuery } from '../infrastructure/timeseries/buildTimeSeriesQueryRunner';
 
@@ -13,9 +13,7 @@ export function getExploreUrl(rawTimeRange: RawTimeRange, query: TimeSeriesQuery
     },
   });
 
-  const subUrl = config.appSubUrl ?? '';
-
-  return urlUtil.renderUrl(`${subUrl}/explore`, {
+  return urlUtil.renderUrl(getGrafanaUrl('/explore'), {
     panes: exploreState,
     schemaVersion: 1,
   });

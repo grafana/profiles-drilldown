@@ -59,9 +59,6 @@ export class AllServicesFilterVariable extends AdHocFiltersVariable {
     const {
       value: { from, to },
     } = sceneGraph.getTimeRange(model).useState();
-    const { value: dataSourceUid } = sceneGraph
-      .findByKeyAndType(model, 'dataSource', ProfilesDataSourceVariable)
-      .useState();
     const { value: profileMetricId } = sceneGraph
       .findByKeyAndType(model, 'profileMetricId', ProfileMetricVariable)
       .useState();
@@ -75,7 +72,6 @@ export class AllServicesFilterVariable extends AdHocFiltersVariable {
       <QueryBuilder
         id={`query-builder-${key}`}
         autoExecute
-        dataSourceUid={dataSourceUid as string}
         query={query}
         from={from.unix() * 1000}
         to={to.unix() * 1000}

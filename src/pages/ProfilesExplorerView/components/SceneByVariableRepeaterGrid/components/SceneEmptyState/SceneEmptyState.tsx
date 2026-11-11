@@ -1,7 +1,6 @@
 import { SceneComponentProps, SceneObjectBase, SceneObjectState } from '@grafana/scenes';
+import { EmptyState } from '@grafana/ui';
 import React from 'react';
-
-import { EmptyState } from './ui/EmptyState';
 
 interface SceneEmptyStateState extends SceneObjectState {
   message: string;
@@ -10,6 +9,6 @@ interface SceneEmptyStateState extends SceneObjectState {
 export class SceneEmptyState extends SceneObjectBase<SceneEmptyStateState> {
   public static Component = ({ model }: SceneComponentProps<SceneEmptyState>) => {
     const { message } = model.useState();
-    return <EmptyState message={message} />;
+    return <EmptyState message={message} variant="not-found" />;
   };
 }

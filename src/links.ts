@@ -1,7 +1,7 @@
 import { PluginExtensionAddedLinkConfig, PluginExtensionPoints, RawTimeRange } from '@grafana/data';
 import { DataQuery } from '@grafana/schema';
-import { GrafanaPyroscopeDataQuery } from '@grafana/schema/dist/esm/raw/composable/grafanapyroscope/dataquery/x/GrafanaPyroscopeDataQuery_types.gen';
 import { parseRawFilters } from '@shared/components/QueryBuilder/domain/helpers/queryToFilters';
+import { GrafanaPyroscopeDataQuery } from '@shared/domain/pyroscopeDataQuery';
 
 export type PluginExtensionExploreContext = {
   targets: DataQuery[];

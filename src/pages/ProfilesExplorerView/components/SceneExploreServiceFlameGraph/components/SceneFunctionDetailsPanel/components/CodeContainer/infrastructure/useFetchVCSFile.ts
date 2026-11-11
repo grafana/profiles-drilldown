@@ -34,7 +34,7 @@ export function useFetchVCSFile({
   const privateVcsClient = DataSourceProxyClientBuilder.build(dataSourceUid, PrivateVcsClient);
   const { isFetching, error, data } = useQuery({
     enabled: Boolean(enabled && repository && (localPath || functionName)),
-    queryKey: ['vcs-file', repository, gitRef, localPath, rootPath, functionName],
+    queryKey: ['vcs-file', dataSourceUid, repository, gitRef, localPath, rootPath, functionName],
     queryFn: () =>
       privateVcsClient
         .getFile(repository, gitRef, localPath, rootPath, functionName)

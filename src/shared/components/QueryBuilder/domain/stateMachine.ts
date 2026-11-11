@@ -1,9 +1,11 @@
+import { MemoryCacheClient } from '@shared/infrastructure/MemoryCacheClient';
 import { createMachine, interpret, Interpreter, type MachineConfig, type MachineOptions } from 'xstate';
 
-import { actions } from './actions';
+import { QueryBuilderLabelsRepository } from '../infrastructure/QueryBuilderLabelsRepository';
+import { createActions } from './actions';
 import { guards } from './guards';
 import { queryToFilters } from './helpers/queryToFilters';
-import { services } from './services';
+import { createServices } from './services';
 import { autoSuggestProxy } from './states/autoSuggestProxy';
 import { idle } from './states/idle';
 import { displayLabels, loadLabels } from './states/loadLabels';
@@ -13,6 +15,7 @@ import { InputParams, QueryBuilderContext, QueryBuilderEvent, QueryBuilderSchema
 
 export const defaultContext: QueryBuilderContext = Object.freeze({
   inputParams: {
+    dataSourceUid: '',
     query: '',
     from: 0,
     to: 0,
@@ -54,12 +57,6 @@ const config = (
   },
 });
 
-const options: MachineOptions<QueryBuilderContext, QueryBuilderEvent> = {
-  guards,
-  services,
-  actions,
-};
-
 export type Actor = Interpreter<QueryBuilderContext, QueryBuilderSchema, QueryBuilderEvent>;
 
 export function buildStateMachine(inputParams: InputParams) {
@@ -71,6 +68,15 @@ export function buildStateMachine(inputParams: InputParams) {
     query,
     // See changeInputParams() in domain/actions.ts
     filters: queryToFilters(query),
+  };
+
+  const labelsRepository = new QueryBuilderLabelsRepository({
+    cacheClient: new MemoryCacheClient(),
+  });
+  const options: MachineOptions<QueryBuilderContext, QueryBuilderEvent> = {
+    guards,
+    actions: createActions({ labelsRepository }),
+    services: createServices({ labelsRepository }),
   };
 
   const stateMachine = createMachine(config(initialContext), options);

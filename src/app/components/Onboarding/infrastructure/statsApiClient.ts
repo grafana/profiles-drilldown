@@ -1,4 +1,4 @@
-import { ApiClient } from '@shared/infrastructure/http/ApiClient';
+import { DataSourceProxyClient } from 'src/pages/ProfilesExplorerView/infrastructure/series/http/DataSourceProxyClient';
 
 export type Stats = {
   hasIngestedData: boolean;
@@ -6,7 +6,7 @@ export type Stats = {
   newestProfileTime: number;
 };
 
-class StatsApiClient extends ApiClient {
+export class StatsApiClient extends DataSourceProxyClient {
   async get(): Promise<Stats> {
     const response = await this.fetch('/querier.v1.QuerierService/GetProfileStats', {
       method: 'POST',
@@ -22,5 +22,3 @@ class StatsApiClient extends ApiClient {
     };
   }
 }
-
-export const statsApiClient = new StatsApiClient();

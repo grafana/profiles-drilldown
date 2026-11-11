@@ -1,5 +1,86 @@
 # Changelog
 
+## [3.1.0](https://github.com/grafana/profiles-drilldown/compare/v3.0.0...v3.1.0) (2026-10-21)
+
+
+### 🎉 Features
+
+* replace config.apps with getAppPluginVersion ([#1185](https://github.com/grafana/profiles-drilldown/issues/1185)) ([2d450c3](https://github.com/grafana/profiles-drilldown/commit/2d450c336ee333ead9bfb2584337693615c96acb))
+* replace config.appSubUrl with locationUtil.assureBaseUrl ([#1187](https://github.com/grafana/profiles-drilldown/issues/1187)) ([68102b4](https://github.com/grafana/profiles-drilldown/commit/68102b48791c0768aeee010bafa99c6efbff9988))
+
+
+### 🐛 Bug Fixes
+
+* **deps:** bump @grafana/flamegraph to 13.2.4 ([#1194](https://github.com/grafana/profiles-drilldown/issues/1194)) ([6fcc10e](https://github.com/grafana/profiles-drilldown/commit/6fcc10ebade9f6cc0ee5604c86f386b14ed8ef7f))
+* **e2e:** add explicit types for implicit any parameters ([#1201](https://github.com/grafana/profiles-drilldown/issues/1201)) ([7b18616](https://github.com/grafana/profiles-drilldown/commit/7b1861602d10384b8f54768ce7145acd72691429))
+* preserve gcx export selectors and consolidate helpers ([#1142](https://github.com/grafana/profiles-drilldown/issues/1142)) ([7ca0f98](https://github.com/grafana/profiles-drilldown/commit/7ca0f98d6713cafa979aa3f28dedec95f56b59e5))
+* preserve span selector remove button layout ([#1198](https://github.com/grafana/profiles-drilldown/issues/1198)) ([7330fc3](https://github.com/grafana/profiles-drilldown/commit/7330fc3c4b0787c7f6964a21448eb8d73272bca6))
+* use EmptyState from @grafana/ui ([#1196](https://github.com/grafana/profiles-drilldown/issues/1196)) ([2630626](https://github.com/grafana/profiles-drilldown/commit/26306266300c35d729f2d370273442884dd6cc64))
+* use stock Button APIs in profiles-drilldown ([#1195](https://github.com/grafana/profiles-drilldown/issues/1195)) ([06b37be](https://github.com/grafana/profiles-drilldown/commit/06b37be56332f326ecc8b0adc242513447ca47cb))
+
+
+### 📝 Documentation
+
+* Add Grafana Play link to the Profiles Drilldown landing page ([#1202](https://github.com/grafana/profiles-drilldown/issues/1202)) ([a9ed0d7](https://github.com/grafana/profiles-drilldown/commit/a9ed0d7a9b277777c00225ca47f14d04b9aa96d3))
+
+
+### 🧹 Chore
+
+* bump @grafana/create-plugin configuration to 7.11.0 ([#1153](https://github.com/grafana/profiles-drilldown/issues/1153)) ([1dd0706](https://github.com/grafana/profiles-drilldown/commit/1dd07067ca10f8773b4cd06fd39998e5bd4e00d5))
+* **deps:** bump basic-ftp ([#1205](https://github.com/grafana/profiles-drilldown/issues/1205)) ([b837577](https://github.com/grafana/profiles-drilldown/commit/b837577305f242d62be725b30c33d3aa1a30b25a))
+* **deps:** lock file maintenance ([#1184](https://github.com/grafana/profiles-drilldown/issues/1184)) ([8a336f3](https://github.com/grafana/profiles-drilldown/commit/8a336f3dcde299f260a1568ee8cf9484d6407c77))
+* **deps:** lock file maintenance ([#1199](https://github.com/grafana/profiles-drilldown/issues/1199)) ([765d43b](https://github.com/grafana/profiles-drilldown/commit/765d43b3b2eabd289ce1e7707e4c8739c4774b91))
+* Remove profilesHeatmap feature flag ([#1175](https://github.com/grafana/profiles-drilldown/issues/1175)) ([3030a2e](https://github.com/grafana/profiles-drilldown/commit/3030a2e30f0f57f15e5b53df37ecae6b030625fd))
+
+## [3.0.0](https://github.com/grafana/profiles-drilldown/compare/v2.3.1...v3.0.0) (2026-10-09)
+
+
+### ⚠ BREAKING CHANGES
+
+* Profiles Drilldown no longer installs or runs on Grafana versions below 13.1.0.
+* **deps:** Profiles Drilldown no longer installs or runs on Grafana versions below 13.1.0.
+
+### 🎉 Features
+
+* copy gcx pprof commands ([#1088](https://github.com/grafana/profiles-drilldown/issues/1088)) ([b32d7f6](https://github.com/grafana/profiles-drilldown/commit/b32d7f63945dc2dfdd753a5a08713319109aaec0))
+
+
+### 🐛 Bug Fixes
+
+* **deps:** update react ([#1158](https://github.com/grafana/profiles-drilldown/issues/1158)) ([25cd5d1](https://github.com/grafana/profiles-drilldown/commit/25cd5d19bf4428a6a0721bb554cde0aaa032e694))
+* **deps:** update react ([#1159](https://github.com/grafana/profiles-drilldown/issues/1159)) ([bad09aa](https://github.com/grafana/profiles-drilldown/commit/bad09aa683e88b4d764a03fc46639b251a99b22e))
+* **security/high/:** update dependency brace-expansion@^1 to v1.1.21 [security] ([#1149](https://github.com/grafana/profiles-drilldown/issues/1149)) ([17b1c10](https://github.com/grafana/profiles-drilldown/commit/17b1c103d446ba9af8d60b7b67b2754745d0bb3b))
+
+
+### 📝 Documentation
+
+* document gcx command export for flame graphs ([#1148](https://github.com/grafana/profiles-drilldown/issues/1148)) ([8d49e72](https://github.com/grafana/profiles-drilldown/commit/8d49e7288ad1078b09f82c9cd7c51fbf36932870))
+* expand span heatmap investigation guidance ([#1179](https://github.com/grafana/profiles-drilldown/issues/1179)) ([86e142b](https://github.com/grafana/profiles-drilldown/commit/86e142b64bc3f9e55e7076629811eae7977764d0))
+* require signed commits in CONTRIBUTING and UI screenshots ([#1141](https://github.com/grafana/profiles-drilldown/issues/1141)) ([8f29606](https://github.com/grafana/profiles-drilldown/commit/8f296064654b6fdde3197638dd5e5accbd5903db))
+
+
+### 🧹 Chore
+
+* add pre-commit hook ([#1135](https://github.com/grafana/profiles-drilldown/issues/1135)) ([9784712](https://github.com/grafana/profiles-drilldown/commit/978471240e23596d995614b76ddd3078b35ec9f3))
+* **deps:** lock file maintenance ([#1136](https://github.com/grafana/profiles-drilldown/issues/1136)) ([11e1594](https://github.com/grafana/profiles-drilldown/commit/11e159480c8793c8c6263d3dc46ab310a0e9b313))
+* **deps:** lock file maintenance ([#1146](https://github.com/grafana/profiles-drilldown/issues/1146)) ([19530fd](https://github.com/grafana/profiles-drilldown/commit/19530fd9af0f3b18fee6ce76ce055c8790637cb8))
+* **deps:** lock file maintenance ([#1170](https://github.com/grafana/profiles-drilldown/issues/1170)) ([110c5f0](https://github.com/grafana/profiles-drilldown/commit/110c5f0f08b7d5df959058cec8683cda75fd9614))
+* **deps:** raise Grafana dependency to &gt;=13.1.0 ([#1150](https://github.com/grafana/profiles-drilldown/issues/1150)) ([3695e70](https://github.com/grafana/profiles-drilldown/commit/3695e70caab76729de4175ef01f9a4d20ec453b4))
+* **deps:** update actions/checkout action to v6.1.0 ([#1160](https://github.com/grafana/profiles-drilldown/issues/1160)) ([8c9ea0d](https://github.com/grafana/profiles-drilldown/commit/8c9ea0dc598288af5dfd827edd99422c6849f97e))
+* **deps:** update actions/stale action to v10.4.0 ([#1161](https://github.com/grafana/profiles-drilldown/issues/1161)) ([c5298f7](https://github.com/grafana/profiles-drilldown/commit/c5298f763c0dcede24a026154f44de56af7dda56))
+* **deps:** update buf ([#1163](https://github.com/grafana/profiles-drilldown/issues/1163)) ([8a67f22](https://github.com/grafana/profiles-drilldown/commit/8a67f2291e9b2b55955c1956ddd734d6e41e96f4))
+* **deps:** update copy-webpack-plugin, fork-ts-checker-webpack-plugin, knip, and dependency overrides ([#1176](https://github.com/grafana/profiles-drilldown/issues/1176)) ([2a12418](https://github.com/grafana/profiles-drilldown/commit/2a12418da21aa1c89b6689c3194f4d2eaf9fd0aa))
+* **deps:** update dependency @playwright/test to v1.63.0 ([#1164](https://github.com/grafana/profiles-drilldown/issues/1164)) ([8f87197](https://github.com/grafana/profiles-drilldown/commit/8f87197db0c16a58cb8b300a8e7907d9a39ae8eb))
+* **deps:** update dependency @swc/core to v1.16.2 ([#1154](https://github.com/grafana/profiles-drilldown/issues/1154)) ([1d0d65e](https://github.com/grafana/profiles-drilldown/commit/1d0d65eb45918c880f18e6e3524ac282de4e6f45))
+* **deps:** update dependency i18next-cli to v1.74.4 ([#1165](https://github.com/grafana/profiles-drilldown/issues/1165)) ([2b7f902](https://github.com/grafana/profiles-drilldown/commit/2b7f90279ba03b9f400fc96d322dc9695934537e))
+* **deps:** update dependency knip to v5.88.1 ([#1166](https://github.com/grafana/profiles-drilldown/issues/1166)) ([e89208d](https://github.com/grafana/profiles-drilldown/commit/e89208d0902675a282b352f4992e5161003780e4))
+* **deps:** update dependency react-hook-form to v7.89.0 ([#1167](https://github.com/grafana/profiles-drilldown/issues/1167)) ([7fc292b](https://github.com/grafana/profiles-drilldown/commit/7fc292bc26d12a1dc8f77327dd164c620f7ad641))
+* **deps:** update module github.com/grafana/pyroscope-go/godeltaprof to v0.1.12 ([#1156](https://github.com/grafana/profiles-drilldown/issues/1156)) ([10dd8b7](https://github.com/grafana/profiles-drilldown/commit/10dd8b7b9152177bec6879834cffe849a8dee373))
+* raise Grafana dependency to &gt;=13.1.0 ([#1139](https://github.com/grafana/profiles-drilldown/issues/1139)) ([32c7a0e](https://github.com/grafana/profiles-drilldown/commit/32c7a0ecb857dc972e1b545a7e3475a0f276e3eb))
+* reduce overrides ([#1152](https://github.com/grafana/profiles-drilldown/issues/1152)) ([4ba6069](https://github.com/grafana/profiles-drilldown/commit/4ba606977539665e4456ac56bd358594e228d5bf))
+* update old references ([#1173](https://github.com/grafana/profiles-drilldown/issues/1173)) ([f897041](https://github.com/grafana/profiles-drilldown/commit/f897041fa4c1d1275de69252697c417b49de6562))
+* upgrade moment ([#1151](https://github.com/grafana/profiles-drilldown/issues/1151)) ([30dcb68](https://github.com/grafana/profiles-drilldown/commit/30dcb681bda0259180491d0f49bdf38f1567176b))
+
 ## [2.3.1](https://github.com/grafana/profiles-drilldown/compare/v2.3.0...v2.3.1) (2026-09-21)
 
 

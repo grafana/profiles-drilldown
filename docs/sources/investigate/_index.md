@@ -77,18 +77,80 @@ While flame graphs show an aggregate of all profiles in the selected time range,
 
 ## Move from profiles to traces
 
-{{< docs/public-preview product="Profiles to Traces" >}}
+Use the span heatmap to investigate how resource usage varies across trace spans. Start with the distribution of span profile values, select an exemplar, and inspect its flame graph or associated trace.
 
-When your profiles include span-level exemplars, you can use the span heatmap in the **Flame graph** view to move from a profile to the trace that produced it.
+The span heatmap is a visualization within the **Flame graph** view, not a separate **Exploration** tab.
 
-1. Select the **Flame graph** view for your service.
-1. Use the **Profile timeline visualization** toggle to select **Span heatmap**. If no span profiles are available for the current service, filters, and time range, this option is unavailable.
-1. Select a **Tempo data source** to load trace details.
-1. In the **Top span exemplars** table, find the span you want to inspect using the span name, duration, or timestamp.
-1. For that span, select one of the following:
+### Before you begin
 
-   - **Open flame graph** to view the flame graph for the single span.
-   - **Open trace** to view the associated trace from your Tempo data source.
+You need:
+
+- A Pyroscope data source with span profiles for the service, profile type, filters, and time range you want to investigate. Aggregated profile data alone doesn't guarantee that span profiles are available.
+- To inspect associated traces, a Tempo data source containing the matching trace data and permission to query it. You can inspect span profiles without selecting Tempo.
+
+### Open the span heatmap
+
+1. Open **Profiles Drilldown** and select your Pyroscope **Data source**.
+1. Select the **Flame graph** view and choose a service and **Profile type**.
+1. Set the time range and any label filters for your investigation.
+1. In the **Profile timeline visualization** toggle above the chart, select **Span heatmap**.
+
+![Span heatmap showing CPU usage per span and the Top span exemplars table](/media/docs/explore-profiles/span-heatmap-overview.png)
+
+To return to the time series visualization, select **Time series** in the same toggle.
+
+### Read the heatmap
+
+The heatmap groups spans into buckets:
+
+- The horizontal axis represents time.
+- The vertical axis represents the selected profile metric's value per span.
+- Cell color represents the count of spans in a bucket. Use the tooltip and color scale to interpret the counts.
+
+Look for changes in the distribution or spans with unusually high profile values. For example, with a CPU profile type, higher-value buckets represent spans with more profiled CPU usage, not necessarily longer elapsed duration.
+
+Exemplar markers identify individual span profiles you can investigate. The **Top span exemplars** table provides timestamps, span IDs, and profile metric values. Trace details, including duration and trace ID, are loaded from the selected Tempo data source when available.
+
+### Inspect an individual span profile
+
+1. Find an exemplar in the heatmap or the **Top span exemplars** table.
+1. Use **Select exemplar** to highlight it in the heatmap and focus the table on that exemplar.
+
+   ![Selected span exemplar highlighted in the heatmap with its profile and trace actions in the table](/media/docs/explore-profiles/span-heatmap-selected-exemplar.png)
+
+1. In the table, select **Open flame graph** to inspect the span's profile and identify the functions contributing to its resource usage.
+
+Use **Clear exemplar selection** in the table to remove the exemplar highlight and restore the table's other rows.
+
+### Open the associated trace
+
+1. In **Top span exemplars**, select the **Tempo data source** that contains the service's traces.
+1. Wait for trace details to load. Use the span name, duration, timestamp, and profile metric value to find a span of interest.
+1. Select **Open trace** for a span with resolved trace details. The associated trace opens in a drawer.
+
+   ![Associated trace open in a drawer showing request timing and spans across services](/media/docs/explore-profiles/span-heatmap-trace.png)
+
+1. Inspect the trace to understand the span in the context of the request. Close the drawer to continue investigating the heatmap.
+
+A span's profile metric value and its trace duration describe different things. Use the flame graph to understand profiled resource usage and the trace to understand request timing and relationships between spans.
+
+### Troubleshoot missing data
+
+#### Span heatmap is unavailable
+
+If **Span heatmap** is disabled, its tooltip says: **No span profiles are available for the current service, filters, and time range**.
+
+Check that you selected the intended service and profile type. Expand the time range or remove restrictive filters, then try again. If span profiles are still unavailable, verify that your profiling setup collects span profiles. Seeing data in **Time series** doesn't by itself mean span profiles are present.
+
+#### No span exemplars are shown
+
+If the table displays **No span exemplars in the selected time range**, try a time range and filters that include span profiles. The exemplar table is not a complete list of every span represented by the heatmap.
+
+#### Trace details are missing
+
+Select the Tempo data source that contains the matching traces. A missing trace ID or **Open trace** action means no trace details have been resolved for that exemplar.
+
+If you see **Unable to load trace details from Tempo**, check your access to the selected Tempo data source and whether it can be queried. Also verify that the matching traces are still available within your trace retention period. You can continue investigating the available profile data without trace details.
 
 ## Common tools during investigations
 

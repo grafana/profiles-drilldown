@@ -8,8 +8,8 @@ type EnvVars = {
 };
 
 function getEnvVars(): EnvVars {
-  const envVars = ['E2E_BASE_URL', 'E2E_USERNAME', 'E2E_PASSWORD'].reduce((acc, name: string) => {
-    acc[name] = process.env[name];
+  const envVars = (['E2E_BASE_URL', 'E2E_USERNAME', 'E2E_PASSWORD'] as const).reduce((acc, name) => {
+    acc[name] = process.env[name] ?? '';
     return acc;
   }, {} as EnvVars);
 
