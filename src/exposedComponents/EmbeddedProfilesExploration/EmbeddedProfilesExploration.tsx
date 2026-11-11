@@ -1,5 +1,5 @@
 import { locationService } from '@grafana/runtime';
-import { SceneTimeRange, sceneUtils, UrlSyncContextProvider } from '@grafana/scenes';
+import { SceneTimeRange, UrlSyncContextProvider } from '@grafana/scenes';
 import { DataSourceUidFallback } from '@shared/infrastructure/datasource/DataSourceUidFallback';
 import { useDefaultDataSourceUid } from '@shared/infrastructure/datasource/useDefaultDataSourceUid';
 import { queryClient } from '@shared/infrastructure/react-query/queryClient';
@@ -14,7 +14,7 @@ interface EmbeddedSceneProps extends EmbeddedProfilesExplorationState {
   initialDS: string;
 }
 
-function buildProfilesExplorationFromState({
+export function buildProfilesExplorationFromState({
   initialTimeRange,
   onTimeRangeChange,
   initialFilters,
@@ -64,8 +64,8 @@ function buildProfilesExplorationFromState({
       true
     );
   }
-  const params = new URLSearchParams(locationService.getLocation().search);
-  sceneUtils.syncStateFromSearchParams(exploration, params);
+  // The namespaced UrlSyncContextProvider owns the initial URL sync. A manual
+  // sync here would consume embedded defaults before the provider initializes.
 
   return exploration;
 }

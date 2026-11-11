@@ -1,7 +1,18 @@
-import { sceneGraph } from '@grafana/scenes';
+import { dateTime } from '@grafana/data';
+import { locationService } from '@grafana/runtime';
+import { sceneGraph, UrlSyncContextProvider } from '@grafana/scenes';
+import { render } from '@testing-library/react';
+import React from 'react';
+import { MemoryRouter } from 'react-router-dom';
+import { buildProfilesExplorationFromState } from 'src/exposedComponents/EmbeddedProfilesExploration/EmbeddedProfilesExploration';
 
 import { SceneExploreServiceFlameGraph } from '../../SceneExploreServiceFlameGraph/SceneExploreServiceFlameGraph';
 import { ExplorationType, SceneProfilesExplorer } from '../SceneProfilesExplorer';
+
+jest.mock('@grafana/runtime', () => {
+  const runtime = jest.requireActual('@grafana/runtime');
+  return { ...runtime, useLocationService: () => runtime.locationService };
+});
 
 jest.mock('../../SceneExploreDiffFlameGraph/SceneExploreDiffFlameGraph', () => {
   const { SceneObjectBase } = jest.requireActual('@grafana/scenes');
@@ -31,6 +42,38 @@ jest.mock('@shared/infrastructure/featureFlags/featureFlags', () => ({
 }));
 
 describe('SceneProfilesExplorer', () => {
+  it.each([
+    { initialExplorationType: 'flame-graph' as const, expected: ExplorationType.FLAME_GRAPH, stale: 'labels' },
+    { initialExplorationType: undefined, expected: ExplorationType.LABELS, stale: 'flame-graph' },
+  ])(
+    'preserves embedded default $expected through provider initialization',
+    ({ initialExplorationType, expected, stale }) => {
+      locationService.replace(`/?pd-explorationType=${stale}&pd-showSpanHeatmap=true`);
+      const explorer = buildProfilesExplorationFromState({
+        initialDS: 'test-ds-uid',
+        initialExplorationType,
+        initialFilters: [{ key: 'service_name', operator: '=', value: 'api' }],
+        initialTimeRange: {
+          from: dateTime(1000),
+          to: dateTime(2000),
+          raw: { from: dateTime(1000), to: dateTime(2000) },
+        },
+      });
+
+      const view = render(
+        <MemoryRouter initialEntries={[locationService.getLocation()]}>
+          <UrlSyncContextProvider namespace="pd" scene={explorer} updateUrlOnInit={false}>
+            <span />
+          </UrlSyncContextProvider>
+        </MemoryRouter>
+      );
+      expect(explorer.state.explorationType).toBe(expected);
+      expect(explorer.state.showSpanHeatmap).toBe(expected === ExplorationType.FLAME_GRAPH);
+      view.unmount();
+      locationService.replace('/');
+    }
+  );
+
   it('applies embedded defaults once while preserving heatmap state and subsequent navigation', () => {
     const explorer = new SceneProfilesExplorer({
       initialDS: 'test-ds-uid',
