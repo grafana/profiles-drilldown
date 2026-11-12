@@ -1,11 +1,15 @@
+import { callAppPluginProxy } from '@grafana/plugin-compat/apps';
 import { useQuery } from '@tanstack/react-query';
-import { PLUGIN_API_URL } from 'src/constants';
+import { PYROSCOPE_APP_ID } from 'src/constants';
+
+type ProxyResponse = { orgSlug?: string; hpInstanceId?: number };
 
 export function useFetchInstances(enabled = true) {
   const { isFetching, error, data } = useQuery({
     enabled,
     queryKey: ['instances'],
-    queryFn: () => fetch(`${PLUGIN_API_URL}/grafanacom-api/instances`).then((response) => response.json()),
+    queryFn: () =>
+      callAppPluginProxy<ProxyResponse>({ pluginId: PYROSCOPE_APP_ID, routePath: 'grafanacom-api/instances' }),
   });
 
   return {
