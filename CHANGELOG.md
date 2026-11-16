@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.2.1](https://github.com/grafana/profiles-drilldown/compare/v3.2.0...v3.2.1) (2026-11-16)
+
+
+### 🐛 Bug Fixes
+
+* **security/medium/samples/rideshare:** update module go.opentelemetry.io/otel/sdk to v1.47.0 [security] ([#1255](https://github.com/grafana/profiles-drilldown/issues/1255)) ([1ba0a85](https://github.com/grafana/profiles-drilldown/commit/1ba0a852e68644cd8e88d352b7c650f25745c54a))
+* **security/medium/samples/rideshare:** update module go.opentelemetry.io/otel/trace to v1.47.0 [security] ([#1256](https://github.com/grafana/profiles-drilldown/issues/1256)) ([22bd9ee](https://github.com/grafana/profiles-drilldown/commit/22bd9eed62bf3a6aacd9c8bd253f588a2635ad02))
+
 ## [3.2.0](https://github.com/grafana/profiles-drilldown/compare/v3.1.0...v3.2.0) (2026-11-12)
 
 
