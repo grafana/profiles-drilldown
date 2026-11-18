@@ -1,5 +1,4 @@
 import { dateTimeParse } from '@grafana/data';
-import { displayWarning } from '@shared/domain/displayStatus';
 import { DataSourceUidProvider } from '@shared/infrastructure/datasource/DataSourceUidContext';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
@@ -16,7 +15,6 @@ jest.mock('@shared/infrastructure/settings/useFetchPluginSettings', () => ({
 }));
 jest.mock('@shared/domain/displayStatus', () => ({
   displayError: jest.fn(),
-  displayWarning: jest.fn(),
 }));
 jest.mock('@shared/domain/useIsFlameGraphCanvasPresent', () => ({ useIsFlameGraphCanvasPresent: () => false }));
 
@@ -62,7 +60,7 @@ describe('SceneExportMenu', () => {
     );
   });
 
-  it('warns and downloads the profile id when a span is also active', async () => {
+  it('downloads with both the profile id and the span selector', async () => {
     const fetchJson = jest.spyOn(SceneExportMenu.prototype, 'fetchFlamebearerProfile').mockResolvedValue(null);
     const fetchPprof = jest.spyOn(SceneExportMenu.prototype, 'fetchPprofProfile').mockResolvedValue(null);
     renderExportMenu({ profileIdSelector: 'profile-123', spanSelector: 'span-456' });
@@ -72,17 +70,16 @@ describe('SceneExportMenu', () => {
 
     await waitFor(() =>
       expect(fetchJson).toHaveBeenCalledWith(
-        expect.objectContaining({ profileIdSelector: 'profile-123', spanSelector: undefined })
+        expect.objectContaining({ profileIdSelector: 'profile-123', spanSelector: 'span-456' })
       )
     );
-    expect(displayWarning).toHaveBeenCalled();
 
     fireEvent.click(screen.getByRole('button', { name: 'Export profile data' }));
     fireEvent.click(await screen.findByText('pprof'));
 
     await waitFor(() =>
       expect(fetchPprof).toHaveBeenCalledWith(
-        expect.objectContaining({ profileIdSelector: 'profile-123', spanSelector: undefined })
+        expect.objectContaining({ profileIdSelector: 'profile-123', spanSelector: 'span-456' })
       )
     );
   });

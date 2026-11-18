@@ -2,7 +2,7 @@ import { TimeRange } from '@grafana/data';
 import { t } from '@grafana/i18n';
 import { SceneComponentProps, SceneObjectBase, SceneObjectState } from '@grafana/scenes';
 import { Button, Dropdown, Menu, Tooltip } from '@grafana/ui';
-import { displayError, displayWarning } from '@shared/domain/displayStatus';
+import { displayError } from '@shared/domain/displayStatus';
 import { reportInteraction } from '@shared/domain/reportInteraction';
 import { saveProfileJsonToFile } from '@shared/domain/saveProfileJsonToFile';
 import { useMaxNodesFromUrl } from '@shared/domain/url-params/useMaxNodesFromUrl';
@@ -136,26 +136,11 @@ export class SceneExportMenu extends SceneObjectBase<SceneExportMenuState> {
     };
 
     const exportParams = { dataSourceUid, query, timeRange, maxNodes, profileIdSelector, spanSelector };
-    // Neither export API has both fields. A profile id is kept and the span is left out.
-    const downloadParams =
-      profileIdSelector && spanSelector ? { ...exportParams, spanSelector: undefined } : exportParams;
-
-    const warnIfSpanOmitted = () => {
-      if (profileIdSelector && spanSelector) {
-        displayWarning([
-          t(
-            'export-menu.span-omitted',
-            'The span filter cannot be included with a profile ID. This download uses the profile ID only.'
-          ),
-        ]);
-      }
-    };
 
     const downloadJson = async () => {
       reportInteraction('g_pyroscope_app_export_profile', { format: 'json' });
-      warnIfSpanOmitted();
 
-      const profile = await this.fetchFlamebearerProfile(downloadParams);
+      const profile = await this.fetchFlamebearerProfile(exportParams);
       if (!profile) {
         return;
       }
@@ -170,9 +155,8 @@ export class SceneExportMenu extends SceneObjectBase<SceneExportMenuState> {
 
     const downloadPprof = async () => {
       reportInteraction('g_pyroscope_app_export_profile', { format: 'pprof' });
-      warnIfSpanOmitted();
 
-      const profile = await this.fetchPprofProfile(downloadParams);
+      const profile = await this.fetchPprofProfile(exportParams);
       if (!profile) {
         return;
       }
@@ -202,9 +186,8 @@ export class SceneExportMenu extends SceneObjectBase<SceneExportMenuState> {
 
     const uploadToFlamegraphDotCom = async () => {
       reportInteraction('g_pyroscope_app_export_profile', { format: 'flamegraph.com' });
-      warnIfSpanOmitted();
 
-      const profile = await this.fetchFlamebearerProfile(downloadParams);
+      const profile = await this.fetchFlamebearerProfile(exportParams);
       if (!profile) {
         return;
       }

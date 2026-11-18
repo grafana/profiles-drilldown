@@ -3,10 +3,15 @@ server:
 
 storage:
   backend: filesystem
+  filesystem:
+    dir: /data-shared
+
+architecture_storage: v1
 
 limits:
   max_query_length: 0
   max_query_lookback: 0
+  write_path: ingester
 
 tenant_settings:
   recording_rules:

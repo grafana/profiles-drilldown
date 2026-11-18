@@ -4,7 +4,7 @@ import { ProfileApiClient } from '../ProfileApiClient';
 
 jest.mock('@grafana/runtime', () => ({ config: { bootData: { user: { orgId: 1 } } } }));
 
-const timeRange = { from: dateTime(1000), to: dateTime(2000), raw: { from: '1', to: '2' } };
+const timeRange = { from: dateTime(1710352800123), to: dateTime(1710352801124), raw: { from: '1', to: '2' } };
 const query = 'process_cpu:cpu:nanoseconds:cpu:nanoseconds{service_name="api"}';
 
 const runtime = globalThis as unknown as { fetch: jest.Mock };
@@ -30,14 +30,21 @@ describe('ProfileApiClient', () => {
   it('keeps using render when no selector is active', async () => {
     await client.get({ query, timeRange, format: 'json', maxNodes: 10 });
 
-    expect(lastRequest().url).toContain('/pyroscope/render?');
+    const renderUrl = new URL(lastRequest().url, 'http://pyroscope');
+    expect(renderUrl.pathname).toContain('/pyroscope/render');
+    expect(renderUrl.searchParams.get('from')).toBe('1710352800123');
+    expect(renderUrl.searchParams.get('until')).toBe('1710352801124');
   });
 
-  it('sends a span selector to SelectMergeSpanProfile', async () => {
+  it('sends a span selector to SelectMergeStacktraces', async () => {
     const profile = await client.get({ query, timeRange, format: 'json', maxNodes: 10, spanSelector: 'span-1' });
 
-    expect(lastRequest().url).toContain('/SelectMergeSpanProfile');
-    expect(lastRequest().body.spanSelector).toEqual(['span-1']);
+    const { url, body } = lastRequest();
+    expect(url).toContain('/SelectMergeStacktraces');
+    expect(body.format).toBe('PROFILE_FORMAT_FLAMEGRAPH');
+    expect(body.start).toBe(1710352800123);
+    expect(body.end).toBe(1710352801124);
+    expect(body.spanSelector).toEqual(['span-1']);
     expect(profile).toMatchObject({ metadata: { units: 'samples', sampleRate: 1_000_000_000 } });
   });
 
@@ -52,11 +59,12 @@ describe('ProfileApiClient', () => {
 
     const { url, body } = lastRequest();
     expect(url).toContain('/SelectMergeStacktraces');
+    expect(body.format).toBe('PROFILE_FORMAT_FLAMEGRAPH');
     expect(body.profileIdSelector).toEqual(['profile-1']);
     expect(body.spanSelector).toBeUndefined();
   });
 
-  it('keeps the profile id and drops the span when both are set', async () => {
+  it('sends both the profile id and the span selector', async () => {
     await client.get({
       query: 'memory:inuse_space:bytes:space:bytes{service_name="api"}',
       timeRange,
@@ -68,8 +76,9 @@ describe('ProfileApiClient', () => {
 
     const { url, body } = lastRequest();
     expect(url).toContain('/SelectMergeStacktraces');
+    expect(body.format).toBe('PROFILE_FORMAT_FLAMEGRAPH');
     expect(body.profileIdSelector).toEqual(['profile-1']);
-    expect(body.spanSelector).toBeUndefined();
+    expect(body.spanSelector).toEqual(['span-1']);
   });
 
   it('maps count-based profile types to object units', async () => {

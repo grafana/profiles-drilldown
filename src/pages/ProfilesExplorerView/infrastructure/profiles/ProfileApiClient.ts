@@ -27,8 +27,8 @@ export class ProfileApiClient extends DataSourceProxyClient {
 
     const searchParams = new URLSearchParams({
       query: params.query,
-      from: String(params.timeRange.from.unix() * 1000),
-      until: String(params.timeRange.to.unix() * 1000),
+      from: String(params.timeRange.from.valueOf()),
+      until: String(params.timeRange.to.valueOf()),
       format: params.format,
     });
 
@@ -52,23 +52,18 @@ export class ProfileApiClient extends DataSourceProxyClient {
 
   private async getFilteredFlamebearer(params: GetParams): Promise<FlamebearerProfile> {
     const { profileMetricId, labelsSelector } = parseQuery(params.query);
-    // /pyroscope/render drops selectors. Span-only uses SelectMergeSpanProfile.
-    // A profile id uses SelectMergeStacktraces, which has no span field.
-    const pathname =
-      params.spanSelector && !params.profileIdSelector
-        ? '/querier.v1.QuerierService/SelectMergeSpanProfile'
-        : '/querier.v1.QuerierService/SelectMergeStacktraces';
 
-    const response = await this.fetch(pathname, {
+    const response = await this.fetch('/querier.v1.QuerierService/SelectMergeStacktraces', {
       method: 'POST',
       body: JSON.stringify({
         profileTypeID: profileMetricId,
         labelSelector: labelsSelector,
-        start: params.timeRange.from.unix() * 1000,
-        end: params.timeRange.to.unix() * 1000,
+        start: params.timeRange.from.valueOf(),
+        end: params.timeRange.to.valueOf(),
+        format: 'PROFILE_FORMAT_FLAMEGRAPH',
         ...(params.maxNodes && { maxNodes: params.maxNodes }),
         ...(params.profileIdSelector && { profileIdSelector: [params.profileIdSelector] }),
-        ...(params.spanSelector && !params.profileIdSelector && { spanSelector: [params.spanSelector] }),
+        ...(params.spanSelector && { spanSelector: [params.spanSelector] }),
       }),
     });
 
@@ -107,10 +102,7 @@ function flamebearerUnits(sampleType: string, sampleUnit: string): FlamebearerPr
     return 'samples';
   }
 
-  if (
-    ['inuse_objects', 'alloc_objects', 'goroutine', 'samples'].includes(sampleType) ||
-    sampleUnit === 'count'
-  ) {
+  if (['inuse_objects', 'alloc_objects', 'goroutine', 'samples'].includes(sampleType) || sampleUnit === 'count') {
     return 'objects';
   }
 
