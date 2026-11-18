@@ -13,6 +13,9 @@ jest.mock('@shared/domain/url-params/useMaxNodesFromUrl', () => ({ useMaxNodesFr
 jest.mock('@shared/infrastructure/settings/useFetchPluginSettings', () => ({
   useFetchPluginSettings: () => ({ settings: {} }),
 }));
+jest.mock('@shared/domain/displayStatus', () => ({
+  displayError: jest.fn(),
+}));
 jest.mock('@shared/domain/useIsFlameGraphCanvasPresent', () => ({ useIsFlameGraphCanvasPresent: () => false }));
 
 type Selectors = { profileIdSelector?: string; spanSelector?: string };
@@ -38,6 +41,9 @@ async function copyGcxCommand() {
 }
 
 describe('SceneExportMenu', () => {
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
   it.each([
     { profileIdSelector: 'profile-123', spanSelector: 'span-456' },
     { profileIdSelector: undefined, spanSelector: undefined },
@@ -51,6 +57,30 @@ describe('SceneExportMenu', () => {
     );
     expect(jest.mocked(copyGcxCommandToClipboard).mock.calls[0][0].includes("--span-id 'span-456'")).toBe(
       Boolean(selectors.spanSelector)
+    );
+  });
+
+  it('downloads with both the profile id and the span selector', async () => {
+    const fetchJson = jest.spyOn(SceneExportMenu.prototype, 'fetchFlamebearerProfile').mockResolvedValue(null);
+    const fetchPprof = jest.spyOn(SceneExportMenu.prototype, 'fetchPprofProfile').mockResolvedValue(null);
+    renderExportMenu({ profileIdSelector: 'profile-123', spanSelector: 'span-456' });
+
+    fireEvent.click(screen.getByRole('button', { name: 'Export profile data' }));
+    fireEvent.click(await screen.findByText('json'));
+
+    await waitFor(() =>
+      expect(fetchJson).toHaveBeenCalledWith(
+        expect.objectContaining({ profileIdSelector: 'profile-123', spanSelector: 'span-456' })
+      )
+    );
+
+    fireEvent.click(screen.getByRole('button', { name: 'Export profile data' }));
+    fireEvent.click(await screen.findByText('pprof'));
+
+    await waitFor(() =>
+      expect(fetchPprof).toHaveBeenCalledWith(
+        expect.objectContaining({ profileIdSelector: 'profile-123', spanSelector: 'span-456' })
+      )
     );
   });
 

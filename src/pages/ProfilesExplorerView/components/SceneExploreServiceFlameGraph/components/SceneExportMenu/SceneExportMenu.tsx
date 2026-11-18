@@ -43,6 +43,8 @@ export class SceneExportMenu extends SceneObjectBase<SceneExportMenuState> {
     query,
     timeRange,
     maxNodes,
+    profileIdSelector,
+    spanSelector,
   }: ExtraProps & { dataSourceUid: string; maxNodes: number | null }): Promise<FlamebearerProfile | null> {
     const profileApiClient = DataSourceProxyClientBuilder.build(dataSourceUid, ProfileApiClient);
 
@@ -54,6 +56,8 @@ export class SceneExportMenu extends SceneObjectBase<SceneExportMenuState> {
         timeRange,
         format: 'json',
         maxNodes: maxNodes || DEFAULT_SETTINGS.maxNodes,
+        profileIdSelector,
+        spanSelector,
       });
     } catch (error) {
       displayError(error as Error, [
@@ -71,6 +75,8 @@ export class SceneExportMenu extends SceneObjectBase<SceneExportMenuState> {
     query,
     timeRange,
     maxNodes,
+    profileIdSelector,
+    spanSelector,
   }: ExtraProps & { dataSourceUid: string; maxNodes: number | null }): Promise<Blob | null> {
     const pprofApiClient = DataSourceProxyClientBuilder.build(dataSourceUid, PprofApiClient);
 
@@ -81,6 +87,8 @@ export class SceneExportMenu extends SceneObjectBase<SceneExportMenuState> {
         query,
         timeRange,
         maxNodes: maxNodes || DEFAULT_SETTINGS.maxNodes,
+        profileIdSelector,
+        spanSelector,
       });
       profile = await new Response(blob.stream().pipeThrough(new CompressionStream('gzip'))).blob();
     } catch (error) {
@@ -127,10 +135,12 @@ export class SceneExportMenu extends SceneObjectBase<SceneExportMenuState> {
       }, 'image/png');
     };
 
+    const exportParams = { dataSourceUid, query, timeRange, maxNodes, profileIdSelector, spanSelector };
+
     const downloadJson = async () => {
       reportInteraction('g_pyroscope_app_export_profile', { format: 'json' });
 
-      const profile = await this.fetchFlamebearerProfile({ dataSourceUid, query, timeRange, maxNodes });
+      const profile = await this.fetchFlamebearerProfile(exportParams);
       if (!profile) {
         return;
       }
@@ -146,7 +156,7 @@ export class SceneExportMenu extends SceneObjectBase<SceneExportMenuState> {
     const downloadPprof = async () => {
       reportInteraction('g_pyroscope_app_export_profile', { format: 'pprof' });
 
-      const profile = await this.fetchPprofProfile({ dataSourceUid, query, timeRange, maxNodes });
+      const profile = await this.fetchPprofProfile(exportParams);
       if (!profile) {
         return;
       }
@@ -177,7 +187,7 @@ export class SceneExportMenu extends SceneObjectBase<SceneExportMenuState> {
     const uploadToFlamegraphDotCom = async () => {
       reportInteraction('g_pyroscope_app_export_profile', { format: 'flamegraph.com' });
 
-      const profile = await this.fetchFlamebearerProfile({ dataSourceUid, query, timeRange, maxNodes });
+      const profile = await this.fetchFlamebearerProfile(exportParams);
       if (!profile) {
         return;
       }
