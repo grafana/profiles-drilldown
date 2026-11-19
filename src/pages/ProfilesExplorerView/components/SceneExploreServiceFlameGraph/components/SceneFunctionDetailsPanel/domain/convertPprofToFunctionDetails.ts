@@ -15,6 +15,7 @@ const buildDetails = (profile: PprofProfile, func: Function, mapping?: Mapping) 
     version,
     startLine: !Number.isNaN(Number(func.startLine)) ? Number(func.startLine) : undefined,
     fileName: profile.stringTable[Number(func.filename)],
+    executableName: mapping ? profile.stringTable[Number(mapping.filename)] : undefined,
     callSites: new Map<number, CallSiteProps>(),
     unit: profile.stringTable[Number(profile.sampleType[0].unit)],
     commit: PLACEHOLDER_COMMIT_DATA,
