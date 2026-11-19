@@ -44,4 +44,4 @@ overrides:
   'react-router@^6': ^6.30.6
 
 minimumReleaseAgeExclude:
-  - '@grafana/plugin-compat@0.7.0'
+  - '@grafana/plugin-compat@0.9.0'
