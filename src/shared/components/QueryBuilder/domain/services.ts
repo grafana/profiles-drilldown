@@ -1,7 +1,7 @@
+import type { SessionLabelsRepository } from '@shared/infrastructure/query-session/DrilldownQuerySession';
 import { logger } from '@shared/infrastructure/tracking/logger';
 
 import { operatorsRepository } from '../infrastructure/operatorsRepository';
-import type { QueryBuilderLabelsRepository } from '../infrastructure/QueryBuilderLabelsRepository';
 import { filtersToQuery } from './helpers/filtersToQuery';
 import { getLastFilter } from './helpers/getLastFilter';
 import { isPrivateLabel } from './helpers/isPrivateLabel';
@@ -23,7 +23,7 @@ function handleError(error: Error, info: string) {
 export const createServices = ({
   labelsRepository,
 }: {
-  labelsRepository: QueryBuilderLabelsRepository;
+  labelsRepository: SessionLabelsRepository;
 }): Services<QueryBuilderContext, QueryBuilderEvent> => ({
   fetchLabels: async (context) => {
     const { dataSourceUid, from, to } = context.inputParams;

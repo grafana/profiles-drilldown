@@ -1,7 +1,7 @@
 import { getProfileMetric, ProfileMetricId } from '@shared/infrastructure/profile-metrics/getProfileMetric';
 import { logger } from '@shared/infrastructure/tracking/logger';
 
-import { PyroscopeSeries } from './SeriesApiClient';
+import { PyroscopeSeries } from '../types';
 
 type Labels = Array<{ name: string; value: string }>;
 

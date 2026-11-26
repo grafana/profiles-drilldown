@@ -2,7 +2,7 @@ import { MetricFindValue } from '@grafana/data';
 import { localeCompare } from '@shared/domain/localeCompare';
 import { getProfileMetric, ProfileMetricId } from '@shared/infrastructure/profile-metrics/getProfileMetric';
 
-import { PyroscopeSeries } from './http/SeriesApiClient';
+import { PyroscopeSeries } from './types';
 
 export function formatSeriesToProfileMetrics(
   pyroscopeSeries: PyroscopeSeries,

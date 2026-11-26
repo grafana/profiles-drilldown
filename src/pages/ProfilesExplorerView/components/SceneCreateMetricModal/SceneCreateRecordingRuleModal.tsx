@@ -5,8 +5,8 @@ import { SceneComponentProps, sceneGraph, SceneObjectBase, SceneObjectState } fr
 import { Button, Divider, Field, Input, Modal, MultiSelect, Text, useStyles2 } from '@grafana/ui';
 import { reportInteraction } from '@shared/domain/reportInteraction';
 import { useDataSourceUid } from '@shared/infrastructure/datasource/DataSourceUidContext';
-import { labelsRepository } from '@shared/infrastructure/labels/labelsRepository';
 import { getProfileMetric, ProfileMetricId } from '@shared/infrastructure/profile-metrics/getProfileMetric';
+import { getQuerySession } from '@shared/infrastructure/query-session/DrilldownQuerySession';
 import { RecordingRuleViewModel } from '@shared/types/RecordingRuleViewModel';
 import React, { useState } from 'react';
 import { Controller, FieldError, SubmitHandler, useForm } from 'react-hook-form';
@@ -122,7 +122,8 @@ export class SceneCreateRecordingRuleModal extends SceneObjectBase<SceneCreateRe
 
     useMount(() => {
       const timeRange = sceneGraph.getTimeRange(model).state.value;
-      labelsRepository
+      getQuerySession(model)
+        .labels()
         .listLabels({
           dataSourceUid,
           query: `{${filterQuery}}`,

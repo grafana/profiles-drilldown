@@ -20,8 +20,8 @@ jest.mock('@shared/domain/reportInteraction', () => ({
 }));
 
 const mockListLabels = jest.fn();
-jest.mock('@shared/infrastructure/labels/labelsRepository', () => ({
-  labelsRepository: { listLabels: (options: unknown) => mockListLabels(options) },
+jest.mock('@shared/infrastructure/query-session/DrilldownQuerySession', () => ({
+  getQuerySession: () => ({ labels: () => ({ listLabels: (options: unknown) => mockListLabels(options) }) }),
 }));
 
 const wrapper = ({ children }: { children: ReactNode }) => (

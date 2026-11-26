@@ -1,7 +1,7 @@
 import { MetricFindValue } from '@grafana/data';
 import { localeCompare } from '@shared/domain/localeCompare';
 
-import { PyroscopeSeries } from './http/SeriesApiClient';
+import { PyroscopeSeries } from './types';
 
 export function formatSeriesToServices(pyroscopeSeries: PyroscopeSeries, profileMetricId?: string): MetricFindValue[] {
   if (profileMetricId) {

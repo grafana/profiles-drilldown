@@ -1,6 +1,12 @@
 import { AdHocVariableFilter, dateTime, TimeRange } from '@grafana/data';
-import { AdHocFiltersVariable, ConstantVariable, EmbeddedScene, SceneCanvasText, SceneVariableSet } from '@grafana/scenes';
-import { mockFetch } from '@shared/infrastructure/http/testing/mockFetch';
+import {
+  AdHocFiltersVariable,
+  ConstantVariable,
+  EmbeddedScene,
+  SceneCanvasText,
+  SceneVariableSet,
+} from '@grafana/scenes';
+import { SessionLabelsRepository } from '@shared/infrastructure/query-session/DrilldownQuerySession';
 
 import {
   FILTER_EXPRESSION_WITH_LEADING_COMMA,
@@ -68,25 +74,29 @@ describe('LabelsDataSource.getParams', () => {
 
 describe('LabelsDataSource', () => {
   it('should fetch labels from the given datasource', async () => {
-    const fetch = mockFetch(() => ({ names: ['env'] }));
-
-    const labels = await new LabelsDataSource().fetchLabels('pyroscope-abc', 'q', 1, 2);
-
-    expect(fetch).toHaveBeenCalledWith(
-      '/api/datasources/proxy/uid/pyroscope-abc/querier.v1.QuerierService/LabelNames',
-      expect.anything()
-    );
+    const repository: SessionLabelsRepository = {
+      listLabels: jest.fn().mockResolvedValue([{ value: 'env', label: 'env' }]),
+      listLabelValues: jest.fn(),
+      cancel: jest.fn(),
+    };
+    const labels = await new LabelsDataSource().fetchLabels(repository, 'pyroscope-abc', 'q', 1, 2);
+    expect(repository.listLabels).toHaveBeenCalledWith({ dataSourceUid: 'pyroscope-abc', query: 'q', from: 1, to: 2 });
     expect(labels).toEqual([{ value: 'env', label: 'env' }]);
   });
 
   it('should fetch label values from the given datasource', async () => {
-    const fetch = mockFetch(() => ({ names: [] }));
-
-    await new LabelsDataSource().fetchLabelValues('pyroscope-abc', 'q', 1, 2, 'env');
-
-    expect(fetch).toHaveBeenCalledWith(
-      '/api/datasources/proxy/uid/pyroscope-abc/querier.v1.QuerierService/LabelValues',
-      expect.anything()
-    );
+    const repository: SessionLabelsRepository = {
+      listLabels: jest.fn(),
+      listLabelValues: jest.fn().mockResolvedValue([]),
+      cancel: jest.fn(),
+    };
+    await new LabelsDataSource().fetchLabelValues(repository, 'pyroscope-abc', 'q', 1, 2, 'env');
+    expect(repository.listLabelValues).toHaveBeenCalledWith({
+      dataSourceUid: 'pyroscope-abc',
+      query: 'q',
+      from: 1,
+      to: 2,
+      label: 'env',
+    });
   });
 });

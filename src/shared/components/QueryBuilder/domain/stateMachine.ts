@@ -1,7 +1,6 @@
-import { MemoryCacheClient } from '@shared/infrastructure/MemoryCacheClient';
+import { SessionLabelsRepository } from '@shared/infrastructure/query-session/DrilldownQuerySession';
 import { createMachine, interpret, Interpreter, type MachineConfig, type MachineOptions } from 'xstate';
 
-import { QueryBuilderLabelsRepository } from '../infrastructure/QueryBuilderLabelsRepository';
 import { createActions } from './actions';
 import { guards } from './guards';
 import { queryToFilters } from './helpers/queryToFilters';
@@ -59,7 +58,7 @@ const config = (
 
 export type Actor = Interpreter<QueryBuilderContext, QueryBuilderSchema, QueryBuilderEvent>;
 
-export function buildStateMachine(inputParams: InputParams) {
+export function buildStateMachine(inputParams: InputParams, labelsRepository: SessionLabelsRepository) {
   const { query } = inputParams;
 
   const initialContext: QueryBuilderContext = {
@@ -70,9 +69,6 @@ export function buildStateMachine(inputParams: InputParams) {
     filters: queryToFilters(query),
   };
 
-  const labelsRepository = new QueryBuilderLabelsRepository({
-    cacheClient: new MemoryCacheClient(),
-  });
   const options: MachineOptions<QueryBuilderContext, QueryBuilderEvent> = {
     guards,
     actions: createActions({ labelsRepository }),
@@ -83,5 +79,10 @@ export function buildStateMachine(inputParams: InputParams) {
 
   const actor = interpret(stateMachine) as unknown as Actor;
 
-  return { actor, initialContext };
+  return {
+    actor,
+    initialContext,
+    dispose: () =>
+      labelsRepository.cancel({ dataSourceUid: inputParams.dataSourceUid, reason: 'Query builder unmounted' }),
+  };
 }

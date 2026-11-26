@@ -10,7 +10,7 @@ import {
 import { t } from '@grafana/i18n';
 import { RuntimeDataSource } from '@grafana/scenes';
 import { isPrivateLabel } from '@shared/components/QueryBuilder/domain/helpers/isPrivateLabel';
-import { labelsRepository } from '@shared/infrastructure/labels/labelsRepository';
+import { getQuerySession, SessionLabelsRepository } from '@shared/infrastructure/query-session/DrilldownQuerySession';
 import { logger } from '@shared/infrastructure/tracking/logger';
 import pLimit from 'p-limit';
 
@@ -72,9 +72,16 @@ export class LabelsDataSource extends RuntimeDataSource {
     };
   }
 
-  async fetchLabels(dataSourceUid: string, query: string, from: number, to: number, variableName?: string) {
+  async fetchLabels(
+    repository: SessionLabelsRepository,
+    dataSourceUid: string,
+    query: string,
+    from: number,
+    to: number,
+    variableName?: string
+  ) {
     try {
-      return await labelsRepository.listLabels({ dataSourceUid, query, from, to });
+      return await repository.listLabels({ dataSourceUid, query, from, to });
     } catch (error) {
       logger.error(error as Error, {
         info: 'Error while loading Pyroscope label names!',
@@ -86,6 +93,7 @@ export class LabelsDataSource extends RuntimeDataSource {
   }
 
   async fetchLabelValues(
+    repository: SessionLabelsRepository,
     dataSourceUid: string,
     query: string,
     from: number,
@@ -96,7 +104,7 @@ export class LabelsDataSource extends RuntimeDataSource {
     let values;
 
     try {
-      values = await labelsRepository.listLabelValues({ dataSourceUid, query, from, to, label: labelName });
+      values = await repository.listLabelValues({ dataSourceUid, query, from, to, label: labelName });
     } catch (error) {
       logger.error(error as Error, {
         info: 'Error while loading Pyroscope label values!',
@@ -140,13 +148,14 @@ export class LabelsDataSource extends RuntimeDataSource {
       return [];
     }
 
-    const labels = await this.fetchLabels(dataSourceUid, query, from, to, options.variable?.name);
+    const repository = getQuerySession(sceneObject).labels();
+    const labels = await this.fetchLabels(repository, dataSourceUid, query, from, to, options.variable?.name);
 
     const labelsWithValuesAndCount = await Promise.all(
       labels
         .filter(({ value }) => !isPrivateLabel(value))
         .map(({ value }) =>
-          limit(() => this.fetchLabelValues(dataSourceUid, query, from, to, value, options.variable?.name))
+          limit(() => this.fetchLabelValues(repository, dataSourceUid, query, from, to, value, options.variable?.name))
         )
     );
 

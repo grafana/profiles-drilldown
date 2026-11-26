@@ -1,8 +1,8 @@
 import { t } from '@grafana/i18n';
 import { generateUUID } from '@shared/domain/generateUUID';
+import type { SessionLabelsRepository } from '@shared/infrastructure/query-session/DrilldownQuerySession';
 import { assign } from 'xstate';
 
-import type { QueryBuilderLabelsRepository } from '../infrastructure/QueryBuilderLabelsRepository';
 import { areFiltersEqual } from './helpers/areFiltersEqual';
 import { buildIsEmptyFilter } from './helpers/buildIsEmptyFilter';
 import { filtersToQuery } from './helpers/filtersToQuery';
@@ -34,7 +34,7 @@ function updateFiltersAndQuery(newFilters: Filters, context: QueryBuilderContext
   };
 }
 
-export const createActions = ({ labelsRepository }: { labelsRepository: QueryBuilderLabelsRepository }): any => ({
+export const createActions = ({ labelsRepository }: { labelsRepository: SessionLabelsRepository }): any => ({
   cancelAllLoad: (context: QueryBuilderContext) => {
     labelsRepository.cancel({
       dataSourceUid: context.inputParams.dataSourceUid,

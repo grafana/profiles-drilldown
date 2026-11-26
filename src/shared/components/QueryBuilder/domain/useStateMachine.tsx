@@ -1,4 +1,5 @@
 import { useDataSourceUid } from '@shared/infrastructure/datasource/DataSourceUidContext';
+import { useQuerySession } from '@shared/infrastructure/query-session/DrilldownQuerySession';
 import { useEffect, useMemo, useState } from 'react';
 
 import { QueryBuilderProps } from '../QueryBuilder';
@@ -7,8 +8,9 @@ import { CompleteFilters, QueryBuilderContext } from './types';
 
 export function useStateMachine({ query, from, to, onChangeQuery }: QueryBuilderProps) {
   const dataSourceUid = useDataSourceUid();
-  const { actor, initialContext } = useMemo(
-    () => buildStateMachine({ dataSourceUid, query, from, to }),
+  const querySession = useQuerySession();
+  const { actor, initialContext, dispose } = useMemo(
+    () => buildStateMachine({ dataSourceUid, query, from, to }, querySession.labels()),
     // We don't want to build a new state machine when the props change, props change is handheld via the CHANGE_INPUT_PARAMS action below
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
@@ -37,6 +39,7 @@ export function useStateMachine({ query, from, to, onChangeQuery }: QueryBuilder
 
     return () => {
       actor.stop();
+      dispose();
     };
     // onChangeQuery is not a stable prop, we omit it to prevent multiple machine initializations that would end up in a broken UI
     // eslint-disable-next-line react-hooks/exhaustive-deps

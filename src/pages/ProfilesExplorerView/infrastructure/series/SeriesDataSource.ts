@@ -8,26 +8,34 @@ import {
   TimeRange,
 } from '@grafana/data';
 import { t } from '@grafana/i18n';
-import { RuntimeDataSource } from '@grafana/scenes';
+import { RuntimeDataSource, SceneObject } from '@grafana/scenes';
 import { getSelectedDefaultDataSource } from '@shared/infrastructure/datasource/useSelectDefaultDataSourceUid';
+import { getQuerySession } from '@shared/infrastructure/query-session/DrilldownQuerySession';
 import { logger } from '@shared/infrastructure/tracking/logger';
 
 import { ProfileMetricVariable } from '../../domain/variables/ProfileMetricVariable';
 import { ServiceNameVariable } from '../../domain/variables/ServiceNameVariable/ServiceNameVariable';
+import { computeRoundedTimeRange } from '../../helpers/computeRoundedTimeRange';
 import { PYROSCOPE_SERIES_DATA_SOURCE } from '../pyroscope-data-sources';
 import { formatSeriesToProfileMetrics } from './formatSeriesToProfileMetrics';
 import { formatSeriesToServices } from './formatSeriesToServices';
 import { safeInterpolate } from './helpers/safeInterpolate';
-import { seriesRepository } from './http/seriesRepository';
 
 export class SeriesDataSource extends RuntimeDataSource {
   constructor() {
     super(PYROSCOPE_SERIES_DATA_SOURCE.type, PYROSCOPE_SERIES_DATA_SOURCE.uid);
   }
 
-  async fetchSeries(dataSourceUid: string, timeRange: TimeRange, variableName?: string, matchers?: string[]) {
+  async fetchSeries(
+    dataSourceUid: string,
+    timeRange: TimeRange,
+    sceneObject: SceneObject,
+    variableName?: string,
+    matchers?: string[]
+  ) {
     try {
-      return await seriesRepository.list({ dataSourceUid, timeRange, matchers });
+      const { from, to } = computeRoundedTimeRange(timeRange);
+      return await getQuerySession(sceneObject).series(dataSourceUid, from, to, matchers ?? []);
     } catch (error) {
       logger.error(error as Error, {
         info: 'Error while loading Pyroscope series!',
@@ -71,9 +79,13 @@ export class SeriesDataSource extends RuntimeDataSource {
       dataSourceUid = (await getSelectedDefaultDataSource())?.uid ?? '';
     }
 
-    const pyroscopeSeries = await this.fetchSeries(dataSourceUid, options.range as TimeRange, options.variable?.name, [
-      `{${filtersAllServices}}`,
-    ]);
+    const pyroscopeSeries = await this.fetchSeries(
+      dataSourceUid,
+      options.range as TimeRange,
+      sceneObject,
+      options.variable?.name,
+      [`{${filtersAllServices}}`]
+    );
 
     switch (query) {
       // queries that depend only on the selected data source

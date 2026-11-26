@@ -25,6 +25,11 @@ import { reportInteraction } from '@shared/domain/reportInteraction';
 import { DataSourceUidProvider } from '@shared/infrastructure/datasource/DataSourceUidContext';
 import { getKgAnnotationsInPyroscopeFromOpenFeature } from '@shared/infrastructure/featureFlags/featureFlags';
 import { ensureOpenFeaturePluginInitialized } from '@shared/infrastructure/featureFlags/openFeature';
+import {
+  DrilldownQuerySession,
+  QuerySessionProvider,
+  registerQuerySession,
+} from '@shared/infrastructure/query-session/DrilldownQuerySession';
 import { DomainHookReturnValue } from '@shared/types/DomainHookReturnValue';
 import { PluginHeaderToolbar } from '@shared/ui/PluginHeaderToolbar';
 import React, { useState } from 'react';
@@ -151,6 +156,7 @@ export class SceneProfilesExplorer extends SceneObjectBase<SceneProfilesExplorer
   private initialExplorationType?: ExplorationType;
   private hasInitializedFromUrl = false;
   private kgInitialized = false;
+  readonly querySession = new DrilldownQuerySession();
 
   public constructor(state: Partial<SceneProfilesExplorerState> & { initialDS: string }) {
     super({
@@ -214,6 +220,7 @@ export class SceneProfilesExplorer extends SceneObjectBase<SceneProfilesExplorer
       isEmbedded: state?.isEmbedded,
     });
 
+    registerQuerySession(this, this.querySession);
     this.registerRuntimeDataSources();
 
     this.initialFilters = state?.initialFilters;
@@ -222,6 +229,7 @@ export class SceneProfilesExplorer extends SceneObjectBase<SceneProfilesExplorer
   }
 
   onActivate() {
+    this.querySession.activate();
     let isActive = true;
     const varSub = this.subscribeToVariableChanges();
     const eventsSub = this.subscribeToEvents();
@@ -264,6 +272,7 @@ export class SceneProfilesExplorer extends SceneObjectBase<SceneProfilesExplorer
 
     return () => {
       isActive = false;
+      this.querySession.close();
       clearKeyBindings();
       eventsSub.unsubscribe();
       varSub.unsubscribe();
@@ -354,6 +363,7 @@ export class SceneProfilesExplorer extends SceneObjectBase<SceneProfilesExplorer
       .findByKeyAndType(this, 'dataSource', ProfilesDataSourceVariable)
       .subscribeToState((newState, prevState) => {
         if (newState.value && newState.value !== prevState.value) {
+          this.querySession.selectDataSource(String(newState.value));
           FiltersVariable.resetAll(this);
           this.resetDiffTimeRangeAnnotations();
           this.resetSpanSelector();
@@ -644,48 +654,50 @@ export class SceneProfilesExplorer extends SceneObjectBase<SceneProfilesExplorer
     } = model.useState();
 
     return (
-      <DataSourceUidProvider uid={dataSourceUid}>
-        <FunctionVersionProvider>
-          <GitHubContextProvider>
-            <PluginHeaderToolbar
-              model={model}
-              explorationType={explorationType}
-              controls={controls}
-              body={body}
-              $variables={$variables}
-              loadSearchScene={loadSearchScene}
-              onChangeExplorationType={actions.onChangeExplorationType}
-              isEmbedded={isEmbedded}
-              onCreateRecordingRule={() => {
-                setRecordingRulesModalState({ isOpen: true });
-              }}
-            />
-
-            <div className={cx(styles.body, isEmbedded && styles.embeddedBody)} data-testid="sceneBody">
-              {body && <body.Component model={body} />}
-            </div>
-
-            {recordingRulesModalState.isOpen && (
-              <SceneCreateRecordingRuleModal.Component
-                model={createRecordingRuleModal}
-                isModalOpen={recordingRulesModalState.isOpen}
-                functionName={recordingRulesModalState.functionName}
-                onDismiss={() => setRecordingRulesModalState({ isOpen: false })}
-                onCreated={() => {
-                  setRecordingRulesModalState({ isOpen: false });
+      <QuerySessionProvider value={model.querySession}>
+        <DataSourceUidProvider uid={dataSourceUid}>
+          <FunctionVersionProvider>
+            <GitHubContextProvider>
+              <PluginHeaderToolbar
+                model={model}
+                explorationType={explorationType}
+                controls={controls}
+                body={body}
+                $variables={$variables}
+                loadSearchScene={loadSearchScene}
+                onChangeExplorationType={actions.onChangeExplorationType}
+                isEmbedded={isEmbedded}
+                onCreateRecordingRule={() => {
+                  setRecordingRulesModalState({ isOpen: true });
                 }}
               />
-            )}
 
-            {isAddToDashboardModalOpen && addToDashboardPanelData && (
-              <AddToDashboardModal
-                panelData={addToDashboardPanelData}
-                onClose={() => model.closeAddToDashboardModal()}
-              />
-            )}
-          </GitHubContextProvider>
-        </FunctionVersionProvider>
-      </DataSourceUidProvider>
+              <div className={cx(styles.body, isEmbedded && styles.embeddedBody)} data-testid="sceneBody">
+                {body && <body.Component model={body} />}
+              </div>
+
+              {recordingRulesModalState.isOpen && (
+                <SceneCreateRecordingRuleModal.Component
+                  model={createRecordingRuleModal}
+                  isModalOpen={recordingRulesModalState.isOpen}
+                  functionName={recordingRulesModalState.functionName}
+                  onDismiss={() => setRecordingRulesModalState({ isOpen: false })}
+                  onCreated={() => {
+                    setRecordingRulesModalState({ isOpen: false });
+                  }}
+                />
+              )}
+
+              {isAddToDashboardModalOpen && addToDashboardPanelData && (
+                <AddToDashboardModal
+                  panelData={addToDashboardPanelData}
+                  onClose={() => model.closeAddToDashboardModal()}
+                />
+              )}
+            </GitHubContextProvider>
+          </FunctionVersionProvider>
+        </DataSourceUidProvider>
+      </QuerySessionProvider>
     );
   }
 }
