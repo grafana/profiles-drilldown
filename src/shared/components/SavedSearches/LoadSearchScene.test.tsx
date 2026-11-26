@@ -120,13 +120,13 @@ describe('LoadSearchScene', () => {
     it('should switch load controls to Saved queries', async () => {
       renderLoadSearch();
 
-      expect(screen.getByRole('button', { name: 'Load saved search' })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Use saved query' })).toBeInTheDocument();
       expect(screen.queryByText('Exposed component')).not.toBeInTheDocument();
 
       await waitFor(() => {
         expect(screen.getByText('Exposed component')).toBeVisible();
       });
-      expect(screen.queryByRole('button', { name: 'Load saved search' })).not.toBeInTheDocument();
+      expect(screen.queryByRole('button', { name: 'Use saved query' })).not.toBeInTheDocument();
     });
   });
 
@@ -156,15 +156,15 @@ describe('LoadSearchScene', () => {
     const scene = new LoadSearchScene({ dsUid: 'test-datasource-uid', dsName: 'test-datasource-uid' });
     render(<scene.Component model={scene} />);
 
-    expect(screen.queryByText('Load a previously saved search')).not.toBeInTheDocument();
+    expect(screen.queryByText('Saved queries')).not.toBeInTheDocument();
 
     fireEvent.click(screen.getByRole('button'));
 
-    expect(screen.queryByText('Load a previously saved search')).toBeInTheDocument();
+    expect(screen.queryByText('Saved queries')).toBeInTheDocument();
 
     fireEvent.click(screen.getByLabelText('Close'));
 
-    expect(screen.queryByText('Load a previously saved search')).not.toBeInTheDocument();
+    expect(screen.queryByText('Saved queries')).not.toBeInTheDocument();
   });
 
   test('Returns null when the scene is embedded', () => {

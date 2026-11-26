@@ -51,7 +51,7 @@ export function SaveSearchButton({ sceneRef }: Props) {
           variant="canvas"
           icon="save"
           onClick={() => setSaving(true)}
-          tooltip={t('saved-searches.save.tooltip', 'Save search')}
+          tooltip={t('saved-searches.save.tooltip', 'Save query')}
         />
         {saving && <SaveSearchModal dsUid={dsUid} sceneRef={sceneRef} onClose={() => setSaving(false)} />}
       </>
@@ -94,7 +94,7 @@ export function SaveSearchButton({ sceneRef }: Props) {
     <OpenQueryLibraryComponent
       datasourceFilters={[dsName]}
       query={query}
-      tooltip={t('saved-searches.save.saved-queries-tooltip', 'Save in Saved queries')}
+      tooltip={t('saved-searches.save.saved-queries-tooltip', 'Save query')}
     />
   );
 }

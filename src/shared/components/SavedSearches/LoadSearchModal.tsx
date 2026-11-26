@@ -65,11 +65,11 @@ export function LoadSearchModal({ onClose, sceneRef }: Props) {
   }, [onClose, sceneRef, selectedSearch]);
 
   return (
-    <Modal title={t('saved-searches.load.title', 'Load a previously saved search')} isOpen={true} onDismiss={onClose}>
+    <Modal title={t('saved-searches.load.title', 'Saved queries')} isOpen={true} onDismiss={onClose}>
       {!isLoading && searches.length === 0 && (
         <Box backgroundColor="secondary" padding={1.5} marginBottom={2}>
           <Text variant="body">
-            <Trans i18nKey="saved-searches.load.no-searches">No saved searches to display.</Trans>
+            <Trans i18nKey="saved-searches.load.no-searches">No saved queries to display.</Trans>
           </Text>
         </Box>
       )}
