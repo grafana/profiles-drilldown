@@ -93,10 +93,10 @@ export function PluginHeaderToolbar(props: PluginHeaderToolbarProps) {
             explorationType !== ExplorationType.FAVORITES && (
               <EntityAssertionsWidget serviceName={serviceName} model={props.model} />
             )}
-          {!props.isEmbedded && <SaveSearchButton sceneRef={props.model} />}
           {!props.isEmbedded && props.loadSearchScene && (
             <props.loadSearchScene.Component model={props.loadSearchScene} />
           )}
+          {!props.isEmbedded && <SaveSearchButton sceneRef={props.model} />}
 
           {timePickerControl && (
             <timePickerControl.Component key={timePickerControl.state.key} model={timePickerControl} />
