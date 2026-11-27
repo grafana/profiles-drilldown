@@ -10,16 +10,18 @@ afterEach(() => {
   grafanaFetchMock.mockRestore();
 });
 
-type FetchMock = jest.Mock<Promise<Response>, [url: string, options?: RequestInit]>;
+type FetchInput = Parameters<typeof grafanaFetch>[0];
 
-export function mockGrafanaFetch(respond: (url: string) => unknown = () => ({})): FetchMock {
-  const fetch: FetchMock = jest.fn(async (url) => ({ ok: true, json: async () => respond(url) } as Response));
+export function mockGrafanaFetch(respond: (input: FetchInput) => unknown = () => ({})) {
+  const fetch = jest.fn<Promise<Response>, [FetchInput]>(
+    async (input) => ({ ok: true, json: async () => respond(input) } as Response)
+  );
 
-  grafanaFetchMock.mockImplementation(({ url, options }) => fetch(url, options));
+  grafanaFetchMock.mockImplementation(fetch);
 
   return fetch;
 }
 
-export function mockPendingGrafanaFetch(): FetchMock {
+export function mockPendingGrafanaFetch() {
   return mockGrafanaFetch().mockImplementation(() => new Promise<Response>(() => {}));
 }

@@ -24,8 +24,10 @@ describe('SeriesDataSource', () => {
     await new SeriesDataSource().fetchSeries('pyroscope-abc', range);
 
     expect(fetch).toHaveBeenCalledWith(
-      '/api/datasources/proxy/uid/pyroscope-abc/querier.v1.QuerierService/Series',
-      expect.anything()
+      expect.objectContaining({
+        uid: 'pyroscope-abc',
+        routePath: 'querier.v1.QuerierService/Series',
+      })
     );
   });
 
@@ -35,8 +37,10 @@ describe('SeriesDataSource', () => {
     await new SeriesDataSource().metricFindQuery('$dataSource $filtersAllServices and all services', { range });
 
     expect(fetch).toHaveBeenCalledWith(
-      '/api/datasources/proxy/uid/pyroscope-xyz/querier.v1.QuerierService/Series',
-      expect.anything()
+      expect.objectContaining({
+        uid: 'pyroscope-xyz',
+        routePath: 'querier.v1.QuerierService/Series',
+      })
     );
   });
 });

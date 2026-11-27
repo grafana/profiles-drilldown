@@ -13,7 +13,13 @@ describe('seriesRepository', () => {
     await seriesRepository.list({ dataSourceUid: 'pyroscope-def', timeRange });
 
     expect(fetch).toHaveBeenCalledTimes(2);
-    expect(fetch.mock.calls[0][0]).toEqual('/api/datasources/proxy/uid/pyroscope-abc/querier.v1.QuerierService/Series');
-    expect(fetch.mock.calls[1][0]).toEqual('/api/datasources/proxy/uid/pyroscope-def/querier.v1.QuerierService/Series');
+    expect(fetch.mock.calls[0][0]).toMatchObject({
+      uid: 'pyroscope-abc',
+      routePath: 'querier.v1.QuerierService/Series',
+    });
+    expect(fetch.mock.calls[1][0]).toMatchObject({
+      uid: 'pyroscope-def',
+      routePath: 'querier.v1.QuerierService/Series',
+    });
   });
 });

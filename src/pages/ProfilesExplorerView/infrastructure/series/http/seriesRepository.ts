@@ -31,7 +31,7 @@ class SeriesRepository implements DataSourceRepository<SeriesApiClient> {
     const apiClient = this.getApiClient(options.dataSourceUid);
 
     const matchersCacheKey = JSON.stringify(matchers ?? []);
-    const cacheParams = [apiClient.baseUrl, from, to, matchersCacheKey];
+    const cacheParams = [apiClient.dataSourceUid, from, to, matchersCacheKey];
 
     const responseFromCacheP = this.getCacheClient().get(cacheParams);
     if (responseFromCacheP) {

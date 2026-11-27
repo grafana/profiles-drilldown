@@ -14,8 +14,10 @@ describe('useFetchTenantStats()', () => {
 
     await waitFor(() =>
       expect(fetch).toHaveBeenCalledWith(
-        '/api/datasources/proxy/uid/pyroscope-abc/querier.v1.QuerierService/GetProfileStats',
-        expect.anything()
+        expect.objectContaining({
+          uid: 'pyroscope-abc',
+          routePath: 'querier.v1.QuerierService/GetProfileStats',
+        })
       )
     );
   });

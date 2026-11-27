@@ -27,13 +27,3 @@ export function getGrafanaUrl(path: string): string {
 export function getGrafanaAbsoluteUrl(path: string): string {
   return new URL(getGrafanaUrl(path), window.location.origin).toString();
 }
-
-/**
- * Builds a Grafana datasource proxy URL.
- *
- * @param dataSourceUid - The UID of the datasource to proxy requests through.
- * @returns The root-relative proxy URL, including Grafana's configured subpath.
- */
-export function getDataSourceProxyUrl(dataSourceUid: string): string {
-  return getGrafanaUrl(`/api/datasources/proxy/uid/${dataSourceUid}`);
-}

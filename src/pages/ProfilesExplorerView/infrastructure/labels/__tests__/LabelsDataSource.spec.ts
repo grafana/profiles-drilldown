@@ -79,8 +79,10 @@ describe('LabelsDataSource', () => {
     const labels = await new LabelsDataSource().fetchLabels('pyroscope-abc', 'q', 1, 2);
 
     expect(fetch).toHaveBeenCalledWith(
-      '/api/datasources/proxy/uid/pyroscope-abc/querier.v1.QuerierService/LabelNames',
-      expect.anything()
+      expect.objectContaining({
+        uid: 'pyroscope-abc',
+        routePath: 'querier.v1.QuerierService/LabelNames',
+      })
     );
     expect(labels).toEqual([{ value: 'env', label: 'env' }]);
   });
@@ -91,8 +93,10 @@ describe('LabelsDataSource', () => {
     await new LabelsDataSource().fetchLabelValues('pyroscope-abc', 'q', 1, 2, 'env');
 
     expect(fetch).toHaveBeenCalledWith(
-      '/api/datasources/proxy/uid/pyroscope-abc/querier.v1.QuerierService/LabelValues',
-      expect.anything()
+      expect.objectContaining({
+        uid: 'pyroscope-abc',
+        routePath: 'querier.v1.QuerierService/LabelValues',
+      })
     );
   });
 });

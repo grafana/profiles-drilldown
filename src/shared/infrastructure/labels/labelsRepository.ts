@@ -67,7 +67,7 @@ export class LabelsRepository implements DataSourceRepository<LabelsApiClient> {
     LabelsRepository.assertParams(query, from, to);
 
     const apiClient = this.getApiClient(dataSourceUid);
-    const cacheParams = [apiClient.baseUrl, query, from, to];
+    const cacheParams = [apiClient.dataSourceUid, query, from, to];
 
     const labelsFromCacheP = this.getCacheClient().get(cacheParams);
     if (labelsFromCacheP) {
@@ -98,7 +98,7 @@ export class LabelsRepository implements DataSourceRepository<LabelsApiClient> {
     invariant(Boolean(label), 'Missing label value!');
 
     const apiClient = this.getApiClient(dataSourceUid);
-    const cacheParams = [apiClient.baseUrl, label, query, from, to];
+    const cacheParams = [apiClient.dataSourceUid, label, query, from, to];
 
     const labelValuesFromCacheP = this.getCacheClient().get(cacheParams);
     if (labelValuesFromCacheP) {

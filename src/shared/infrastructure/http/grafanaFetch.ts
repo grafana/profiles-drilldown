@@ -1,6 +1,12 @@
-import { type BackendSrvRequest, type FetchError, getBackendSrv, isFetchError } from '@grafana/runtime';
-import type { HttpRequestInput } from '@shared/infrastructure/types';
-import { lastValueFrom } from 'rxjs';
+import { callDataSourcePluginProxy } from '@grafana/plugin-compat/datasources';
+import { type FetchError, isFetchError } from '@grafana/runtime';
+
+interface GrafanaFetchInput {
+  pluginId: string;
+  uid: string;
+  routePath: string;
+  options: RequestInit;
+}
 
 interface GrafanaResponseInput {
   data?: BodyInit | null;
@@ -9,17 +15,14 @@ interface GrafanaResponseInput {
   headers?: Headers;
 }
 
-export function toBackendSrvRequest({ url, options }: HttpRequestInput): BackendSrvRequest {
+export function toProxyRequest(options: RequestInit) {
   return {
-    url,
     method: options.method,
     headers: Object.fromEntries(new Headers(options.headers)),
     data: options.body,
     abortSignal: options.signal ?? undefined,
     credentials: options.credentials,
-    responseType: 'blob',
-    showErrorAlert: false,
-    showSuccessAlert: false,
+    responseType: 'blob' as const,
   };
 }
 
@@ -75,9 +78,20 @@ export function toResponse({ data, status, statusText, headers }: GrafanaRespons
   return new Response(body, { status, statusText, headers });
 }
 
-export async function grafanaFetch({ url, options }: HttpRequestInput): Promise<Response> {
+export async function grafanaFetch({ pluginId, uid, routePath, options }: GrafanaFetchInput): Promise<Response> {
   try {
-    const response = await lastValueFrom(getBackendSrv().fetch<Blob>(toBackendSrvRequest({ url, options })));
+    const response = await callDataSourcePluginProxy<Blob>({
+      pluginId,
+      uid,
+      routePath,
+      showErrorAlert: false,
+      request: toProxyRequest(options),
+    });
+
+    if (response === undefined) {
+      throw new Error('Grafana did not return a datasource proxy response');
+    }
+
     return toResponse(response);
   } catch (error) {
     const cancellation = toCancellationError({ error, signal: options.signal });
