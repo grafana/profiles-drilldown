@@ -1,4 +1,5 @@
-import { SceneTimeRange, sceneUtils, UrlSyncContextProvider } from '@grafana/scenes';
+import { locationService } from '@grafana/runtime';
+import { SceneTimeRange, UrlSyncContextProvider } from '@grafana/scenes';
 import { DataSourceUidFallback } from '@shared/infrastructure/datasource/DataSourceUidFallback';
 import { useDefaultDataSourceUid } from '@shared/infrastructure/datasource/useDefaultDataSourceUid';
 import { queryClient } from '@shared/infrastructure/react-query/queryClient';
@@ -7,15 +8,18 @@ import React, { useState } from 'react';
 import { SceneProfilesExplorer } from 'src/pages/ProfilesExplorerView/components/SceneProfilesExplorer/SceneProfilesExplorer';
 
 import { EmbeddedProfilesExplorationState } from '../types';
+import { initialServiceNames } from './initialServiceNames';
 
 interface EmbeddedSceneProps extends EmbeddedProfilesExplorationState {
   initialDS: string;
 }
 
-function buildProfilesExplorationFromState({
+export function buildProfilesExplorationFromState({
   initialTimeRange,
   onTimeRangeChange,
   initialFilters,
+  initialAllServicesFilter,
+  initialExplorationType,
   initialDS,
 }: EmbeddedSceneProps) {
   const $timeRange = new SceneTimeRange({
@@ -33,12 +37,35 @@ function buildProfilesExplorationFromState({
   const exploration = new SceneProfilesExplorer({
     $timeRange,
     isEmbedded: true,
+    initialExplorationType,
     initialFilters: initialFilters ? initialFilters.map((filter) => ({ ...filter })) : undefined,
+    initialAllServicesFilter: initialAllServicesFilter?.map((filter) => ({ ...filter })),
     initialDS,
   });
 
-  const params = new URLSearchParams(window.location.search);
-  sceneUtils.syncStateFromSearchParams(exploration, params);
+  // Embedded inputs are authoritative when switching entities. Do not restore
+  // filters from the previous embedded scene over the caller's new filters.
+  if (initialAllServicesFilter !== undefined || initialFilters !== undefined) {
+    const encodeFilter = (filter: NonNullable<typeof initialFilters>[number]) =>
+      [filter.key, filter.operator, filter.value]
+        .map((part) => part.replace(/\|/g, '__gfp__').replace(/,/g, '__gfc__').replace(/#/g, '__gfh__'))
+        .join('|');
+    const nonServiceFilters = initialFilters?.filter((filter) => filter.key !== 'service_name');
+    const serviceNames = initialServiceNames([...(initialFilters ?? []), ...(initialAllServicesFilter ?? [])]);
+    const currentService = new URLSearchParams(locationService.getLocation().search).get('pd-var-serviceName');
+    locationService.partial(
+      {
+        'pd-var-filtersAllServices': initialAllServicesFilter?.map(encodeFilter) ?? null,
+        'pd-var-filters': nonServiceFilters?.length ? nonServiceFilters.map(encodeFilter) : null,
+        ...(currentService !== null && serviceNames.includes(currentService)
+          ? {}
+          : { 'pd-var-serviceName': serviceNames[0] ?? null }),
+      },
+      true
+    );
+  }
+  // The namespaced UrlSyncContextProvider owns the initial URL sync. A manual
+  // sync here would consume embedded defaults before the provider initializes.
 
   return exploration;
 }

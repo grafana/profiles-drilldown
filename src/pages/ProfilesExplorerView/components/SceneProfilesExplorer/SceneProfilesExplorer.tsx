@@ -76,6 +76,8 @@ export interface SceneProfilesExplorerState extends Partial<EmbeddedSceneState> 
   loadSearchScene: LoadSearchScene;
   isEmbedded?: boolean;
   initialFilters?: AdHocVariableFilter[];
+  initialExplorationType?: `${ExplorationType}`;
+  initialAllServicesFilter?: AdHocVariableFilter[];
   initialDS?: string;
   isAddToDashboardModalOpen?: boolean;
   addToDashboardPanelData?: PanelDataRequestPayload;
@@ -146,12 +148,16 @@ export class SceneProfilesExplorer extends SceneObjectBase<SceneProfilesExplorer
 
   protected _urlSync = new SceneObjectUrlSyncConfig(this, { keys: ['explorationType', 'showSpanHeatmap'] });
   private initialFilters?: AdHocVariableFilter[];
+  private initialExplorationType?: ExplorationType;
+  private hasInitializedFromUrl = false;
   private kgInitialized = false;
 
   public constructor(state: Partial<SceneProfilesExplorerState> & { initialDS: string }) {
     super({
       key: 'profiles-explorer',
-      explorationType: state.initialFilters && state.initialFilters.length > 0 ? ExplorationType.LABELS : undefined,
+      explorationType:
+        (state.initialExplorationType as ExplorationType | undefined) ??
+        (state.initialFilters && state.initialFilters.length > 0 ? ExplorationType.LABELS : undefined),
       body: undefined,
       $timeRange: state?.$timeRange ?? new SceneTimeRange(getDefaultTimeRange()),
       $variables:
@@ -164,7 +170,9 @@ export class SceneProfilesExplorer extends SceneObjectBase<SceneProfilesExplorer
           // see setExplorationType() for dynamic updates
           variables: [
             new ProfilesDataSourceVariable({ initialDS: state.initialDS }),
-            new ServiceNameVariable({ initialFilters: state?.initialFilters }),
+            new ServiceNameVariable({
+              initialFilters: [...(state.initialFilters ?? []), ...(state.initialAllServicesFilter ?? [])],
+            }),
             new ProfileMetricVariable(),
             new FiltersVariable({
               key: 'filters',
@@ -178,7 +186,10 @@ export class SceneProfilesExplorer extends SceneObjectBase<SceneProfilesExplorer
                 return filtered.length > 0 ? filtered : undefined;
               })(),
             }),
-            new AllServicesFilterVariable({ key: 'filtersAllServices' }),
+            new AllServicesFilterVariable({
+              key: 'filtersAllServices',
+              initialFilters: state.initialAllServicesFilter,
+            }),
             new FiltersVariable({ key: 'filtersBaseline' }),
             new FiltersVariable({ key: 'filtersComparison' }),
             new GroupByVariable(),
@@ -206,6 +217,7 @@ export class SceneProfilesExplorer extends SceneObjectBase<SceneProfilesExplorer
     this.registerRuntimeDataSources();
 
     this.initialFilters = state?.initialFilters;
+    this.initialExplorationType = state.initialExplorationType as ExplorationType | undefined;
     this.addActivationHandler(this.onActivate.bind(this));
   }
 
@@ -244,6 +256,10 @@ export class SceneProfilesExplorer extends SceneObjectBase<SceneProfilesExplorer
       this.setExplorationType({
         type: SceneProfilesExplorer.DEFAULT_EXPLORATION_TYPE,
       });
+    } else if (!this.state.body) {
+      this.setExplorationType({
+        type: this.state.explorationType,
+      });
     }
 
     return () => {
@@ -262,13 +278,12 @@ export class SceneProfilesExplorer extends SceneObjectBase<SceneProfilesExplorer
   }
 
   updateFromUrl(values: SceneObjectUrlValues) {
-    // Don't update from URL if initialFilters are provided - we want to select the LABELS view as we are in embedded mode
-    if (this.initialFilters && this.initialFilters.length > 0) {
-      this.setExplorationType({ type: ExplorationType.LABELS, comesFromUserAction: false });
+    const showSpanHeatmapChanged = this.updateShowSpanHeatmapFromUrl(values);
+    const initialType = this.consumeInitialExplorationType();
+    if (initialType) {
+      this.applyInitialExplorationType(initialType, showSpanHeatmapChanged);
       return;
     }
-
-    const showSpanHeatmapChanged = this.updateShowSpanHeatmapFromUrl(values);
 
     if (typeof values.explorationType === 'string' && values.explorationType !== this.state.explorationType) {
       const type = values.explorationType as ExplorationType;
@@ -278,6 +293,25 @@ export class SceneProfilesExplorer extends SceneObjectBase<SceneProfilesExplorer
     } else if (showSpanHeatmapChanged && this.state.explorationType === ExplorationType.FLAME_GRAPH) {
       this.syncSpanHeatmapFromUrl();
     }
+  }
+
+  private consumeInitialExplorationType(): ExplorationType | undefined {
+    if (this.hasInitializedFromUrl) {
+      return undefined;
+    }
+    this.hasInitializedFromUrl = true;
+    // Embedded defaults override only the initial URL, not subsequent navigation.
+    return this.initialExplorationType ?? (this.initialFilters?.length ? ExplorationType.LABELS : undefined);
+  }
+
+  private applyInitialExplorationType(initialType: ExplorationType, showSpanHeatmapChanged: boolean) {
+    if (this.state.body && this.state.explorationType === initialType) {
+      if (showSpanHeatmapChanged && initialType === ExplorationType.FLAME_GRAPH) {
+        this.syncSpanHeatmapFromUrl();
+      }
+      return;
+    }
+    this.setExplorationType({ type: initialType, comesFromUserAction: false });
   }
 
   private updateShowSpanHeatmapFromUrl(values: SceneObjectUrlValues): boolean {

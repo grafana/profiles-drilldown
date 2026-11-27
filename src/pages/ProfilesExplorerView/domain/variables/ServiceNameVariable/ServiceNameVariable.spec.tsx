@@ -77,13 +77,25 @@ describe('ServiceNameVariable', () => {
       expect(model.state.value).toBe('stored-svc');
     });
 
-    it('restores from userStorage when service_name filter is not an equality filter', () => {
+    it.each(['=~', '!=', '!~'])('does not restore a stale service with an initial %s constraint', (operator) => {
       jest.mocked(userStorage.get).mockReturnValue({
-        serviceName: 'stored-svc',
+        serviceName: 'worker',
       });
 
       const model = new ServiceNameVariable({
-        initialFilters: [{ key: 'service_name', operator: '!=', value: 'ignored' }],
+        initialFilters: [{ key: 'service_name', operator, value: 'api-.*' }],
+      });
+      model.setState({ value: '' });
+
+      model.setInitialValue();
+
+      expect(model.state.value).toBe('');
+    });
+
+    it('restores from storage when initial filters only constrain other labels', () => {
+      jest.mocked(userStorage.get).mockReturnValue({ serviceName: 'stored-svc' });
+      const model = new ServiceNameVariable({
+        initialFilters: [{ key: 'region', operator: '=', value: 'eu' }],
       });
       model.setState({ value: '' });
 
