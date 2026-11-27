@@ -43,8 +43,10 @@ describe('useUploadFile()', () => {
     });
 
     expect(fetch).toHaveBeenCalledWith(
-      '/api/datasources/proxy/uid/pyroscope-abc/adhocprofiles.v1.AdHocProfileService/Upload',
-      expect.anything()
+      expect.objectContaining({
+        uid: 'pyroscope-abc',
+        routePath: 'adhocprofiles.v1.AdHocProfileService/Upload',
+      })
     );
   });
 
@@ -60,6 +62,6 @@ describe('useUploadFile()', () => {
 
     act(() => result.current[1].removeFile());
 
-    expect(fetch.mock.calls[0][1]?.signal?.aborted).toBe(false);
+    expect(fetch.mock.calls[0][0].options.signal?.aborted).toBe(false);
   });
 });

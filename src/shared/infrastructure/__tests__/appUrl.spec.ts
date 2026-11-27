@@ -116,17 +116,6 @@ describe('appUrl', () => {
   });
 
   test.each([
-    ['', '/api/datasources/proxy/uid/profiles'],
-    ['/', '/api/datasources/proxy/uid/profiles'],
-    ['/grafana', '/grafana/api/datasources/proxy/uid/profiles'],
-    ['/grafana/', '/grafana/api/datasources/proxy/uid/profiles'],
-  ])('should build datasource proxy URLs with appSubUrl "%s"', (appSubUrl, expectedUrl) => {
-    const { getDataSourceProxyUrl } = setupAppUrl({ appSubUrl });
-
-    expect(getDataSourceProxyUrl('profiles')).toBe(expectedUrl);
-  });
-
-  test.each([
     ['', 'http://localhost:3000/namespaces/team%2Fone?view=all#details'],
     ['/', 'http://localhost:3000/namespaces/team%2Fone?view=all#details'],
     ['/grafana', 'http://localhost:3000/grafana/namespaces/team%2Fone?view=all#details'],

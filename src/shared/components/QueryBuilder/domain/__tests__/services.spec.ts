@@ -31,8 +31,10 @@ describe('QueryBuilder labels', () => {
     await services.fetchLabels(context, event);
 
     expect(fetch).toHaveBeenCalledWith(
-      '/api/datasources/proxy/uid/pyroscope-abc/querier.v1.QuerierService/LabelNames',
-      expect.anything()
+      expect.objectContaining({
+        uid: 'pyroscope-abc',
+        routePath: 'querier.v1.QuerierService/LabelNames',
+      })
     );
   });
 
@@ -65,7 +67,7 @@ describe('QueryBuilder labels', () => {
       });
 
       expect(fetch).toHaveBeenCalledTimes(1);
-      expect(fetch.mock.calls[0][1]?.signal?.aborted).toBe(false);
+      expect(fetch.mock.calls[0][0].options.signal?.aborted).toBe(false);
       expect(actor.getSnapshot().value).toBe('idle');
     } finally {
       actor.stop();
@@ -86,8 +88,8 @@ describe('QueryBuilder labels', () => {
     actions.cancelAllLoad(context);
 
     expect(fetch).toHaveBeenCalledTimes(2);
-    expect(fetch.mock.calls[0][1]?.signal?.aborted).toBe(false);
-    expect(fetch.mock.calls[1][1]?.signal?.aborted).toBe(true);
+    expect(fetch.mock.calls[0][0].options.signal?.aborted).toBe(false);
+    expect(fetch.mock.calls[1][0].options.signal?.aborted).toBe(true);
   });
 
   it('should cancel query-builder label values without aborting shared label values', () => {
@@ -119,8 +121,8 @@ describe('QueryBuilder labels', () => {
     actions.cancelAllLoad(context);
 
     expect(fetch).toHaveBeenCalledTimes(2);
-    expect(fetch.mock.calls[0][1]?.signal?.aborted).toBe(false);
-    expect(fetch.mock.calls[1][1]?.signal?.aborted).toBe(true);
+    expect(fetch.mock.calls[0][0].options.signal?.aborted).toBe(false);
+    expect(fetch.mock.calls[1][0].options.signal?.aborted).toBe(true);
   });
 
   it('should reuse pending and completed query-builder label requests', async () => {
@@ -149,8 +151,8 @@ describe('QueryBuilder labels', () => {
     actions.cancelAllLoad(context);
 
     expect(fetch).toHaveBeenCalledTimes(2);
-    expect(fetch.mock.calls[0][1]?.signal?.aborted).toBe(true);
-    expect(fetch.mock.calls[1][1]?.signal?.aborted).toBe(false);
+    expect(fetch.mock.calls[0][0].options.signal?.aborted).toBe(true);
+    expect(fetch.mock.calls[1][0].options.signal?.aborted).toBe(false);
   });
 
   it('should cancel pending requests to the input datasource', () => {
@@ -159,6 +161,6 @@ describe('QueryBuilder labels', () => {
     void services.fetchLabels({ ...context, query: '{pending}' }, event);
     actions.cancelAllLoad(context);
 
-    expect(fetch.mock.calls[0][1]?.signal?.aborted).toBe(true);
+    expect(fetch.mock.calls[0][0].options.signal?.aborted).toBe(true);
   });
 });

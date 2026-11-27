@@ -12,8 +12,10 @@ describe('useFetchPluginSettings()', () => {
 
     await waitFor(() =>
       expect(fetch).toHaveBeenCalledWith(
-        '/api/datasources/proxy/uid/pyroscope-abc/settings.v1.SettingsService/Get',
-        expect.anything()
+        expect.objectContaining({
+          uid: 'pyroscope-abc',
+          routePath: 'settings.v1.SettingsService/Get',
+        })
       )
     );
   });
