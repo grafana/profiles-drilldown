@@ -101,28 +101,28 @@ describe('SaveSearchButton', () => {
     it('should switch save controls to Saved queries', async () => {
       renderSaveSearch();
 
-      expect(screen.getByRole('button', { name: 'Save search' })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Save query' })).toBeInTheDocument();
       expect(screen.queryByText('Exposed component')).not.toBeInTheDocument();
 
       await waitFor(() => {
         expect(screen.getByText('Exposed component')).toBeVisible();
       });
-      expect(screen.queryByRole('button', { name: 'Save search' })).not.toBeInTheDocument();
+      expect(screen.queryByRole('button', { name: 'Save query' })).not.toBeInTheDocument();
     });
   });
 
   test('Opens the modal when the button is clicked', () => {
     render(<SaveSearchButton sceneRef={mockSceneRef} />);
 
-    expect(screen.queryByText('Save current search')).not.toBeInTheDocument();
+    expect(screen.queryByText('Save query')).not.toBeInTheDocument();
 
     fireEvent.click(screen.getByRole('button', { name: /Save/i }));
 
-    expect(screen.getByText('Save current search')).toBeInTheDocument();
+    expect(screen.getByText('Save query')).toBeInTheDocument();
 
     fireEvent.click(screen.getByRole('button', { name: /Cancel/i }));
 
-    expect(screen.queryByText('Save current search')).not.toBeInTheDocument();
+    expect(screen.queryByText('Save query')).not.toBeInTheDocument();
   });
 
   test('Returns null when the scene is embedded', () => {

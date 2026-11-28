@@ -618,30 +618,30 @@
   },
   "saved-searches": {
     "load": {
-      "no-searches": "No saved searches to display.",
-      "no-searches-tooltip": "No saved searches to load",
+      "no-searches": "No saved queries to display.",
+      "no-searches-tooltip": "No saved queries",
       "remove-tooltip": "Remove",
-      "saved-query-tooltip": "Load Saved query",
+      "saved-query-tooltip": "Use saved query",
       "select": "Select",
       "select-pyroscope-query": "Please select a Pyroscope query.",
-      "title": "Load a previously saved search",
-      "tooltip": "Load saved search"
+      "title": "Saved queries",
+      "tooltip": "Use saved query"
     },
     "save": {
       "cancel": "Cancel",
       "close": "Close",
       "description-label": "Description",
-      "error-message": "Unexpected error saving this search.",
-      "existing-search-warning": "There is a previously saved search with the same query: {{title}}",
-      "info-message": "Saved searches are stored locally in your browser and will only be available on this device.",
+      "error-message": "Unexpected error saving this query.",
+      "existing-search-warning": "There is a previously saved query with the same expression: {{title}}",
+      "info-message": "Saved queries are stored locally in your browser and will only be available on this device.",
       "save": "Save",
-      "saved-queries-tooltip": "Save in Saved queries",
-      "success-body": "Search successfully saved.",
-      "success-message": "Search successfully saved.",
+      "saved-queries-tooltip": "Save query",
+      "success-body": "Query successfully saved.",
+      "success-message": "Query successfully saved.",
       "success-title": "Success",
-      "title": "Save current search",
+      "title": "Save query",
       "title-label": "Title",
-      "tooltip": "Save search"
+      "tooltip": "Save query"
     }
   },
   "series": {
